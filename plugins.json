@@ -6,22 +6,9 @@
   "id": "chaostempoross-plugin",
   "releases": [{
     "date": "2022-02-23",
-    "sha512sum": "E6BA101C7EEE66F0308BF3E6387DE54C0691DDF93B9087B45A46C31E58BF98A1534A3A74A4F7A4017F90FC5C2822B394188CEA7425A694F56F595FF85D0A8720",
+    "sha512sum": "A9F79A12D684681DDA54AF3ADD6B992135C96137E539741EC6C98AB8FE7626298C3CD9BCD198C7A098C6E3BF47265C6B7D516E8B8C862FDB665086DA8C1DE1D8",
     "version": "1.0.0",
     "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.0.0.jar",
-    "requires": "^1.0.0"
-  }]
-}, {
-  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
-  "provider": "ChaosEnergy",
-  "name": "Chaos Test",
-  "description": "Test plugin",
-  "id": "chaostest-plugin",
-  "releases": [{
-    "date": "2022-02-23",
-    "sha512sum": "C0A8AF22AEC8211B794F6C490C64F07D7269C5045076091BB7696F41CF69013C59864C809D2004EDF58548363EFD978BFA83A1F1C26EE4F48CE71742AD045099",
-    "version": "1.0.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/test-1.0.0.jar",
     "requires": "^1.0.0"
   }]
 }, {
@@ -32,7 +19,7 @@
   "id": "chaosutils-plugin",
   "releases": [{
     "date": "2022-02-23",
-    "sha512sum": "C27B56BB691E46BD3053DE5238561ACE5969AAA0070C07904BA0E59A0A6B6622F9698FD2F80F424999DFBFF9EFCED016F00734F363005CB3A4A3E89BF0C09DFD",
+    "sha512sum": "BDE0B69575128DC25CF34D2C0D2D594A2B6A26614E096AE88F04134C855DBBFFB973ABB4E40D661B534CED91A4944815C2F6610503F3325FB1144F48E23A5597",
     "version": "1.0.0",
     "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.0.0.jar",
     "requires": "^1.0.0"
