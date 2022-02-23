@@ -17,26 +17,16 @@ import javax.inject.Inject;
 
 @PluginDescriptor(
 		name = "Chaos Utils",
-		description = "Utilities for Chaos scripts",
-		enabledByDefault = false
+		description = "Utilities for Chaos scripts"
 )
 @Slf4j
 @Extension
 public class Utils extends Plugin {
 	@Inject
-	private Config config;
-
-	@Inject
 	private Client client;
 
 	@Inject
 	private ChatMessageManager chatMessageManager;
-
-	@Provides
-	public Config getConfig(ConfigManager configManager)
-	{
-		return configManager.getConfig(Config.class);
-	}
 
 	@Override
 	public void startUp() {
