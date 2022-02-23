@@ -1,6 +1,19 @@
 [{
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
+  "name": "Chaos Tempoross",
+  "description": "Plays the Tempoross minigame",
+  "id": "chaostempoross-plugin",
+  "releases": [{
+    "date": "2022-02-23",
+    "sha512sum": "E6BA101C7EEE66F0308BF3E6387DE54C0691DDF93B9087B45A46C31E58BF98A1534A3A74A4F7A4017F90FC5C2822B394188CEA7425A694F56F595FF85D0A8720",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
   "name": "Chaos Utils",
   "description": "Utilities for Chaos scripts",
   "id": "chaosutils-plugin",
