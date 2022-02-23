@@ -25,6 +25,7 @@
 
 rootProject.name = "Chaos Plugins"
 
+include("tempoross")
 include("utils")
 
 for (project in rootProject.children) {
