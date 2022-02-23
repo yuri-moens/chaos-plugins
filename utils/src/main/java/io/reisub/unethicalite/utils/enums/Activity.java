@@ -24,7 +24,6 @@ public enum Activity {
     FISHING(),
     ATTACKING(),
     DOUSING_FIRE(),
-    REPAIRING_MAST(),
     TETHERING_MAST(),
     STOCKING_CANNON(),
     FILLING_BUCKETS();
