@@ -41,7 +41,7 @@ public class LeaveGame extends Task {
         deri.interact("Leave");
         Time.sleepUntil(() -> plugin.isInDesert(), 20000);
 
-        Time.sleepUntil(Dialog::canContinue, 30000);
+        Time.sleepUntil(Dialog::canContinueNPC, 100, 30000);
         Movement.walk(new WorldPoint(3142, 2839, 0));
         Time.sleep(400, 700);
     }
