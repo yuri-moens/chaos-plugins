@@ -5,8 +5,7 @@ import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 
 @ConfigGroup("chaosbase")
-public interface Config extends net.runelite.client.config.Config
-{
+public interface Config extends net.runelite.client.config.Config {
 	@ConfigItem(
 			keyName = "startButton",
 			name = "Start/Stop",
