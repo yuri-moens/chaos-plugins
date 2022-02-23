@@ -44,7 +44,7 @@ open class BootstrapTask : DefaultTask() {
                 ?: throw RuntimeException("Base bootstrap is null!")
 
             project.subprojects.forEach {
-                if (it.project.properties.containsKey("PluginName") && it.project.properties.containsKey("PluginDescription")) {
+                if (it.project.properties.containsKey("PluginName") && it.project.properties.containsKey("PluginDescription") && (it.project.extra.get("PluginName") as String) != "Chaos Test") {
                     var pluginAdded = false
                     val plugin = it.project.tasks["jar"].outputs.files.singleFile
 
