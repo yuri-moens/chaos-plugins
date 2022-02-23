@@ -14,6 +14,19 @@
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
+  "name": "Chaos Test",
+  "description": "Test plugin",
+  "id": "chaostest-plugin",
+  "releases": [{
+    "date": "2022-02-23",
+    "sha512sum": "C0A8AF22AEC8211B794F6C490C64F07D7269C5045076091BB7696F41CF69013C59864C809D2004EDF58548363EFD978BFA83A1F1C26EE4F48CE71742AD045099",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/test-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
   "name": "Chaos Utils",
   "description": "Utilities for Chaos scripts",
   "id": "chaosutils-plugin",
