@@ -1,0 +1,31 @@
+package io.reisub.unethicalite.utils.enums;
+
+public enum Activity {
+    IDLE(),
+    COOKING(),
+    GLASSBLOWING(),
+    SMELTING(),
+    WOODCUTTING(),
+    FLETCHING(),
+    FEEDING_BRAZIER(),
+    FIXING_BRAZIER(),
+    LIGHTING_BRAZIER(),
+    THIEVING(),
+    MINING(),
+    CLEANING_HERBS(),
+    CREATING_UNFINISHED_POTIONS(),
+    CREATING_POTIONS(),
+    SMITHING(),
+    FIGHTING(),
+    DEPOSITING(),
+    REPAIRING(),
+    WITHDRAWING(),
+    BANKING(),
+    FISHING(),
+    ATTACKING(),
+    DOUSING_FIRE(),
+    REPAIRING_MAST(),
+    TETHERING_MAST(),
+    STOCKING_CANNON(),
+    FILLING_BUCKETS();
+}

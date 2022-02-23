@@ -1,0 +1,14 @@
+[{
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
+  "name": "Chaos Utils",
+  "description": "Utilities for Chaos scripts",
+  "id": "chaosutils-plugin",
+  "releases": [{
+    "date": "2022-02-23",
+    "sha512sum": "C27B56BB691E46BD3053DE5238561ACE5969AAA0070C07904BA0E59A0A6B6622F9698FD2F80F424999DFBFF9EFCED016F00734F363005CB3A4A3E89BF0C09DFD",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
+}]
