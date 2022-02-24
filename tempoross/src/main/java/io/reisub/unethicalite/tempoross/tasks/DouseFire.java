@@ -3,6 +3,7 @@ package io.reisub.unethicalite.tempoross.tasks;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.items.Inventory;
+import dev.hoot.api.packets.NPCPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -47,7 +48,7 @@ public class DouseFire extends Task {
 
     @Override
     public void execute() {
-        fire.interact(0);
+        NPCPackets.npcFirstOption(fire, false);
 
         if (!Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.DOUSING_FIRE, 2500)) return;
         Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 15000);

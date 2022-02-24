@@ -6,7 +6,8 @@ import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Inventory;
-import dev.hoot.api.movement.Movement;
+import dev.hoot.api.packets.MovementPackets;
+import dev.hoot.api.packets.TileObjectPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -72,7 +73,7 @@ public class Cook extends Task {
         WorldPoint target = plugin.getDudiPos().dx(7).dy(16);
 
         if (Players.getLocal().getWorldLocation().getY() < target.getY() - 5) {
-            Movement.walk(target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
+            MovementPackets.sendMovement(target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
 
             if (!Time.sleepUntil(() -> Players.getLocal().isMoving(), 1500)) {
                 return;
@@ -91,7 +92,7 @@ public class Cook extends Task {
         TileObject shrine = TileObjects.getNearest(ObjectID.SHRINE_41236);
         if (shrine == null) return;
 
-        shrine.interact(0);
+        TileObjectPackets.tileObjectFirstOption(shrine, false);
         Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.COOKING || plugin.isWaveIncoming(), 10000);
     }
 }

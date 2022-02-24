@@ -4,6 +4,7 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Inventory;
+import dev.hoot.api.packets.TileObjectPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -43,7 +44,7 @@ public class FillBuckets extends Task {
         TileObject pump = TileObjects.getNearest(ObjectID.WATER_PUMP_41000, ObjectID.WATER_PUMP_41004);
         if (pump == null) return;
 
-        pump.interact(0);
+        TileObjectPackets.tileObjectFirstOption(pump, false);
 
         if (!Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.FILLING_BUCKETS, 15000)) return;
         Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 5000);

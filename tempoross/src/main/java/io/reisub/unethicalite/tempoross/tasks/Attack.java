@@ -2,6 +2,7 @@ package io.reisub.unethicalite.tempoross.tasks;
 
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
+import dev.hoot.api.packets.NPCPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -38,7 +39,7 @@ public class Attack extends Task {
 
     @Override
     public void execute() {
-        pool.interact(0);
+        NPCPackets.npcFirstOption(pool, false);
         Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.FISHING, 50, 5000);
     }
 }

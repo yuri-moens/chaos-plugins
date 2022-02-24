@@ -1,20 +1,23 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
-import dev.hoot.api.coords.RectangularArea;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.movement.Movement;
+import dev.hoot.api.packets.TileObjectPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
+import net.runelite.api.coords.WorldArea;
 
 import javax.inject.Inject;
 
+@Slf4j
 public class DodgeFire extends Task {
     @Inject
     private Tempoross plugin;
@@ -35,10 +38,7 @@ public class DodgeFire extends Task {
             return false;
         }
 
-         int x = fire.getWorldLocation().getX();
-         int y = fire.getWorldLocation().getY();
-
-        RectangularArea fireArea = new RectangularArea(x, y, x + 1, y + 1);
+         WorldArea fireArea = new WorldArea(fire.getWorldLocation(), 2, 2);
 
         return fireArea.contains(Players.getLocal());
     }
@@ -52,7 +52,7 @@ public class DodgeFire extends Task {
             TileObject shrine = TileObjects.getNearest(ObjectID.SHRINE_41236);
             if (shrine == null) return;
 
-            shrine.interact(0);
+            TileObjectPackets.tileObjectFirstOption(shrine, false);
         }
     }
 }

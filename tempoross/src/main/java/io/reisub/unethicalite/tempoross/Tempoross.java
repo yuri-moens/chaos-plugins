@@ -9,6 +9,7 @@ import dev.hoot.api.items.Inventory;
 import dev.hoot.api.widgets.Widgets;
 import io.reisub.unethicalite.tempoross.tasks.*;
 import io.reisub.unethicalite.utils.TickScript;
+import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Run;
 import lombok.Getter;
@@ -21,6 +22,7 @@ import net.runelite.api.util.Text;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import org.pf4j.Extension;
 
@@ -35,6 +37,7 @@ import java.util.regex.Pattern;
 		description = "Plays the Tempoross minigame",
 		enabledByDefault = false
 )
+@PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Tempoross extends TickScript {
@@ -99,6 +102,8 @@ public class Tempoross extends TickScript {
 	protected void onStart() {
 		super.onStart();
 
+		reset();
+
 		tasks.add(new Run());
 
 		addTask(DodgeFire.class);
@@ -113,8 +118,6 @@ public class Tempoross extends TickScript {
 		addTask(Stock.class);
 		addTask(Cook.class);
 		addTask(Fish.class);
-
-		reset();
 	}
 
 	@Subscribe(priority = 1)
@@ -208,7 +211,7 @@ public class Tempoross extends TickScript {
 	private void onItemContainerChanged(ItemContainerChanged event) {
 		final ItemContainer container = event.getItemContainer();
 
-		if (currentActivity == Activity.STOCKING_CANNON) {
+		if (container.count(ItemID.HARPOONFISH) < cookedFish) {
 			cookedFishRequired--;
 		}
 
@@ -314,13 +317,13 @@ public class Tempoross extends TickScript {
 	}
 
 	private void reset() {
+		waveIncoming = false;
 		phase = 1;
-		dudiPos = null;
-		cookedFishRequired = 17;
-		finished = false;
 		rawFish = 0;
 		cookedFish = 0;
-		waveIncoming = false;
+		cookedFishRequired = 17;
+		dudiPos = null;
+		finished = false;
 	}
 
 	private int parseWidget(int group, int id) {

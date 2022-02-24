@@ -2,6 +2,7 @@ package io.reisub.unethicalite.tempoross.tasks;
 
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.packets.TileObjectPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ObjectID;
@@ -29,7 +30,7 @@ public class EnterBoat extends Task {
         TileObject ladder = TileObjects.getNearest(ObjectID.ROPE_LADDER_41305);
         if (ladder == null) return;
 
-        ladder.interact("Climb");
+        TileObjectPackets.tileObjectFirstOption(ladder, false);
         Time.sleepUntil(() -> plugin.isOnBoat(), 10000);
     }
 }

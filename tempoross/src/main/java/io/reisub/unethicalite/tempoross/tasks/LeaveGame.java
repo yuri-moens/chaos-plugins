@@ -4,7 +4,9 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Inventory;
-import dev.hoot.api.movement.Movement;
+import dev.hoot.api.packets.MovementPackets;
+import dev.hoot.api.packets.NPCPackets;
+import dev.hoot.api.packets.TileObjectPackets;
 import dev.hoot.api.widgets.Dialog;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -32,17 +34,17 @@ public class LeaveGame extends Task {
         TileObject buckets = TileObjects.getNearest(ObjectID.BUCKETS_40966);
         if (buckets == null) return;
 
-        buckets.interact("Take-5");
+        TileObjectPackets.tileObjectSecondOption(buckets, false);
         Time.sleepUntil(() -> Inventory.contains(ItemID.BUCKET), 100, 10000);
 
         NPC deri = NPCs.getNearest(NpcID.FIRST_MATE_DERI_10595);
         if (deri == null) return;
 
-        deri.interact("Leave");
+        NPCPackets.npcAction(deri, "Leave", false);;
         Time.sleepUntil(() -> plugin.isInDesert(), 20000);
 
         Time.sleepUntil(Dialog::canContinueNPC, 100, 30000);
-        Movement.walk(new WorldPoint(3142, 2839, 0));
+        MovementPackets.sendMovement(new WorldPoint(3142, 2839, 0));
         Time.sleep(400, 700);
     }
 }

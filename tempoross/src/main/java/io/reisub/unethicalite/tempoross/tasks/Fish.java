@@ -7,7 +7,11 @@ import dev.hoot.api.entities.Players;
 import dev.hoot.api.game.Combat;
 import dev.hoot.api.items.Equipment;
 import dev.hoot.api.items.Inventory;
-import dev.hoot.api.movement.Movement;
+import dev.hoot.api.packets.ItemPackets;
+import dev.hoot.api.packets.MovementPackets;
+import dev.hoot.api.packets.NPCPackets;
+import dev.hoot.api.packets.WidgetPackets;
+import dev.hoot.api.widgets.Widgets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -15,6 +19,7 @@ import net.runelite.api.ItemID;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.api.widgets.Widget;
 
 import javax.inject.Inject;
 
@@ -72,7 +77,7 @@ public class Fish extends Task {
                 Time.sleep(400, 600);
             }
 
-            Movement.walk(target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
+            MovementPackets.sendMovement(target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
 
             if (!Time.sleepUntil(() -> Players.getLocal().isMoving(), 1500)) {
                 return;
@@ -82,12 +87,15 @@ public class Fish extends Task {
         }
 
         if (plugin.getPhase() >= 2) {
-            Inventory.getAll(ItemID.BUCKET, ItemID.BUCKET_OF_WATER).forEach((i) -> i.interact("Drop"));
+            Inventory.getAll(ItemID.BUCKET, ItemID.BUCKET_OF_WATER).forEach((i) -> ItemPackets.itemAction(i, "Drop"));
         }
 
         if (Combat.getSpecEnergy() == 100
                 && Equipment.contains(ItemID.DRAGON_HARPOON, ItemID.DRAGON_HARPOON_OR, ItemID.INFERNAL_HARPOON, ItemID.INFERNAL_HARPOON_OR, ItemID.CRYSTAL_HARPOON)) {
-            Combat.toggleSpec();
+            Widget spec = Widgets.get(593, 36);
+            if (spec != null) {
+                WidgetPackets.widgetFirstOption(spec);
+            }
         }
 
         if (spot == null) {
@@ -96,7 +104,7 @@ public class Fish extends Task {
 
         if (spot == null) return;
 
-        spot.interact(0);
+        NPCPackets.npcFirstOption(spot, false);
         Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.FISHING, 3000);
     }
 }
