@@ -1,7 +1,10 @@
 package io.reisub.unethicalite.utils;
 
 import dev.hoot.api.commons.Rand;
+import dev.hoot.api.entities.Players;
+import dev.hoot.api.game.Game;
 import dev.hoot.api.input.Keyboard;
+import dev.hoot.api.utils.MessageUtils;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import lombok.Getter;
@@ -12,7 +15,7 @@ import net.runelite.api.events.*;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 
-import javax.inject.Inject;
+import java.awt.event.KeyEvent;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
@@ -20,17 +23,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static java.awt.event.KeyEvent.VK_LEFT;
-import static java.awt.event.KeyEvent.VK_RIGHT;
-
 @Slf4j
 public abstract class TickScript extends Plugin {
-    @Inject
-    private Client client;
-
-    @Inject
-    private Utils utils;
-
     @Getter
     private volatile boolean running;
 
@@ -109,7 +103,7 @@ public abstract class TickScript extends Plugin {
     private void onItemContainerChanged(ItemContainerChanged event) {
         if (!isRunning() || !isLoggedIn()) return;
 
-        if (event.getItemContainer() != client.getItemContainer(InventoryID.INVENTORY)) return;
+        if (event.getItemContainer() != Game.getClient().getItemContainer(InventoryID.INVENTORY)) return;
 
         if (idleCheckInventoryChange) {
             lastInventoryChange = Instant.now();
@@ -136,7 +130,7 @@ public abstract class TickScript extends Plugin {
     }
 
     public final boolean isLoggedIn() {
-        return client != null && client.getGameState() == GameState.LOGGED_IN;
+        return Game.getClient() != null && Game.getState() == GameState.LOGGED_IN;
     }
 
     public final boolean isLoggedInForLongerThan(Duration duration) {
@@ -144,15 +138,14 @@ public abstract class TickScript extends Plugin {
     }
 
     public final boolean isInRegion(int regionId) {
-        Player player = client.getLocalPlayer();
+        Player player = Players.getLocal();
 
-        return player != null
-                && player.getWorldLocation() != null
+        return player.getWorldLocation() != null
                 && player.getWorldLocation().getRegionID() == regionId;
     }
 
     public final boolean isInMapRegion(int regionId) {
-        for (int id : client.getMapRegions()) {
+        for (int id : Game.getClient().getMapRegions()) {
             if (id == regionId) {
                 return true;
             }
@@ -178,7 +171,7 @@ public abstract class TickScript extends Plugin {
     }
 
     public void start(String msg) {
-        utils.sendGameMessage(msg);
+        MessageUtils.addMessage(msg);
         start();
     }
 
@@ -188,7 +181,7 @@ public abstract class TickScript extends Plugin {
     }
 
     public void stop(String msg) {
-        utils.sendGameMessage(msg);
+        MessageUtils.addMessage(msg);
         stop();
     }
 
@@ -213,13 +206,13 @@ public abstract class TickScript extends Plugin {
     }
 
     protected void checkActionTimeout() {
-        if (currentActivity == Activity.IDLE || client.getLocalPlayer() == null) return;
+        if (currentActivity == Activity.IDLE) return;
 
         if (Duration.between(lastExperience, Instant.now()).compareTo(lastActionTimeout) < 0) return;
 
         if (Duration.between(lastInventoryChange, Instant.now()).compareTo(lastActionTimeout) < 0) return;
 
-        if (!client.getLocalPlayer().isIdle() || lastActionTime == null) {
+        if (!Players.getLocal().isIdle() || lastActionTime == null) {
             lastActionTime = Instant.now();
             return;
         }
@@ -232,10 +225,10 @@ public abstract class TickScript extends Plugin {
     }
 
     private void checkIdleLogout() {
-        int idleClientTicks = client.getKeyboardIdleTicks();
+        int idleClientTicks = Game.getClient().getKeyboardIdleTicks();
 
-        if (client.getMouseIdleTicks() < idleClientTicks) {
-            idleClientTicks = client.getMouseIdleTicks();
+        if (Game.getClient().getMouseIdleTicks() < idleClientTicks) {
+            idleClientTicks = Game.getClient().getMouseIdleTicks();
         }
 
         if (idleClientTicks > 12500) {
@@ -243,13 +236,13 @@ public abstract class TickScript extends Plugin {
             log.info("Resetting idle");
 
             if (r.nextBoolean()) {
-                Keyboard.type((char) VK_LEFT);
+                Keyboard.type((char) KeyEvent.VK_BACK_SPACE);
             } else {
-                Keyboard.type((char) VK_RIGHT);
+                Keyboard.type((char) KeyEvent.VK_BACK_SPACE);
             }
 
-            client.setKeyboardIdleTicks(0);
-            client.setMouseIdleTicks(0);
+            Game.getClient().setKeyboardIdleTicks(0);
+            Game.getClient().setMouseIdleTicks(0);
         }
     }
 
