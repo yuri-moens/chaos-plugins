@@ -2,6 +2,7 @@ package io.reisub.unethicalite.base;
 
 import com.google.inject.Provides;
 import io.reisub.unethicalite.utils.TickScript;
+import io.reisub.unethicalite.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.client.config.ConfigManager;
@@ -15,6 +16,7 @@ import javax.inject.Inject;
 		description = "",
 		enabledByDefault = false
 )
+@PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Base extends TickScript {
