@@ -1,0 +1,95 @@
+package io.reisub.unethicalite.combathelper.misc;
+
+import dev.hoot.api.commons.Rand;
+import dev.hoot.api.commons.Time;
+import dev.hoot.api.entities.Players;
+import dev.hoot.api.game.Game;
+import dev.hoot.api.items.Equipment;
+import dev.hoot.api.magic.Magic;
+import dev.hoot.api.magic.Regular;
+import dev.hoot.api.packets.ItemPackets;
+import dev.hoot.api.utils.MessageUtils;
+import io.reisub.unethicalite.combathelper.CombatHelper;
+import io.reisub.unethicalite.combathelper.Config;
+import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.Item;
+import net.runelite.api.Player;
+import net.runelite.api.Varbits;
+import net.runelite.api.events.InteractingChanged;
+import net.runelite.api.events.PlayerSpawned;
+
+import javax.inject.Inject;
+import java.awt.event.KeyEvent;
+
+@Slf4j
+public class MiscHelper {
+    @Inject
+    private CombatHelper plugin;
+
+    @Inject
+    private Config config;
+
+    private boolean pkTeleport;
+
+    public void onPlayerSpawned(PlayerSpawned event) {
+        if (!config.tpOnDangerousPlayer() || !pkTeleport || Game.getClient().getVar(Varbits.IN_WILDERNESS) == 0 || event.getPlayer() == null) return;
+
+        int wildyLevel = Game.getWildyLevel();
+        int minLevel = Players.getLocal().getCombatLevel() - wildyLevel;
+        int maxLevel = Players.getLocal().getCombatLevel() + wildyLevel;
+
+        Player enemy = event.getPlayer();
+        if (enemy.getSkullIcon() != null
+                && enemy.getCombatLevel() <= maxLevel
+                && enemy.getCombatLevel() >= minLevel
+                && wildyLevel <= 30) {
+            log.info("Dangerous player spawned: " + event.getPlayer().getName());
+            plugin.schedule(this::pkTeleport, 0);
+        }
+    }
+
+    public void onInteractingChanged(InteractingChanged event) {
+        if (!config.tpOnPlayerAttack() || !pkTeleport || Game.getClient().getVar(Varbits.IN_WILDERNESS) == 0) return;
+
+        if (event.getSource() == null || event.getTarget() == null || event.getTarget().getName() == null) return;
+
+        if (event.getSource() instanceof Player && event.getTarget() == Players.getLocal() && Game.getWildyLevel() <= 30) {
+            log.info("Player attacking us: " + event.getSource().getName());
+            plugin.schedule(this::pkTeleport, 0);
+        }
+    }
+
+    public void keyPressed(KeyEvent e) {
+        if (config.pkTeleport().matches(e)) {
+            pkTeleport = !pkTeleport;
+
+            if (pkTeleport) {
+                MessageUtils.addMessage("Enabled PK teleport");
+            } else {
+                MessageUtils.addMessage("Disabled PK teleport");
+            }
+            e.consume();
+        }
+
+        if (config.tpHotkey().matches(e)) {
+            plugin.schedule(this::teleport, Rand.nextInt(100, 150));
+            e.consume();
+        }
+    }
+
+    private void pkTeleport() {
+        pkTeleport = false;
+
+        Item amuletOfGlory = Equipment.getFirst((i) -> i.hasAction("Edgeville"));
+        if (amuletOfGlory == null) return;
+
+        ItemPackets.itemAction(amuletOfGlory, "Edgeville");
+        MessageUtils.addMessage("Tried to teleport, disabled PK teleport");
+        Time.sleep(1500, 1800);
+    }
+
+    private void teleport() {
+        Magic.cast(Regular.TELEPORT_TO_HOUSE);
+        Time.sleep(1500, 1800);
+    }
+}
