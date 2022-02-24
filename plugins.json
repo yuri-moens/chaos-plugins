@@ -1,14 +1,40 @@
 [{
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
+  "name": "Chaos Auto Dropper",
+  "description": "Serial litterer",
+  "id": "chaosautodropper-plugin",
+  "releases": [{
+    "date": "2022-02-24",
+    "sha512sum": "8D4BC84E7FAC22D03AEE254A51099AC8844C9A9493B79C5C902DD6C965D92F01890400E3C6D58D67C7F60907D2D8104E05C77148D75A0E763AA93E2DA259D566",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/autodropper-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
+  "name": "Chaos Combat Helper",
+  "description": "Various utilities to make combat easier",
+  "id": "chaoscombathelper-plugin",
+  "releases": [{
+    "date": "2022-02-24",
+    "sha512sum": "689D36E48AFB97E4FA699BD9EA3B5B3DC8F39BF11600A456188ED2E55435537E75989B5E70846D731A67E77781D616D5754A0A36F611F1A61EE48C4A5425AE8D",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
   "name": "Chaos Tempoross",
   "description": "Plays the Tempoross minigame",
   "id": "chaostempoross-plugin",
   "releases": [{
-    "date": "2022-02-23",
-    "sha512sum": "A9F79A12D684681DDA54AF3ADD6B992135C96137E539741EC6C98AB8FE7626298C3CD9BCD198C7A098C6E3BF47265C6B7D516E8B8C862FDB665086DA8C1DE1D8",
-    "version": "1.0.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.0.0.jar",
+    "date": "2022-02-24",
+    "sha512sum": "885E0F56B4F6D3E650BA9BD2780FA63186162C289B7598FA7F6386D21F39BB87B388ADACF28CB220D51E6D32CCB21455FF73631ED487EC258866A35088F36471",
+    "version": "1.1.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.1.0.jar",
     "requires": "^1.0.0"
   }]
 }, {
@@ -18,10 +44,10 @@
   "description": "Utilities for Chaos scripts",
   "id": "chaosutils-plugin",
   "releases": [{
-    "date": "2022-02-23",
-    "sha512sum": "BDE0B69575128DC25CF34D2C0D2D594A2B6A26614E096AE88F04134C855DBBFFB973ABB4E40D661B534CED91A4944815C2F6610503F3325FB1144F48E23A5597",
-    "version": "1.0.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.0.0.jar",
+    "date": "2022-02-24",
+    "sha512sum": "E70051FDC4E5E3D09C3FEDD9F779EBD18BA63C3BC1084F558B91D2370377280815900FB0C932BA8BCC9289ABA17B2192886B872BFB0780B935B6994AB5B9FCD1",
+    "version": "1.0.1",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.0.1.jar",
     "requires": "^1.0.0"
   }]
 }]
