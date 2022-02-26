@@ -8,6 +8,8 @@ import net.runelite.api.ObjectID;
 import java.util.Set;
 
 public class Constants {
+    public static final int MAKE_FIRST_ITEM_WIDGET_ID = 17694734;
+
     public static final Set<Integer> LOG_IDS = ImmutableSet.of(
             ItemID.LOGS,
             ItemID.OAK_LOGS,
