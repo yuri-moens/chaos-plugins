@@ -24,7 +24,10 @@
  */
 package io.reisub.unethicalite.autodropper;
 
-import net.runelite.client.config.*;
+import net.runelite.client.config.ConfigGroup;
+import net.runelite.client.config.ConfigItem;
+import net.runelite.client.config.ConfigSection;
+import net.runelite.client.config.Keybind;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;

@@ -8,7 +8,6 @@ import io.reisub.unethicalite.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.GameState;
 import net.runelite.api.Item;
-import net.runelite.api.events.ConfigButtonClicked;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
