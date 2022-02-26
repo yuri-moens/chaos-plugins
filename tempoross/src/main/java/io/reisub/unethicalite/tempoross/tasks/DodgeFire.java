@@ -1,17 +1,17 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
+import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.movement.Movement;
-import dev.hoot.api.packets.TileObjectPackets;
+import dev.hoot.api.packets.NPCPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
-import net.runelite.api.ObjectID;
+import net.runelite.api.NullObjectID;
 import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldArea;
 
@@ -29,10 +29,10 @@ public class DodgeFire extends Task {
 
     @Override
     public boolean validate() {
-        if (!plugin.isInTemporossArea()) return false;
+        if (!plugin.isInTemporossArea() || Players.getLocal().isMoving()) return false;
 
-        NPC fire = NPCs.getNearest((n) -> n.getId() == NpcID.FIRE_8643
-                && (plugin.getIslandArea().contains(n) || plugin.getBoatArea().contains(n)));
+        TileObject fire = TileObjects.getNearest((o) -> o.getId() == NullObjectID.NULL_41006
+                && (plugin.getIslandArea().contains(o) || plugin.getBoatArea().contains(o)));
 
          if (fire == null) {
             return false;
@@ -46,13 +46,11 @@ public class DodgeFire extends Task {
     @Override
     public void execute() {
         if (plugin.getCurrentActivity() == Activity.STOCKING_CANNON) {
-            NPC northAmmoCrate = NPCs.getNearest(NpcID.AMMUNITION_CRATE);
-            Movement.walk(northAmmoCrate.getWorldLocation().dy(-1));
+            NPC southAmmoCrate = NPCs.getNearest(NpcID.AMMUNITION_CRATE_10577);
+            NPCPackets.npcFirstOption(southAmmoCrate, false);
+            Time.sleepTicksUntil(() -> !Players.getLocal().isMoving(), 3);
         } else if (plugin.getCurrentActivity() == Activity.FISHING) {
-            TileObject shrine = TileObjects.getNearest(ObjectID.SHRINE_41236);
-            if (shrine == null) return;
-
-            TileObjectPackets.tileObjectFirstOption(shrine, false);
+            plugin.setActivity(Activity.IDLE);
         }
     }
 }

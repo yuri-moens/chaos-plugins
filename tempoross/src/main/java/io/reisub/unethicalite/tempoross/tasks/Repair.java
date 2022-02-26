@@ -41,6 +41,7 @@ public class Repair extends Task {
     @Override
     public void execute() {
         TileObjectPackets.tileObjectFirstOption(brokenObject, false);
+        if (!Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 3)) return;
         Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.REPAIRING, 15000);
     }
 }

@@ -65,38 +65,38 @@ public class Tempoross extends TickScript {
 	private static final int UNKAH_BOAT_REGION = 12332;
 
 	@Getter
-	private boolean waveIncoming;
+	private volatile boolean waveIncoming;
 
 	@Getter
-	private int phase = 1;
+	private volatile int phase = 1;
 
 	@Getter
-	private int playersReady;
+	private volatile int playersReady;
 
 	@Getter
-	private int energy;
+	private volatile int energy;
 
 	@Getter
-	private int essence;
+	private volatile int essence;
 
 	@Getter
-	private int stormIntensity;
+	private volatile int stormIntensity;
 
 	@Getter
-	private int rawFish;
+	private volatile int rawFish;
 
 	@Getter
-	private int cookedFish;
+	private volatile int cookedFish;
 
 	@Getter
-	private WorldPoint dudiPos = null;
+	private volatile WorldPoint dudiPos = null;
 
 	@Getter
-	private boolean finished;
+	private volatile boolean finished;
 
 	@Getter
 	@Setter
-	private int cookedFishRequired;
+	private volatile int cookedFishRequired;
 
 	@Override
 	protected void onStart() {
@@ -166,8 +166,6 @@ public class Tempoross extends TickScript {
 				TileObject shrine = TileObjects.getNearest(ObjectID.SHRINE_41236);
 				if (shrine != null && shrine.distanceTo(client.getLocalPlayer()) <= 3) {
 					setActivity(Activity.COOKING);
-				} else {
-					setActivity(Activity.STOCKING_CANNON);
 				}
 				break;
 			case AnimationID.CONSTRUCTION:
@@ -188,7 +186,8 @@ public class Tempoross extends TickScript {
 			if (event.getTarget() == null) {
 				if (currentActivity == Activity.FISHING
 						|| currentActivity == Activity.DOUSING_FIRE
-						|| currentActivity == Activity.ATTACKING) {
+						|| currentActivity == Activity.ATTACKING
+						|| currentActivity == Activity.STOCKING_CANNON) {
 					setActivity(Activity.IDLE);
 				}
 			} else {
@@ -201,6 +200,8 @@ public class Tempoross extends TickScript {
 						setActivity(Activity.DOUSING_FIRE);
 					} else if (name.contains("Spirit pool")) {
 						setActivity(Activity.ATTACKING);
+					} else if (name.contains("Ammunition crate")) {
+						setActivity(Activity.STOCKING_CANNON);
 					}
 				}
 			}

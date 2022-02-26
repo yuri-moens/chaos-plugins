@@ -4,6 +4,7 @@ import dev.hoot.api.commons.Rand;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.Players;
+import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.game.Combat;
 import dev.hoot.api.items.Equipment;
 import dev.hoot.api.items.Inventory;
@@ -15,13 +16,15 @@ import dev.hoot.api.widgets.Widgets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
-import net.runelite.api.ItemID;
-import net.runelite.api.NPC;
-import net.runelite.api.NpcID;
+import net.runelite.api.*;
+import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.widgets.Widget;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class Fish extends Task {
     @Inject
@@ -40,7 +43,7 @@ public class Fish extends Task {
 
         if (plugin.getPhase() >= 4) return false;
 
-        spot = NPCs.getNearest(NpcID.FISHING_SPOT_10569);
+        spot = getNearestSafeSpot(NpcID.FISHING_SPOT_10569);
 
         if (plugin.getCurrentActivity() == Activity.FISHING) {
             if (spot != null && Players.getLocal().getInteracting() != spot) {
@@ -99,12 +102,52 @@ public class Fish extends Task {
         }
 
         if (spot == null) {
-            spot = NPCs.getNearest(NpcID.FISHING_SPOT_10565);
+            spot = getNearestSafeSpot(NpcID.FISHING_SPOT_10565);
         }
 
         if (spot == null) return;
 
         NPCPackets.npcFirstOption(spot, false);
         Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.FISHING, 3000);
+    }
+
+    private NPC getNearestSafeSpot(int id) {
+        List<TileObject> fires = TileObjects.getAll((o) -> (o.getId() == NullObjectID.NULL_41006 || o.getId() == 37582)
+                && (plugin.getIslandArea().contains(o) || plugin.getBoatArea().contains(o)));
+
+        if (fires.size() == 0) {
+            return NPCs.getNearest(id);
+        } else {
+            List<WorldArea> unsafeAreas = new ArrayList<>();
+            for (TileObject fire : fires) {
+                unsafeAreas.add(new WorldArea(fire.getWorldLocation(), 2, 2));
+            }
+
+            List<NPC> spots = NPCs.getAll(id);
+            spots.sort(Comparator.comparingInt(o -> o.distanceTo(Players.getLocal())));
+
+            for (NPC spot : spots) {
+                if (isSpotSafe(spot, unsafeAreas)) {
+                    return spot;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private boolean isSpotSafe(NPC spot, List<WorldArea> unsafeAreas) {
+        WorldPoint p = spot.getWorldLocation();
+
+        for (WorldArea unsafeArea : unsafeAreas) {
+            if (
+                    unsafeArea.contains(p.dx(1))
+                    || unsafeArea.contains(p.dx(-1))
+                    || unsafeArea.contains(p.dy(1))
+                    || unsafeArea.contains(p.dy(-1))
+            ) return false;
+        }
+
+        return true;
     }
 }

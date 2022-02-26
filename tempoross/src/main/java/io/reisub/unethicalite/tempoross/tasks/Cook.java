@@ -79,7 +79,7 @@ public class Cook extends Task {
                 return;
             }
 
-            Time.sleepUntil(() -> Players.getLocal().getWorldLocation().getY() >= target.getY() - Rand.nextInt(4, 6), 10000);
+            Time.sleepUntil(() -> Players.getLocal().getWorldLocation().getY() >= target.getY() - Rand.nextInt(4, 6) || plugin.isWaveIncoming(), 10000);
         }
 
         NPC doubleSpot = NPCs.getNearest((n) -> n.getId() == NpcID.FISHING_SPOT_10569 && plugin.getIslandArea().contains(n));
@@ -88,6 +88,8 @@ public class Cook extends Task {
                 && !Inventory.isFull()
                 && !(plugin.getPhase() == 1 && plugin.getCookedFishRequired() == 19 && plugin.getRawFish() + plugin.getCookedFish() >= 19)
         ) return;
+
+        if (plugin.isWaveIncoming()) return;
 
         TileObject shrine = TileObjects.getNearest(ObjectID.SHRINE_41236);
         if (shrine == null) return;
