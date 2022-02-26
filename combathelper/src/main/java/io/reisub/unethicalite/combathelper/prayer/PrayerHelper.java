@@ -1,7 +1,6 @@
 package io.reisub.unethicalite.combathelper.prayer;
 
 import com.google.common.collect.ImmutableSet;
-import dev.hoot.api.commons.Rand;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.Players;
@@ -41,8 +40,6 @@ public class PrayerHelper {
     private static final Set<Integer> DEMONIC_PROJECTILES = ImmutableSet.of(ProjectileID.DEMONIC_GORILLA_RANGED, ProjectileID.DEMONIC_GORILLA_MAGIC, ProjectileID.DEMONIC_GORILLA_BOULDER);
     private static final int JALTOK_JAD_MAGE_ATTACK = 7592;
     private static final int JALTOK_JAD_RANGE_ATTACK = 7593;
-//    private final int HESPORI_MAGE_ATTACK = 8223;
-//    private final int HESPORI_RANGE_ATTACK = 8224;
 
     private boolean toggleFlicking;
     private boolean firstFlick;
@@ -123,12 +120,12 @@ public class PrayerHelper {
 
         if (toggleFlicking) {
             if (!Prayers.isQuickPrayerEnabled() && !firstFlick) {
-                togglePrayer(Rand.nextInt(config.onDelayMin(), config.onDelayMax()), quickPrayersWidget);
+                togglePrayer(0, quickPrayersWidget);
                 return;
             }
 
-            togglePrayer(Rand.nextInt(config.onDelayMin(), config.onDelayMax()), quickPrayersWidget);
-            togglePrayer(Rand.nextInt(config.offDelayMin(), config.offDelayMax()), quickPrayersWidget);
+            togglePrayer(0, quickPrayersWidget);
+            togglePrayer(0, quickPrayersWidget);
 
             if (firstFlick) {
                 firstFlick = false;
@@ -137,7 +134,7 @@ public class PrayerHelper {
             toggledOff = false;
 
             if (config.deactivateAfterStopping()) {
-                togglePrayer(Rand.nextInt(config.offDelayMin() + 10, config.offDelayMax() + 10), quickPrayersWidget);
+                togglePrayer(0, quickPrayersWidget);
             }
         }
     }
@@ -237,16 +234,15 @@ public class PrayerHelper {
             if (quickPrayersWidget == null) return;
 
             WidgetPackets.widgetSecondOption(quickPrayersWidget);
-            Time.sleepUntil(() -> {
-                Widget w = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4);
-                return w != null && !w.isHidden();
-            }, 1800);
+            Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4)), 3);
 
             for (QuickPrayer quickPrayer : quickPrayers) {
                 Widget prayer = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4, quickPrayer.getChildId());
-                if (prayer == null) return;
+                if (prayer == null) {
+                    return;
+                }
 
-                WidgetPackets.widgetSecondOption(prayer);
+                WidgetPackets.widgetFirstOption(prayer);
             }
 
             Widget update = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 5);
@@ -276,16 +272,13 @@ public class PrayerHelper {
             if (quickPrayersWidget == null) return;
 
             WidgetPackets.widgetSecondOption(quickPrayersWidget);
-            Time.sleepUntil(() -> {
-                Widget w = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4);
-                return w != null && !w.isHidden();
-            }, 1800);
+            Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4)), 3);
 
             for (QuickPrayer quickPrayer : quickPrayers) {
                 Widget prayer = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4, quickPrayer.getChildId());
                 if (prayer == null) return;
 
-                WidgetPackets.widgetSecondOption(prayer);
+                WidgetPackets.widgetFirstOption(prayer);
             }
 
             Widget update = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 5);

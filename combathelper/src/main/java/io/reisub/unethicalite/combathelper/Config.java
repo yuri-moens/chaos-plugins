@@ -621,59 +621,6 @@ public interface Config extends net.runelite.client.config.Config {
 	)
 	default boolean demonicGorillaFlick() { return true; }
 
-	@ConfigItem(
-			keyName = "showDebugOptions",
-			name = "Show debug options",
-			description = "Show debug options. Probably shouldn't touch these.",
-			section = "prayerConfig",
-			position = 214
-	)
-	default boolean showDebugOptions() { return false; }
-
-	@ConfigItem(
-			keyName = "onDelayMin",
-			name = "On delay minimum",
-			description = "Minimum wait time for toggling on quickprayers.",
-			hidden = true,
-			unhide = "showDebugOptions",
-			section = "prayerConfig",
-			position = 215
-	)
-	default int onDelayMin() { return 5; }
-
-	@ConfigItem(
-			keyName = "onDelayMax",
-			name = "On delay maximum",
-			description = "Maximum wait time for toggling on quickprayers.",
-			hidden = true,
-			unhide = "showDebugOptions",
-			section = "prayerConfig",
-			position = 216
-	)
-	default int onDelayMax() { return 10; }
-
-	@ConfigItem(
-			keyName = "offDelayMin",
-			name = "Off delay minimum",
-			description = "Minimum wait time for toggling off quickprayers.",
-			hidden = true,
-			unhide = "showDebugOptions",
-			section = "prayerConfig",
-			position = 217
-	)
-	default int offDelayMin() { return 70; }
-
-	@ConfigItem(
-			keyName = "offDelayMax",
-			name = "Off delay maximum",
-			description = "Maximum wait time for toggling off quickprayers.",
-			hidden = true,
-			unhide = "showDebugOptions",
-			section = "prayerConfig",
-			position = 218
-	)
-	default int offDelayMax() { return 80; }
-
 	@ConfigSection(
 			keyName = "bonesConfig",
 			name = "Bones/ashes Configuration",
