@@ -17,13 +17,22 @@
   "name": "Chaos Combat Helper",
   "description": "Various utilities to make combat easier",
   "id": "chaoscombathelper-plugin",
-  "releases": [{
-    "date": "2022-02-27",
-    "sha512sum": "41C827BE556331C244B87B3797AA242D6ECB0B362526085B2F283D5B0A0E03CE88927751CCE0F74B72B6CC6E1136C3C13C9AA20843E5FA4B1E8C33C3385D34CD",
-    "version": "1.0.1",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.0.1.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-02-27",
+      "sha512sum": "41C827BE556331C244B87B3797AA242D6ECB0B362526085B2F283D5B0A0E03CE88927751CCE0F74B72B6CC6E1136C3C13C9AA20843E5FA4B1E8C33C3385D34CD",
+      "version": "1.0.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.0.1.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-02-27",
+      "sha512sum": "512BC5A15B6D8D9ABE1C0FAB096FFA143CB5F42FE3E3687DCD5BFCC619AE915DCBBC9E1D626A2281A4C4F0A0BF04C5165073E2B8F1C32B8D1D56534EDEE946CE",
+      "version": "1.0.2",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.0.2.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",

@@ -116,7 +116,6 @@ public class ConsumeHelper {
         if (config.useSpecial()
                 && config.activationMethod() == SpecialActivation.AUTOMATIC
                 && Combat.getSpecEnergy() >= config.specialCost()
-                && Combat.isSpecEnabled()
                 && lastSpecial + 1800 < System.currentTimeMillis()) {
             shouldUseSpecial = true;
         }
