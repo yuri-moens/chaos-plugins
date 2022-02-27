@@ -1,5 +1,6 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
+import dev.hoot.api.commons.Rand;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.packets.MovementPackets;
@@ -31,9 +32,12 @@ public class EnterBoat extends Task {
     @Override
     public void execute() {
         TileObject ladder = TileObjects.getNearest(ObjectID.ROPE_LADDER_41305);
-        if (ladder == null) return;
+        if (ladder == null) {
+            return;
+        }
 
         TileObjectPackets.tileObjectFirstOption(ladder, false);
+        Time.sleepTicks(Rand.nextInt(3, 5));
         Time.sleepUntil(() -> plugin.isOnBoat() || plugin.getPlayersReady() >= 1, 10000);
 
         if (!plugin.isOnBoat() && plugin.getPlayersReady() >= 1) {
