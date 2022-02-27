@@ -23,6 +23,11 @@ import net.runelite.api.events.StatChanged;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.events.ConfigChanged;
+import net.runelite.client.plugins.itemstats.Effect;
+import net.runelite.client.plugins.itemstats.ItemStatChanges;
+import net.runelite.client.plugins.itemstats.StatChange;
+import net.runelite.client.plugins.itemstats.StatsChanges;
+import net.runelite.client.plugins.itemstats.stats.Stats;
 
 import javax.inject.Inject;
 import java.awt.event.KeyEvent;
@@ -35,8 +40,17 @@ public class ConsumeHelper {
     @Inject
     private Config config;
 
+    @Inject
+    private ItemStatChanges statChanges;
+
     private final Set<Integer> IGNORE_FOOD = Set.of(ItemID.DWARVEN_ROCK_CAKE, ItemID.DWARVEN_ROCK_CAKE_7510);
-    private final Set<Integer> DRINK_SET = Set.of(ItemID.JUG_OF_WINE, ItemID.SARADOMIN_BREW1, ItemID.SARADOMIN_BREW2, ItemID.SARADOMIN_BREW3, ItemID.SARADOMIN_BREW4, ItemID.XERICS_AID_1, ItemID.XERICS_AID_2, ItemID.XERICS_AID_3, ItemID.XERICS_AID_4, ItemID.XERICS_AID_1_20977, ItemID.XERICS_AID_2_20978, ItemID.XERICS_AID_3_20979, ItemID.XERICS_AID_4_20980, ItemID.XERICS_AID_1_20981, ItemID.XERICS_AID_2_20982, ItemID.XERICS_AID_3_20983, ItemID.XERICS_AID_4_20984, ItemID.BANDAGES);
+    private final Set<Integer> NON_EAT_FOOD_IDS = Set.of(ItemID.JUG_OF_WINE, ItemID.BANDAGES);
+    private final Set<Integer> BREW_IDS = Set.of(ItemID.SARADOMIN_BREW1, ItemID.SARADOMIN_BREW2, ItemID.SARADOMIN_BREW3, ItemID.SARADOMIN_BREW4, ItemID.XERICS_AID_1, ItemID.XERICS_AID_2, ItemID.XERICS_AID_3, ItemID.XERICS_AID_4, ItemID.XERICS_AID_1_20977, ItemID.XERICS_AID_2_20978, ItemID.XERICS_AID_3_20979, ItemID.XERICS_AID_4_20980, ItemID.XERICS_AID_1_20981, ItemID.XERICS_AID_2_20982, ItemID.XERICS_AID_3_20983, ItemID.XERICS_AID_4_20984);
+    private final Set<Integer> RESTORE_IDS = Set.of(ItemID.RESTORE_POTION1, ItemID.RESTORE_POTION2, ItemID.RESTORE_POTION3, ItemID.RESTORE_POTION4,
+            ItemID.SUPER_RESTORE1, ItemID.SUPER_RESTORE2, ItemID.SUPER_RESTORE3, ItemID.SUPER_RESTORE4, ItemID.BLIGHTED_SUPER_RESTORE1,
+            ItemID.BLIGHTED_SUPER_RESTORE2, ItemID.BLIGHTED_SUPER_RESTORE3, ItemID.BLIGHTED_SUPER_RESTORE4, ItemID.EGNIOL_POTION_1,
+            ItemID.EGNIOL_POTION_2, ItemID.EGNIOL_POTION_3, ItemID.EGNIOL_POTION_4,
+            ItemID.SANFEW_SERUM1, ItemID.SANFEW_SERUM2, ItemID.SANFEW_SERUM3, ItemID.SANFEW_SERUM4);
     private final Set<Integer> ANTI_POISON_IDS = Set.of(ItemID.ANTIPOISON1, ItemID.ANTIPOISON2, ItemID.ANTIPOISON3, ItemID.ANTIPOISON4, ItemID.SUPERANTIPOISON1, ItemID.SUPERANTIPOISON2, ItemID.SUPERANTIPOISON3, ItemID.SUPERANTIPOISON4,
             ItemID.ANTIDOTE1, ItemID.ANTIDOTE2, ItemID.ANTIDOTE3, ItemID.ANTIDOTE4, ItemID.ANTIDOTE1_5958, ItemID.ANTIDOTE2_5956, ItemID.ANTIDOTE3_5954, ItemID.ANTIDOTE4_5952,
             ItemID.ANTIVENOM1, ItemID.ANTIVENOM2, ItemID.ANTIVENOM3, ItemID.ANTIVENOM4, ItemID.ANTIVENOM4_12913, ItemID.ANTIVENOM3_12915, ItemID.ANTIVENOM2_12917, ItemID.ANTIVENOM1_12919);
@@ -81,11 +95,13 @@ public class ConsumeHelper {
     private long lastPot;
     private int timeout;
     private int eatThreshold;
+    private boolean shouldDrinkRestore;
     private int prayerThreshold;
     private boolean shouldDrinkAntiPoison;
     private long lastAntiPoison;
     private boolean shouldDrinkAntiFire;
     private long lastAntiFire;
+    private long shouldDrinkBrew;
     private boolean shouldDrinkPrayer;
     private long lastPrayer;
     private boolean shouldDrinkStrength;
@@ -214,19 +230,34 @@ public class ConsumeHelper {
         }
     }
 
+    private int getHealed(int itemId) {
+        Effect effect = statChanges.get(itemId);
+        if (effect != null) {
+            StatsChanges statsChanges = effect.calculate(Game.getClient());
+            for (StatChange statChange : statsChanges.getStatChanges()) {
+                if (statChange.getStat().getName().equals(Stats.HITPOINTS.getName())) {
+                    return statChange.getAbsolute();
+                }
+            }
+        }
+
+        return 0;
+    }
+
     private void tick() {
         int hp = Combat.getCurrentHealth();
+        int missingHp = Combat.getMissingHealth();
         boolean didAction = false;
 
         if (config.enableEating() && hp <= eatThreshold && canEat()) {
-            Item food = Inventory.getFirst((i) -> i.hasAction("Eat") && !IGNORE_FOOD.contains(i.getId()));
+            Item food = Inventory.getFirst((i) -> (i.hasAction("Eat") || NON_EAT_FOOD_IDS.contains(i.getId())) && !IGNORE_FOOD.contains(i.getId()));
             if (food != null) {
+                missingHp += getHealed(food.getId());
+
                 ItemPackets.itemFirstOption(food);
                 lastAte = Game.getClient().getTickCount();
                 didAction = true;
             }
-
-            // TODO drinks and sara brews
 
             if (!didAction && config.eatWarnings()) {
                 MessageUtils.addMessage("HP below threshold but you don't have any food!");
@@ -272,7 +303,28 @@ public class ConsumeHelper {
             lastSpecial = System.currentTimeMillis();
         }
 
-        if (shouldDrinkAntiPoison && canPot()) {
+        if (config.enableEating() && hp <= eatThreshold && canPot()) {
+            if ((lastAte == Game.getClient().getTickCount() && config.comboBrew())
+                    || (lastAte != Game.getClient().getTickCount())) {
+
+                if (drinkPotion(BREW_IDS)) {
+                    didAction = true;
+                    missingHp += getHealed(ItemID.SARADOMIN_BREW1);
+                    if (config.restoreAfterBrew()) {
+                        shouldDrinkRestore = true;
+                    }
+                }
+            }
+        }
+
+        if (shouldDrinkRestore && canPot()) {
+            if (drinkPotion(RESTORE_IDS)) {
+                didAction = true;
+            }
+
+            shouldDrinkRestore = false;
+            shouldDrinkPrayer = false;
+        } else if (shouldDrinkAntiPoison && canPot()) {
             if (drinkPotion(ANTI_POISON_IDS)) {
                 didAction = true;
             } else {
@@ -388,8 +440,8 @@ public class ConsumeHelper {
             lastEnergy = Game.getClient().getTickCount();
         }
 
-        if (config.enableEating() && hp < eatThreshold && config.comboEat()) {
-            Item karambwan = Inventory.getFirst(ItemID.COOKED_KARAMBWAN, ItemID.COOKED_KARAMBWAN_3147, ItemID.COOKED_KARAMBWAN_23533);
+        if (config.enableEating() && hp < eatThreshold && missingHp <= 18 && config.comboKarambwan()) {
+            Item karambwan = Inventory.getFirst(ItemID.COOKED_KARAMBWAN, ItemID.COOKED_KARAMBWAN_3147, ItemID.COOKED_KARAMBWAN_23533, ItemID.BLIGHTED_KARAMBWAN);
             if (karambwan != null) {
                 ItemPackets.itemFirstOption(karambwan);
                 lastAte = Game.getClient().getTickCount();
