@@ -5,7 +5,7 @@
   "description": "Serial litterer",
   "id": "chaosautodropper-plugin",
   "releases": [{
-    "date": "2022-02-26",
+    "date": "2022-02-27",
     "sha512sum": "EA19840736B997310BA53951EA57571FB3A3AC00A23FF0D3A02E4F9245FC0021D33781E675FA0162C843AAECB8551049679398EEC1C890C40D31DE97CC886A7B",
     "version": "1.0.0",
     "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/autodropper-1.0.0.jar",
@@ -18,7 +18,7 @@
   "description": "Various utilities to make combat easier",
   "id": "chaoscombathelper-plugin",
   "releases": [{
-    "date": "2022-02-26",
+    "date": "2022-02-27",
     "sha512sum": "41C827BE556331C244B87B3797AA242D6ECB0B362526085B2F283D5B0A0E03CE88927751CCE0F74B72B6CC6E1136C3C13C9AA20843E5FA4B1E8C33C3385D34CD",
     "version": "1.0.1",
     "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.0.1.jar",
@@ -31,7 +31,7 @@
   "description": "You put the lime in the coconut, you drank them both up",
   "id": "chaosherblore-plugin",
   "releases": [{
-    "date": "2022-02-26",
+    "date": "2022-02-27",
     "sha512sum": "AB3B039801E3947537F2EB3C2FE5D8015FA010F1AEA51570B872661F8E0E82D803C23EFC2D50DC3B4A7A6116575101E23FA5783DC43E8B65F369CB42E6B630F3",
     "version": "1.0.0",
     "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/herblore-1.0.0.jar",
@@ -44,10 +44,10 @@
   "description": "Plays the Tempoross minigame",
   "id": "chaostempoross-plugin",
   "releases": [{
-    "date": "2022-02-26",
-    "sha512sum": "622B24834A3532CD217C4EFFDA5DFC4A3C296BADCF0B1B8EAF5F675EBD94334EC3D09D278DFFF76762516F1B84B10B0F299584C8DD7124B154CCB6599C8D6B0F",
-    "version": "1.1.1",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.1.1.jar",
+    "date": "2022-02-27",
+    "sha512sum": "5FF44BB458D4CBBA070D2A59E0229D72C69C131AAD698030AC7259F60820B44B53149320DD66F80061345EB3CF3EAD9FEA7E12EDB6EA5D709F21FE1A845D4107",
+    "version": "1.1.2",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.1.2.jar",
     "requires": "^1.0.0"
   }]
 }, {
@@ -57,7 +57,7 @@
   "description": "Utilities for Chaos scripts",
   "id": "chaosutils-plugin",
   "releases": [{
-    "date": "2022-02-26",
+    "date": "2022-02-27",
     "sha512sum": "8AF9F8749540634C94D2D75EC218BB49159BB4EFDEE8AD59EC6CE56E75CAF2D5EFEABCD8D4CF0625971D2B97D11F92B3529BDE833A9533AFF960FF4BF0DF0B83",
     "version": "1.1.0",
     "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.1.0.jar",

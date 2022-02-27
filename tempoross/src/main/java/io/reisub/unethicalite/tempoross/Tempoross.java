@@ -2,7 +2,6 @@ package io.reisub.unethicalite.tempoross;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
-import dev.hoot.api.coords.RectangularArea;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.game.Vars;
 import dev.hoot.api.items.Inventory;
@@ -16,6 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
+import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.*;
 import net.runelite.api.util.Text;
@@ -289,21 +289,19 @@ public class Tempoross extends TickScript {
 		return isInMapRegion(TEMPOROSS_REGION) || isInRegion(TEMPOROSS_REGION);
 	}
 
-	public RectangularArea getBoatArea() {
-		return new RectangularArea(
-				dudiPos.getX() - 3,
-				dudiPos.getY() - 13,
-				dudiPos.getX() + 3,
-				dudiPos.getY() + 9
+	public WorldArea getBoatArea() {
+		return new WorldArea(
+				dudiPos.dx(-3).dy(-13),
+				7,
+				23
 		);
 	}
 
-	public RectangularArea getIslandArea() {
-		return new RectangularArea(
-				dudiPos.getX() - 3,
-				dudiPos.getY() - 1,
-				dudiPos.getX() + 16,
-				dudiPos.getY() + 27
+	public WorldArea getIslandArea() {
+		return new WorldArea(
+				dudiPos.dx(-3),
+				20,
+				30
 		);
 	}
 

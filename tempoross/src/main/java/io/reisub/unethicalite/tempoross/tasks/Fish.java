@@ -16,6 +16,7 @@ import dev.hoot.api.widgets.Widgets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Slf4j
 public class Fish extends Task {
     @Inject
     private Tempoross plugin;
@@ -105,7 +107,10 @@ public class Fish extends Task {
             spot = getNearestSafeSpot(NpcID.FISHING_SPOT_10565);
         }
 
-        if (spot == null) return;
+        if (spot == null) {
+            log.info("no fishing spot found");
+            return;
+        }
 
         NPCPackets.npcFirstOption(spot, false);
         Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.FISHING, 3000);

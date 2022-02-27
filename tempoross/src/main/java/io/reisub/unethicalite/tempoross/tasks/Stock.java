@@ -108,7 +108,7 @@ public class Stock extends Task {
                 && (plugin.getIslandArea().contains(n) || plugin.getBoatArea().contains(n)));
         if (fire != null) return;
 
-        NPC crate = null;
+        NPC crate;
 
         if (plugin.getPhase() >= 4 && plugin.getCurrentActivity() == Activity.STOCKING_CANNON) {
             plugin.setActivity(Activity.IDLE);
@@ -125,6 +125,6 @@ public class Stock extends Task {
 
         NPCPackets.npcFirstOption(crate, false);
 
-        Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.STOCKING_CANNON, 20000);
+        Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.STOCKING_CANNON, 3);
     }
 }

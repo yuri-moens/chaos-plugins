@@ -4,11 +4,11 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.Game;
 import dev.hoot.api.packets.NPCPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 import net.runelite.api.NullObjectID;
@@ -17,10 +17,11 @@ import net.runelite.api.coords.WorldArea;
 
 import javax.inject.Inject;
 
-@Slf4j
 public class DodgeFire extends Task {
     @Inject
     private Tempoross plugin;
+
+    private int last;
 
     @Override
     public String getStatus() {
@@ -29,7 +30,7 @@ public class DodgeFire extends Task {
 
     @Override
     public boolean validate() {
-        if (!plugin.isInTemporossArea() || Players.getLocal().isMoving()) return false;
+        if (!plugin.isInTemporossArea() || Players.getLocal().isMoving() || Game.getClient().getTickCount() <= last + 3) return false;
 
         TileObject fire = TileObjects.getNearest((o) -> o.getId() == NullObjectID.NULL_41006
                 && (plugin.getIslandArea().contains(o) || plugin.getBoatArea().contains(o)));
@@ -45,12 +46,15 @@ public class DodgeFire extends Task {
 
     @Override
     public void execute() {
-        if (plugin.getCurrentActivity() == Activity.STOCKING_CANNON) {
+        if (plugin.getBoatArea().contains(Players.getLocal())) {
             NPC southAmmoCrate = NPCs.getNearest(NpcID.AMMUNITION_CRATE_10577);
             NPCPackets.npcFirstOption(southAmmoCrate, false);
-            Time.sleepTicksUntil(() -> !Players.getLocal().isMoving(), 3);
-        } else if (plugin.getCurrentActivity() == Activity.FISHING) {
+            Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 3);
+            Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.STOCKING_CANNON, 3);
+        } else {
             plugin.setActivity(Activity.IDLE);
         }
+
+        last = Game.getClient().getTickCount();
     }
 }
