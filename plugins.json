@@ -4,13 +4,22 @@
   "name": "Chaos Auto Dropper",
   "description": "Serial litterer",
   "id": "chaosautodropper-plugin",
-  "releases": [{
-    "date": "2022-02-27",
-    "sha512sum": "EA19840736B997310BA53951EA57571FB3A3AC00A23FF0D3A02E4F9245FC0021D33781E675FA0162C843AAECB8551049679398EEC1C890C40D31DE97CC886A7B",
-    "version": "1.0.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/autodropper-1.0.0.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-02-27",
+      "sha512sum": "EA19840736B997310BA53951EA57571FB3A3AC00A23FF0D3A02E4F9245FC0021D33781E675FA0162C843AAECB8551049679398EEC1C890C40D31DE97CC886A7B",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/autodropper-1.0.0.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-02-27",
+      "sha512sum": "414D94A995A32C6FDC2DF936CA2D0C647904655DB4CB2A6641A52847EF1A2225DA03C3D110E0ABCAE9E3A4E37705BF52155FFB04E686F87DC1D5F6B3280C1FAD",
+      "version": "1.0.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/autodropper-1.0.1.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
@@ -59,13 +68,22 @@
   "name": "Chaos Tempoross",
   "description": "Plays the Tempoross minigame",
   "id": "chaostempoross-plugin",
-  "releases": [{
-    "date": "2022-02-27",
-    "sha512sum": "5FF44BB458D4CBBA070D2A59E0229D72C69C131AAD698030AC7259F60820B44B53149320DD66F80061345EB3CF3EAD9FEA7E12EDB6EA5D709F21FE1A845D4107",
-    "version": "1.1.2",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.1.2.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-02-27",
+      "sha512sum": "5FF44BB458D4CBBA070D2A59E0229D72C69C131AAD698030AC7259F60820B44B53149320DD66F80061345EB3CF3EAD9FEA7E12EDB6EA5D709F21FE1A845D4107",
+      "version": "1.1.2",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.1.2.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-02-27",
+      "sha512sum": "7EF904237994A9145B2D93EB2782C1EC017558477CBAA4B5C33A79FF33EAD73B978586E353BDED045963C6BBED0901E9F2BC3735A44CB6BADD763A21BF4A7840",
+      "version": "1.2.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.2.0.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
