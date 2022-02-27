@@ -4,14 +4,12 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Inventory;
-import dev.hoot.api.packets.MovementPackets;
 import dev.hoot.api.packets.NPCPackets;
 import dev.hoot.api.packets.TileObjectPackets;
 import dev.hoot.api.widgets.Dialog;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.*;
-import net.runelite.api.coords.WorldPoint;
 
 import javax.inject.Inject;
 
@@ -44,7 +42,5 @@ public class LeaveGame extends Task {
         Time.sleepUntil(() -> plugin.isInDesert(), 20000);
 
         Time.sleepUntil(Dialog::canContinueNPC, 100, 30000);
-        MovementPackets.sendMovement(new WorldPoint(3142, 2839, 0));
-        Time.sleep(400, 700);
     }
 }

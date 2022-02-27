@@ -106,6 +106,7 @@ public class Tempoross extends TickScript {
 
 		tasks.add(new Run());
 
+		addTask(HandleBank.class);
 		addTask(DodgeFire.class);
 		addTask(LeaveGame.class);
 		addTask(EnterBoat.class);
