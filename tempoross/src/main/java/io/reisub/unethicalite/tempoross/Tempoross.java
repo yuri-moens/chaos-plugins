@@ -54,6 +54,7 @@ public class Tempoross extends TickScript {
 	}
 
 	private static final String WAVE_INCOMING_MESSAGE = "a colossal wave closes in...";
+	private static final String WAVE_FAILED_MESSAGE = "the wave slams into you";
 	private static final String TETHER_MESSAGE = "you securely tether yourself";
 	private static final String UNTETHER_MESSAGE = "you untether yourself";
 	private static final String TEMPOROSS_VULNERABLE_MESSAGE = "tempoross is vulnerable";
@@ -146,7 +147,7 @@ public class Tempoross extends TickScript {
 			waveIncoming = true;
 		} else if (message.contains(TETHER_MESSAGE)) {
 			setActivity(Activity.TETHERING_MAST);
-		} else if (message.contains(UNTETHER_MESSAGE)) {
+		} else if (message.contains(UNTETHER_MESSAGE) || message.contains(WAVE_FAILED_MESSAGE)) {
 			waveIncoming = false;
 			setActivity(Activity.IDLE);
 		} else if (message.contains(TEMPOROSS_VULNERABLE_MESSAGE)) {
