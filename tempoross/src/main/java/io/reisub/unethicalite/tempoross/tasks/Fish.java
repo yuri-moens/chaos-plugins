@@ -86,7 +86,7 @@ public class Fish extends Task {
                 return;
             }
 
-            Time.sleepUntil(() -> Players.getLocal().getWorldLocation().getY() >= target.getY() - Rand.nextInt(4, 6), 15000);
+            Time.sleepUntil(() -> Players.getLocal().getWorldLocation().getY() >= target.getY() - Rand.nextInt(4, 6) || plugin.isWaveIncoming(), 15000);
         }
 
         if (plugin.getPhase() >= 2) {
@@ -110,6 +110,7 @@ public class Fish extends Task {
         }
 
         NPCPackets.npcFirstOption(spot, false);
+        Time.sleepTick();
         Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.FISHING, 3000);
     }
 
@@ -125,7 +126,7 @@ public class Fish extends Task {
                 unsafeAreas.add(new WorldArea(fire.getWorldLocation(), 2, 2));
             }
 
-            List<NPC> spots = NPCs.getAll(id);
+            List<NPC> spots = NPCs.getAll((n) -> n.getId() == id && plugin.getIslandArea().contains(n));
             spots.sort(Comparator.comparingInt(o -> o.distanceTo(Players.getLocal())));
 
             for (NPC spot : spots) {
