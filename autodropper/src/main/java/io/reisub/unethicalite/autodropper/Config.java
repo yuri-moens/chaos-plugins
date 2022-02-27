@@ -81,6 +81,7 @@ public interface Config extends net.runelite.client.config.Config {
             keyName = "seedsConfig",
             name = "Seeds configuration",
             description = "Seeds configuration",
+            hidden = true,
             position = 70
     )
     String seedsConfig = "seedsConfig";
@@ -89,6 +90,7 @@ public interface Config extends net.runelite.client.config.Config {
             keyName = "seedNames",
             name = "Seed names",
             description = "List of seeds to drop. This works the same as regular items but is an extra field to not clog the regular one.",
+            section = "seedsConfig",
             position = 71
     )
     default String seedNames() { return "Potato seed; Onion seed; Cabbage seed; Tomato seed; Sweetcorn seed; Marigold seed; Rosemary seed; Nasturtium seed; Woad seed; Redberry seed; Cadavaberry seed; Dwellberry seed; Acorn; Apple tree seed; Banana tree seed"; }

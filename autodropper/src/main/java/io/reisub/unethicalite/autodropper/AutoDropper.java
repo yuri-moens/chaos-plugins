@@ -1,12 +1,14 @@
 package io.reisub.unethicalite.autodropper;
 
 import com.google.inject.Provides;
+import dev.hoot.api.commons.Rand;
 import dev.hoot.api.game.Game;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.packets.ItemPackets;
 import io.reisub.unethicalite.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.GameState;
+import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.client.config.ConfigManager;
@@ -21,6 +23,7 @@ import org.pf4j.Extension;
 
 import javax.inject.Inject;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Executors;
@@ -72,7 +75,7 @@ public class AutoDropper extends Plugin implements KeyListener {
 
 	@Subscribe
 	private void onItemContainerChanged(ItemContainerChanged event) {
-		if (Game.getState() != GameState.LOGGED_IN || config.dropMethod() == DropMethod.NONE) return;
+		if (Game.getState() != GameState.LOGGED_IN || config.dropMethod() == DropMethod.NONE || event.getContainerId() != InventoryID.INVENTORY.getId()) return;
 
 		if (config.dropMethod() == DropMethod.ON_ADD) {
 			drop();
@@ -136,13 +139,11 @@ public class AutoDropper extends Plugin implements KeyListener {
 	public void keyReleased(KeyEvent e) {}
 
 	private void drop() {
-		executor.schedule(() -> {
-			List<Item> items = Inventory.getAll(itemNames);
-			items.addAll(Inventory.getAll(itemIds));
+		List<Item> items = Inventory.getAll(itemNames);
+		items.addAll(Inventory.getAll(itemIds));
 
-			for (Item item : items) {
-				ItemPackets.itemAction(item, "Drop");
-			}
-		}, 0, TimeUnit.MILLISECONDS);
+		for (Item item : items) {
+			ItemPackets.itemAction(item, "Drop");
+		}
 	}
 }
