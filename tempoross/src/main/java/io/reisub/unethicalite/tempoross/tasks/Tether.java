@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
-import dev.hoot.api.commons.Rand;
 import dev.hoot.api.commons.Time;
+import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.packets.TileObjectPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
@@ -32,12 +32,13 @@ public class Tether extends Task {
 
     @Override
     public void execute() {
-        if (plugin.getCurrentActivity() != Activity.IDLE && plugin.getPreviousActivity() != Activity.REPAIRING) {
-            Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, Rand.nextInt(2200, 2500));
-        }
-
         TileObject tetherObject = TileObjects.getNearest(NullObjectID.NULL_41352, NullObjectID.NULL_41353, NullObjectID.NULL_41354, NullObjectID.NULL_41355);
         if (tetherObject == null) return;
+
+        if (plugin.getCurrentActivity() != Activity.IDLE && plugin.getPreviousActivity() != Activity.REPAIRING) {
+            int waitTicks = 10 - (Players.getLocal().distanceTo(tetherObject) / 2);
+            Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, waitTicks);
+        }
 
         TileObjectPackets.tileObjectFirstOption(tetherObject, false);
 
