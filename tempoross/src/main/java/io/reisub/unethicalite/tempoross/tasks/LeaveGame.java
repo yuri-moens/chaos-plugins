@@ -2,6 +2,7 @@ package io.reisub.unethicalite.tempoross.tasks;
 
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
+import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.packets.NPCPackets;
@@ -24,11 +25,23 @@ public class LeaveGame extends Task {
 
     @Override
     public boolean validate() {
+        NPC pudi = NPCs.getNearest(NpcID.CAPTAIN_PUDI_10585, NpcID.CAPTAIN_PUDI_10586);
+
+        if (pudi != null && Players.getLocal().distanceTo(pudi) < 5) {
+            return true;
+        }
+
         return plugin.isFinished();
     }
 
     @Override
     public void execute() {
+        if (!plugin.isFinished()) {
+            NPC pudi = NPCs.getNearest(NpcID.CAPTAIN_PUDI_10585, NpcID.CAPTAIN_PUDI_10586);
+            NPCPackets.npcAction(pudi, "Forfeit", false);
+            Time.sleepUntil(() -> plugin.isInDesert(), 20000);
+        }
+
         TileObject buckets = TileObjects.getNearest(ObjectID.BUCKETS_40966);
         if (buckets == null) return;
 

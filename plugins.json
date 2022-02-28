@@ -89,6 +89,13 @@
       "version": "1.2.1",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.2.1.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-02-28",
+      "sha512sum": "464CA068AF3E11E05ABCCAE6030BA0DB4474D5855AB099DCC3DA33E55ECD3495121DDE4786BC0EA7D5D34538596265F5174F3DA8B1DB7B44E8A1DA3B855E0881",
+      "version": "1.2.2",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.2.2.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
