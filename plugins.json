@@ -65,6 +65,19 @@
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
+  "name": "Chaos Smithing",
+  "description": "I shall make weapons from your bones!",
+  "id": "chaossmithing-plugin",
+  "releases": [{
+    "date": "2022-03-02",
+    "sha512sum": "ED79924A973A3EBF98959EF270683DF46279396065EDC52B858081FA41DC219A56B0074E8561997B3435B63A6D07953691ECD4B870CBC4C826C6B8576B88974B",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/smithing-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
   "name": "Chaos Tempoross",
   "description": "Plays the Tempoross minigame",
   "id": "chaostempoross-plugin",
@@ -117,6 +130,13 @@
       "sha512sum": "092934C35CF6CC81E471F5A4C4635E7ACC72D6C1FF861C6E521A277C022403DEE124913AAD67C57CDE0A6C50F91025D9D5230D934095591C7F82D884D2E669CF",
       "version": "1.1.1",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.1.1.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-02",
+      "sha512sum": "17590B8C078EC0FF79627CA46479EFDA4915786A2FC84F42ABF4272B5134F3815F7A739956D61A468262117BBF86DED4ECEECC7D71FEC1046D31AEB659534A09",
+      "version": "1.1.2",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.1.2.jar",
       "requires": "^1.0.0"
     }
   ]
