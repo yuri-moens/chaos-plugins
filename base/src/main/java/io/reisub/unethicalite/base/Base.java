@@ -4,7 +4,6 @@ import com.google.inject.Provides;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.Client;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -23,9 +22,6 @@ import javax.inject.Inject;
 public class Base extends TickScript {
 	@Inject
 	private Config config;
-
-	@Inject
-	private Client client;
 
 	@Provides
 	public Config getConfig(ConfigManager configManager)
