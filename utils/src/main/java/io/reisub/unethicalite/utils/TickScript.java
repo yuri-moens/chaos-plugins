@@ -232,14 +232,9 @@ public abstract class TickScript extends Plugin {
         }
 
         if (idleClientTicks > 12500) {
-            Random r = new Random();
             log.info("Resetting idle");
 
-            if (r.nextBoolean()) {
-                Keyboard.type((char) KeyEvent.VK_BACK_SPACE);
-            } else {
-                Keyboard.type((char) KeyEvent.VK_BACK_SPACE);
-            }
+            Keyboard.type((char) KeyEvent.VK_BACK_SPACE);
 
             Game.getClient().setKeyboardIdleTicks(0);
             Game.getClient().setMouseIdleTicks(0);

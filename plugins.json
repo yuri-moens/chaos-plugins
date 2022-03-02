@@ -104,11 +104,20 @@
   "name": "Chaos Utils",
   "description": "Utilities for Chaos scripts",
   "id": "chaosutils-plugin",
-  "releases": [{
-    "date": "2022-02-27",
-    "sha512sum": "8AF9F8749540634C94D2D75EC218BB49159BB4EFDEE8AD59EC6CE56E75CAF2D5EFEABCD8D4CF0625971D2B97D11F92B3529BDE833A9533AFF960FF4BF0DF0B83",
-    "version": "1.1.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.1.0.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-02-27",
+      "sha512sum": "8AF9F8749540634C94D2D75EC218BB49159BB4EFDEE8AD59EC6CE56E75CAF2D5EFEABCD8D4CF0625971D2B97D11F92B3529BDE833A9533AFF960FF4BF0DF0B83",
+      "version": "1.1.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.1.0.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-02",
+      "sha512sum": "092934C35CF6CC81E471F5A4C4635E7ACC72D6C1FF861C6E521A277C022403DEE124913AAD67C57CDE0A6C50F91025D9D5230D934095591C7F82D884D2E669CF",
+      "version": "1.1.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.1.1.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }]
