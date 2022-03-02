@@ -23,8 +23,8 @@ import javax.inject.Inject;
 import java.time.Duration;
 
 @PluginDescriptor(
-		name = "Chaos Base",
-		description = "",
+		name = "Chaos Smithing",
+		description = "I shall make weapons from your bones!",
 		enabledByDefault = false
 )
 @PluginDependency(Utils.class)
