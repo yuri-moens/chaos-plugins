@@ -111,4 +111,27 @@ public class Constants {
             ItemID.PURE_ESSENCE,
             ItemID.DAEYALT_ESSENCE
     );
+
+    public static final Set<Integer> ANVIL_IDS = ImmutableSet.of(
+            ObjectID.ANVIL,
+            ObjectID.ANVIL_2097,
+            ObjectID.AN_EXPERIMENTAL_ANVIL,
+            ObjectID.ANVIL_4306,
+            ObjectID.ANVIL_6150,
+            ObjectID.ANVIL_22725,
+            ObjectID.BARBARIAN_ANVIL,
+            ObjectID.ANVIL_28563,
+            ObjectID.ORNAMENTAL_ANVIL,
+            ObjectID.ORNAMENTAL_ANVIL_29310,
+            ObjectID.GIANT_ANVIL,
+            ObjectID.ANVIL_31623,
+            ObjectID.ANVIL_32215,
+            ObjectID.ANVIL_32216,
+            ObjectID.ANVIL_39242,
+            ObjectID.RUSTED_ANVIL,
+            ObjectID.GIANT_ANVIL_39724,
+            ObjectID.ANVIL_40725,
+            ObjectID.ANVIL_42825,
+            ObjectID.ANVIL_42860
+    );
 }
