@@ -216,11 +216,11 @@ public abstract class BankTask extends Task {
             } else {
                 NPCPackets.npcFirstOption(bankNpc, false);
             }
+        }
 
-            if (!Time.sleepTicksUntil(Bank::isOpen, waitTicks)) {
-                bankObject = null;
-                bankNpc = null;
-            }
+        if (!Time.sleepTicksUntil(Bank::isOpen, waitTicks)) {
+            bankObject = null;
+            bankNpc = null;
         }
 
         return Bank.isOpen();
