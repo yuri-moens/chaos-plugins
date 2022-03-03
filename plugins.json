@@ -61,6 +61,13 @@
       "version": "1.1.1",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.1.1.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-03",
+      "sha512sum": "EDB89639B2F5D31DF2AD7BA1A96738E53DDBFB954729D58600C31FE50062D2E041F21856CF6341DF5E5C678C3013436AB9E3E8D97B2DA23C3C3EF5068ADC850F",
+      "version": "1.1.2",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.1.2.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -147,6 +154,13 @@
       "sha512sum": "2FE90F4B8448C214A4360AAF78BCEEFEF6E930A4A9ADD6213E57F487BBC7E7785653DE920941A2E80E694EF6032D3E917D380D88467B304FBFB1ACDCDB5C6BCF",
       "version": "1.2.3",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.2.3.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-03",
+      "sha512sum": "72013C49EE30512FAEB12D760AF6B95007B65CBF9CEF78388377768D09E73EDC7B7EB34153443031FAE103359438E0A83D6E2C006D612C17CAE8180B23847D23",
+      "version": "1.2.4",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.2.4.jar",
       "requires": "^1.0.0"
     }
   ]

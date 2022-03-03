@@ -291,10 +291,7 @@ public class ConsumeHelper {
             }
 
             if (Vars.getBit(Varbits.PVP_SPEC_ORB.getId()) == 0 && shouldUseSpecial) {
-                Widget spec = Widgets.get(593, 36);
-                if (spec != null) {
-                    spec.interact(0);
-                }
+                Combat.toggleSpec();
             }
 
             shouldUseSpecial = false;

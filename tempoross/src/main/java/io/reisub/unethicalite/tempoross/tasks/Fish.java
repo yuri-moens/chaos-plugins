@@ -92,10 +92,7 @@ public class Fish extends Task {
 
         if (Combat.getSpecEnergy() == 100
                 && Equipment.contains(ItemID.DRAGON_HARPOON, ItemID.DRAGON_HARPOON_OR, ItemID.INFERNAL_HARPOON, ItemID.INFERNAL_HARPOON_OR, ItemID.CRYSTAL_HARPOON)) {
-            Widget spec = Widgets.get(160, 31);
-            if (spec != null) {
-                spec.interact(0);
-            }
+            Combat.toggleSpec();
         }
 
         if (spot == null) {
