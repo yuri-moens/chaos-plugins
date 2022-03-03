@@ -5,7 +5,6 @@ import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.game.Game;
-import dev.hoot.api.packets.NPCPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -48,7 +47,7 @@ public class DodgeFire extends Task {
     public void execute() {
         if (plugin.getBoatArea().contains(Players.getLocal())) {
             NPC southAmmoCrate = NPCs.getNearest(NpcID.AMMUNITION_CRATE_10577);
-            NPCPackets.npcFirstOption(southAmmoCrate, false);
+            southAmmoCrate.interact(0);
             Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 3);
             Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.STOCKING_CANNON, 3);
         } else {

@@ -7,7 +7,6 @@ import dev.hoot.api.game.Game;
 import dev.hoot.api.items.Equipment;
 import dev.hoot.api.magic.Magic;
 import dev.hoot.api.magic.Regular;
-import dev.hoot.api.packets.ItemPackets;
 import dev.hoot.api.utils.MessageUtils;
 import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.combathelper.Config;
@@ -83,7 +82,7 @@ public class MiscHelper {
         Item amuletOfGlory = Equipment.getFirst((i) -> i.hasAction("Edgeville"));
         if (amuletOfGlory == null) return;
 
-        ItemPackets.itemAction(amuletOfGlory, "Edgeville");
+        amuletOfGlory.interact("Edgeville");
         MessageUtils.addMessage("Tried to teleport, disabled PK teleport");
         Time.sleep(1500, 1800);
     }

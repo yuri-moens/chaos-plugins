@@ -7,7 +7,6 @@ import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.packets.MovementPackets;
-import dev.hoot.api.packets.NPCPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -123,7 +122,7 @@ public class Stock extends Task {
 
         if (crate == null) return;
 
-        NPCPackets.npcFirstOption(crate, false);
+        crate.interact(0);
 
         Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.STOCKING_CANNON, 3);
     }

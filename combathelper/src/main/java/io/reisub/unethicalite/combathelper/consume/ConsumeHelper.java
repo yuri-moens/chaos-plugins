@@ -9,8 +9,6 @@ import dev.hoot.api.items.Bank;
 import dev.hoot.api.items.Equipment;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.movement.Movement;
-import dev.hoot.api.packets.ItemPackets;
-import dev.hoot.api.packets.WidgetPackets;
 import dev.hoot.api.utils.MessageUtils;
 import dev.hoot.api.widgets.Dialog;
 import dev.hoot.api.widgets.Widgets;
@@ -254,7 +252,7 @@ public class ConsumeHelper {
             if (food != null) {
                 missingHp += getHealed(food.getId());
 
-                ItemPackets.itemFirstOption(food);
+                food.interact(0);
                 lastAte = Game.getClient().getTickCount();
                 didAction = true;
             }
@@ -267,7 +265,7 @@ public class ConsumeHelper {
         if (shouldSwapBack) {
             Item weapon = Inventory.getFirst(originalWeaponId);
             if (weapon != null) {
-                ItemPackets.itemAction(weapon, "Wield");
+                weapon.interact("Wield");
                 didAction = true;
                 shouldSwapBack = false;
                 originalWeaponId = 0;
@@ -283,7 +281,7 @@ public class ConsumeHelper {
 
                 Item weapon = Inventory.getFirst(config.specialWeapon());
                 if (weapon != null) {
-                    ItemPackets.itemAction(weapon, "Wield");
+                    weapon.interact("Wield");
                     didAction = true;
                 }
             }
@@ -295,7 +293,7 @@ public class ConsumeHelper {
             if (Vars.getBit(Varbits.PVP_SPEC_ORB.getId()) == 0 && shouldUseSpecial) {
                 Widget spec = Widgets.get(593, 36);
                 if (spec != null) {
-                    WidgetPackets.widgetFirstOption(spec);
+                    spec.interact(0);
                 }
             }
 
@@ -443,7 +441,7 @@ public class ConsumeHelper {
         if (config.enableEating() && hp < eatThreshold && missingHp <= 18 && config.comboKarambwan()) {
             Item karambwan = Inventory.getFirst(ItemID.COOKED_KARAMBWAN, ItemID.COOKED_KARAMBWAN_3147, ItemID.COOKED_KARAMBWAN_23533, ItemID.BLIGHTED_KARAMBWAN);
             if (karambwan != null) {
-                ItemPackets.itemFirstOption(karambwan);
+                karambwan.interact(0);
                 lastAte = Game.getClient().getTickCount();
                 didAction = true;
             }
@@ -519,7 +517,7 @@ public class ConsumeHelper {
             return false;
         }
 
-        ItemPackets.itemFirstOption(potion);
+        potion.interact(0);
         lastPot = Game.getClient().getTickCount();
         return true;
     }

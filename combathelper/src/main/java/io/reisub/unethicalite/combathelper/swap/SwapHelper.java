@@ -6,7 +6,6 @@ import dev.hoot.api.game.Skills;
 import dev.hoot.api.game.Vars;
 import dev.hoot.api.items.Equipment;
 import dev.hoot.api.items.Inventory;
-import dev.hoot.api.packets.ItemPackets;
 import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.combathelper.Config;
 import io.reisub.unethicalite.combathelper.prayer.PrayerHelper;
@@ -153,9 +152,9 @@ public class SwapHelper {
             if (!items.isEmpty()) {
                 for (Item item : items) {
                     if (item.hasAction("Wield")) {
-                        ItemPackets.itemAction(item, "Wield");
+                        item.interact("Wield");
                     } else {
-                        ItemPackets.itemAction(item, "Wear");
+                        item.interact("Wear");
                     }
                 }
 
@@ -215,9 +214,9 @@ public class SwapHelper {
             if (!items.isEmpty()) {
                 for (Item item : items) {
                     if (item.hasAction("Wield")) {
-                        ItemPackets.itemAction(item, "Wield");
+                        item.interact("Wield");
                     } else {
-                        ItemPackets.itemAction(item, "Wear");
+                        item.interact("Wear");
                     }
                 }
 

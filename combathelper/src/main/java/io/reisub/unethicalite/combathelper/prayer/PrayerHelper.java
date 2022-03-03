@@ -211,7 +211,7 @@ public class PrayerHelper {
     }
 
     private void togglePrayer(int delay, Widget widget) {
-        plugin.schedule(() -> WidgetPackets.widgetFirstOption(widget), delay);
+        plugin.schedule(() -> widget.interact(0), delay);
     }
 
     public void setPrayer(boolean allowToggleOff, Set<QuickPrayer> quickPrayers) {
@@ -233,7 +233,7 @@ public class PrayerHelper {
             Widget quickPrayersWidget = Widgets.get(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB);
             if (quickPrayersWidget == null) return;
 
-            WidgetPackets.widgetSecondOption(quickPrayersWidget);
+            quickPrayersWidget.interact(1);
             Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4)), 3);
 
             for (QuickPrayer quickPrayer : quickPrayers) {
@@ -242,13 +242,13 @@ public class PrayerHelper {
                     return;
                 }
 
-                WidgetPackets.widgetFirstOption(prayer);
+                prayer.interact(0);
             }
 
             Widget update = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 5);
             if (update == null) return;
 
-            WidgetPackets.widgetFirstOption(update);
+            update.interact(0);
 
             if (config.openInventory()) {
                 Tabs.openInterface(Tab.INVENTORY);
@@ -271,20 +271,20 @@ public class PrayerHelper {
             Widget quickPrayersWidget = Widgets.get(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB);
             if (quickPrayersWidget == null) return;
 
-            WidgetPackets.widgetSecondOption(quickPrayersWidget);
+            quickPrayersWidget.interact(1);
             Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4)), 3);
 
             for (QuickPrayer quickPrayer : quickPrayers) {
                 Widget prayer = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4, quickPrayer.getChildId());
                 if (prayer == null) return;
 
-                WidgetPackets.widgetFirstOption(prayer);
+                prayer.interact(0);
             }
 
             Widget update = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 5);
             if (update == null) return;
 
-            WidgetPackets.widgetFirstOption(update);
+            update.interact(0);
 
             if (config.openInventory()) {
                 Tabs.openInterface(Tab.INVENTORY);

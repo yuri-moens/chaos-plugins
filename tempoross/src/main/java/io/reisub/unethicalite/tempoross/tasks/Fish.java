@@ -8,10 +8,7 @@ import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.game.Combat;
 import dev.hoot.api.items.Equipment;
 import dev.hoot.api.items.Inventory;
-import dev.hoot.api.packets.ItemPackets;
 import dev.hoot.api.packets.MovementPackets;
-import dev.hoot.api.packets.NPCPackets;
-import dev.hoot.api.packets.WidgetPackets;
 import dev.hoot.api.widgets.Widgets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -90,14 +87,14 @@ public class Fish extends Task {
         }
 
         if (plugin.getPhase() >= 2) {
-            Inventory.getAll(ItemID.BUCKET, ItemID.BUCKET_OF_WATER).forEach((i) -> ItemPackets.itemAction(i, "Drop"));
+            Inventory.getAll(ItemID.BUCKET, ItemID.BUCKET_OF_WATER).forEach((i) -> i.interact("Drop"));
         }
 
         if (Combat.getSpecEnergy() == 100
                 && Equipment.contains(ItemID.DRAGON_HARPOON, ItemID.DRAGON_HARPOON_OR, ItemID.INFERNAL_HARPOON, ItemID.INFERNAL_HARPOON_OR, ItemID.CRYSTAL_HARPOON)) {
-            Widget spec = Widgets.get(593, 36);
+            Widget spec = Widgets.get(160, 31);
             if (spec != null) {
-                WidgetPackets.widgetFirstOption(spec);
+                spec.interact(0);
             }
         }
 
@@ -109,7 +106,7 @@ public class Fish extends Task {
             return;
         }
 
-        NPCPackets.npcFirstOption(spot, false);
+        spot.interact(0);
         Time.sleepTick();
         Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.FISHING, 3000);
     }

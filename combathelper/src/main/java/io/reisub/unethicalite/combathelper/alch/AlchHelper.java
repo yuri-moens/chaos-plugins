@@ -5,8 +5,8 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.game.Game;
 import dev.hoot.api.items.Equipment;
 import dev.hoot.api.items.Inventory;
+import dev.hoot.api.magic.Magic;
 import dev.hoot.api.magic.Regular;
-import dev.hoot.api.packets.ItemPackets;
 import dev.hoot.api.utils.MessageUtils;
 import dev.hoot.api.widgets.Tab;
 import dev.hoot.api.widgets.Tabs;
@@ -109,7 +109,7 @@ public class AlchHelper {
         Item item = Inventory.getFirst(itemPredicate);
         if (item == null) return;
 
-        ItemPackets.queueSpellOnItemPacket(item.getId(), item.getSlot(), Regular.HIGH_LEVEL_ALCHEMY.getWidget().getId());
+        Magic.cast(Regular.HIGH_LEVEL_ALCHEMY, item);
         last = Game.getClient().getTickCount();
 
         Time.sleepTicks(3);

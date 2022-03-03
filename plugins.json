@@ -18,6 +18,13 @@
       "version": "1.0.1",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/autodropper-1.0.1.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-03",
+      "sha512sum": "8A5D3392D8DEA79915E2C15FA05E742A5A35E70FD17360295DFAB33A982DF8641EE1199FC18BEF8C6D65409CE86A96BD221E3B6B691C0020576ADD86C33D5471",
+      "version": "1.0.2",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/autodropper-1.0.2.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -47,6 +54,13 @@
       "version": "1.1.0",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.1.0.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-03",
+      "sha512sum": "916EDFDBEB9067AE5286EE201EE16474228F4339BBD44B91CBA19A1957BF3F17A29798327DCB5826D1028371C8CE59353FF8DDC50581A3AFEAF6CDD58319F178",
+      "version": "1.1.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.1.1.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -55,26 +69,44 @@
   "name": "Chaos Herblore",
   "description": "You put the lime in the coconut, you drank them both up",
   "id": "chaosherblore-plugin",
-  "releases": [{
-    "date": "2022-02-27",
-    "sha512sum": "AB3B039801E3947537F2EB3C2FE5D8015FA010F1AEA51570B872661F8E0E82D803C23EFC2D50DC3B4A7A6116575101E23FA5783DC43E8B65F369CB42E6B630F3",
-    "version": "1.0.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/herblore-1.0.0.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-02-27",
+      "sha512sum": "AB3B039801E3947537F2EB3C2FE5D8015FA010F1AEA51570B872661F8E0E82D803C23EFC2D50DC3B4A7A6116575101E23FA5783DC43E8B65F369CB42E6B630F3",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/herblore-1.0.0.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-03",
+      "sha512sum": "7CAC61EB1DC6681252F72E8F7C16255DA8BC20C0136460502373E27672174007DA411BFAB379728BA6FE47BEAF0EFF61AA856ABB75BCDE622E48DC225DA6D106",
+      "version": "1.0.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/herblore-1.0.1.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
   "name": "Chaos Smithing",
   "description": "I shall make weapons from your bones!",
   "id": "chaossmithing-plugin",
-  "releases": [{
-    "date": "2022-03-02",
-    "sha512sum": "8332CD6CE0D09878C53FFA87E68D89C6693109E4B646D3393BA61EDDF895F0CA3309CA3473CD54F4BABAC2E9A8F6C7E7242C33D0D6061BB549DD7EEABA50BBCE",
-    "version": "1.0.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/smithing-1.0.0.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-03-02",
+      "sha512sum": "8332CD6CE0D09878C53FFA87E68D89C6693109E4B646D3393BA61EDDF895F0CA3309CA3473CD54F4BABAC2E9A8F6C7E7242C33D0D6061BB549DD7EEABA50BBCE",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/smithing-1.0.0.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-03",
+      "sha512sum": "33502F7ED94B1C875F4E682BEB4ED82C0BCC8A7A028143EC2FC434AE703405BCEDB9335D0D8611FFE62F612D9B878A59CBE684A319D0DE45A7BCB25C1E32A7D3",
+      "version": "1.0.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/smithing-1.0.1.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
@@ -108,6 +140,13 @@
       "sha512sum": "464CA068AF3E11E05ABCCAE6030BA0DB4474D5855AB099DCC3DA33E55ECD3495121DDE4786BC0EA7D5D34538596265F5174F3DA8B1DB7B44E8A1DA3B855E0881",
       "version": "1.2.2",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.2.2.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-03",
+      "sha512sum": "2FE90F4B8448C214A4360AAF78BCEEFEF6E930A4A9ADD6213E57F487BBC7E7785653DE920941A2E80E694EF6032D3E917D380D88467B304FBFB1ACDCDB5C6BCF",
+      "version": "1.2.3",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.2.3.jar",
       "requires": "^1.0.0"
     }
   ]
@@ -144,6 +183,13 @@
       "sha512sum": "F72085E7B352D2C50D8FAF876D6164937CBF1B76632167CCB38FED73E31529D4DEB67D6585AEA8F1215FCFC80CF6013C9B2B18FCB35A3DF0FD2378F6610B55B9",
       "version": "1.1.3",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.1.3.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-03",
+      "sha512sum": "7D85441F813D5FE46D2EE2B0A212A2C6F4410A1D945F2D699D285BD6EC24CFB9FB02216E6F6633943F9C3D201044E6496C2A8B8899E9107C3008E8DC7085C0A6",
+      "version": "1.1.4",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.1.4.jar",
       "requires": "^1.0.0"
     }
   ]

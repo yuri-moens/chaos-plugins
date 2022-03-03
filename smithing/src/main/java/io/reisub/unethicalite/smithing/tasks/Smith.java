@@ -2,10 +2,7 @@ package io.reisub.unethicalite.smithing.tasks;
 
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.items.Bank;
 import dev.hoot.api.items.Inventory;
-import dev.hoot.api.packets.TileObjectPackets;
-import dev.hoot.api.packets.WidgetPackets;
 import dev.hoot.api.widgets.Widgets;
 import io.reisub.unethicalite.smithing.Config;
 import io.reisub.unethicalite.smithing.Smithing;
@@ -40,7 +37,7 @@ public class Smith extends Task {
             return;
         }
 
-        TileObjectPackets.tileObjectFirstOption(anvil, false);
+        anvil.interact(0);
         Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetInfo.SMITHING_INVENTORY_ITEMS_CONTAINER)), 15);
 
         Widget productWidget = Widgets.get(312, config.product().getInterfaceId());
@@ -48,7 +45,7 @@ public class Smith extends Task {
             return;
         }
 
-        WidgetPackets.widgetFirstOption(productWidget);
+        productWidget.interact(0);
         Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.SMITHING, 10);
     }
 }

@@ -4,9 +4,6 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Bank;
-import dev.hoot.api.packets.NPCPackets;
-import dev.hoot.api.packets.TileObjectPackets;
-import dev.hoot.api.packets.WidgetPackets;
 import dev.hoot.api.widgets.Widgets;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
@@ -198,11 +195,11 @@ public abstract class BankTask extends Task {
 
         if (bankObject != null) {
             if (bankObject.hasAction("Bank")) {
-                TileObjectPackets.tileObjectAction(bankObject, "Bank", false);
+                bankObject.interact("Bank");
             } else if (bankObject.hasAction("Use")) {
-                TileObjectPackets.tileObjectAction(bankObject, "Use", false);
+                bankObject.interact("Use");
             } else {
-                TileObjectPackets.tileObjectFirstOption(bankObject, false);
+                bankObject.interact(0);
             }
         } else {
             if (bankNpc == null) {
@@ -212,9 +209,9 @@ public abstract class BankTask extends Task {
             if (bankNpc == null) return false;
 
             if (bankNpc.hasAction("Bank")) {
-                NPCPackets.npcAction(bankNpc, "Bank", false);
+                bankNpc.interact("Bank");
             } else {
-                NPCPackets.npcFirstOption(bankNpc, false);
+                bankNpc.interact(0);
             }
         }
 
@@ -232,7 +229,7 @@ public abstract class BankTask extends Task {
             return;
         }
 
-        WidgetPackets.widgetAction(exit, "Close");
+        exit.interact("Close");
     }
 
     protected boolean isLastBankDurationAgo(Duration duration) {

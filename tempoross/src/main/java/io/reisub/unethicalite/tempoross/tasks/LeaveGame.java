@@ -5,8 +5,6 @@ import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Inventory;
-import dev.hoot.api.packets.NPCPackets;
-import dev.hoot.api.packets.TileObjectPackets;
 import dev.hoot.api.widgets.Dialog;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -38,20 +36,20 @@ public class LeaveGame extends Task {
     public void execute() {
         if (!plugin.isFinished()) {
             NPC pudi = NPCs.getNearest(NpcID.CAPTAIN_PUDI_10585, NpcID.CAPTAIN_PUDI_10586);
-            NPCPackets.npcAction(pudi, "Forfeit", false);
+            pudi.interact("Forfeit");
             Time.sleepUntil(() -> plugin.isInDesert(), 20000);
         }
 
         TileObject buckets = TileObjects.getNearest(ObjectID.BUCKETS_40966);
         if (buckets == null) return;
 
-        TileObjectPackets.tileObjectSecondOption(buckets, false);
+        buckets.interact("Take-5");
         Time.sleepUntil(() -> Inventory.contains(ItemID.BUCKET), 100, 10000);
 
         NPC deri = NPCs.getNearest(NpcID.FIRST_MATE_DERI_10595);
         if (deri == null) return;
 
-        NPCPackets.npcAction(deri, "Leave", false);;
+        deri.interact("Leave");
         Time.sleepUntil(() -> plugin.isInDesert(), 20000);
 
         Time.sleepUntil(Dialog::canContinueNPC, 100, 30000);

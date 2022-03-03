@@ -7,7 +7,6 @@ import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.packets.MovementPackets;
-import dev.hoot.api.packets.TileObjectPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -94,7 +93,7 @@ public class Cook extends Task {
         TileObject shrine = TileObjects.getNearest(ObjectID.SHRINE_41236);
         if (shrine == null) return;
 
-        TileObjectPackets.tileObjectFirstOption(shrine, false);
+        shrine.interact(0);
         Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.COOKING || plugin.isWaveIncoming(), 10000);
     }
 }

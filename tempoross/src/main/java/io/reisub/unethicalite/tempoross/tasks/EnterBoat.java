@@ -4,7 +4,6 @@ import dev.hoot.api.commons.Rand;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.packets.MovementPackets;
-import dev.hoot.api.packets.TileObjectPackets;
 import dev.hoot.api.widgets.Dialog;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -36,7 +35,7 @@ public class EnterBoat extends Task {
             return;
         }
 
-        TileObjectPackets.tileObjectFirstOption(ladder, false);
+        ladder.interact(0);
         Time.sleepTicks(Rand.nextInt(3, 5));
         Time.sleepUntil(() -> plugin.isOnBoat() || plugin.getPlayersReady() >= 1, 10000);
 

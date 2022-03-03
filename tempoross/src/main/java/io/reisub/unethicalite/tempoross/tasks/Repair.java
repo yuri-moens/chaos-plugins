@@ -3,7 +3,6 @@ package io.reisub.unethicalite.tempoross.tasks;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.packets.TileObjectPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -40,7 +39,7 @@ public class Repair extends Task {
 
     @Override
     public void execute() {
-        TileObjectPackets.tileObjectFirstOption(brokenObject, false);
+        brokenObject.interact(0);
         if (!Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 3)) return;
         Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.REPAIRING, 15000);
     }

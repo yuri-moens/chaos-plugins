@@ -2,7 +2,6 @@ package io.reisub.unethicalite.combathelper.bones;
 
 import dev.hoot.api.commons.Rand;
 import dev.hoot.api.items.Inventory;
-import dev.hoot.api.packets.ItemPackets;
 import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.combathelper.Config;
 import net.runelite.api.Item;
@@ -40,7 +39,7 @@ public class BonesHelper {
         plugin.schedule(() -> {
             Item buryItem = Inventory.getFirst(itemIds);
             if (buryItem != null) {
-                ItemPackets.itemFirstOption(buryItem);
+                buryItem.interact(0);
             }
         }, Rand.nextInt(0, 100));
     }

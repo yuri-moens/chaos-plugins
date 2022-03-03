@@ -3,7 +3,6 @@ package io.reisub.unethicalite.tempoross.tasks;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.packets.TileObjectPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -40,7 +39,7 @@ public class Tether extends Task {
             Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, waitTicks);
         }
 
-        TileObjectPackets.tileObjectFirstOption(tetherObject, false);
+        tetherObject.interact(0);
 
         Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.TETHERING_MAST, 10000);
         Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 20000);
