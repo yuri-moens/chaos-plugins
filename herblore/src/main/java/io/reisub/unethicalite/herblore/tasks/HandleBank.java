@@ -89,13 +89,13 @@ public class HandleBank extends BankTask {
     private void deposit() {
         switch (plugin.getConfig().task()) {
             case TAR_HERBS:
-                Bank.depositAllExcept(true, ItemID.PESTLE_AND_MORTAR, ItemID.SWAMP_TAR);
+                Bank.depositAllExcept(ItemID.PESTLE_AND_MORTAR, ItemID.SWAMP_TAR);
                 break;
             case PROCESS_SECONDARIES:
-                Bank.depositAllExcept(true, ItemID.PESTLE_AND_MORTAR);
+                Bank.depositAllExcept(ItemID.PESTLE_AND_MORTAR);
                 break;
             case MAKE_COCONUT_MILK:
-                Bank.depositAllExcept(true, ItemID.HAMMER, ItemID.IMCANDO_HAMMER);
+                Bank.depositAllExcept( ItemID.HAMMER, ItemID.IMCANDO_HAMMER);
                 break;
             default:
                 Bank.depositInventory();

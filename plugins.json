@@ -90,6 +90,13 @@
       "version": "1.0.1",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/herblore-1.0.1.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-04",
+      "sha512sum": "4B65B9EC51209E60D387B484170399B6E49F90403FD5FEC1958195675C268AA56D859BC3E4BFDCCC3AECAA49819107B94F00959B7483352409C562D6644200B4",
+      "version": "1.0.2",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/herblore-1.0.2.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -111,6 +118,13 @@
       "sha512sum": "33502F7ED94B1C875F4E682BEB4ED82C0BCC8A7A028143EC2FC434AE703405BCEDB9335D0D8611FFE62F612D9B878A59CBE684A319D0DE45A7BCB25C1E32A7D3",
       "version": "1.0.1",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/smithing-1.0.1.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-04",
+      "sha512sum": "6A53B5AE0F7B04817117BCA842C4449F46EDA488875E3205147688E7B9AD50554ABDB6DD93B6244D9110D6F9A7ABA4EF037CE1D29CDB023984587B82B57F6513",
+      "version": "1.0.2",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/smithing-1.0.2.jar",
       "requires": "^1.0.0"
     }
   ]

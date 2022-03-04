@@ -39,7 +39,7 @@ public class HandleBank extends BankTask {
             }
         }
 
-        Bank.depositAllExcept(true, ItemID.HAMMER, ItemID.IMCANDO_HAMMER, config.metal().getBarId());
+        Bank.depositAllExcept(ItemID.HAMMER, ItemID.IMCANDO_HAMMER, config.metal().getBarId());
 
         Bank.withdrawAll(config.metal().getBarId(), Bank.WithdrawMode.ITEM);
     }
