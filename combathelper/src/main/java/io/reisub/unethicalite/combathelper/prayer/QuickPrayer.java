@@ -1,8 +1,12 @@
 package io.reisub.unethicalite.combathelper.prayer;
 
+import com.google.common.collect.ImmutableSet;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.runelite.api.widgets.WidgetID;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor
 @Getter
@@ -41,23 +45,27 @@ public enum QuickPrayer {
     private final int childId;
     private final int level;
 
-    public static QuickPrayer[] getBestMeleeBuff(int level, boolean pietyUnlocked) {
+    public static Set<QuickPrayer> getBestMeleeBuff(int level, boolean pietyUnlocked) {
         if (level >= PIETY.level && pietyUnlocked) {
-            return new QuickPrayer[] { PIETY };
+            return ImmutableSet.of(PIETY);
         } else if (level >= CHIVALRY.level && pietyUnlocked) {
-            return new QuickPrayer[] { CHIVALRY };
+            return ImmutableSet.of(CHIVALRY);
         } else {
-            QuickPrayer[] quickPrayers;
-            if (level >= 7) {
-                quickPrayers = new QuickPrayer[2];
-                quickPrayers[0] = getBestStrength(level);
-                quickPrayers[1] = getBestAttack(level);
-            } else if (level >= 4) {
-                quickPrayers = new QuickPrayer[1];
-                quickPrayers[0] = getBestStrength(level);
-            } else {
-                quickPrayers = new QuickPrayer[0];
+            Set<QuickPrayer> quickPrayers = new HashSet<>();
+
+            QuickPrayer bestStrength = getBestStrength(level);
+            QuickPrayer bestAttack = getBestAttack(level);
+            QuickPrayer bestDefence = getBestDefence(level);
+
+            if (bestAttack != null) {
+                quickPrayers.add(bestAttack);
             }
+
+            if (bestStrength != null) {
+                quickPrayers.add(bestStrength);
+            }
+
+            quickPrayers.add(bestDefence);
 
             return quickPrayers;
         }
@@ -92,38 +100,40 @@ public enum QuickPrayer {
             return STEEL_SKIN;
         } else if (level >= ROCK_SKIN.level) {
             return ROCK_SKIN;
-        } else if (level >= THICK_SKIN.level) {
+        } else {
             return THICK_SKIN;
         }
-
-        return null;
     }
 
-    public static QuickPrayer[] getBestRangedBuff(int level, boolean rigourUnlocked) {
+    public static Set<QuickPrayer> getBestRangedBuff(int level, boolean rigourUnlocked) {
+        QuickPrayer bestDefense = getBestDefence(level);
+
         if (level >= RIGOUR.level && rigourUnlocked) {
-            return new QuickPrayer[] { RIGOUR };
+            return ImmutableSet.of(RIGOUR);
         } else if (level >= EAGLE_EYE.level) {
-            return new QuickPrayer[] { EAGLE_EYE };
+            return ImmutableSet.of(EAGLE_EYE, bestDefense);
         } else if (level >= HAWK_EYE.level) {
-            return new QuickPrayer[] { HAWK_EYE };
+            return ImmutableSet.of(HAWK_EYE, bestDefense);
         } else if (level >= SHARP_EYE.level) {
-            return new QuickPrayer[] { SHARP_EYE };
+            return ImmutableSet.of(SHARP_EYE, bestDefense);
         }
 
-        return new QuickPrayer[]{};
+        return ImmutableSet.of(bestDefense);
     }
 
-    public static QuickPrayer[] getBestMagicBuff(int level, boolean auguryUnlocked) {
+    public static Set<QuickPrayer> getBestMagicBuff(int level, boolean auguryUnlocked) {
+        QuickPrayer bestDefense = getBestDefence(level);
+
         if (level >= AUGURY.level && auguryUnlocked) {
-            return new QuickPrayer[] { AUGURY };
+            return ImmutableSet.of(AUGURY);
         } else if (level >= MYSTIC_MIGHT.level) {
-            return new QuickPrayer[] { MYSTIC_MIGHT };
+            return ImmutableSet.of(MYSTIC_MIGHT, bestDefense);
         } else if (level >= MYSTIC_LORE.level) {
-            return new QuickPrayer[] { MYSTIC_LORE };
+            return ImmutableSet.of(MYSTIC_LORE, bestDefense);
         } else if (level >= MYSTIC_WILL.level) {
-            return new QuickPrayer[] { MYSTIC_WILL };
+            return ImmutableSet.of(MYSTIC_WILL, bestDefense);
         }
 
-        return new QuickPrayer[]{};
+        return ImmutableSet.of(bestDefense);
     }
 }

@@ -51,6 +51,7 @@ public class PrayerHelper {
     private boolean toggledOff;
     private boolean switchToInventory;
     private volatile QuickPrayer currentOverhead;
+    private volatile Set<QuickPrayer> swapPrayers;
 
     private Map<NPC, DemonicGorilla> gorillas;
     private List<WorldPoint> recentBoulders;
@@ -105,17 +106,17 @@ public class PrayerHelper {
                 switch (style) {
                     case MELEE:
                         if (currentOverhead != QuickPrayer.PROTECT_FROM_MELEE) {
-                            setPrayer(false, QuickPrayer.PROTECT_FROM_MELEE);
+                            setPrayer(QuickPrayer.PROTECT_FROM_MELEE, false);
                         }
                         break;
                     case RANGED:
                         if (currentOverhead != QuickPrayer.PROTECT_FROM_MISSILES) {
-                            setPrayer(false, QuickPrayer.PROTECT_FROM_MISSILES);
+                            setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
                         }
                         break;
                     case MAGIC:
                         if (currentOverhead != QuickPrayer.PROTECT_FROM_MAGIC) {
-                            setPrayer(false, QuickPrayer.PROTECT_FROM_MAGIC);
+                            setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
                         }
                         break;
                 }
@@ -129,14 +130,31 @@ public class PrayerHelper {
 
         Widget quickPrayersWidget = Widgets.get(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB);
 
+        if (swapPrayers != null && !swapPrayers.isEmpty()) {
+            if (interactionConfig.interactMethod() == InteractMethod.PACKETS) {
+                WidgetPackets.queueWidgetAction2Packet(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId(), -1, -1);
+
+                for (QuickPrayer quickPrayer : swapPrayers) {
+                    WidgetPackets.queueWidgetAction1Packet(5046276, -1, quickPrayer.getChildId());
+                }
+
+                WidgetPackets.queueWidgetAction1Packet(5046277, -1, -1);
+                switchToInventory = config.openInventory();
+            } else {
+                swapPrayers(swapPrayers);
+            }
+
+            swapPrayers = null;
+        }
+
         if (toggleFlicking) {
             if (!Prayers.isQuickPrayerEnabled() && !firstFlick) {
-                togglePrayer(0, quickPrayersWidget);
+                togglePrayer(quickPrayersWidget);
                 return;
             }
 
-            togglePrayer(0, quickPrayersWidget);
-            togglePrayer(0, quickPrayersWidget);
+            togglePrayer(quickPrayersWidget);
+            togglePrayer(quickPrayersWidget);
 
             if (firstFlick) {
                 firstFlick = false;
@@ -145,7 +163,7 @@ public class PrayerHelper {
             toggledOff = false;
 
             if (config.deactivateAfterStopping()) {
-                togglePrayer(0, quickPrayersWidget);
+                togglePrayer(quickPrayersWidget);
             }
         }
     }
@@ -158,12 +176,12 @@ public class PrayerHelper {
             switch (actor.getAnimation()) {
                 case AnimationID.TZTOK_JAD_MAGIC_ATTACK:
                 case JALTOK_JAD_MAGE_ATTACK:
-                    setPrayer(false, QuickPrayer.PROTECT_FROM_MAGIC);
+                    setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
                     MessageUtils.addMessage("Pray against magic!");
                     break;
                 case AnimationID.TZTOK_JAD_RANGE_ATTACK:
                 case JALTOK_JAD_RANGE_ATTACK:
-                    setPrayer(false, QuickPrayer.PROTECT_FROM_MISSILES);
+                    setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
                     MessageUtils.addMessage("Pray against missiles!");
                     break;
             }
@@ -172,13 +190,13 @@ public class PrayerHelper {
         if (config.demonicGorillaFlick()) {
             switch (actor.getAnimation()) {
                 case AnimationID.DEMONIC_GORILLA_MAGIC_ATTACK:
-                    setPrayer(false, QuickPrayer.PROTECT_FROM_MAGIC);
+                    setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
                     break;
                 case AnimationID.DEMONIC_GORILLA_RANGED_ATTACK:
-                    setPrayer(false, QuickPrayer.PROTECT_FROM_MISSILES);
+                    setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
                     break;
                 case AnimationID.DEMONIC_GORILLA_MELEE_ATTACK:
-                    setPrayer(false, QuickPrayer.PROTECT_FROM_MELEE);
+                    setPrayer(QuickPrayer.PROTECT_FROM_MELEE, false);
                     break;
             }
         }
@@ -197,22 +215,22 @@ public class PrayerHelper {
             toggleFlicking = !toggleFlicking;
             e.consume();
         } else if (config.hotkeyMelee().matches(e)) {
-            setPrayer(config.allowToggleOff(), QuickPrayer.PROTECT_FROM_MELEE);
+            setPrayer(QuickPrayer.PROTECT_FROM_MELEE);
             e.consume();
         } else if (config.hotkeyMissiles().matches(e)) {
-            setPrayer(config.allowToggleOff(), QuickPrayer.PROTECT_FROM_MISSILES);
+            setPrayer(QuickPrayer.PROTECT_FROM_MISSILES);
             e.consume();
         } else if (config.hotkeyMagic().matches(e)) {
-            setPrayer(config.allowToggleOff(), QuickPrayer.PROTECT_FROM_MAGIC);
+            setPrayer(QuickPrayer.PROTECT_FROM_MAGIC);
             e.consume();
         } else if (config.hotkeyMeleeBuff().matches(e)) {
-            setPrayer(config.allowToggleOff(), QuickPrayer.getBestMeleeBuff(level, Vars.getBit(Varbits.CAMELOT_TRAINING_ROOM_STATUS.getId()) == 8));
+            setPrayers(QuickPrayer.getBestMeleeBuff(level, Vars.getBit(Varbits.CAMELOT_TRAINING_ROOM_STATUS.getId()) == 8));
             e.consume();
         } else if (config.hotkeyRangedBuff().matches(e)) {
-            setPrayer(config.allowToggleOff(), QuickPrayer.getBestRangedBuff(level, Vars.getBit(Varbits.RIGOUR_UNLOCKED.getId()) != 0));
+            setPrayers(QuickPrayer.getBestRangedBuff(level, Vars.getBit(Varbits.RIGOUR_UNLOCKED.getId()) != 0));
             e.consume();
         } else if (config.hotkeyMagicBuff().matches(e)) {
-            setPrayer(config.allowToggleOff(), QuickPrayer.getBestMagicBuff(level, Vars.getBit(Varbits.AUGURY_UNLOCKED.getId()) != 0));
+            setPrayers(QuickPrayer.getBestMagicBuff(level, Vars.getBit(Varbits.AUGURY_UNLOCKED.getId()) != 0));
             e.consume();
         }
     }
@@ -221,14 +239,56 @@ public class PrayerHelper {
         currentGorilla = getCurrentGorilla();
     }
 
-    private void togglePrayer(int delay, Widget widget) {
-        plugin.schedule(() -> widget.interact(0), delay);
+    private void togglePrayer(Widget widget) {
+        plugin.schedule(() -> widget.interact(0), 0);
     }
 
-    public void setPrayer(boolean allowToggleOff, Set<QuickPrayer> quickPrayers) {
+    private void swapPrayers(Set<QuickPrayer> quickPrayers) {
+        plugin.schedule(() -> {
+            Widget quickPrayersWidget = Widgets.get(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB);
+            if (quickPrayersWidget == null) return;
+
+            quickPrayersWidget.interact(1);
+            Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4)), 3);
+
+            for (QuickPrayer quickPrayer : quickPrayers) {
+                Widget prayer = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4, quickPrayer.getChildId());
+                if (prayer == null) {
+                    return;
+                }
+
+                prayer.interact(0);
+            }
+
+            Widget update = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 5);
+            if (update == null) return;
+
+            update.interact(0);
+
+            if (config.openInventory()) {
+                Tabs.openInterface(Tab.INVENTORY);
+            }
+        }, 0);
+    }
+
+    public void setPrayer(QuickPrayer quickPrayer) {
+        setPrayers(ImmutableSet.of(quickPrayer), config.allowToggleOff());
+    }
+
+    public void setPrayer(QuickPrayer quickPrayer, boolean allowToggleOff) {
+        setPrayers(ImmutableSet.of(quickPrayer), allowToggleOff);
+    }
+
+    public void setPrayers(Set<QuickPrayer> quickPrayers) {
+        setPrayers(quickPrayers, config.allowToggleOff());
+    }
+
+    public void setPrayers(Set<QuickPrayer> quickPrayers, boolean allowToggleOff) {
         if (quickPrayers == null
                 || quickPrayers.isEmpty()
-                || (!allowToggleOff && quickPrayers.contains(currentOverhead))) return;
+                || (!allowToggleOff && quickPrayers.contains(currentOverhead))) {
+            return;
+        }
 
         if (quickPrayers.contains(currentOverhead)) {
             currentOverhead = QuickPrayer.NONE;
@@ -240,89 +300,7 @@ public class PrayerHelper {
             currentOverhead = QuickPrayer.PROTECT_FROM_MELEE;
         }
 
-        plugin.schedule(() -> {
-            if (interactionConfig.interactMethod() == InteractMethod.PACKETS) {
-                GameThread.invoke(() -> WidgetPackets.queueWidgetAction2Packet(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId(), -1, -1));
-
-                for (QuickPrayer quickPrayer : quickPrayers) {
-                    GameThread.invoke(() -> WidgetPackets.queueWidgetAction1Packet(5046276, -1, quickPrayer.getChildId()));
-                }
-
-                GameThread.invoke(() -> WidgetPackets.queueWidgetAction1Packet(5046277, -1, -1));
-                switchToInventory = config.openInventory();
-            } else {
-                Widget quickPrayersWidget = Widgets.get(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB);
-                if (quickPrayersWidget == null) return;
-
-                quickPrayersWidget.interact(1);
-                Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4)), 3);
-
-                for (QuickPrayer quickPrayer : quickPrayers) {
-                    Widget prayer = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4, quickPrayer.getChildId());
-                    if (prayer == null) {
-                        return;
-                    }
-
-                    prayer.interact(0);
-                }
-
-                Widget update = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 5);
-                if (update == null) return;
-
-                update.interact(0);
-
-                if (config.openInventory()) {
-                    Tabs.openInterface(Tab.INVENTORY);
-                }
-            }
-        }, 0);
-    }
-
-    public void setPrayer(boolean allowToggleOff, QuickPrayer... quickPrayers) {
-        if (!allowToggleOff && quickPrayers[0] == currentOverhead) return;
-
-        if (currentOverhead == quickPrayers[0]) {
-            currentOverhead = QuickPrayer.NONE;
-        } else if (quickPrayers[0] == QuickPrayer.PROTECT_FROM_MAGIC
-                || quickPrayers[0] == QuickPrayer.PROTECT_FROM_MISSILES
-                || quickPrayers[0] == QuickPrayer.PROTECT_FROM_MELEE) {
-            currentOverhead = quickPrayers[0];
-        }
-
-        plugin.schedule(() -> {
-            if (interactionConfig.interactMethod() == InteractMethod.PACKETS) {
-                GameThread.invoke(() -> WidgetPackets.queueWidgetAction2Packet(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId(), -1, -1));
-
-                for (QuickPrayer quickPrayer : quickPrayers) {
-                    GameThread.invoke(() -> WidgetPackets.queueWidgetAction1Packet(5046276, -1, quickPrayer.getChildId()));
-                }
-
-                GameThread.invoke(() -> WidgetPackets.queueWidgetAction1Packet(5046277, -1, -1));
-                switchToInventory = config.openInventory();
-            } else {
-                Widget quickPrayersWidget = Widgets.get(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB);
-                if (quickPrayersWidget == null) return;
-
-                quickPrayersWidget.interact(1);
-                Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4)), 3);
-
-                for (QuickPrayer quickPrayer : quickPrayers) {
-                    Widget prayer = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4, quickPrayer.getChildId());
-                    if (prayer == null) return;
-
-                    prayer.interact(0);
-                }
-
-                Widget update = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 5);
-                if (update == null) return;
-
-                update.interact(0);
-
-                if (config.openInventory()) {
-                    Tabs.openInterface(Tab.INVENTORY);
-                }
-            }
-        }, 0);
+        swapPrayers = quickPrayers;
     }
 
     private DemonicGorilla getCurrentGorilla() {
