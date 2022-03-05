@@ -4,6 +4,7 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Bank;
+import dev.hoot.api.packets.DialogPackets;
 import dev.hoot.api.widgets.Widgets;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
@@ -220,16 +221,15 @@ public abstract class BankTask extends Task {
             bankNpc = null;
         }
 
+        last = Instant.now();
+
         return Bank.isOpen();
     }
 
     protected void close() {
-        Widget exit = Widgets.get(12, 2, 11);
-        if (exit == null || !exit.isVisible()) {
-            return;
+        if (Bank.isOpen()) {
+            DialogPackets.closeInterface();
         }
-
-        exit.interact("Close");
     }
 
     protected boolean isLastBankDurationAgo(Duration duration) {
