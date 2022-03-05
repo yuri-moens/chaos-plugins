@@ -39,6 +39,6 @@ public class PickupSpore extends Task {
             Time.sleep(250, 400);
         } while (!Players.getLocal().isMoving());
 
-        Time.sleepTicksUntil(() -> Inventory.getCount(ItemID.SEAWEED_SPORE) > quantity, 30);
+        Time.sleepTicksUntil(() -> Inventory.getCount(true, ItemID.SEAWEED_SPORE) > quantity, 30);
     }
 }
