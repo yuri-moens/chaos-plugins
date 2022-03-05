@@ -22,14 +22,21 @@ public class Constants {
             ItemID.REDWOOD_LOGS
     );
 
-    public static final Set<Integer> BIRDHOUSE_SPACES = ImmutableSet.of(
-        NullObjectID.NULL_30567, // verdant north
-        NullObjectID.NULL_30568, // verdant south
-        NullObjectID.NULL_30565, // meadow north
-        NullObjectID.NULL_30566 //meadow south
+    public static final int BIRD_HOUSE_EMPTY_SPACE = ObjectID.SPACE;
+
+    public static final int MEADOW_NORTH_SPACE = NullObjectID.NULL_30565;
+    public static final int MEADOW_SOUTH_SPACE = NullObjectID.NULL_30566;
+    public static final int VERDANT_NORTH_SPACE = NullObjectID.NULL_30567;
+    public static final int VERDANT_SOUTH_SPACE = NullObjectID.NULL_30568;
+
+    public static final Set<Integer> BIRD_HOUSE_SPACES = ImmutableSet.of(
+            MEADOW_NORTH_SPACE,
+            MEADOW_SOUTH_SPACE,
+            VERDANT_NORTH_SPACE,
+            VERDANT_SOUTH_SPACE
     );
 
-    public static final Set<Integer> BIRDHOUSE_IDS = ImmutableSet.of(
+    public static final Set<Integer> BIRD_HOUSE_IDS = ImmutableSet.of(
             ObjectID.BIRDHOUSE,
             ObjectID.BIRDHOUSE_30555,
             ObjectID.OAK_BIRDHOUSE,
@@ -50,7 +57,7 @@ public class Constants {
             ObjectID.REDWOOD_BIRDHOUSE_31841
     );
 
-    public static final Set<Integer> BIRDHOUSE_EMPTY_IDS = ImmutableSet.of(
+    public static final Set<Integer> BIRD_HOUSE_EMPTY_IDS = ImmutableSet.of(
             ObjectID.BIRDHOUSE_EMPTY,
             ObjectID.OAK_BIRDHOUSE_EMPTY,
             ObjectID.WILLOW_BIRDHOUSE_EMPTY,
@@ -62,7 +69,7 @@ public class Constants {
             ObjectID.REDWOOD_BIRDHOUSE_EMPTY
     );
 
-    public static final Set<Integer> BIRDHOUSE_ITEM_IDS = ImmutableSet.of(
+    public static final Set<Integer> BIRD_HOUSE_ITEM_IDS = ImmutableSet.of(
             ItemID.BIRD_HOUSE,
             ItemID.OAK_BIRD_HOUSE,
             ItemID.WILLOW_BIRD_HOUSE,
@@ -74,7 +81,7 @@ public class Constants {
             ItemID.REDWOOD_BIRD_HOUSE
     );
 
-    public static final Set<Integer> BIRDHOUSE_SEED_IDS = ImmutableSet.of(
+    public static final Set<Integer> BIRD_HOUSE_SEED_IDS = ImmutableSet.of(
             ItemID.BARLEY_SEED,
             ItemID.HAMMERSTONE_SEED,
             ItemID.ASGARNIAN_SEED,
