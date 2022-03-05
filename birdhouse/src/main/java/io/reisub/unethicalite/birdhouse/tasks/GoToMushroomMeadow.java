@@ -4,7 +4,6 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Inventory;
-import dev.hoot.api.packets.WidgetPackets;
 import dev.hoot.api.widgets.Widgets;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.tasks.Task;
