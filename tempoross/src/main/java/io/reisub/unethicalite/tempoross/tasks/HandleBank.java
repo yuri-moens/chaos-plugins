@@ -8,6 +8,7 @@ import io.reisub.unethicalite.utils.tasks.BankTask;
 import net.runelite.api.ItemID;
 
 import javax.inject.Inject;
+import java.time.Duration;
 
 public class HandleBank extends BankTask {
     @Inject
@@ -21,8 +22,9 @@ public class HandleBank extends BankTask {
 
         bucketCount = Inventory.getCount(ItemID.BUCKET, ItemID.BUCKET_OF_WATER);
 
-        return bucketCount < 4
-                || (!Inventory.contains(ItemID.HAMMER, ItemID.IMCANDO_HAMMER) && !Equipment.contains(ItemID.IMCANDO_HAMMER));
+        return isLastBankDurationAgo(Duration.ofSeconds(5))
+                && (bucketCount < 4
+                || (!Inventory.contains(ItemID.HAMMER, ItemID.IMCANDO_HAMMER) && !Equipment.contains(ItemID.IMCANDO_HAMMER)));
     }
 
     @Override
