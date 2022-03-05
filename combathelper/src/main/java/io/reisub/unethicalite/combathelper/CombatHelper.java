@@ -22,6 +22,7 @@ import net.runelite.client.input.KeyManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.plugins.interaction.InteractionPlugin;
 import net.runelite.client.plugins.itemstats.ItemStatPlugin;
 import org.pf4j.Extension;
 
@@ -37,6 +38,7 @@ import java.util.concurrent.TimeUnit;
 		enabledByDefault = false
 )
 @PluginDependency(ItemStatPlugin.class)
+@PluginDependency(InteractionPlugin.class)
 @Slf4j
 @Extension
 public class CombatHelper extends Plugin implements KeyListener {

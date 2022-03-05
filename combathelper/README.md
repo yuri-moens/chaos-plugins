@@ -13,3 +13,5 @@ This plugin aids players in combat with various useful features. Currently offer
 * Gear swapping
   * Can swap gear along with prayers
   * Automatically when target changed prayer
+
+It has the `Interaction` and `Item Stats` plugins as dependencies.

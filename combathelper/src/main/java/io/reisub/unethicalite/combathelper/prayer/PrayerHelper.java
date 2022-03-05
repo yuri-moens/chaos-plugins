@@ -14,6 +14,8 @@ import dev.hoot.api.widgets.Prayers;
 import dev.hoot.api.widgets.Tab;
 import dev.hoot.api.widgets.Tabs;
 import dev.hoot.api.widgets.Widgets;
+import dev.hoot.bot.managers.interaction.InteractMethod;
+import dev.hoot.bot.managers.interaction.InteractionConfig;
 import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.combathelper.Config;
 import net.runelite.api.*;
@@ -37,6 +39,9 @@ public class PrayerHelper {
     @Inject
     private Config config;
 
+    @Inject
+    private InteractionConfig interactionConfig;
+
     private static final Set<Integer> DEMONIC_PROJECTILES = ImmutableSet.of(ProjectileID.DEMONIC_GORILLA_RANGED, ProjectileID.DEMONIC_GORILLA_MAGIC, ProjectileID.DEMONIC_GORILLA_BOULDER);
     private static final int JALTOK_JAD_MAGE_ATTACK = 7592;
     private static final int JALTOK_JAD_RANGE_ATTACK = 7593;
@@ -44,6 +49,7 @@ public class PrayerHelper {
     private boolean toggleFlicking;
     private boolean firstFlick;
     private boolean toggledOff;
+    private boolean switchToInventory;
     private volatile QuickPrayer currentOverhead;
 
     private Map<NPC, DemonicGorilla> gorillas;
@@ -114,6 +120,11 @@ public class PrayerHelper {
                         break;
                 }
             }
+        }
+
+        if (switchToInventory && !Tabs.isOpen(Tab.INVENTORY)) {
+            Tabs.openInterface(Tab.INVENTORY);
+            switchToInventory = false;
         }
 
         Widget quickPrayersWidget = Widgets.get(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB);
@@ -230,28 +241,39 @@ public class PrayerHelper {
         }
 
         plugin.schedule(() -> {
-            Widget quickPrayersWidget = Widgets.get(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB);
-            if (quickPrayersWidget == null) return;
+            if (interactionConfig.interactMethod() == InteractMethod.PACKETS) {
+                GameThread.invoke(() -> WidgetPackets.queueWidgetAction2Packet(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId(), -1, -1));
 
-            quickPrayersWidget.interact(1);
-            Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4)), 3);
-
-            for (QuickPrayer quickPrayer : quickPrayers) {
-                Widget prayer = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4, quickPrayer.getChildId());
-                if (prayer == null) {
-                    return;
+                for (QuickPrayer quickPrayer : quickPrayers) {
+                    GameThread.invoke(() -> WidgetPackets.queueWidgetAction1Packet(5046276, -1, quickPrayer.getChildId()));
                 }
 
-                prayer.interact(0);
-            }
+                GameThread.invoke(() -> WidgetPackets.queueWidgetAction1Packet(5046277, -1, -1));
+                switchToInventory = config.openInventory();
+            } else {
+                Widget quickPrayersWidget = Widgets.get(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB);
+                if (quickPrayersWidget == null) return;
 
-            Widget update = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 5);
-            if (update == null) return;
+                quickPrayersWidget.interact(1);
+                Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4)), 3);
 
-            update.interact(0);
+                for (QuickPrayer quickPrayer : quickPrayers) {
+                    Widget prayer = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4, quickPrayer.getChildId());
+                    if (prayer == null) {
+                        return;
+                    }
 
-            if (config.openInventory()) {
-                Tabs.openInterface(Tab.INVENTORY);
+                    prayer.interact(0);
+                }
+
+                Widget update = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 5);
+                if (update == null) return;
+
+                update.interact(0);
+
+                if (config.openInventory()) {
+                    Tabs.openInterface(Tab.INVENTORY);
+                }
             }
         }, 0);
     }
@@ -268,26 +290,37 @@ public class PrayerHelper {
         }
 
         plugin.schedule(() -> {
-            Widget quickPrayersWidget = Widgets.get(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB);
-            if (quickPrayersWidget == null) return;
+            if (interactionConfig.interactMethod() == InteractMethod.PACKETS) {
+                GameThread.invoke(() -> WidgetPackets.queueWidgetAction2Packet(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId(), -1, -1));
 
-            quickPrayersWidget.interact(1);
-            Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4)), 3);
+                for (QuickPrayer quickPrayer : quickPrayers) {
+                    GameThread.invoke(() -> WidgetPackets.queueWidgetAction1Packet(5046276, -1, quickPrayer.getChildId()));
+                }
 
-            for (QuickPrayer quickPrayer : quickPrayers) {
-                Widget prayer = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4, quickPrayer.getChildId());
-                if (prayer == null) return;
+                GameThread.invoke(() -> WidgetPackets.queueWidgetAction1Packet(5046277, -1, -1));
+                switchToInventory = config.openInventory();
+            } else {
+                Widget quickPrayersWidget = Widgets.get(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB);
+                if (quickPrayersWidget == null) return;
 
-                prayer.interact(0);
-            }
+                quickPrayersWidget.interact(1);
+                Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4)), 3);
 
-            Widget update = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 5);
-            if (update == null) return;
+                for (QuickPrayer quickPrayer : quickPrayers) {
+                    Widget prayer = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4, quickPrayer.getChildId());
+                    if (prayer == null) return;
 
-            update.interact(0);
+                    prayer.interact(0);
+                }
 
-            if (config.openInventory()) {
-                Tabs.openInterface(Tab.INVENTORY);
+                Widget update = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 5);
+                if (update == null) return;
+
+                update.interact(0);
+
+                if (config.openInventory()) {
+                    Tabs.openInterface(Tab.INVENTORY);
+                }
             }
         }, 0);
     }
