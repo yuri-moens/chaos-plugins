@@ -33,13 +33,22 @@
   "name": "Chaos Bird House",
   "description": "Mass bird slaughter",
   "id": "chaosbirdhouse-plugin",
-  "releases": [{
-    "date": "2022-03-05",
-    "sha512sum": "1C75126F18A47314EA144C28593ADC38B8505ACEC328300667A7E4259830337FC34B81C49A8A1BAFEBCF43E52709CC559956916BF44E349F48056713EF440C3B",
-    "version": "1.0.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.0.0.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-03-05",
+      "sha512sum": "1C75126F18A47314EA144C28593ADC38B8505ACEC328300667A7E4259830337FC34B81C49A8A1BAFEBCF43E52709CC559956916BF44E349F48056713EF440C3B",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.0.0.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-05",
+      "sha512sum": "D3B1C5560B54CBBD2743C2F7ACD9B2536B17267108062FDD9F804422691F0B75474DD584A91BC08061D806C0928A28830386E1460C4FCE697875A204A5E03F3C",
+      "version": "1.0.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.0.1.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
@@ -189,6 +198,13 @@
       "version": "1.2.4",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.2.4.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-05",
+      "sha512sum": "B43B4F060562CA7869F0F7F46A7E3C4C63F4C136BE24FECE29212D704F1CA88BD325FD67A0C3489C1B37F5D168C4C9EAF541242BEFA6B042FDA379EC69FA3050",
+      "version": "1.2.5",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.2.5.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -238,6 +254,13 @@
       "sha512sum": "61267DBE06F992B9D18C7C6B1D076658C37E544BF1688C8027C258AA81709F278D14F0B413BE2F24117DEFE9CC9E76DB26668D78E149A679CD296AC641D519CA",
       "version": "1.1.5",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.1.5.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-05",
+      "sha512sum": "7901BA2C498A8ECB5617F100989BA056261FBE0BAD06465F2F454BDAD3FA798749FF48A75336F9EC413F3469BFCD2BD83DBC8ACFD5251B71431706E5F57A653A",
+      "version": "1.1.6",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.1.6.jar",
       "requires": "^1.0.0"
     }
   ]
