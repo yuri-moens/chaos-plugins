@@ -34,23 +34,21 @@ public class GoToIsland extends Task {
             }
         }
 
-        int regionId = Players.getLocal().getWorldLocation().getRegionID();
-
         return config.farmSeaweed()
-                && (regionId == 14651 || regionId == 14652);
+                && !plugin.isUnderwater()
+                && Players.getLocal().distanceTo(BirdHouse.ISLAND) > 10;
     }
 
     @Override
     public void execute() {
-        while (Players.getLocal().distanceTo(target) > 10) {
+        if (Players.getLocal().distanceTo(target) > 10) {
             if (!Movement.isWalking()) {
                 Movement.walkTo(target, 2);
-                Time.sleepTick();
             } else {
                 Inventory.getAll((i) -> i.hasAction("Search")).forEach((i) -> i.interact("Search"));
             }
 
-            Time.sleepTick();
+            return;
         }
 
         TileObject rowBoat = TileObjects.getNearest(ObjectID.ROWBOAT_30915);
