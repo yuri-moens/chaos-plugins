@@ -14,6 +14,8 @@ import io.reisub.unethicalite.utils.tasks.BankTask;
 import lombok.AllArgsConstructor;
 import net.runelite.api.*;
 
+import java.time.Duration;
+
 @AllArgsConstructor
 public class HandleBank extends BankTask {
     private final Config config;
@@ -21,6 +23,7 @@ public class HandleBank extends BankTask {
     @Override
     public boolean validate() {
         return config.farmSeaweed()
+                && isLastBankDurationAgo(Duration.ofSeconds(5))
                 && Players.getLocal().distanceTo(BirdHouse.ISLAND) < 10
                 && Inventory.contains((i) -> Constants.BIRD_NEST_IDS.contains(i.getId()));
     }
