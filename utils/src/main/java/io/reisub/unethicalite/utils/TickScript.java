@@ -21,6 +21,7 @@ import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -38,12 +39,14 @@ public abstract class TickScript extends Plugin {
     @Setter
     private Instant lastHop;
 
-    private ScheduledExecutorService executor;
+    private ScheduledFuture<?> current;
+    private ScheduledFuture<?> next;
+    protected ScheduledExecutorService executor;
 
     protected final List<Task> tasks = new ArrayList<>();
 
-    protected int minimumDelay = 100;
-    protected int maximumDelay = 150;
+    protected int minimumDelay = 50;
+    protected int maximumDelay = 100;
     protected Instant lastLogin = Instant.EPOCH;
     protected Instant lastActionTime = Instant.EPOCH;
     protected Duration lastActionTimeout = Duration.ofSeconds(3);
@@ -71,7 +74,23 @@ public abstract class TickScript extends Plugin {
             return;
         }
 
-        executor.schedule(this::tick, Rand.nextInt(minimumDelay, maximumDelay), TimeUnit.MILLISECONDS);
+        if (current == null) {
+            current = executor.schedule(this::tick, Rand.nextInt(minimumDelay, maximumDelay), TimeUnit.MILLISECONDS);
+        } else {
+            if (current.isDone()) {
+                if (next == null) {
+                    current = executor.schedule(this::tick, Rand.nextInt(minimumDelay, maximumDelay), TimeUnit.MILLISECONDS);
+                } else {
+                    current = next;
+                    next = null;
+                }
+            } else {
+                if (next == null) {
+                    next = executor.schedule(this::tick, Rand.nextInt(minimumDelay, maximumDelay), TimeUnit.MILLISECONDS);
+                }
+            }
+        }
+
         checkActionTimeout();
         checkIdleLogout();
     }
