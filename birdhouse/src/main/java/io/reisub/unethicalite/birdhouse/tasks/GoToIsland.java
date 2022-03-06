@@ -4,6 +4,7 @@ import dev.hoot.api.commons.Rand;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.Game;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.movement.Movement;
 import dev.hoot.api.widgets.Dialog;
@@ -43,16 +44,17 @@ public class GoToIsland extends Task {
     @Override
     public void execute() {
         WorldPoint randomTarget = target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3));
+        int start = Game.getClient().getTickCount();
 
-        while (Players.getLocal().distanceTo(randomTarget) > 10) {
+        while (Players.getLocal().distanceTo(randomTarget) > 10 && Game.getClient().getTickCount() <= start + 100) {
             if (!Movement.isWalking()) {
                 Movement.walkTo(randomTarget);
-            } else {
-                Inventory.getAll((i) -> i.hasAction("Search")).forEach((i) -> i.interact("Search"));
             }
 
             Time.sleepTick();
         }
+
+        Inventory.getAll((i) -> i.hasAction("Search")).forEach((i) -> i.interact("Search"));
 
         TileObject rowBoat = TileObjects.getNearest(ObjectID.ROWBOAT_30915);
         if (rowBoat == null) {
