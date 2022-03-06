@@ -5,6 +5,7 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.Game;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.packets.MovementPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
@@ -94,6 +95,6 @@ public class Cook extends Task {
         if (shrine == null) return;
 
         shrine.interact(0);
-        Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.COOKING || plugin.isWaveIncoming(), 10000);
+        Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.COOKING || plugin.isWaveIncoming() || plugin.getLastDoubleSpawn() + 3 >= Game.getClient().getTickCount(), 10000);
     }
 }

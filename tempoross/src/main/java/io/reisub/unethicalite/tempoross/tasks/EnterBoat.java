@@ -3,7 +3,7 @@ package io.reisub.unethicalite.tempoross.tasks;
 import dev.hoot.api.commons.Rand;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.packets.MovementPackets;
+import dev.hoot.api.movement.Movement;
 import dev.hoot.api.widgets.Dialog;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -40,7 +40,7 @@ public class EnterBoat extends Task {
         Time.sleepUntil(() -> plugin.isOnBoat() || plugin.getPlayersReady() >= 1, 10000);
 
         if (!plugin.isOnBoat() && plugin.getPlayersReady() >= 1) {
-            MovementPackets.sendMovement(new WorldPoint(3142, 2839, 0));
+            Movement.walk(new WorldPoint(3137, 2840, 0));
             Time.sleep(400, 700);
         }
     }

@@ -9,14 +9,12 @@ import dev.hoot.api.game.Combat;
 import dev.hoot.api.items.Equipment;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.packets.MovementPackets;
-import dev.hoot.api.widgets.Widgets;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.*;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.api.widgets.Widget;
 
 import javax.inject.Inject;
 import java.util.ArrayList;

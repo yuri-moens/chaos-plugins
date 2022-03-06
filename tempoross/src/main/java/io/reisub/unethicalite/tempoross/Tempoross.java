@@ -3,6 +3,7 @@ package io.reisub.unethicalite.tempoross;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.Game;
 import dev.hoot.api.game.Vars;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.widgets.Widgets;
@@ -98,6 +99,9 @@ public class Tempoross extends TickScript {
 	@Getter
 	@Setter
 	private volatile int cookedFishRequired;
+
+	@Getter
+	private volatile int lastDoubleSpawn;
 
 	@Override
 	protected void onStart() {
@@ -265,8 +269,12 @@ public class Tempoross extends TickScript {
 
 	@Subscribe
 	private void onNpcSpawned(NpcSpawned npcSpawned) {
-		if (npcSpawned.getNpc().getId() == NpcID.CAPTAIN_DUDI_10587 && dudiPos == null) {
+		int id = npcSpawned.getNpc().getId();
+
+		if (id == NpcID.CAPTAIN_DUDI_10587 && dudiPos == null) {
 			dudiPos = npcSpawned.getNpc().getWorldLocation();
+		} else if (id == NpcID.FISHING_SPOT_10569) {
+			lastDoubleSpawn = Game.getClient().getTickCount();
 		}
 	}
 
