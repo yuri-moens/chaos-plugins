@@ -1,6 +1,5 @@
 package io.reisub.unethicalite.smithing.tasks;
 
-import dev.hoot.api.game.Game;
 import dev.hoot.api.items.Bank;
 import dev.hoot.api.items.Equipment;
 import dev.hoot.api.items.Inventory;

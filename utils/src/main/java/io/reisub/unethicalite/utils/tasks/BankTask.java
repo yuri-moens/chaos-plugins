@@ -5,12 +5,10 @@ import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Bank;
 import dev.hoot.api.packets.DialogPackets;
-import dev.hoot.api.widgets.Widgets;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
-import net.runelite.api.widgets.Widget;
 
 import java.time.Duration;
 import java.time.Instant;
