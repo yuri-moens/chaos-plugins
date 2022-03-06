@@ -1,5 +1,6 @@
 package io.reisub.unethicalite.birdhouse.tasks;
 
+import dev.hoot.api.commons.Rand;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
@@ -41,14 +42,16 @@ public class GoToIsland extends Task {
 
     @Override
     public void execute() {
-        if (Players.getLocal().distanceTo(target) > 10) {
+        WorldPoint randomTarget = target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3));
+
+        while (Players.getLocal().distanceTo(randomTarget) > 10) {
             if (!Movement.isWalking()) {
-                Movement.walkTo(target, 2);
+                Movement.walkTo(randomTarget);
             } else {
                 Inventory.getAll((i) -> i.hasAction("Search")).forEach((i) -> i.interact("Search"));
             }
 
-            return;
+            Time.sleepTick();
         }
 
         TileObject rowBoat = TileObjects.getNearest(ObjectID.ROWBOAT_30915);

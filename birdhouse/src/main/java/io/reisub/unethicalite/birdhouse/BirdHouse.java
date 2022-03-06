@@ -68,9 +68,9 @@ public class BirdHouse extends TickScript {
 		tasks.add(new EmptyBirdHouse(this));
 		tasks.add(new GetTools(this));
 		tasks.add(new GoToBirdHouse(this));
-		tasks.add(new GoToIsland(this, config));
 		tasks.add(new GoToMushroomMeadow());
 		tasks.add(new GoToVerdantValley());
+		tasks.add(new GoToIsland(this, config));
 		tasks.add(new PickupSpore(this, config));
 		tasks.add(new PlantSeaweed(this));
 		tasks.add(new NoteSeaweed(this));

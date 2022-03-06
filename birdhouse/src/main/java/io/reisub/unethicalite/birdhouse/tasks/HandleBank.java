@@ -44,7 +44,7 @@ public class HandleBank extends BankTask {
         close();
         Time.sleepTicksUntil(() -> !Bank.isOpen(), 5);
 
-        Time.sleepTicks(2);
+        Time.sleepTick();
         Inventory.getAll(ItemID.FISHBOWL_HELMET, ItemID.DIVING_APPARATUS, ItemID.FLIPPERS).forEach((i) -> i.interact("Wear"));
 
         Item weapon = Equipment.fromSlot(EquipmentInventorySlot.WEAPON);
