@@ -18,9 +18,11 @@ import net.runelite.api.events.InteractingChanged;
 import net.runelite.api.events.PlayerSpawned;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.awt.event.KeyEvent;
 
 @Slf4j
+@Singleton
 public class MiscHelper {
     @Inject
     private CombatHelper plugin;

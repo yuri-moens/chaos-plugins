@@ -9,7 +9,9 @@ import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.client.events.ConfigChanged;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class BonesHelper {
     @Inject
     private CombatHelper plugin;

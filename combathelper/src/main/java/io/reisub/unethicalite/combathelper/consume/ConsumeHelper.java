@@ -26,9 +26,11 @@ import net.runelite.client.plugins.itemstats.StatsChanges;
 import net.runelite.client.plugins.itemstats.stats.Stats;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.awt.event.KeyEvent;
 import java.util.Set;
 
+@Singleton
 public class ConsumeHelper {
     @Inject
     private CombatHelper plugin;

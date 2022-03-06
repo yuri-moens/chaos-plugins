@@ -21,9 +21,11 @@ import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.RunepouchRune;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.awt.event.KeyEvent;
 import java.util.function.Predicate;
 
+@Singleton
 public class AlchHelper {
     @Inject
     private CombatHelper plugin;

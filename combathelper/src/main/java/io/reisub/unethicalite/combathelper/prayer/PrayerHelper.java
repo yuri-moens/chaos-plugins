@@ -28,10 +28,12 @@ import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.Subscribe;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Singleton
 public class PrayerHelper {
     @Inject
     private CombatHelper plugin;

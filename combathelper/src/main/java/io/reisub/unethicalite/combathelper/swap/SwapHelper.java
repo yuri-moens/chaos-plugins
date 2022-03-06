@@ -13,11 +13,13 @@ import io.reisub.unethicalite.combathelper.prayer.QuickPrayer;
 import net.runelite.api.*;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Singleton
 public class SwapHelper {
     @Inject
     private CombatHelper plugin;
