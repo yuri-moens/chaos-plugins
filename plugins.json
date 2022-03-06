@@ -54,6 +54,13 @@
       "version": "1.0.2",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.0.2.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-07",
+      "sha512sum": "D33D4A5AEF151B690C81F2863255ED400A0C1337CF3398BE62CA605D01AC0944EB853706E50908A5549BB6E21BEB45BFEACC63CE180414BB2D6C749E02D6BE72",
+      "version": "1.0.3",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.0.3.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -110,6 +117,13 @@
       "sha512sum": "CD868DF1F2E4E4C27406C327A093B967AA313100D2CF3D43EC54EEDAEF8A7755AE8526C42214FEC3A6C3C863DEAE86497695E768D17727DF94F813B994DAF665",
       "version": "1.1.4",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.1.4.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-07",
+      "sha512sum": "53DC846427E579EAF53F5205AB10154F8D072ACAB326CF03D0CF95B4E17BA15B8F89B27651677ED27E57F60E573DF68677FEC8DFA4D8AADA2B0C0C9C22479653",
+      "version": "1.1.5",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.1.5.jar",
       "requires": "^1.0.0"
     }
   ]
