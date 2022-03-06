@@ -116,6 +116,19 @@
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
+  "name": "Chaos Cooking",
+  "description": "It's fucking raw!",
+  "id": "chaoscooking-plugin",
+  "releases": [{
+    "date": "2022-03-06",
+    "sha512sum": "367BE749019EF5B4714257536E9451E56A532BB2C3666DA219561D55DA445ED363D4A486AA26B41FC5233A1706921C3809092B07CF78FF3736EC0D0B93729F75",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/cooking-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
   "name": "Chaos Herblore",
   "description": "You put the lime in the coconut, you drank them both up",
   "id": "chaosherblore-plugin",
