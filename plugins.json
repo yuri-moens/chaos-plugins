@@ -140,13 +140,22 @@
   "name": "Chaos Cooking",
   "description": "It's fucking raw!",
   "id": "chaoscooking-plugin",
-  "releases": [{
-    "date": "2022-03-06",
-    "sha512sum": "367BE749019EF5B4714257536E9451E56A532BB2C3666DA219561D55DA445ED363D4A486AA26B41FC5233A1706921C3809092B07CF78FF3736EC0D0B93729F75",
-    "version": "1.0.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/cooking-1.0.0.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-03-06",
+      "sha512sum": "367BE749019EF5B4714257536E9451E56A532BB2C3666DA219561D55DA445ED363D4A486AA26B41FC5233A1706921C3809092B07CF78FF3736EC0D0B93729F75",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/cooking-1.0.0.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-07",
+      "sha512sum": "B9C1529B636055DEFFB5FCD5DC22FBA40D3281194BA6C4A331D859921C7E7CC55E928243EB11433D70777FCEE514C785ACD9E55CB4ADB86128A15AD47B246DF6",
+      "version": "1.1.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/cooking-1.1.0.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
