@@ -234,7 +234,7 @@ public class ConsumeHelper {
             StatsChanges statsChanges = effect.calculate(Game.getClient());
             for (StatChange statChange : statsChanges.getStatChanges()) {
                 if (statChange.getStat().getName().equals(Stats.HITPOINTS.getName())) {
-                    return statChange.getAbsolute();
+                    return statChange.getTheoretical();
                 }
             }
         }
@@ -435,7 +435,7 @@ public class ConsumeHelper {
             lastEnergy = Game.getClient().getTickCount();
         }
 
-        if (config.enableEating() && hp < eatThreshold && missingHp <= 18 && config.comboKarambwan()) {
+        if (config.enableEating() && hp < eatThreshold && missingHp >= 18 && config.comboKarambwan()) {
             Item karambwan = Inventory.getFirst(ItemID.COOKED_KARAMBWAN, ItemID.COOKED_KARAMBWAN_3147, ItemID.COOKED_KARAMBWAN_23533, ItemID.BLIGHTED_KARAMBWAN);
             if (karambwan != null) {
                 karambwan.interact(0);
