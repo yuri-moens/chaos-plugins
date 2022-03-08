@@ -49,12 +49,12 @@ public class GoToIsland extends Task {
         while (Players.getLocal().distanceTo(randomTarget) > 10 && Game.getClient().getTickCount() <= start + 100) {
             if (!Movement.isWalking()) {
                 Movement.walkTo(randomTarget);
+            } else {
+                Inventory.getAll((i) -> i.hasAction("Search")).forEach((i) -> i.interact("Search"));
             }
 
             Time.sleepTick();
         }
-
-        Inventory.getAll((i) -> i.hasAction("Search")).forEach((i) -> i.interact("Search"));
 
         TileObject rowBoat = TileObjects.getNearest(ObjectID.ROWBOAT_30915);
         if (rowBoat == null) {

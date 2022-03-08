@@ -61,6 +61,13 @@
       "version": "1.0.3",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.0.3.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-08",
+      "sha512sum": "C97E2CDD8D0CB8BE3B01EC8F05ADDC81D28CC394CB54895BA9869C10C3AA008325AE08A9ED99A94EB091425D685DBCEE61E3F08B10FC0E937F8287BA135E57D1",
+      "version": "1.0.4",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.0.4.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
