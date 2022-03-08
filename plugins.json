@@ -30,6 +30,19 @@
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
+  "name": "Chaos Bank Pin",
+  "description": "Automatically enters your bank PIN",
+  "id": "chaosbankpin-plugin",
+  "releases": [{
+    "date": "2022-03-09",
+    "sha512sum": "E7D34CC3F574E8DD996665AA843E2A87A5E3BD6CFC656C94EA7FDAECD0C5C0D74E5E63A35B0AAF9A8CB5C064E9B6ACACF988A57F069A0F3748C6F2863374AAEA",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/bankpin-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
   "name": "Chaos Bird House",
   "description": "Mass bird slaughter",
   "id": "chaosbirdhouse-plugin",
