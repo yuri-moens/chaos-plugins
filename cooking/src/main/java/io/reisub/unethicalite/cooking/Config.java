@@ -18,6 +18,16 @@ public interface Config extends net.runelite.client.config.Config {
 	}
 
 	@ConfigItem(
+			keyName = "sonicMode",
+			name = "Sonic mode",
+			description = "Gotta go fast",
+			position = 1
+	)
+	default boolean sonicMode() {
+		return false;
+	}
+
+	@ConfigItem(
 			keyName = "startButton",
 			name = "Start/Stop",
 			description = "Start the script",

@@ -4,7 +4,9 @@ import com.google.inject.Provides;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.cooking.tasks.Cook;
+import io.reisub.unethicalite.cooking.tasks.Drop;
 import io.reisub.unethicalite.cooking.tasks.HandleBank;
+import io.reisub.unethicalite.cooking.tasks.SonicCook;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -44,11 +46,17 @@ public class Cooking extends TickScript {
 	@Setter
 	private int lastBank;
 
+	@Getter
+	@Setter
+	private int lastDrop;
+
 	@Override
 	protected void onStart() {
 		super.onStart();
 
 		tasks.add(new HandleBank(this, config));
+		tasks.add(new Drop(this, config));
+		tasks.add(new SonicCook(this, config));
 		tasks.add(new Cook(this, config));
 	}
 

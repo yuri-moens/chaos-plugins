@@ -1,5 +1,7 @@
 package io.reisub.unethicalite.cooking.tasks;
 
+import dev.hoot.api.entities.Players;
+import dev.hoot.api.entities.TileItems;
 import dev.hoot.api.game.Game;
 import dev.hoot.api.items.Bank;
 import dev.hoot.api.items.Inventory;
@@ -19,6 +21,7 @@ public class HandleBank extends BankTask {
     @Override
     public boolean validate() {
         return !Inventory.contains(config.foodId())
+                && (!config.sonicMode() || TileItems.getFirstAt(Players.getLocal().getWorldLocation(), config.foodId()) == null)
                 && isLastBankDurationAgo(Duration.ofSeconds(5));
     }
 
