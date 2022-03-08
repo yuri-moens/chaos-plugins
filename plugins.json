@@ -168,6 +168,13 @@
       "version": "1.2.0",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/cooking-1.2.0.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-08",
+      "sha512sum": "5CAA0129EF2B0C6C9FF17BF3EE7DE2CB35A2A9A143FD34A7D777C626F1AC1B710BB1981FB7FF9BC5C0AEB7D30D5AF5FC068AA3F9FEB3E446B4ADBCC5180B8928",
+      "version": "1.2.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/cooking-1.2.1.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {

@@ -29,17 +29,15 @@ public class Cook extends Task {
     @Override
     public boolean validate() {
         int count = Inventory.getCount(config.foodId());
-        return (plugin.getCurrentActivity() == Activity.IDLE || count == 1)
+
+        return !config.sonicMode()
+                && (plugin.getCurrentActivity() == Activity.IDLE || count == 1)
                 && (count > 0 || plugin.getLastBank() + 1 >= Game.getClient().getTickCount())
                 && Game.getClient().getTickCount() >= last + 3;
     }
 
     @Override
     public void execute() {
-        if (config.sonicMode()) {
-            Inventory.getAll(config.foodId()).forEach((i) -> i.interact("Drop"));
-        }
-
         TileObject oven = TileObjects.getNearest(ObjectID.CLAY_OVEN_21302, ObjectID.RANGE_31631);
         TileObject fire = TileObjects.getNearest("Fire");
         if (oven == null && fire == null) {

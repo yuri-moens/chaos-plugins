@@ -4,7 +4,6 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileItems;
 import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.game.Game;
 import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.cooking.Config;
 import io.reisub.unethicalite.cooking.Cooking;
