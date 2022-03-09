@@ -33,8 +33,11 @@ include("cooking")
 include("herblore")
 include("smithing")
 include("tempoross")
-include("test")
 include("utils")
+
+if (File("./test").exists()) {
+    include("test")
+}
 
 for (project in rootProject.children) {
     project.apply {
