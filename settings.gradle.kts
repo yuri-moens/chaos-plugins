@@ -26,6 +26,7 @@
 rootProject.name = "Chaos Plugins"
 
 include("autodropper")
+include("bankpin")
 include("birdhouse")
 include("combathelper")
 include("cooking")
