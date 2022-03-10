@@ -185,6 +185,10 @@ public abstract class BankTask extends Task {
         return open(15);
     }
 
+    protected boolean open(String name) {
+        return open(name, 15);
+    }
+
     protected boolean open(int waitTicks) {
         if (Bank.isOpen()) return true;
 
@@ -216,6 +220,31 @@ public abstract class BankTask extends Task {
 
         if (!Time.sleepTicksUntil(Bank::isOpen, waitTicks)) {
             bankObject = null;
+            bankNpc = null;
+        }
+
+        last = Instant.now();
+
+        return Bank.isOpen();
+    }
+
+    protected boolean open(String name, int waitTicks) {
+        if (Bank.isOpen()) {
+            return true;
+        }
+
+        if (bankNpc == null) {
+            bankNpc = NPCs.getNearest(name);
+        }
+
+        if (bankNpc == null) {
+            System.out.println("npc is null");
+            return false;
+        }
+
+        bankNpc.interact("Bank");
+
+        if (!Time.sleepTicksUntil(Bank::isOpen, waitTicks)) {
             bankNpc = null;
         }
 
