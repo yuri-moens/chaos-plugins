@@ -40,6 +40,7 @@ public class SonicCook extends Task {
         food.interact("Take");
         Time.sleepTick();
 
+
         TileObject oven = TileObjects.getNearest(ObjectID.CLAY_OVEN_21302, ObjectID.RANGE_31631);
         TileObject fire = TileObjects.getNearest("Fire");
         if (oven == null && fire == null) {

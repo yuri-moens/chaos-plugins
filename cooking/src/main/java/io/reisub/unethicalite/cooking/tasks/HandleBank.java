@@ -15,6 +15,8 @@ import java.time.Duration;
 
 @AllArgsConstructor
 public class HandleBank extends BankTask {
+    private static final int ROGUES_DEN_REGION = 12109;
+
     private final Cooking plugin;
     private final Config config;
 
@@ -27,7 +29,11 @@ public class HandleBank extends BankTask {
 
     @Override
     public void execute() {
-        open();
+        if (Players.getLocal().getWorldLocation().getRegionID() == ROGUES_DEN_REGION) {
+            open("Emerald Benedict");
+        } else {
+            open();
+        }
 
         Bank.depositInventory();
 
