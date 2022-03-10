@@ -1,16 +1,21 @@
 package io.reisub.unethicalite.cooking.tasks;
 
 import dev.hoot.api.commons.Time;
+import dev.hoot.api.entities.Players;
 import dev.hoot.api.game.Game;
 import dev.hoot.api.items.Inventory;
+import dev.hoot.api.movement.Movement;
 import io.reisub.unethicalite.cooking.Config;
 import io.reisub.unethicalite.cooking.Cooking;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import lombok.RequiredArgsConstructor;
+import net.runelite.api.coords.WorldPoint;
 
 @RequiredArgsConstructor
 public class Drop extends Task {
+    private static final WorldPoint HOSIDIUS_COOKING_SPOT = new WorldPoint(1677, 3621, 0);
+
     private final Cooking plugin;
     private final Config config;
 
@@ -31,7 +36,14 @@ public class Drop extends Task {
 
     @Override
     public void execute() {
-        // TODO: move to oven in Hosidius before dropping
+        if (Players.getLocal().distanceTo(HOSIDIUS_COOKING_SPOT) < 10
+                && !Players.getLocal().getWorldLocation().equals(HOSIDIUS_COOKING_SPOT)) {
+            Movement.walk(HOSIDIUS_COOKING_SPOT);
+
+            if (!Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(HOSIDIUS_COOKING_SPOT), 10)) {
+                return;
+            }
+        }
 
         Inventory.getAll(config.foodId()).forEach((i) -> i.interact("Drop"));
 
