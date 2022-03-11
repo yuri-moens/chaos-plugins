@@ -2,6 +2,7 @@ package io.reisub.unethicalite.combathelper.swap;
 
 import dev.hoot.api.commons.Rand;
 import dev.hoot.api.entities.NPCs;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.game.Skills;
 import dev.hoot.api.game.Vars;
 import dev.hoot.api.items.Equipment;
@@ -80,7 +81,6 @@ public class SwapHelper {
         if (plugin.getLastTarget() == null) return;
 
         NPC target = null;
-
 
         List<NPC> npcList = NPCs.getAll((n) -> n.getWorldLocation().equals(plugin.getLastTarget().getWorldLocation()));
         if (npcList != null && npcList.size() > 0) {
@@ -201,7 +201,7 @@ public class SwapHelper {
         }
 
         if (plugin.getLastTarget() != null) {
-            plugin.getLastTarget().interact("Attack");
+            GameThread.invoke(() -> plugin.getLastTarget().interact("Attack"));
         }
     }
 
@@ -226,7 +226,7 @@ public class SwapHelper {
         }
 
         if (plugin.getLastTarget() != null) {
-            plugin.getLastTarget().interact("Attack");
+            GameThread.invoke(() -> plugin.getLastTarget().interact("Attack"));
         }
     }
 }
