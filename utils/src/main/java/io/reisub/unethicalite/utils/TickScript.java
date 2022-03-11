@@ -5,6 +5,7 @@ import dev.hoot.api.entities.Players;
 import dev.hoot.api.game.Game;
 import dev.hoot.api.input.Keyboard;
 import dev.hoot.api.utils.MessageUtils;
+import dev.hoot.bot.managers.Static;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import lombok.Getter;
@@ -214,14 +215,28 @@ public abstract class TickScript extends Plugin {
     protected void onStop() {
         log.info("Stopping " + this.getName());
 
+        for (Task task : tasks) {
+            Static.getEventBus().unregister(task);
+        }
+
         tasks.clear();
 
         previousActivity = Activity.IDLE;
         currentActivity = Activity.IDLE;
     }
 
+    protected final void addTask(Task task) {
+        Static.getEventBus().register(task);
+
+        tasks.add(task);
+    }
+
     protected final <T extends Task> void addTask(Class<T> type) {
-        tasks.add(injector.getInstance(type));
+        Task task = injector.getInstance(type);
+
+        Static.getEventBus().register(task);
+
+        tasks.add(task);
     }
 
     protected void checkActionTimeout() {
