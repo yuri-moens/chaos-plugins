@@ -7,11 +7,13 @@ import dev.hoot.api.game.Skills;
 import dev.hoot.api.game.Vars;
 import dev.hoot.api.items.Equipment;
 import dev.hoot.api.items.Inventory;
-import io.reisub.unethicalite.combathelper.CombatHelper;
-import io.reisub.unethicalite.combathelper.Config;
+import io.reisub.unethicalite.combathelper.Helper;
 import io.reisub.unethicalite.combathelper.prayer.PrayerHelper;
 import io.reisub.unethicalite.combathelper.prayer.QuickPrayer;
 import net.runelite.api.*;
+import net.runelite.api.events.GameTick;
+import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.ConfigChanged;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -21,13 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 @Singleton
-public class SwapHelper {
-    @Inject
-    private CombatHelper plugin;
-
-    @Inject
-    private Config config;
-
+public class SwapHelper extends Helper {
     @Inject
     private PrayerHelper prayerHelper;
 
@@ -35,17 +31,24 @@ public class SwapHelper {
     private Set<Integer> rangedIds;
     private Set<Integer> magicIds;
 
+    @Override
     public void startUp() {
         meleeIds = parseIds(config.meleeGear());
         rangedIds = parseIds(config.rangedGear());
         magicIds = parseIds(config.magicGear());
     }
 
-    public void onGameTick() {
+    @Subscribe
+    private void onGameTick(GameTick event) {
         plugin.schedule(this::tick, Rand.nextInt(100, 120));
     }
 
-    public void onConfigChanged() {
+    @Subscribe
+    private void onConfigChanged(ConfigChanged event) {
+        if (!event.getGroup().equals("chaoscombathelper")) {
+            return;
+        }
+
         meleeIds = parseIds(config.meleeGear());
         rangedIds = parseIds(config.rangedGear());
         magicIds = parseIds(config.magicGear());
@@ -198,31 +201,6 @@ public class SwapHelper {
             }
 
             break;
-        }
-
-        if (plugin.getLastTarget() != null) {
-            GameThread.invoke(() -> plugin.getLastTarget().interact("Attack"));
-        }
-    }
-
-    @SafeVarargs
-    private void swap(Set<Integer>... sets) {
-        for (Set<Integer> set : sets) {
-            if (set.isEmpty()) continue;
-
-            List<Item> items = Inventory.getAll((i) -> set.contains(i.getId()));
-
-            if (!items.isEmpty()) {
-                for (Item item : items) {
-                    if (item.hasAction("Wield")) {
-                        item.interact("Wield");
-                    } else {
-                        item.interact("Wear");
-                    }
-                }
-
-                break;
-            }
         }
 
         if (plugin.getLastTarget() != null) {

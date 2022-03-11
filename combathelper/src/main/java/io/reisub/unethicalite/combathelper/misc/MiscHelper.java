@@ -8,31 +8,25 @@ import dev.hoot.api.items.Equipment;
 import dev.hoot.api.magic.Magic;
 import dev.hoot.api.magic.Regular;
 import dev.hoot.api.utils.MessageUtils;
-import io.reisub.unethicalite.combathelper.CombatHelper;
-import io.reisub.unethicalite.combathelper.Config;
+import io.reisub.unethicalite.combathelper.Helper;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Item;
 import net.runelite.api.Player;
 import net.runelite.api.Varbits;
 import net.runelite.api.events.InteractingChanged;
 import net.runelite.api.events.PlayerSpawned;
+import net.runelite.client.eventbus.Subscribe;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.awt.event.KeyEvent;
 
 @Slf4j
 @Singleton
-public class MiscHelper {
-    @Inject
-    private CombatHelper plugin;
-
-    @Inject
-    private Config config;
-
+public class MiscHelper extends Helper {
     private boolean pkTeleport;
 
-    public void onPlayerSpawned(PlayerSpawned event) {
+    @Subscribe(priority = 100)
+    private void onPlayerSpawned(PlayerSpawned event) {
         if (!config.tpOnDangerousPlayer() || !pkTeleport || Game.getClient().getVar(Varbits.IN_WILDERNESS) == 0 || event.getPlayer() == null) return;
 
         int wildyLevel = Game.getWildyLevel();
@@ -49,7 +43,8 @@ public class MiscHelper {
         }
     }
 
-    public void onInteractingChanged(InteractingChanged event) {
+    @Subscribe(priority = 100)
+    private void onInteractingChanged(InteractingChanged event) {
         if (!config.tpOnPlayerAttack() || !pkTeleport || Game.getClient().getVar(Varbits.IN_WILDERNESS) == 0) return;
 
         if (event.getSource() == null || event.getTarget() == null || event.getTarget().getName() == null) return;

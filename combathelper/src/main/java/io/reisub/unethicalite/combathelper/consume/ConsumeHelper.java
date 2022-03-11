@@ -11,13 +11,10 @@ import dev.hoot.api.items.Inventory;
 import dev.hoot.api.movement.Movement;
 import dev.hoot.api.utils.MessageUtils;
 import dev.hoot.api.widgets.Dialog;
-import io.reisub.unethicalite.combathelper.CombatHelper;
-import io.reisub.unethicalite.combathelper.Config;
+import io.reisub.unethicalite.combathelper.Helper;
 import net.runelite.api.*;
-import net.runelite.api.events.ChatMessage;
-import net.runelite.api.events.GameStateChanged;
-import net.runelite.api.events.StatChanged;
-import net.runelite.api.events.VarbitChanged;
+import net.runelite.api.events.*;
+import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.itemstats.Effect;
 import net.runelite.client.plugins.itemstats.ItemStatChanges;
@@ -31,13 +28,7 @@ import java.awt.event.KeyEvent;
 import java.util.Set;
 
 @Singleton
-public class ConsumeHelper {
-    @Inject
-    private CombatHelper plugin;
-
-    @Inject
-    private Config config;
-
+public class ConsumeHelper extends Helper {
     @Inject
     private ItemStatChanges statChanges;
 
@@ -119,12 +110,14 @@ public class ConsumeHelper {
     private long lastSpecial;
     private long lastEnergy;
 
+    @Override
     public void startUp() {
         generateNewEatThreshold();
         generateNewPrayerThreshold();
     }
 
-    public void onGameTick() {
+    @Subscribe
+    private void onGameTick(GameTick event) {
         if (Bank.isOpen() || Dialog.isOpen()) return;
 
         if (config.useSpecial()
@@ -148,7 +141,8 @@ public class ConsumeHelper {
         plugin.schedule(this::tick, Rand.nextInt(50, 80));
     }
 
-    public void onVarbitChanged(VarbitChanged event) {
+    @Subscribe
+    private void onVarbitChanged(VarbitChanged event) {
         if (Game.getState() != GameState.LOGGED_IN) return;
 
         if (config.drinkAntiPoison()
@@ -159,7 +153,8 @@ public class ConsumeHelper {
         }
     }
 
-    public void onChatMessage(ChatMessage event) {
+    @Subscribe
+    private void onChatMessage(ChatMessage event) {
         if (Game.getState() != GameState.LOGGED_IN) return;
 
         String BURN_MESSAGE = ("You're horribly burnt by the dragon fire!");
@@ -172,7 +167,8 @@ public class ConsumeHelper {
         }
     }
 
-    public void onStatChanged(StatChanged event) {
+    @Subscribe
+    private void onStatChanged(StatChanged event) {
         if (Game.getState() != GameState.LOGGED_IN || timeout > 0) return;
 
         Skill skill = event.getSkill();
@@ -181,13 +177,19 @@ public class ConsumeHelper {
         checkSkill(skill, level);
     }
 
-    public void onGameStateChanged(GameStateChanged event) {
+    @Subscribe
+    private void onGameStateChanged(GameStateChanged event) {
         if (event.getGameState() == GameState.LOGGED_IN) {
             timeout = 5;
         }
     }
 
-    public void onConfigChanged(ConfigChanged event) {
+    @Subscribe
+    private void onConfigChanged(ConfigChanged event) {
+        if (!event.getGroup().equals("chaoscombathelper")) {
+            return;
+        }
+
         switch (event.getKey()) {
             case "minEatHP":
             case "maxEatHP":

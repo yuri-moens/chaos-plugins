@@ -2,40 +2,41 @@ package io.reisub.unethicalite.combathelper.bones;
 
 import dev.hoot.api.commons.Rand;
 import dev.hoot.api.items.Inventory;
-import io.reisub.unethicalite.combathelper.CombatHelper;
-import io.reisub.unethicalite.combathelper.Config;
+import io.reisub.unethicalite.combathelper.Helper;
 import net.runelite.api.Item;
 import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class BonesHelper {
-    @Inject
-    private CombatHelper plugin;
-
-    @Inject
-    private Config config;
-
+public class BonesHelper extends Helper {
     private int[] itemIds;
 
+    @Override
     public void startUp() {
         itemIds = parseItemIds();
     }
 
+    @Override
     public void shutDown() {
         itemIds =  null;
     }
 
-    public void onConfigChanged(ConfigChanged event) {
+    @Subscribe
+    private void onConfigChanged(ConfigChanged event) {
+        if (!event.getGroup().equals("chaoscombathelper")) {
+            return;
+        }
+
         if (event.getKey().equals("bones") || event.getKey().equals("ashes")) {
             itemIds = parseItemIds();
         }
     }
 
-    public void onItemContainerChanged(ItemContainerChanged event) {
+    @Subscribe
+    private void onItemContainerChanged(ItemContainerChanged event) {
         if (config.bones().getId() == -1 && config.ashes().getId() == -1) return;
 
         plugin.schedule(() -> {

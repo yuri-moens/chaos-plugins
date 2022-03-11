@@ -10,29 +10,23 @@ import dev.hoot.api.magic.Regular;
 import dev.hoot.api.utils.MessageUtils;
 import dev.hoot.api.widgets.Tab;
 import dev.hoot.api.widgets.Tabs;
-import io.reisub.unethicalite.combathelper.CombatHelper;
-import io.reisub.unethicalite.combathelper.Config;
+import io.reisub.unethicalite.combathelper.Helper;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 import net.runelite.api.Varbits;
 import net.runelite.api.events.ChatMessage;
+import net.runelite.api.events.GameTick;
 import net.runelite.api.util.Text;
+import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.RunepouchRune;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.awt.event.KeyEvent;
 import java.util.function.Predicate;
 
 @Singleton
-public class AlchHelper {
-    @Inject
-    private CombatHelper plugin;
-
-    @Inject
-    private Config config;
-
+public class AlchHelper extends Helper {
     private final static String FINISHED_TASK_MSG = "You have completed your task!";
     private static final Varbits[] AMOUNT_VARBITS = {
             Varbits.RUNE_POUCH_AMOUNT1, Varbits.RUNE_POUCH_AMOUNT2, Varbits.RUNE_POUCH_AMOUNT3
@@ -73,12 +67,14 @@ public class AlchHelper {
         }
     };
 
+    @Override
     public void startUp() {
         names = parseItems(config.alchItems());
         blacklistNames = parseItems(config.alchItemsBlacklist());
     }
 
-    public void onGameTick() {
+    @Subscribe
+    private void onGameTick(GameTick event) {
         if (!active || last + 5 > Game.getClient().getTickCount()) return;
 
         if (names == null || names.length == 0) return;
@@ -88,7 +84,12 @@ public class AlchHelper {
         }
     }
 
-    public void onConfigChanged(ConfigChanged event) {
+    @Subscribe
+    private void onConfigChanged(ConfigChanged event) {
+        if (!event.getGroup().equals("chaoscombathelper")) {
+            return;
+        }
+
         if (event.getKey().equals("alchItems")) {
             names = parseItems(config.alchItems());
         }
@@ -98,12 +99,26 @@ public class AlchHelper {
         }
     }
 
-    public void onChatMessage(ChatMessage event) {
+    @Subscribe
+    private void onChatMessage(ChatMessage event) {
         String msg = event.getMessage();
 
         if (Text.removeFormattingTags(msg).startsWith(FINISHED_TASK_MSG) && config.disableAfterTask()) {
             active = false;
             MessageUtils.addMessage("Finished Slayer task, disabled Auto Alcher");
+        }
+    }
+
+    public void keyPressed(KeyEvent e) {
+        if (config.autoalchHotkey().matches(e)) {
+            e.consume();
+            active = !active;
+
+            if (active) {
+                MessageUtils.addMessage("Enabled Auto Alcher");
+            } else {
+                MessageUtils.addMessage("Disabled Auto Alcher");
+            }
         }
     }
 
@@ -126,19 +141,6 @@ public class AlchHelper {
         }
 
         return itemsArray;
-    }
-
-    public void keyPressed(KeyEvent e) {
-        if (config.autoalchHotkey().matches(e)) {
-            e.consume();
-            active = !active;
-
-            if (active) {
-                MessageUtils.addMessage("Enabled Auto Alcher");
-            } else {
-                MessageUtils.addMessage("Disabled Auto Alcher");
-            }
-        }
     }
 
     private boolean hasRunes() {

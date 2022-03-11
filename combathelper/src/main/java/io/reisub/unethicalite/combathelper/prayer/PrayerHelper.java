@@ -16,8 +16,7 @@ import dev.hoot.api.widgets.Tabs;
 import dev.hoot.api.widgets.Widgets;
 import dev.hoot.bot.managers.interaction.InteractMethod;
 import dev.hoot.bot.managers.interaction.InteractionConfig;
-import io.reisub.unethicalite.combathelper.CombatHelper;
-import io.reisub.unethicalite.combathelper.Config;
+import io.reisub.unethicalite.combathelper.Helper;
 import net.runelite.api.*;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
@@ -34,13 +33,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Singleton
-public class PrayerHelper {
-    @Inject
-    private CombatHelper plugin;
-
-    @Inject
-    private Config config;
-
+public class PrayerHelper extends Helper {
     @Inject
     private InteractionConfig interactionConfig;
 
@@ -61,6 +54,7 @@ public class PrayerHelper {
     private Map<Player, MemorizedPlayer> memorizedPlayers;
     private DemonicGorilla currentGorilla;
 
+    @Override
     public void startUp() {
         gorillas = new HashMap<>();
         recentBoulders = new ArrayList<>();
@@ -69,6 +63,7 @@ public class PrayerHelper {
         GameThread.invoke(this::reset); // Updates the list of gorillas and players
     }
 
+    @Override
     public void shutDown() {
         gorillas = null;
         recentBoulders = null;
@@ -76,7 +71,8 @@ public class PrayerHelper {
         memorizedPlayers = null;
     }
 
-    public void onGameTick(GameTick event) {
+    @Subscribe(priority = 100)
+    private void onGameTick(GameTick event) {
         checkGorillaAttacks();
         checkPendingAttacks();
         updatePlayers();
@@ -170,7 +166,8 @@ public class PrayerHelper {
         }
     }
 
-    public void onAnimationChanged(AnimationChanged event) {
+    @Subscribe
+    private void onAnimationChanged(AnimationChanged event) {
         Actor actor = event.getActor();
         if (actor == null) return;
 
@@ -237,7 +234,8 @@ public class PrayerHelper {
         }
     }
 
-    public void onInteractingChanged() {
+    @Subscribe
+    private void onInteractingChanged() {
         currentGorilla = getCurrentGorilla();
     }
 
@@ -814,7 +812,8 @@ public class PrayerHelper {
         }
     }
 
-    public void onHitsplatApplied(HitsplatApplied event)
+    @Subscribe
+    private void onHitsplatApplied(HitsplatApplied event)
     {
         if (gorillas.isEmpty())
         {
@@ -842,7 +841,8 @@ public class PrayerHelper {
         }
     }
 
-    public void onGameStateChanged(GameStateChanged event)
+    @Subscribe
+    private void onGameStateChanged(GameStateChanged event)
     {
         GameState gs = event.getGameState();
         if (gs == GameState.LOGGING_IN ||
@@ -853,7 +853,8 @@ public class PrayerHelper {
         }
     }
 
-    public void onPlayerSpawned(PlayerSpawned event)
+    @Subscribe
+    private void onPlayerSpawned(PlayerSpawned event)
     {
         if (gorillas.isEmpty())
         {
@@ -869,7 +870,8 @@ public class PrayerHelper {
         memorizedPlayers.put(player, new MemorizedPlayer(player));
     }
 
-    public void onPlayerDespawned(PlayerDespawned event)
+    @Subscribe
+    private void onPlayerDespawned(PlayerDespawned event)
     {
         if (gorillas.isEmpty())
         {
@@ -879,7 +881,8 @@ public class PrayerHelper {
         memorizedPlayers.remove(event.getPlayer());
     }
 
-    public void onNpcSpawned(NpcSpawned event)
+    @Subscribe
+    private void onNpcSpawned(NpcSpawned event)
     {
         NPC npc = event.getNpc();
         if (isNpcGorilla(npc.getId()))
@@ -895,7 +898,8 @@ public class PrayerHelper {
         }
     }
 
-    public void onNpcDespawned(NpcDespawned event)
+    @Subscribe
+    private void onNpcDespawned(NpcDespawned event)
     {
         if (currentGorilla != null && currentGorilla.getNpc().equals(event.getNpc())) {
             currentGorilla = null;
