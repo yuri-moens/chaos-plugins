@@ -214,6 +214,19 @@
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
+  "name": "Chaos Daeyalt Essence",
+  "description": "For people too lazy to click a rock every 30 seconds",
+  "id": "chaosdaeyaltessence-plugin",
+  "releases": [{
+    "date": "2022-03-11",
+    "sha512sum": "8DBE66EC1084189C207168648E28DC48660165C12F5C80F731DB3FDD8E3FE941535E3D217F9CD5F90F0C7C3AE0F0B34675B7D2EFAE990150E40D34E1369DA12B",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/daeyaltessence-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
   "name": "Chaos Herblore",
   "description": "You put the lime in the coconut, you drank them both up",
   "id": "chaosherblore-plugin",
