@@ -106,6 +106,7 @@ public interface Config extends net.runelite.client.config.Config {
 			keyName = "potsConfig",
 			name = "Potions Configuration",
 			description = "Configure when to pot",
+			closedByDefault = true,
 			position = 100
 	)
 	String potsConfig = "potsConfig";
@@ -445,7 +446,7 @@ public interface Config extends net.runelite.client.config.Config {
 			keyName = "specialConfig",
 			name = "Weapon Special Configuration",
 			description = "Configure weapon specials",
-			hidden = true,
+			closedByDefault = true,
 			position = 200
 	)
 	String specialConfig = "specialConfig";
@@ -518,7 +519,7 @@ public interface Config extends net.runelite.client.config.Config {
 			keyName = "prayerConfig",
 			name = "Prayer Configuration",
 			description = "Configure prayer flicking and swapping",
-			hidden = true,
+			closedByDefault = true,
 			position = 300
 	)
 	String prayerConfig = "prayerConfig";
@@ -651,7 +652,7 @@ public interface Config extends net.runelite.client.config.Config {
 			keyName = "bonesConfig",
 			name = "Bones/ashes Configuration",
 			description = "Configure bones burying and ashes scattering",
-			hidden = true,
+			closedByDefault = true,
 			position = 400
 	)
 	String bonesConfig = "bonesConfig";
@@ -687,7 +688,7 @@ public interface Config extends net.runelite.client.config.Config {
 			keyName = "alchConfig",
 			name = "Alch Configuration",
 			description = "Configure automatic alching",
-			hidden = true,
+			closedByDefault = true,
 			position = 500
 	)
 	String alchConfig = "alchConfig";
@@ -743,7 +744,7 @@ public interface Config extends net.runelite.client.config.Config {
 			keyName = "swapConfig",
 			name = "Swap Configuration",
 			description = "Configure automatic swapping",
-			hidden = true,
+			closedByDefault = true,
 			position = 600
 	)
 	String swapConfig = "swapConfig";
@@ -841,7 +842,7 @@ public interface Config extends net.runelite.client.config.Config {
 			name = "Misc Configuration",
 			description = "Configure miscellaneous features",
 			section = "swapConfig",
-			hidden = true,
+			closedByDefault = true,
 			position = 700
 	)
 	String miscConfig = "miscConfig";
