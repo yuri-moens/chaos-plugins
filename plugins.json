@@ -166,6 +166,13 @@
       "version": "1.2.0",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.2.0.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-11",
+      "sha512sum": "C6E6358D984F61D6176A81155ACED2C40721CDF4097095BEB3269312404BD02DA0B34BA94806EFEF0C3904FF5C7B9D7EC575DEADC3E83AE0DFFE8E4036D4854E",
+      "version": "1.2.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.2.1.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {

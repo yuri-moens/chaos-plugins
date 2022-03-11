@@ -235,7 +235,7 @@ public class PrayerHelper extends Helper {
     }
 
     @Subscribe
-    private void onInteractingChanged() {
+    private void onInteractingChanged(InteractingChanged event) {
         currentGorilla = getCurrentGorilla();
     }
 
