@@ -27,7 +27,7 @@ public class Smith extends Task {
     @Override
     public boolean validate() {
         return plugin.getCurrentActivity() == Activity.IDLE
-                && Inventory.getCount(config.metal().getBarId()) >= config.product().getRequiredBars();
+                && (Inventory.getCount(config.metal().getBarId()) >= config.product().getRequiredBars() || plugin.getPreviousActivity() == Activity.BANKING);
     }
 
     @Override

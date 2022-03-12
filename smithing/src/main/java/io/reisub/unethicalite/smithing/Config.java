@@ -21,7 +21,7 @@ public interface Config extends net.runelite.client.config.Config {
 			description = "Choose product",
 			position = 1
 	)
-	default Product product() { return Product.PLATEBODY; }
+	default Product product() { return Product.PLATE_BODY; }
 
 	@ConfigItem(
 			keyName = "startButton",

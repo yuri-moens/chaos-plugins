@@ -5,6 +5,7 @@ import dev.hoot.api.items.Equipment;
 import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.smithing.Config;
 import io.reisub.unethicalite.smithing.Smithing;
+import io.reisub.unethicalite.utils.api.CBank;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,10 @@ public class HandleBank extends BankTask {
 
     @Override
     public void execute() {
+        plugin.setActivity(Activity.BANKING);
+
         if (!open()) {
+            plugin.setActivity(Activity.IDLE);
             return;
         }
 
@@ -38,8 +42,13 @@ public class HandleBank extends BankTask {
             }
         }
 
-        Bank.depositAllExcept(ItemID.HAMMER, ItemID.IMCANDO_HAMMER, config.metal().getBarId());
+        CBank.depositAllExcept(false, ItemID.HAMMER, ItemID.IMCANDO_HAMMER, config.metal().getBarId());
 
-        Bank.withdrawAll(config.metal().getBarId(), Bank.WithdrawMode.ITEM);
+        if (Bank.getCount(true, config.metal().getBarId()) >= config.product().getRequiredBars()) {
+            Bank.withdrawAll(config.metal().getBarId(), Bank.WithdrawMode.ITEM);
+            plugin.setActivity(Activity.IDLE);
+        } else {
+            plugin.stop("Out of bars. Stopping plugin.");
+        }
     }
 }
