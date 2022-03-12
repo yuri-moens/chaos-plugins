@@ -3,7 +3,12 @@ package io.reisub.unethicalite.herblore;
 import com.google.inject.Provides;
 import dev.hoot.api.game.Game;
 import dev.hoot.api.items.Inventory;
-import io.reisub.unethicalite.herblore.tasks.*;
+import io.reisub.unethicalite.herblore.tasks.Clean;
+import io.reisub.unethicalite.herblore.tasks.HandleBank;
+import io.reisub.unethicalite.herblore.tasks.MakePotion;
+import io.reisub.unethicalite.herblore.tasks.MakeUnfinished;
+import io.reisub.unethicalite.herblore.tasks.ProcessSecondary;
+import io.reisub.unethicalite.herblore.tasks.TarHerbs;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -53,7 +58,7 @@ public class Herblore extends TickScript {
 
 	@Subscribe
 	private void onItemContainerChanged(ItemContainerChanged event) {
-		if (!isLoggedIn() || event.getItemContainer() != Game.getClient().getItemContainer(InventoryID.INVENTORY)) return;
+		if (!Utils.isLoggedIn() || event.getItemContainer() != Game.getClient().getItemContainer(InventoryID.INVENTORY)) return;
 
 
 		int grimyHerbs = Inventory.getCount(getGrimyHerbIds());

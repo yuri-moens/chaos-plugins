@@ -5,6 +5,7 @@ import dev.hoot.api.items.Bank;
 import io.reisub.unethicalite.herblore.Herblore;
 import io.reisub.unethicalite.herblore.Potion;
 import io.reisub.unethicalite.herblore.Secondary;
+import io.reisub.unethicalite.utils.api.CBank;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import net.runelite.api.ItemID;
@@ -89,13 +90,13 @@ public class HandleBank extends BankTask {
     private void deposit() {
         switch (plugin.getConfig().task()) {
             case TAR_HERBS:
-                Bank.depositAllExcept(ItemID.PESTLE_AND_MORTAR, ItemID.SWAMP_TAR);
+                CBank.depositAllExcept(ItemID.PESTLE_AND_MORTAR, ItemID.SWAMP_TAR);
                 break;
             case PROCESS_SECONDARIES:
-                Bank.depositAllExcept(ItemID.PESTLE_AND_MORTAR);
+                CBank.depositAllExcept(ItemID.PESTLE_AND_MORTAR);
                 break;
             case MAKE_COCONUT_MILK:
-                Bank.depositAllExcept( ItemID.HAMMER, ItemID.IMCANDO_HAMMER);
+                CBank.depositAllExcept( ItemID.HAMMER, ItemID.IMCANDO_HAMMER);
                 break;
             default:
                 Bank.depositInventory();
