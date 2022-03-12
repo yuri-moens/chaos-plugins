@@ -62,7 +62,7 @@ public class Cooking extends TickScript {
 
 	@Subscribe
 	private void onAnimationChanged(AnimationChanged event) {
-		if (!isLoggedIn() || event.getActor() != Players.getLocal()) return;
+		if (!Utils.isLoggedIn() || event.getActor() != Players.getLocal()) return;
 
 		switch (Players.getLocal().getAnimation()) {
 			case AnimationID.COOKING_FIRE:
@@ -73,7 +73,7 @@ public class Cooking extends TickScript {
 
 	@Subscribe
 	private void onItemContainerChanged(ItemContainerChanged event) {
-		if (!isLoggedIn()) return;
+		if (!Utils.isLoggedIn()) return;
 
 		if (currentActivity == Activity.COOKING && !Inventory.contains(config.foodId())) {
 			setActivity(Activity.IDLE);
