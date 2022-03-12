@@ -8,7 +8,11 @@ import dev.hoot.api.items.Inventory;
 import dev.hoot.api.widgets.Dialog;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.tasks.Task;
-import net.runelite.api.*;
+import net.runelite.api.ItemID;
+import net.runelite.api.NPC;
+import net.runelite.api.NpcID;
+import net.runelite.api.ObjectID;
+import net.runelite.api.TileObject;
 
 import javax.inject.Inject;
 

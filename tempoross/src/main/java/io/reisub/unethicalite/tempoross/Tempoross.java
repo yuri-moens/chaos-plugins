@@ -7,7 +7,19 @@ import dev.hoot.api.game.Game;
 import dev.hoot.api.game.Vars;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.widgets.Widgets;
-import io.reisub.unethicalite.tempoross.tasks.*;
+import io.reisub.unethicalite.tempoross.tasks.Attack;
+import io.reisub.unethicalite.tempoross.tasks.Cook;
+import io.reisub.unethicalite.tempoross.tasks.DodgeFire;
+import io.reisub.unethicalite.tempoross.tasks.DouseFire;
+import io.reisub.unethicalite.tempoross.tasks.EnterBoat;
+import io.reisub.unethicalite.tempoross.tasks.FillBuckets;
+import io.reisub.unethicalite.tempoross.tasks.Fish;
+import io.reisub.unethicalite.tempoross.tasks.HandleBank;
+import io.reisub.unethicalite.tempoross.tasks.LeaveBoat;
+import io.reisub.unethicalite.tempoross.tasks.LeaveGame;
+import io.reisub.unethicalite.tempoross.tasks.Repair;
+import io.reisub.unethicalite.tempoross.tasks.Stock;
+import io.reisub.unethicalite.tempoross.tasks.Tether;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -15,10 +27,25 @@ import io.reisub.unethicalite.utils.tasks.Run;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.*;
+import net.runelite.api.AnimationID;
+import net.runelite.api.ChatMessageType;
+import net.runelite.api.Client;
+import net.runelite.api.Hitsplat;
+import net.runelite.api.ItemContainer;
+import net.runelite.api.ItemID;
+import net.runelite.api.NpcID;
+import net.runelite.api.ObjectID;
+import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
-import net.runelite.api.events.*;
+import net.runelite.api.events.AnimationChanged;
+import net.runelite.api.events.ChatMessage;
+import net.runelite.api.events.GameObjectDespawned;
+import net.runelite.api.events.GameTick;
+import net.runelite.api.events.HitsplatApplied;
+import net.runelite.api.events.InteractingChanged;
+import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.events.NpcSpawned;
 import net.runelite.api.util.Text;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.config.ConfigManager;
@@ -163,7 +190,7 @@ public class Tempoross extends TickScript {
 
 	@Subscribe
 	private void onAnimationChanged(AnimationChanged event) {
-		if (!isLoggedIn()) return;
+		if (!Utils.isLoggedIn()) return;
 
 		if (client.getLocalPlayer() == null || event.getActor() != client.getLocalPlayer()) return;
 
@@ -288,15 +315,15 @@ public class Tempoross extends TickScript {
 	}
 
 	public boolean isOnBoat() {
-		return isInRegion(UNKAH_BOAT_REGION);
+		return Utils.isInRegion(UNKAH_BOAT_REGION);
 	}
 
 	public boolean isInDesert() {
-		return isInRegion(UNKAH_REWARD_POOL_REGION);
+		return Utils.isInRegion(UNKAH_REWARD_POOL_REGION);
 	}
 
 	public boolean isInTemporossArea() {
-		return isInMapRegion(TEMPOROSS_REGION) || isInRegion(TEMPOROSS_REGION);
+		return Utils.isInMapRegion(TEMPOROSS_REGION) || Utils.isInRegion(TEMPOROSS_REGION);
 	}
 
 	public WorldArea getBoatArea() {
