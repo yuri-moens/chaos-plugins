@@ -2,6 +2,7 @@ package io.reisub.unethicalite.utils.tasks;
 
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
+import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Bank;
 import dev.hoot.api.packets.DialogPackets;
@@ -218,6 +219,12 @@ public abstract class BankTask extends Task {
             } else {
                 bankNpc.interact(0);
             }
+        }
+
+        if (!Time.sleepTicksUntil(() -> Bank.isOpen() || Players.getLocal().isMoving(), 3)) {
+            bankObject = null;
+            bankNpc = null;
+            return false;
         }
 
         if (!Time.sleepTicksUntil(Bank::isOpen, waitTicks)) {
