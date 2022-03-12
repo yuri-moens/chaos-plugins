@@ -1,6 +1,19 @@
 [{
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
+  "name": "Chaos Agility",
+  "description": "Hippity hoppity, jumps on your property",
+  "id": "chaosagility-plugin",
+  "releases": [{
+    "date": "2022-03-12",
+    "sha512sum": "5B2141301C5C4205C78415A9628F9D8791D68C5244F90C67235B6C297FD7EFA46751E02B46B6B4B6437DFDBC164D67AE6BDF4AEDC5CE00ABDAB1591BBA3DE615",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/agility-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
   "name": "Chaos Auto Dropper",
   "description": "Serial litterer",
   "id": "chaosautodropper-plugin",
@@ -43,6 +56,19 @@
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
+  "name": "Chaos Barrows",
+  "description": "Automated fratricide",
+  "id": "chaosbarrows-plugin",
+  "releases": [{
+    "date": "2022-03-12",
+    "sha512sum": "BA81E1BE3675571E9520FE5E48B552B7625DCF6E4EBF8EE46A0214AF8E612AA0F95B42C8C73D50E0FE31AF0B12FD8CC8B58D8917EC2D926B16B58D547142C42E",
+    "version": "0.0.1",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/barrows-0.0.1.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
   "name": "Chaos Bird House",
   "description": "Mass bird slaughter",
   "id": "chaosbirdhouse-plugin",
@@ -80,6 +106,13 @@
       "sha512sum": "C97E2CDD8D0CB8BE3B01EC8F05ADDC81D28CC394CB54895BA9869C10C3AA008325AE08A9ED99A94EB091425D685DBCEE61E3F08B10FC0E937F8287BA135E57D1",
       "version": "1.0.4",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.0.4.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-12",
+      "sha512sum": "23B3D700C2A16065C4E5C4B4FEE07F9C2E904049CAA1EA70CCE2DF6A580AC969282DF690F9D13F91A66EDEF8D7E25656A780CD7E9FBC54E8B115D024A4432383",
+      "version": "1.0.5",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.0.5.jar",
       "requires": "^1.0.0"
     }
   ]
@@ -223,6 +256,13 @@
       "version": "1.2.3",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/cooking-1.2.3.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-12",
+      "sha512sum": "469868DEC6EDCA7F682C09D94D0E54799FB67B6D71841986B223FA78309E293EBB37FB92A6892BAF42A07033B6B1E25E8673E44F019E6C367D93C7D4D859DC77",
+      "version": "1.2.4",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/cooking-1.2.4.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -231,13 +271,22 @@
   "name": "Chaos Daeyalt Essence",
   "description": "For people too lazy to click a rock every 30 seconds",
   "id": "chaosdaeyaltessence-plugin",
-  "releases": [{
-    "date": "2022-03-11",
-    "sha512sum": "8DBE66EC1084189C207168648E28DC48660165C12F5C80F731DB3FDD8E3FE941535E3D217F9CD5F90F0C7C3AE0F0B34675B7D2EFAE990150E40D34E1369DA12B",
-    "version": "1.0.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/daeyaltessence-1.0.0.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-03-11",
+      "sha512sum": "8DBE66EC1084189C207168648E28DC48660165C12F5C80F731DB3FDD8E3FE941535E3D217F9CD5F90F0C7C3AE0F0B34675B7D2EFAE990150E40D34E1369DA12B",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/daeyaltessence-1.0.0.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-12",
+      "sha512sum": "F9FBD30CA77F9A7C21E20974AFFB36E974E6C22728F0C17ABE25E50A8CAB1AD1929BA7C1F075874EF8C74AA63C1C26400577D247A94790502966B112087966A8",
+      "version": "1.0.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/daeyaltessence-1.0.1.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
@@ -265,8 +314,28 @@
       "version": "1.0.2",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/herblore-1.0.2.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-12",
+      "sha512sum": "F7DD1E4AB0317FED32CA34E57A0A98E45290815977D9A65EAC9A3E42A7B56AEF8E2C513C26CBC4018B1727E62326EC396ECF28EDFD56B526F4E0AF13D1792BC7",
+      "version": "1.0.3",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/herblore-1.0.3.jar",
+      "requires": "^1.0.0"
     }
   ]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
+  "name": "Chaos Shopper",
+  "description": "Hops worlds and buys stuff from NPCs",
+  "id": "chaosshopper-plugin",
+  "releases": [{
+    "date": "2022-03-12",
+    "sha512sum": "38F7E6B5B4767466CE4F853864A9A1E643490D6FB70592B183CA5F0BE7C7EE8638ED701AD905A714F9720D0F7AAB33CC70C77D646408A24E11FA5230D22D5907",
+    "version": "0.0.1",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/shopper-0.0.1.jar",
+    "requires": "^1.0.0"
+  }]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
@@ -293,6 +362,13 @@
       "sha512sum": "6A53B5AE0F7B04817117BCA842C4449F46EDA488875E3205147688E7B9AD50554ABDB6DD93B6244D9110D6F9A7ABA4EF037CE1D29CDB023984587B82B57F6513",
       "version": "1.0.2",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/smithing-1.0.2.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-12",
+      "sha512sum": "524B589A08AD1BACA1300E6CF1761F74EDCA8DF3FD441B5BFDBF65A93FD9A233AC2D7AF3F15A942A780B32024F0EAAD9747415515868D4538F6D4D79A24BE4BE",
+      "version": "1.1.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/smithing-1.1.0.jar",
       "requires": "^1.0.0"
     }
   ]
@@ -357,6 +433,13 @@
       "sha512sum": "5F1B2568BC8BAE7BE85BA939845A65FDB357B3E2CA63823967565E9CB6260A76CB3511BFE5E07C4724D05040418057D5C55023B90252F66C83177CF6BDE341EF",
       "version": "1.2.6",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.2.6.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-12",
+      "sha512sum": "5F66EC769EF233061BB82B2D88824A57D63B3B0C9AF086FFF5884CBA907E5591B1669000CDDD44C9E7BB4B9F69C48263E96C069B9041635286E6A86F48B67C8F",
+      "version": "1.2.7",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.2.7.jar",
       "requires": "^1.0.0"
     }
   ]
@@ -435,6 +518,13 @@
       "sha512sum": "3A0C0661E20805FB98758CA04666EF64798BA48E618472F9ED10C524792BE6304651675B4ADE21E80851CCE3DED11A59D8B8655B2F579513F076716629C3BDBA",
       "version": "1.2.0",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.2.0.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-12",
+      "sha512sum": "275E0179E7B77364084F4629CF64F15A3F45F774B6476DDC18E524A916EF2E5CA3993E3D108843BB4110FC93B82CD32B27FE8BFBE5128326B62508E02E2C4469",
+      "version": "1.3.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.3.0.jar",
       "requires": "^1.0.0"
     }
   ]
