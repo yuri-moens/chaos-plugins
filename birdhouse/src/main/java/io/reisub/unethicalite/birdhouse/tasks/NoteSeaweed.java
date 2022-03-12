@@ -2,6 +2,7 @@ package io.reisub.unethicalite.birdhouse.tasks;
 
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -33,7 +34,7 @@ public class NoteSeaweed extends Task {
             return;
         }
 
-        seaweed.useOn(leprechaun);
+        GameThread.invoke(() -> seaweed.useOn(leprechaun));
         Time.sleepTicksUntil(() -> !Inventory.contains(ItemID.GIANT_SEAWEED), 30);
     }
 }

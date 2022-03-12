@@ -12,7 +12,11 @@ import io.reisub.unethicalite.birdhouse.Config;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import lombok.AllArgsConstructor;
-import net.runelite.api.*;
+import net.runelite.api.EquipmentInventorySlot;
+import net.runelite.api.Item;
+import net.runelite.api.ItemID;
+import net.runelite.api.ObjectID;
+import net.runelite.api.TileObject;
 
 import java.time.Duration;
 

@@ -1,12 +1,9 @@
 package io.reisub.unethicalite.birdhouse.tasks;
 
-import dev.hoot.api.commons.Rand;
-import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
-import dev.hoot.api.game.Game;
-import dev.hoot.api.movement.Movement;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
 import io.reisub.unethicalite.utils.Constants;
+import io.reisub.unethicalite.utils.api.CMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import lombok.AllArgsConstructor;
 import net.runelite.api.coords.WorldPoint;
@@ -30,15 +27,6 @@ public class GoToBirdHouse extends Task {
 
     @Override
     public void execute() {
-        WorldPoint randomTarget = target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3));
-        int start = Game.getClient().getTickCount();
-
-        while (Players.getLocal().distanceTo(randomTarget) > 10 && Game.getClient().getTickCount() <= start + 50) {
-            if (!Movement.isWalking()) {
-                Movement.walkTo(randomTarget);
-            }
-
-            Time.sleepTick();
-        }
+        CMovement.walkTo(target, 2);
     }
 }

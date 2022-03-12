@@ -5,7 +5,21 @@ import dev.hoot.api.entities.Players;
 import dev.hoot.api.items.Bank;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.widgets.Widgets;
-import io.reisub.unethicalite.birdhouse.tasks.*;
+import io.reisub.unethicalite.birdhouse.tasks.AddSeeds;
+import io.reisub.unethicalite.birdhouse.tasks.BuildBirdHouse;
+import io.reisub.unethicalite.birdhouse.tasks.CraftBirdhouse;
+import io.reisub.unethicalite.birdhouse.tasks.Deposit;
+import io.reisub.unethicalite.birdhouse.tasks.EmptyBirdHouse;
+import io.reisub.unethicalite.birdhouse.tasks.GetTools;
+import io.reisub.unethicalite.birdhouse.tasks.GoToBirdHouse;
+import io.reisub.unethicalite.birdhouse.tasks.GoToIsland;
+import io.reisub.unethicalite.birdhouse.tasks.GoToMushroomMeadow;
+import io.reisub.unethicalite.birdhouse.tasks.GoToVerdantValley;
+import io.reisub.unethicalite.birdhouse.tasks.HandleBank;
+import io.reisub.unethicalite.birdhouse.tasks.HarvestSeaweed;
+import io.reisub.unethicalite.birdhouse.tasks.NoteSeaweed;
+import io.reisub.unethicalite.birdhouse.tasks.PickupSpore;
+import io.reisub.unethicalite.birdhouse.tasks.PlantSeaweed;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
@@ -80,7 +94,7 @@ public class BirdHouse extends TickScript {
 
 	@Subscribe
 	private void onGameTick(GameTick event) {
-		if (!isLoggedIn()) {
+		if (!Utils.isLoggedIn()) {
 			return;
 		}
 
