@@ -1,9 +1,16 @@
 package io.reisub.unethicalite.shopper;
 
 import com.google.inject.Provides;
+import io.reisub.unethicalite.shopper.tasks.Buy;
+import io.reisub.unethicalite.shopper.tasks.HandleBank;
+import io.reisub.unethicalite.shopper.tasks.Hop;
+import io.reisub.unethicalite.shopper.tasks.OpenPacks;
+import io.reisub.unethicalite.shopper.tasks.OpenShop;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
+import io.reisub.unethicalite.utils.tasks.Run;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.config.ConfigManager;
@@ -34,7 +41,7 @@ public class Shopper extends TickScript {
 	}
 
 	@Getter
-	private List<Item> items;
+	private List<BuyItem> buyItems;
 
 	@Getter
 	private WorldPoint bankLocation;
@@ -42,38 +49,47 @@ public class Shopper extends TickScript {
 	@Getter
 	private WorldPoint npcLocation;
 
+	@Getter
+	@Setter
+	private boolean hop;
+
 	@Override
 	protected void onStart() {
 		super.onStart();
 
+		hop = false;
 		loadItems();
 		loadLocations();
 
-		// addTask();
-
+		addTask(Run.class);
+		addTask(Hop.class);
+		addTask(OpenPacks.class);
+		addTask(Buy.class);
+		addTask(HandleBank.class);
+		addTask(OpenShop.class);
 	}
 
 	private void loadItems() {
-		items = new ArrayList<>();
+		buyItems = new ArrayList<>();
 
 		if (config.itemOneEnabled()) {
-			items.add(new Item(config.itemOneId(), config.itemOneAmount(), config.itemOneMinInStore()));
+			buyItems.add(new BuyItem(config.itemOneId(), config.itemOneAmount(), config.itemOneMinInStore(), config.itemOneStackable()));
 		}
 
 		if (config.itemTwoEnabled()) {
-			items.add(new Item(config.itemTwoId(), config.itemTwoAmount(), config.itemTwoMinInStore()));
+			buyItems.add(new BuyItem(config.itemTwoId(), config.itemTwoAmount(), config.itemTwoMinInStore(), config.itemTwoStackable()));
 		}
 
 		if (config.itemThreeEnabled()) {
-			items.add(new Item(config.itemThreeId(), config.itemThreeAmount(), config.itemThreeMinInStore()));
+			buyItems.add(new BuyItem(config.itemThreeId(), config.itemThreeAmount(), config.itemThreeMinInStore(), config.itemThreeStackable()));
 		}
 
 		if (config.itemFourEnabled()) {
-			items.add(new Item(config.itemFourId(), config.itemFourAmount(), config.itemFourMinInStore()));
+			buyItems.add(new BuyItem(config.itemFourId(), config.itemFourAmount(), config.itemFourMinInStore(), config.itemFourStackable()));
 		}
 
 		if (config.itemFiveEnabled()) {
-			items.add(new Item(config.itemFiveId(), config.itemFiveAmount(), config.itemFiveMinInStore()));
+			buyItems.add(new BuyItem(config.itemFiveId(), config.itemFiveAmount(), config.itemFiveMinInStore(), config.itemFiveStackable()));
 		}
 	}
 

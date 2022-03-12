@@ -57,6 +57,26 @@ public interface Config extends net.runelite.client.config.Config {
 		return true;
 	}
 
+	@ConfigItem(
+			keyName = "p2pOnly",
+			name = "P2P only",
+			description = "Only hop through P2P worlds",
+			position = 5
+	)
+	default boolean p2pOnly() {
+		return true;
+	}
+
+	@ConfigItem(
+			keyName = "f2pOnly",
+			name = "F2P only",
+			description = "Only hop through F2P worlds",
+			position = 6
+	)
+	default boolean f2pOnly() {
+		return false;
+	}
+
 	@ConfigSection(
 			keyName = "itemOne",
 			name = "Item 1",
@@ -107,6 +127,17 @@ public interface Config extends net.runelite.client.config.Config {
 	)
 	default int itemOneMinInStore() {
 		return 0;
+	}
+
+	@ConfigItem(
+			keyName = "itemOneStackable",
+			name = "Stackable",
+			description = "Enable if item is stackable (eg. runes)",
+			section = "itemOne",
+			position = 15
+	)
+	default boolean itemOneStackable() {
+		return false;
 	}
 
 	@ConfigSection(
@@ -162,6 +193,17 @@ public interface Config extends net.runelite.client.config.Config {
 		return 0;
 	}
 
+	@ConfigItem(
+			keyName = "itemTwoStackable",
+			name = "Stackable",
+			description = "Enable if item is stackable (eg. runes)",
+			section = "itemTwo",
+			position = 25
+	)
+	default boolean itemTwoStackable() {
+		return false;
+	}
+
 	@ConfigSection(
 			keyName = "itemThree",
 			name = "Item 3",
@@ -213,6 +255,17 @@ public interface Config extends net.runelite.client.config.Config {
 	)
 	default int itemThreeMinInStore() {
 		return 0;
+	}
+
+	@ConfigItem(
+			keyName = "itemThreeStackable",
+			name = "Stackable",
+			description = "Enable if item is stackable (eg. runes)",
+			section = "itemThree",
+			position = 35
+	)
+	default boolean itemThreeStackable() {
+		return false;
 	}
 
 	@ConfigSection(
@@ -268,6 +321,17 @@ public interface Config extends net.runelite.client.config.Config {
 		return 0;
 	}
 
+	@ConfigItem(
+			keyName = "itemFourStackable",
+			name = "Stackable",
+			description = "Enable if item is stackable (eg. runes)",
+			section = "itemFour",
+			position = 45
+	)
+	default boolean itemFourStackable() {
+		return false;
+	}
+
 	@ConfigSection(
 			keyName = "itemFive",
 			name = "Item 5",
@@ -319,6 +383,17 @@ public interface Config extends net.runelite.client.config.Config {
 	)
 	default int itemFiveMinInStore() {
 		return 0;
+	}
+
+	@ConfigItem(
+			keyName = "itemFiveStackable",
+			name = "Stackable",
+			description = "Enable if item is stackable (eg. runes)",
+			section = "itemFive",
+			position = 55
+	)
+	default boolean itemFiveStackable() {
+		return false;
 	}
 
 	@ConfigItem(

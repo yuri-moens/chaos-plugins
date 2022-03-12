@@ -1,14 +1,12 @@
 package io.reisub.unethicalite.shopper.tasks;
 
-import dev.hoot.api.commons.Rand;
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.game.Game;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.movement.Movement;
+import io.reisub.unethicalite.shopper.Config;
 import io.reisub.unethicalite.shopper.Shopper;
+import io.reisub.unethicalite.utils.api.CBank;
+import io.reisub.unethicalite.utils.api.CMovement;
 import io.reisub.unethicalite.utils.tasks.BankTask;
-import net.runelite.api.coords.WorldPoint;
 
 import javax.inject.Inject;
 import java.time.Duration;
@@ -16,6 +14,9 @@ import java.time.Duration;
 public class HandleBank extends BankTask {
     @Inject
     private Shopper plugin;
+
+    @Inject
+    private Config config;
 
     @Override
     public boolean validate() {
@@ -25,25 +26,18 @@ public class HandleBank extends BankTask {
 
     @Override
     public void execute() {
-        if (plugin.getBankLocation() != null) {
-            WorldPoint target = plugin.getBankLocation().dx(Rand.nextInt(-1, 2)).dy(Rand.nextInt(-1, 2));
-            int start = Game.getClient().getTickCount();
-
-            while (Players.getLocal().distanceTo(target) > 10 && Game.getClient().getTickCount() <= start + 100) {
-                if (!Movement.isWalking()) {
-                    Movement.walkTo(target);
-
-                    if (!Players.getLocal().isMoving()) {
-                        Time.sleepTick();
-                    }
-                }
-
-                Time.sleepTick();
-            }
+        if (config.disableRunFromShop() && Movement.isRunEnabled() && Movement.getRunEnergy() < 90) {
+            Movement.toggleRun();
         }
 
-        open();
+        if (plugin.getBankLocation() != null) {
+            CMovement.walkTo(plugin.getBankLocation(), 1);
+        }
 
+        if (!open()) {
+            return;
+        }
 
+        CBank.depositAllExcept(false, "Coins", "Tokkul");
     }
 }
