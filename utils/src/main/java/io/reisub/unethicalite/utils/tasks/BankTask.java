@@ -7,6 +7,7 @@ import dev.hoot.api.items.Bank;
 import dev.hoot.api.packets.DialogPackets;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
+import net.runelite.api.NullObjectID;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
 
@@ -65,6 +66,7 @@ public abstract class BankTask extends Task {
             ObjectID.BANK_BOOTH_28548,
             ObjectID.BANK_BOOTH_28549,
             ObjectID.BANK_BOOTH_32666,
+            NullObjectID.NULL_34810,
             ObjectID.BANK_BOOTH_36559,
             ObjectID.BANK_BOOTH_37959,
             ObjectID.BANK_BOOTH_39238,

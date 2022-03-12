@@ -11,15 +11,27 @@ import io.reisub.unethicalite.utils.tasks.Task;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.*;
-import net.runelite.api.events.*;
+import net.runelite.api.ChatMessageType;
+import net.runelite.api.GameState;
+import net.runelite.api.InventoryID;
+import net.runelite.api.Skill;
+import net.runelite.api.events.ChatMessage;
+import net.runelite.api.events.ConfigButtonClicked;
+import net.runelite.api.events.GameStateChanged;
+import net.runelite.api.events.GameTick;
+import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.events.StatChanged;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 
 import java.awt.event.KeyEvent;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -98,7 +110,7 @@ public abstract class TickScript extends Plugin {
 
     @Subscribe
     private void onChatMessage(ChatMessage event) {
-        if (!isRunning() || !isLoggedIn()) return;
+        if (!isRunning() || !Utils.isLoggedIn()) return;
 
         if (event.getType() == ChatMessageType.GAMEMESSAGE) {
             if (event.getMessage().startsWith("Congratulations, you've just advanced your")) {
@@ -109,7 +121,7 @@ public abstract class TickScript extends Plugin {
 
     @Subscribe
     private void onStatChanged(StatChanged event) {
-        if (!isRunning() || !isLoggedIn()) return;
+        if (!isRunning() || !Utils.isLoggedIn()) return;
 
         for (Skill skill : idleCheckSkills.keySet()) {
             if (event.getSkill() == skill) {
@@ -121,7 +133,7 @@ public abstract class TickScript extends Plugin {
 
     @Subscribe
     private void onItemContainerChanged(ItemContainerChanged event) {
-        if (!isRunning() || !isLoggedIn()) return;
+        if (!isRunning() || !Utils.isLoggedIn()) return;
 
         if (event.getItemContainer() != Game.getClient().getItemContainer(InventoryID.INVENTORY)) return;
 
@@ -149,29 +161,8 @@ public abstract class TickScript extends Plugin {
         }
     }
 
-    public final boolean isLoggedIn() {
-        return Game.getClient() != null && Game.getState() == GameState.LOGGED_IN;
-    }
-
     public final boolean isLoggedInForLongerThan(Duration duration) {
         return Duration.between(lastLogin, Instant.now()).compareTo(duration) >= 0;
-    }
-
-    public final boolean isInRegion(int regionId) {
-        Player player = Players.getLocal();
-
-        return player.getWorldLocation() != null
-                && player.getWorldLocation().getRegionID() == regionId;
-    }
-
-    public final boolean isInMapRegion(int regionId) {
-        for (int id : Game.getClient().getMapRegions()) {
-            if (id == regionId) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     @Override

@@ -141,4 +141,26 @@ public class Constants {
             ObjectID.ANVIL_42825,
             ObjectID.ANVIL_42860
     );
+
+    public static final Set<Integer> PRAYER_RESTORE_POTION_IDS = ImmutableSet.of(
+            ItemID.PRAYER_POTION1,
+            ItemID.PRAYER_POTION2,
+            ItemID.PRAYER_POTION3,
+            ItemID.PRAYER_POTION4,
+            ItemID.PRAYER_MIX1,
+            ItemID.PRAYER_MIX2,
+            ItemID.SUPER_RESTORE1,
+            ItemID.SUPER_RESTORE2,
+            ItemID.SUPER_RESTORE3,
+            ItemID.SUPER_RESTORE4,
+            ItemID.SUPER_RESTORE_MIX1,
+            ItemID.SUPER_RESTORE_MIX2
+    );
+
+    public static final Set<Integer> MINEABLE_GEM_IDS = ImmutableSet.of(
+            ItemID.UNCUT_SAPPHIRE,
+            ItemID.UNCUT_EMERALD,
+            ItemID.UNCUT_RUBY,
+            ItemID.UNCUT_DIAMOND
+    );
 }
