@@ -2,6 +2,7 @@ package io.reisub.unethicalite.shopper;
 
 import com.google.inject.Provides;
 import io.reisub.unethicalite.shopper.tasks.Buy;
+import io.reisub.unethicalite.shopper.tasks.FillBag;
 import io.reisub.unethicalite.shopper.tasks.HandleBank;
 import io.reisub.unethicalite.shopper.tasks.Hop;
 import io.reisub.unethicalite.shopper.tasks.OpenPacks;
@@ -53,6 +54,9 @@ public class Shopper extends TickScript {
 	@Setter
 	private boolean hop;
 
+	@Getter
+	private int coalInBag;
+
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -64,9 +68,18 @@ public class Shopper extends TickScript {
 		addTask(Run.class);
 		addTask(Hop.class);
 		addTask(OpenPacks.class);
+		addTask(FillBag.class);
 		addTask(Buy.class);
 		addTask(HandleBank.class);
 		addTask(OpenShop.class);
+	}
+
+	public void setCoalInBag(int amount) {
+		if (amount > 27) {
+			coalInBag = 27;
+		} else {
+			coalInBag = amount;
+		}
 	}
 
 	private void loadItems() {

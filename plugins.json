@@ -329,13 +329,22 @@
   "name": "Chaos Shopper",
   "description": "Hops worlds and buys stuff from NPCs",
   "id": "chaosshopper-plugin",
-  "releases": [{
-    "date": "2022-03-12",
-    "sha512sum": "D52DE62E1FECC7E5C88F54AEEABBC9DFE78BC6045318AAACBC72CB03DD50C96163606114FEA22C1B6FCB2C35FA3E19CA68BFC0B190DEF816A96503319788B6AB",
-    "version": "1.0.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/shopper-1.0.0.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-03-12",
+      "sha512sum": "D52DE62E1FECC7E5C88F54AEEABBC9DFE78BC6045318AAACBC72CB03DD50C96163606114FEA22C1B6FCB2C35FA3E19CA68BFC0B190DEF816A96503319788B6AB",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/shopper-1.0.0.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-12",
+      "sha512sum": "AB79E97F1CB1B8AFA30CF60B14A6EF546BA401020FF7581BAAEAD5388664A641CD5AADA635F555154A5962156D7112A93162C7EC0683AD466E8AD1834C2714DD",
+      "version": "1.0.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/shopper-1.0.1.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
