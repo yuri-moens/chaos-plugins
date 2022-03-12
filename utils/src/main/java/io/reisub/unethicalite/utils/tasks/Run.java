@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.inject.Inject;
+
 @Slf4j
 public class Run extends Task {
     private int last;
@@ -20,6 +22,7 @@ public class Run extends Task {
     @Setter
     private int max;
 
+    @Inject
     public Run() {
         this(70, 95);
     }
