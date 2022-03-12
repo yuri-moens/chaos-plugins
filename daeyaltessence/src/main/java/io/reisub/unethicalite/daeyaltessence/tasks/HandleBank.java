@@ -3,11 +3,12 @@ package io.reisub.unethicalite.daeyaltessence.tasks;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.game.Game;
-import dev.hoot.api.items.Bank;
 import dev.hoot.api.items.Inventory;
-import dev.hoot.api.movement.Movement;
 import io.reisub.unethicalite.daeyaltessence.Config;
+import io.reisub.unethicalite.utils.Constants;
+import io.reisub.unethicalite.utils.api.CBank;
+import io.reisub.unethicalite.utils.api.CMovement;
+import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import lombok.RequiredArgsConstructor;
 import net.runelite.api.ItemID;
@@ -21,6 +22,7 @@ public class HandleBank extends BankTask {
 
     private static final int DARKMEYER_REGION = 14388;
     private static final WorldPoint DARKMEYER_BANK = new WorldPoint(3604, 3366, 0);
+    private static final WorldPoint BANK_DOOR = new WorldPoint(3605, 3365, 0);
 
     @Override
     public boolean validate() {
@@ -39,29 +41,17 @@ public class HandleBank extends BankTask {
 
         Time.sleepTicks(2);
 
-        int start = Game.getClient().getTickCount();
+        CMovement.walkTo(DARKMEYER_BANK, 1);
 
-        while (Players.getLocal().distanceTo(DARKMEYER_BANK) > 10 && Game.getClient().getTickCount() <= start + 100) {
-            if (!Movement.isWalking()) {
-                Movement.walkTo(DARKMEYER_BANK, 1);
-
-                if (!Players.getLocal().isMoving()) {
-                    Time.sleepTick();
-                }
-            }
-
-            Time.sleepTick();
-        }
-
-        TileObject door = TileObjects.getFirstAt(3605, 3365, 0, ObjectID.DOOR_39406);
+        TileObject door = TileObjects.getFirstAt(BANK_DOOR, ObjectID.DOOR_39406);
         if (door != null) {
             door.interact("Open");
 
-            Time.sleepTicksUntil(() -> TileObjects.getFirstAt(3605, 3365, 0, ObjectID.DOOR_39406) == null, 20);
+            Time.sleepTicksUntil(() -> TileObjects.getFirstAt(BANK_DOOR, ObjectID.DOOR_39406) == null, 20);
         }
 
         open();
 
-        Bank.depositAll(ItemID.UNCUT_DIAMOND, ItemID.UNCUT_RUBY, ItemID.UNCUT_EMERALD, ItemID.UNCUT_SAPPHIRE);
+        CBank.depositAll(false, Predicates.ids(Constants.MINEABLE_GEM_IDS));
     }
 }

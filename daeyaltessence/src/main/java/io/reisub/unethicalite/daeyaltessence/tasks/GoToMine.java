@@ -1,13 +1,11 @@
 package io.reisub.unethicalite.daeyaltessence.tasks;
 
-import dev.hoot.api.commons.Rand;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.game.Game;
 import dev.hoot.api.items.Inventory;
-import dev.hoot.api.movement.Movement;
 import io.reisub.unethicalite.daeyaltessence.DaeyaltEssence;
+import io.reisub.unethicalite.utils.api.CMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
@@ -28,20 +26,7 @@ public class GoToMine extends Task {
 
     @Override
     public void execute() {
-        WorldPoint target = ESSENCE_MINE_LADDER.dx(Rand.nextInt(-1, 2)).dy(Rand.nextInt(-1, 2));
-        int start = Game.getClient().getTickCount();
-
-        while (Players.getLocal().distanceTo(target) > 10 && Game.getClient().getTickCount() <= start + 100) {
-            if (!Movement.isWalking()) {
-                Movement.walkTo(target);
-
-                if (!Players.getLocal().isMoving()) {
-                    Time.sleepTick();
-                }
-            }
-
-            Time.sleepTick();
-        }
+        CMovement.walkTo(ESSENCE_MINE_LADDER, 1);
 
         TileObject ladder = TileObjects.getNearest(ObjectID.STAIRCASE_39092);
         if (ladder == null) {

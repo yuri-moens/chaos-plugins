@@ -50,6 +50,10 @@ public class DaeyaltEssence extends TickScript {
 
 	@Subscribe
 	private void onAnimationChanged(AnimationChanged event) {
+		if (!Utils.isLoggedIn()) {
+			return;
+		}
+
 		switch (Players.getLocal().getAnimation()) {
 			case AnimationID.MINING_BRONZE_PICKAXE:
 			case AnimationID.MINING_IRON_PICKAXE:
