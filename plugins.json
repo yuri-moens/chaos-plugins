@@ -119,6 +119,19 @@
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
+  "name": "Chaos Blast Furnace",
+  "description": "So anyway, I started blasting",
+  "id": "chaosblastfurnace-plugin",
+  "releases": [{
+    "date": "2022-03-13",
+    "sha512sum": "EA7392F6AA7B7012D20B8E1DFC56CBC8EDECDD3D87AFA92D8155AC261A5A10FB66D07B4F35B7CFEDF65B775B2AEE417D318E2D43DECCACE4399DC46003F572A0",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/blastfurnace-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
   "name": "Chaos Combat Helper",
   "description": "Various utilities to make combat easier",
   "id": "chaoscombathelper-plugin",
@@ -343,6 +356,13 @@
       "version": "1.0.1",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/shopper-1.0.1.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-13",
+      "sha512sum": "EEDA8BA52A2E9F2B3867F1C324FE15562ACC2BF28E67061F1B8C241F32E69D7EA9C02E3BA2C04551FC5162A65C52190BAA0A6976E8D1516923D4DD259EBCFA48",
+      "version": "1.0.2",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/shopper-1.0.2.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -548,6 +568,13 @@
       "sha512sum": "FC48A27A2208F8C4D2F91A7937143FBF6A5068ADD03EF583404583646505BB091B8F6D8F9E57DB087DA7768CC0F6BB0F5C8E4334EA2FE81C61A7570BFD0E5107",
       "version": "1.3.3",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.3.3.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-13",
+      "sha512sum": "9C9F2967CBDA197963009DB9DAE3DA0C94AFF643F89E8C1C853120A644A16F8FD5BFF6C665C465C1AEFD898D18B6C54E6720D1994E212B42133A280F7771EA9D",
+      "version": "1.3.4",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.3.4.jar",
       "requires": "^1.0.0"
     }
   ]
