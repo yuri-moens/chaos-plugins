@@ -142,6 +142,13 @@ public class Constants {
             ObjectID.ANVIL_42860
     );
 
+    public static final Set<Integer> STAMINA_POTION_IDS = ImmutableSet.of(
+            ItemID.STAMINA_POTION1,
+            ItemID.STAMINA_POTION2,
+            ItemID.STAMINA_POTION3,
+            ItemID.STAMINA_POTION4
+    );
+
     public static final Set<Integer> PRAYER_RESTORE_POTION_IDS = ImmutableSet.of(
             ItemID.PRAYER_POTION1,
             ItemID.PRAYER_POTION2,
