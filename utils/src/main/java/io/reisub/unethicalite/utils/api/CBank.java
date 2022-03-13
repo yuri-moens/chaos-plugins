@@ -65,4 +65,13 @@ public class CBank {
     public static void depositAllExcept(boolean delay, Predicate<Item> filter) {
         depositAll(delay, filter.negate());
     }
+
+    public static void bankInventoryInteract(Item item, String action) {
+        int index = item.getActions().indexOf(action);
+        if (index == -1) {
+            return;
+        }
+
+        item.interact(index + 1);
+    }
 }
