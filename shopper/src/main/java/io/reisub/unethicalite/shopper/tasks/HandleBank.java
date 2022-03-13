@@ -43,7 +43,7 @@ public class HandleBank extends BankTask {
         CBank.depositAllExcept(false, "Coins", "Tokkul", "Coal bag");
 
         if (Inventory.contains(ItemID.COAL_BAG_12019) && plugin.getCoalInBag() > 0) {
-            Bank.Inventory.getFirst(ItemID.COAL_BAG_12019).interact(9);
+            CBank.bankInventoryInteract(Bank.Inventory.getFirst(ItemID.COAL_BAG_12019), "Empty");
         }
     }
 }
