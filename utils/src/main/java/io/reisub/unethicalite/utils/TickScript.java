@@ -58,8 +58,8 @@ public abstract class TickScript extends Plugin {
 
     protected final List<Task> tasks = new ArrayList<>();
 
-    protected int minimumDelay = 50;
-    protected int maximumDelay = 100;
+    protected int minimumDelay = 150;
+    protected int maximumDelay = 200;
     protected Instant lastLogin = Instant.EPOCH;
     protected Instant lastActionTime = Instant.EPOCH;
     protected Duration lastActionTimeout = Duration.ofSeconds(3);
