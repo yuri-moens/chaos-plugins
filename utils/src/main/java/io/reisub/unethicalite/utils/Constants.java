@@ -170,4 +170,20 @@ public class Constants {
             ItemID.UNCUT_RUBY,
             ItemID.UNCUT_DIAMOND
     );
+
+    public static final Set<Integer> ESSENCE_POUCH_IDS = ImmutableSet.of(
+            ItemID.GIANT_POUCH,
+            ItemID.GIANT_POUCH_5515,
+            ItemID.LARGE_POUCH,
+            ItemID.LARGE_POUCH_5513,
+            ItemID.MEDIUM_POUCH,
+            ItemID.MEDIUM_POUCH_5511,
+            ItemID.SMALL_POUCH
+    );
+
+    public static final Set<Integer> DEGRADED_ESSENCE_POUCH_IDS = ImmutableSet.of(
+            ItemID.GIANT_POUCH_5515,
+            ItemID.LARGE_POUCH_5513,
+            ItemID.MEDIUM_POUCH_5511
+    );
 }

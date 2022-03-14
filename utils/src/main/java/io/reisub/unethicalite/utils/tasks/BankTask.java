@@ -252,12 +252,8 @@ public abstract class BankTask extends Task {
             return true;
         }
 
+        bankNpc = NPCs.getNearest(name);
         if (bankNpc == null) {
-            bankNpc = NPCs.getNearest(name);
-        }
-
-        if (bankNpc == null) {
-            System.out.println("npc is null");
             return false;
         }
 
