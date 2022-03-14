@@ -4,13 +4,22 @@
   "name": "Chaos Agility",
   "description": "Hippity hoppity, jumps on your property",
   "id": "chaosagility-plugin",
-  "releases": [{
-    "date": "2022-03-12",
-    "sha512sum": "5B2141301C5C4205C78415A9628F9D8791D68C5244F90C67235B6C297FD7EFA46751E02B46B6B4B6437DFDBC164D67AE6BDF4AEDC5CE00ABDAB1591BBA3DE615",
-    "version": "1.0.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/agility-1.0.0.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-03-12",
+      "sha512sum": "5B2141301C5C4205C78415A9628F9D8791D68C5244F90C67235B6C297FD7EFA46751E02B46B6B4B6437DFDBC164D67AE6BDF4AEDC5CE00ABDAB1591BBA3DE615",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/agility-1.0.0.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-14",
+      "sha512sum": "61AA171BD1251653962A078E732C1BFF0FCFBD9DC283F2AF46E1B4B5849F5F4E8D61AF4EA6872FE8AF18080124337591352C4811875C60BF4197A3EDC133602A",
+      "version": "1.0.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/agility-1.0.1.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
@@ -122,13 +131,22 @@
   "name": "Chaos Blast Furnace",
   "description": "So anyway, I started blasting",
   "id": "chaosblastfurnace-plugin",
-  "releases": [{
-    "date": "2022-03-13",
-    "sha512sum": "EA7392F6AA7B7012D20B8E1DFC56CBC8EDECDD3D87AFA92D8155AC261A5A10FB66D07B4F35B7CFEDF65B775B2AEE417D318E2D43DECCACE4399DC46003F572A0",
-    "version": "1.0.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/blastfurnace-1.0.0.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-03-13",
+      "sha512sum": "EA7392F6AA7B7012D20B8E1DFC56CBC8EDECDD3D87AFA92D8155AC261A5A10FB66D07B4F35B7CFEDF65B775B2AEE417D318E2D43DECCACE4399DC46003F572A0",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/blastfurnace-1.0.0.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-14",
+      "sha512sum": "D49AE7299E578A3347609A50E04D0DE8DEBA1E4EFD7FA234CFBE40BD7CD57BCEBC84900C33D418D23C54CB8E3A1FF6E0DE66490E134B24281A303E78D0991991",
+      "version": "1.0.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/blastfurnace-1.0.1.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
@@ -399,6 +417,13 @@
       "version": "1.1.0",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/smithing-1.1.0.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-14",
+      "sha512sum": "729D7D6E15F369770F5172FF407CA7F6201677F8755BD7472F36598040E2980984BD83D54A415CA601D1452CF5D9134175C7907329E2BE96DA9DC10904FD5FCE",
+      "version": "1.1.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/smithing-1.1.1.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -575,6 +600,13 @@
       "sha512sum": "9C9F2967CBDA197963009DB9DAE3DA0C94AFF643F89E8C1C853120A644A16F8FD5BFF6C665C465C1AEFD898D18B6C54E6720D1994E212B42133A280F7771EA9D",
       "version": "1.3.4",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.3.4.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-14",
+      "sha512sum": "D2E284530BBFF597C4D05919DF9831DA755474B53DFAF7E3E8C6328C032E24CDE4E86F1E8E88A69C2CA14018A4613BC37D05753ACE24B436BBB56D00CF487120",
+      "version": "1.3.5",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.3.5.jar",
       "requires": "^1.0.0"
     }
   ]
