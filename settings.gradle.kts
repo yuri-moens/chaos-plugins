@@ -39,6 +39,7 @@ include("smithing")
 include("shopper")
 include("tempoross")
 include("utils")
+include("zmi")
 
 if (File("./test").exists()) {
     include("test")

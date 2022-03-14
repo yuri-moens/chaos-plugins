@@ -1,0 +1,112 @@
+package io.reisub.unethicalite.zmi.tasks;
+
+import dev.hoot.api.commons.Time;
+import dev.hoot.api.entities.Players;
+import dev.hoot.api.items.Bank;
+import dev.hoot.api.items.Inventory;
+import dev.hoot.api.movement.Movement;
+import dev.hoot.bot.managers.Static;
+import io.reisub.unethicalite.utils.Constants;
+import io.reisub.unethicalite.utils.api.CBank;
+import io.reisub.unethicalite.utils.api.Predicates;
+import io.reisub.unethicalite.utils.tasks.BankTask;
+import io.reisub.unethicalite.zmi.Pouch;
+import io.reisub.unethicalite.zmi.Zmi;
+import net.runelite.api.Item;
+import net.runelite.api.ItemID;
+
+import java.time.Duration;
+import java.util.List;
+
+public class HandleBank extends BankTask {
+    private static final int UNDERGROUND_REGION_ID = 12119;
+
+    private int lastStamina;
+
+    @Override
+    public boolean validate() {
+        return Players.getLocal().getWorldLocation().getRegionID() == UNDERGROUND_REGION_ID
+                && !Inventory.contains(ItemID.PURE_ESSENCE, ItemID.DAEYALT_ESSENCE)
+                && isLastBankDurationAgo(Duration.ofSeconds(5))
+                && Players.getLocal().distanceTo(Zmi.NEAR_ALTAR) > 10;
+    }
+
+    @Override
+    public void execute() {
+        if (!open("Eniola")) {
+            return;
+        }
+
+        CBank.depositAllExcept(
+                false,
+                ItemID.GIANT_POUCH,
+                ItemID.GIANT_POUCH_5515,
+                ItemID.LARGE_POUCH,
+                ItemID.LARGE_POUCH_5513,
+                ItemID.MEDIUM_POUCH,
+                ItemID.MEDIUM_POUCH_5511,
+                ItemID.SMALL_POUCH,
+                ItemID.RUNE_POUCH,
+                ItemID.MIND_RUNE
+        );
+
+        if (!Movement.isStaminaBoosted() && Bank.contains(Predicates.ids(Constants.STAMINA_POTION_IDS))
+                || lastStamina + 166 <= Static.getClient().getTickCount()) {
+            drinkStamina();
+            lastStamina = Static.getClient().getTickCount();
+        }
+
+        int essenceId = Bank.contains(ItemID.DAEYALT_ESSENCE) ? ItemID.DAEYALT_ESSENCE : ItemID.PURE_ESSENCE;
+
+        Bank.withdrawAll(essenceId, Bank.WithdrawMode.ITEM);
+
+        Item giantPouch = Bank.Inventory.getFirst(ItemID.GIANT_POUCH);
+        if (giantPouch != null) {
+            Zmi.pouchesAreEmpty = false;
+            Time.sleepTick();
+
+            CBank.bankInventoryInteract(giantPouch, "Fill");
+            Pouch.GIANT.addHolding(Pouch.GIANT.getHoldAmount());
+
+            Bank.withdrawAll(essenceId, Bank.WithdrawMode.ITEM);
+        }
+
+        List<Item> pouches = Bank.Inventory.getAll(ItemID.SMALL_POUCH, ItemID.MEDIUM_POUCH, ItemID.LARGE_POUCH);
+        if (!pouches.isEmpty()) {
+            Zmi.pouchesAreEmpty = false;
+
+            Time.sleepTick();
+            for (Item pouch : pouches) {
+                CBank.bankInventoryInteract(pouch, "Fill");
+
+                Pouch pouchEnum = Pouch.forItem(pouch.getId());
+                if (pouchEnum != null) {
+                    pouchEnum.addHolding(pouchEnum.getHoldAmount());
+                }
+
+                Bank.withdrawAll(essenceId, Bank.WithdrawMode.ITEM);
+            }
+        }
+    }
+
+    private void drinkStamina() {
+        Bank.withdraw(Predicates.ids(Constants.STAMINA_POTION_IDS), 1, Bank.WithdrawMode.ITEM);
+
+        Item potion = null;
+        int start = Static.getClient().getTickCount();
+
+        while (potion == null && Static.getClient().getTickCount() < start + 10) {
+            Time.sleepTick();
+            potion = Bank.Inventory.getFirst(Predicates.ids(Constants.STAMINA_POTION_IDS));
+        }
+
+        if (potion == null) {
+            return;
+        }
+
+        CBank.bankInventoryInteract(potion, "Drink");
+        Time.sleepTick();
+
+        Bank.depositAll(Predicates.ids(Constants.STAMINA_POTION_IDS));
+    }
+}
