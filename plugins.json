@@ -123,6 +123,13 @@
       "version": "1.0.5",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.0.5.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-14",
+      "sha512sum": "74AA9A0B67368929DC3126CB775638E5A1CB646CA3080E80767FAACF4138371974A2A6996DEDDAC2314C5B4E6946D5211F1313C08FB81E61C4E81509C67D5288",
+      "version": "1.0.6",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.0.6.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -236,6 +243,13 @@
       "sha512sum": "C6E6358D984F61D6176A81155ACED2C40721CDF4097095BEB3269312404BD02DA0B34BA94806EFEF0C3904FF5C7B9D7EC575DEADC3E83AE0DFFE8E4036D4854E",
       "version": "1.2.1",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.2.1.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-14",
+      "sha512sum": "A3A057081984EF17991F59CC80CB36C46454A967F6B757D4966BD77BEBF4B208313BF1F61FC1BADEC2A2E2E1B1D9C4005281735C74B0750CB00D3FBF8F629E45",
+      "version": "1.2.2",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.2.2.jar",
       "requires": "^1.0.0"
     }
   ]
@@ -380,6 +394,13 @@
       "sha512sum": "EEDA8BA52A2E9F2B3867F1C324FE15562ACC2BF28E67061F1B8C241F32E69D7EA9C02E3BA2C04551FC5162A65C52190BAA0A6976E8D1516923D4DD259EBCFA48",
       "version": "1.0.2",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/shopper-1.0.2.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-14",
+      "sha512sum": "F64D463DBFBF486386B7BE9045AD9146EA43BEE5D28DC43B735F03ECAACCF3D5F35EE7D158B6C65C4A5F191E5E5E2AC3B0CB852175780FE04C1162901A618AA4",
+      "version": "1.0.3",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/shopper-1.0.3.jar",
       "requires": "^1.0.0"
     }
   ]
@@ -608,6 +629,26 @@
       "version": "1.3.5",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.3.5.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-14",
+      "sha512sum": "3AEAEB287985B2E285FCF5C2AC9B9EDB8EFD06EF99125D5F28467343A3C41A68C9EC664ABFBFEDEEAD10AFF147C584380D5EAE49A2F1A4865D2267E02C995896",
+      "version": "1.3.6",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.3.6.jar",
+      "requires": "^1.0.0"
     }
   ]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
+  "name": "Chaos ZMI",
+  "description": "Hail Sa- ehr Zamorak!",
+  "id": "chaoszmi-plugin",
+  "releases": [{
+    "date": "2022-03-14",
+    "sha512sum": "26D4EFB845E3AFAE55509DAB9F55E63FDE1CDC2EB4E62C7E6F7A90597264E01EBACCA81407084F0962E821865811F677259B4E532398843C2E848F6E16B0267B",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/zmi-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
 }]
