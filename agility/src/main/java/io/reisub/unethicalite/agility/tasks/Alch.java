@@ -159,7 +159,7 @@ public class Alch extends Task {
     }
 
     private boolean canCast() {
-        if (Static.getClient().getTickCount() - lastTick < 5) {
+        if (Static.getClient().getTickCount() - lastTick <= 5) {
             return false;
         }
 

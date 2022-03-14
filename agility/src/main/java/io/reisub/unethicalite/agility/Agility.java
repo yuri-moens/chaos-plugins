@@ -44,7 +44,7 @@ public class Agility extends TickScript {
 		super.onStart();
 
 		addTask(PickupMark.class);
-		addTask(Alch.class);
 		addTask(HandleObstacle.class);
+		addTask(Alch.class);
 	}
 }
