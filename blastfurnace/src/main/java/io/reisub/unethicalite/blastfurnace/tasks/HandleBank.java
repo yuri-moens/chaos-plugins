@@ -41,7 +41,7 @@ public class HandleBank extends BankTask {
         plugin.setActivity(Activity.BANKING);
         plugin.setExpectingBars(false);
 
-        open();
+        open(15, 10);
 
         CBank.depositAllExcept(false, ItemID.COAL_BAG_12019, ItemID.ICE_GLOVES, ItemID.GOLDSMITH_GAUNTLETS);
         Time.sleepTick();

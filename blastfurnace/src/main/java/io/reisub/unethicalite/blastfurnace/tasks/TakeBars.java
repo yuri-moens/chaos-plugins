@@ -12,7 +12,6 @@ import io.reisub.unethicalite.utils.enums.Metal;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
-import net.runelite.api.ObjectID;
 import net.runelite.api.Skill;
 import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
@@ -37,7 +36,7 @@ public class TakeBars extends Task {
 
     @Override
     public boolean validate() {
-        if (plugin.getCurrentActivity() != Activity.IDLE || plugin.getPreviousActivity() != Activity.DEPOSITING) {
+        if (plugin.getCurrentActivity() != Activity.IDLE || plugin.getPreviousActivity() != Activity.DEPOSITING || plugin.getPreviousActivity() == Activity.WITHDRAWING) {
             return false;
         }
 
@@ -73,12 +72,12 @@ public class TakeBars extends Task {
 
         barDispenser.interact("Take");
 
-        if (Time.sleepTicksUntil(Production::isOpen, 15)) {
+        if (Time.sleepTicksUntil(Production::isOpen, 10)) {
             Production.chooseOption(1);
+            experienceReceived = false;
         }
 
         Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 5);
-        experienceReceived = false;
     }
 
     @Subscribe
