@@ -188,11 +188,11 @@ public abstract class BankTask extends Task {
         return open(15);
     }
 
-    protected boolean open(String name) {
-        return open(name, 15);
+    protected boolean open(int waitTicks) {
+        return open(waitTicks, 3);
     }
 
-    protected boolean open(int waitTicks) {
+    protected boolean open(int waitTicks, int movingCheck) {
         if (Bank.isOpen()) return true;
 
         if (bankObject == null) {
@@ -221,10 +221,12 @@ public abstract class BankTask extends Task {
             }
         }
 
-        if (!Time.sleepTicksUntil(() -> Bank.isOpen() || Players.getLocal().isMoving(), 3)) {
-            bankObject = null;
-            bankNpc = null;
-            return false;
+        if (movingCheck > 0) {
+            if (!Time.sleepTicksUntil(() -> Bank.isOpen() || Players.getLocal().isMoving(), movingCheck)) {
+                bankObject = null;
+                bankNpc = null;
+                return false;
+            }
         }
 
         if (!Time.sleepTicksUntil(Bank::isOpen, waitTicks)) {
@@ -237,7 +239,15 @@ public abstract class BankTask extends Task {
         return Bank.isOpen();
     }
 
+    protected boolean open(String name) {
+        return open(name, 15);
+    }
+
     protected boolean open(String name, int waitTicks) {
+        return open(name, waitTicks, 3);
+    }
+
+    protected boolean open(String name, int waitTicks, int movingCheck) {
         if (Bank.isOpen()) {
             return true;
         }
@@ -252,6 +262,13 @@ public abstract class BankTask extends Task {
         }
 
         bankNpc.interact("Bank");
+
+        if (movingCheck > 0) {
+            if (!Time.sleepTicksUntil(() -> Bank.isOpen() || Players.getLocal().isMoving(), movingCheck)) {
+                bankNpc = null;
+                return false;
+            }
+        }
 
         if (!Time.sleepTicksUntil(Bank::isOpen, waitTicks)) {
             bankNpc = null;
