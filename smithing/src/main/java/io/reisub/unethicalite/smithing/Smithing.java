@@ -8,6 +8,7 @@ import io.reisub.unethicalite.smithing.tasks.Smith;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.tasks.Run;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.AnimationID;
 import net.runelite.api.InventoryID;
@@ -46,6 +47,7 @@ public class Smithing extends TickScript {
 
 		lastActionTimeout = Duration.ofSeconds(5);
 
+		addTask(Run.class);
 		tasks.add(new HandleBank(this, config));
 		tasks.add(new Smith(this, config));
 	}
