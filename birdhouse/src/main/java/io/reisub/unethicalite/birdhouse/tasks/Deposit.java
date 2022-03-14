@@ -4,6 +4,7 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.items.Bank;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.widgets.Widgets;
@@ -44,7 +45,7 @@ public class Deposit extends BankTask {
             return;
         }
 
-        leprechaun.interact("Exchange");
+        GameThread.invoke(() -> leprechaun.interact("Exchange"));
         Time.sleepTicksUntil(() -> Widgets.isVisible(BirdHouse.TOOLS.get()), 30);
 
         DIBBER.get().interact("Store-1");

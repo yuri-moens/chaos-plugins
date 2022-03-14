@@ -3,6 +3,7 @@ package io.reisub.unethicalite.birdhouse.tasks;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.widgets.Widgets;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
@@ -46,7 +47,7 @@ public class GetTools extends Task {
 
         boolean needSpade = TileObjects.getNearest("Dead seaweed") != null;
 
-        leprechaun.interact("Exchange");
+        GameThread.invoke(() -> leprechaun.interact("Exchange"));
         Time.sleepTicksUntil(() -> Widgets.isVisible(BirdHouse.TOOLS.get()), 30);
         Time.sleepTick();
 
