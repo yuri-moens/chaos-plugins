@@ -3,6 +3,7 @@ package io.reisub.unethicalite.combathelper.consume;
 import dev.hoot.api.commons.Rand;
 import dev.hoot.api.game.Combat;
 import dev.hoot.api.game.Game;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.game.Skills;
 import dev.hoot.api.game.Vars;
 import dev.hoot.api.items.Bank;
@@ -12,8 +13,18 @@ import dev.hoot.api.movement.Movement;
 import dev.hoot.api.utils.MessageUtils;
 import dev.hoot.api.widgets.Dialog;
 import io.reisub.unethicalite.combathelper.Helper;
-import net.runelite.api.*;
-import net.runelite.api.events.*;
+import net.runelite.api.EquipmentInventorySlot;
+import net.runelite.api.GameState;
+import net.runelite.api.Item;
+import net.runelite.api.ItemID;
+import net.runelite.api.Skill;
+import net.runelite.api.VarPlayer;
+import net.runelite.api.Varbits;
+import net.runelite.api.events.ChatMessage;
+import net.runelite.api.events.GameStateChanged;
+import net.runelite.api.events.GameTick;
+import net.runelite.api.events.StatChanged;
+import net.runelite.api.events.VarbitChanged;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.itemstats.Effect;
@@ -447,7 +458,7 @@ public class ConsumeHelper extends Helper {
         }
 
         if (didAction && plugin.getLastTarget() != null && !shouldDrinkAnything()) {
-            plugin.getLastTarget().interact("Attack");
+            GameThread.invoke(() -> plugin.getLastTarget().interact("Attack"));
         }
     }
 
