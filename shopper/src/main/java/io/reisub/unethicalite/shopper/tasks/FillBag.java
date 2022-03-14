@@ -21,8 +21,8 @@ public class FillBag extends Task {
 
     @Override
     public boolean validate() {
-        return (Inventory.contains(ItemID.COAL_BAG_12019)
-                && Inventory.contains(ItemID.COAL))
+        return Inventory.contains(ItemID.COAL_BAG_12019)
+                && Inventory.getCount(ItemID.COAL) > 5
                 && plugin.getCoalInBag() < 26;
     }
 
