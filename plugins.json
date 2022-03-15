@@ -152,6 +152,13 @@
       "version": "1.0.1",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/blastfurnace-1.0.1.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-16",
+      "sha512sum": "08C9A8D00366C921E535BD1ECFC9EB0653F24653950EFAE916AD21DB059DB8EB3D62BECD3E8EC88D24410C3B27C0FF4E66DA4273FACE9FADCBDECCB0F6BE4CFA",
+      "version": "1.0.2",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/blastfurnace-1.0.2.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {

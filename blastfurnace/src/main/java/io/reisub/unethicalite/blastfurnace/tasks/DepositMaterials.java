@@ -65,8 +65,12 @@ public class DepositMaterials extends Task {
                 coalBag.interact("Empty");
                 Time.sleepTick();
 
-                conveyorBelt.interact(CONVEYER_BELT_ACTION);
-                Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 5);
+                boolean successful = false;
+
+                while (!successful) {
+                    conveyorBelt.interact(CONVEYER_BELT_ACTION);
+                    successful = Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 3);
+                }
                 break;
             case GOLD:
                 if (!Equipment.contains(ItemID.GOLDSMITH_GAUNTLETS)) {

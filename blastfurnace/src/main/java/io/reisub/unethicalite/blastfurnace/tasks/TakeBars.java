@@ -2,6 +2,7 @@ package io.reisub.unethicalite.blastfurnace.tasks;
 
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.Vars;
 import dev.hoot.api.items.Equipment;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.widgets.Production;
@@ -14,6 +15,7 @@ import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 import net.runelite.api.Skill;
 import net.runelite.api.TileObject;
+import net.runelite.api.Varbits;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.StatChanged;
 import net.runelite.client.eventbus.Subscribe;
@@ -36,7 +38,8 @@ public class TakeBars extends Task {
 
     @Override
     public boolean validate() {
-        if (plugin.getCurrentActivity() != Activity.IDLE || plugin.getPreviousActivity() != Activity.DEPOSITING || plugin.getPreviousActivity() == Activity.WITHDRAWING) {
+        if (plugin.getCurrentActivity() != Activity.IDLE
+                || (plugin.getPreviousActivity() != Activity.DEPOSITING && plugin.getPreviousActivity() != Activity.WITHDRAWING)) {
             return false;
         }
 
@@ -47,6 +50,7 @@ public class TakeBars extends Task {
         TileObject barDispenser = TileObjects.getFirstAt(new WorldPoint(1940, 4963, 0), "Bar dispenser");
 
         return barDispenser.hasAction("Take")
+                && isAllOreProcessed()
                 && plugin.isExpectingBars()
                 && !Inventory.contains(ItemID.IRON_ORE, ItemID.MITHRIL_ORE, ItemID.COAL)
                 && !Inventory.contains(config.metal().getBarId());
@@ -85,5 +89,16 @@ public class TakeBars extends Task {
         if (event.getSkill() == Skill.SMITHING) {
             experienceReceived = true;
         }
+    }
+
+    private boolean isAllOreProcessed() {
+        return Vars.getBit(Varbits.BLAST_FURNACE_COPPER_ORE)
+                + Vars.getBit(Varbits.BLAST_FURNACE_TIN_ORE)
+                + Vars.getBit(Varbits.BLAST_FURNACE_IRON_ORE)
+                + Vars.getBit(Varbits.BLAST_FURNACE_MITHRIL_ORE)
+                + Vars.getBit(Varbits.BLAST_FURNACE_ADAMANTITE_ORE)
+                + Vars.getBit(Varbits.BLAST_FURNACE_RUNITE_ORE)
+                + Vars.getBit(Varbits.BLAST_FURNACE_SILVER_ORE)
+                + Vars.getBit(Varbits.BLAST_FURNACE_GOLD_ORE) == 0;
     }
 }
