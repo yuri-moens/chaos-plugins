@@ -176,7 +176,7 @@ public class SwapHelper extends Helper {
                         }
 
                         if (config.swapDefensivePrayers()) {
-                            prayers.add(QuickPrayer.PROTECT_FROM_MISSILES);
+                            prayers.add(config.meleePrayer().getQuickPrayer());
                         }
                         break;
                     case RANGED:
@@ -185,7 +185,7 @@ public class SwapHelper extends Helper {
                         }
 
                         if (config.swapDefensivePrayers()) {
-                            prayers.add(QuickPrayer.PROTECT_FROM_MAGIC);
+                            prayers.add(config.rangedPrayer().getQuickPrayer());
                         }
                         break;
                     case MAGIC:
@@ -194,7 +194,7 @@ public class SwapHelper extends Helper {
                         }
 
                         if (config.swapDefensivePrayers()) {
-                            prayers.add(QuickPrayer.PROTECT_FROM_MELEE);
+                            prayers.add(config.magicPrayer().getQuickPrayer());
                         }
                         break;
                 }

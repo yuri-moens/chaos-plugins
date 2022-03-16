@@ -3,6 +3,7 @@ package io.reisub.unethicalite.combathelper;
 import io.reisub.unethicalite.combathelper.bones.Ashes;
 import io.reisub.unethicalite.combathelper.bones.Bones;
 import io.reisub.unethicalite.combathelper.consume.SpecialActivation;
+import io.reisub.unethicalite.combathelper.prayer.ProtectionPrayer;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 import net.runelite.client.config.ConfigSection;
@@ -836,6 +837,39 @@ public interface Config extends net.runelite.client.config.Config {
 	default boolean swapDefensivePrayers() {
 		return false;
 	}
+
+	@ConfigItem(
+			keyName = "meleePrayer",
+			name = "Melee set prayer",
+			description = "Select protection prayer to enable when swapping to melee set",
+			section = "swapConfig",
+			hidden = true,
+			unhide = "swapDefensivePrayers",
+			position = 609
+	)
+	default ProtectionPrayer meleePrayer() { return ProtectionPrayer.PROTECT_FROM_MISSILES; }
+
+	@ConfigItem(
+			keyName = "rangedPrayer",
+			name = "Ranged set prayer",
+			description = "Select protection prayer to enable when swapping to ranged set",
+			section = "swapConfig",
+			hidden = true,
+			unhide = "swapDefensivePrayers",
+			position = 610
+	)
+	default ProtectionPrayer rangedPrayer() { return ProtectionPrayer.PROTECT_FROM_MAGIC; }
+
+	@ConfigItem(
+			keyName = "magicPrayer",
+			name = "Magic set prayer",
+			description = "Select protection prayer to enable when swapping to magic set",
+			section = "swapConfig",
+			hidden = true,
+			unhide = "swapDefensivePrayers",
+			position = 611
+	)
+	default ProtectionPrayer magicPrayer() { return ProtectionPrayer.PROTECT_FROM_MELEE; }
 
 	@ConfigSection(
 			keyName = "miscConfig",
