@@ -195,9 +195,7 @@ public abstract class BankTask extends Task {
     protected boolean open(int waitTicks, int movingCheck) {
         if (Bank.isOpen()) return true;
 
-        if (bankObject == null) {
-            bankObject = getBankObject();
-        }
+        bankObject = getBankObject();
 
         if (bankObject != null) {
             if (bankObject.hasAction("Bank")) {
