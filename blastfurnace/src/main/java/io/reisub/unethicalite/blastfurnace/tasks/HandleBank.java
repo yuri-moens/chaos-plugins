@@ -4,13 +4,9 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.game.Vars;
 import dev.hoot.api.items.Bank;
 import dev.hoot.api.items.Inventory;
-import dev.hoot.api.movement.Movement;
-import dev.hoot.bot.managers.Static;
 import io.reisub.unethicalite.blastfurnace.BlastFurnace;
 import io.reisub.unethicalite.blastfurnace.Config;
-import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.CBank;
-import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.enums.Metal;
 import io.reisub.unethicalite.utils.tasks.BankTask;
@@ -19,6 +15,7 @@ import net.runelite.api.ItemID;
 import net.runelite.api.Varbits;
 
 import javax.inject.Inject;
+import java.time.Duration;
 
 public class HandleBank extends BankTask {
     @Inject
@@ -46,34 +43,14 @@ public class HandleBank extends BankTask {
         CBank.depositAllExcept(false, ItemID.COAL_BAG_12019, ItemID.ICE_GLOVES, ItemID.GOLDSMITH_GAUNTLETS);
         Time.sleepTick();
 
-        if (config.useStamina() && !Movement.isStaminaBoosted() && Bank.contains(Predicates.ids(Constants.STAMINA_POTION_IDS))) {
+        if (config.useStamina()
+                && isStaminaExpiring(Duration.ofSeconds(10))) {
             drinkStamina();
         }
 
         withdraw(config.metal());
 
         plugin.setActivity(Activity.IDLE);
-    }
-
-    private void drinkStamina() {
-        Bank.withdraw(Predicates.ids(Constants.STAMINA_POTION_IDS), 1, Bank.WithdrawMode.ITEM);
-
-        Item potion = null;
-        int start = Static.getClient().getTickCount();
-
-        while (potion == null && Static.getClient().getTickCount() < start + 10) {
-            Time.sleepTick();
-            potion = Bank.Inventory.getFirst(Predicates.ids(Constants.STAMINA_POTION_IDS));
-        }
-
-        if (potion == null) {
-            return;
-        }
-
-        CBank.bankInventoryInteract(potion, "Drink");
-        Time.sleepTick();
-
-        CBank.depositAllExcept(false, ItemID.COAL_BAG_12019, ItemID.ICE_GLOVES, ItemID.GOLDSMITH_GAUNTLETS);
     }
 
     private void withdraw(Metal metal) {

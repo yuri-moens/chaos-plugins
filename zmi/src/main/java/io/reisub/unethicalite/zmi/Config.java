@@ -7,10 +7,18 @@ import net.runelite.client.config.ConfigItem;
 @ConfigGroup("chaoszmi")
 public interface Config extends net.runelite.client.config.Config {
 	@ConfigItem(
+			keyName = "useStamina",
+			name = "Use stamina potion",
+			description = "Use stamina potions",
+			position = 0
+	)
+	default boolean useStamina() { return true; }
+
+	@ConfigItem(
 			keyName = "usePrayer",
 			name = "Use prayer",
 			description = "Use prayer for faster healing",
-			position = 0
+			position = 1
 	)
 	default boolean usePrayer() { return true; }
 
