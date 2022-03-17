@@ -65,6 +65,10 @@ public class Smithing extends TickScript {
 
 	@Subscribe
 	private void onAnimationChanged(AnimationChanged event) {
+		if (!Utils.isLoggedIn()) {
+			return;
+		}
+
 		switch (Players.getLocal().getAnimation()) {
 			case AnimationID.SMITHING_ANVIL:
 			case AnimationID.SMITHING_IMCANDO_HAMMER:
