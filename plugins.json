@@ -473,6 +473,13 @@
       "version": "1.1.2",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/smithing-1.1.2.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-18",
+      "sha512sum": "3700B088D94948FD2E817128F90C5B6962C6475BB40589E6EEF6E29AFFF76ED5C94B9AFBF76D6C5AF4F9C9762C906FF5BC0343BF413A465AEEA267569B254A4B",
+      "version": "1.1.3",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/smithing-1.1.3.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -677,6 +684,13 @@
       "sha512sum": "392C77CC4D3F06F040756259949AE66355124C1D0A883380DE829CBA32947B7335D68765F3529AD100771E0A7D05D824B834BE3A9535458FAC782C59C93D5F5B",
       "version": "1.3.8",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.3.8.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-18",
+      "sha512sum": "DF8A86E9B22D817998277985F6B400619E86319C81AB2F8DA35828386EA90EF770DF3EBED7E955AC163AA615E1F860F9AE280A0AA4381C0C3ABC40C76F8521C1",
+      "version": "1.3.9",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.3.9.jar",
       "requires": "^1.0.0"
     }
   ]
