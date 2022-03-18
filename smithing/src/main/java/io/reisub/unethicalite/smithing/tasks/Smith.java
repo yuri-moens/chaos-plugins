@@ -1,6 +1,7 @@
 package io.reisub.unethicalite.smithing.tasks;
 
 import dev.hoot.api.commons.Time;
+import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.widgets.Widgets;
@@ -11,6 +12,7 @@ import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import lombok.AllArgsConstructor;
 import net.runelite.api.TileObject;
+import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 
@@ -18,6 +20,9 @@ import net.runelite.api.widgets.WidgetInfo;
 public class Smith extends Task {
     private final Smithing plugin;
     private final Config config;
+
+    private final static int PRIFDDINAS_REGION = 13150;
+    private final static WorldPoint PRIFDDINAS_ANVIL_LOCATION = new WorldPoint(3287, 6055, 0);
 
     @Override
     public String getStatus() {
@@ -32,7 +37,13 @@ public class Smith extends Task {
 
     @Override
     public void execute() {
-        TileObject anvil = TileObjects.getNearest((o) -> Constants.ANVIL_IDS.contains(o.getId()));
+        TileObject anvil;
+        if (Players.getLocal().getWorldLocation().getRegionID() == PRIFDDINAS_REGION) {
+            anvil = TileObjects.getFirstAt(PRIFDDINAS_ANVIL_LOCATION, (o) -> Constants.ANVIL_IDS.contains(o.getId()));
+        } else {
+            anvil = TileObjects.getNearest((o) -> Constants.ANVIL_IDS.contains(o.getId()));
+        }
+
         if (anvil == null) {
             return;
         }
