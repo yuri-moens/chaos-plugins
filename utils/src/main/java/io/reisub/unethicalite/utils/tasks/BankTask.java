@@ -5,6 +5,7 @@ import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Bank;
+import dev.hoot.api.items.Equipment;
 import dev.hoot.api.movement.Movement;
 import dev.hoot.api.packets.DialogPackets;
 import dev.hoot.bot.managers.Static;
@@ -12,6 +13,7 @@ import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.CBank;
 import io.reisub.unethicalite.utils.api.Predicates;
 import net.runelite.api.Item;
+import net.runelite.api.ItemID;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 import net.runelite.api.NullObjectID;
@@ -314,7 +316,9 @@ public abstract class BankTask extends Task {
             return false;
         }
 
-        duration = Duration.ofSeconds(120).minus(duration);
+        int seconds = Equipment.contains(ItemID.RING_OF_ENDURANCE) ? 240 : 120;
+
+        duration = Duration.ofSeconds(seconds).minus(duration);
 
         return Duration.between(lastStamina, Instant.now()).compareTo(duration) >= 0;
     }
