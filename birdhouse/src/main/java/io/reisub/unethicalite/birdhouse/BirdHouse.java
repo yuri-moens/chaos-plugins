@@ -5,6 +5,7 @@ import dev.hoot.api.entities.Players;
 import dev.hoot.api.items.Bank;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.widgets.Widgets;
+import dev.hoot.bot.managers.Static;
 import io.reisub.unethicalite.birdhouse.tasks.AddSeeds;
 import io.reisub.unethicalite.birdhouse.tasks.BuildBirdHouse;
 import io.reisub.unethicalite.birdhouse.tasks.CraftBirdhouse;
@@ -20,10 +21,13 @@ import io.reisub.unethicalite.birdhouse.tasks.HarvestSeaweed;
 import io.reisub.unethicalite.birdhouse.tasks.NoteSeaweed;
 import io.reisub.unethicalite.birdhouse.tasks.PickupSpore;
 import io.reisub.unethicalite.birdhouse.tasks.PlantSeaweed;
+import io.reisub.unethicalite.birdhouse.tasks.StartRun;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.tasks.Run;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
@@ -31,11 +35,13 @@ import net.runelite.api.events.GameTick;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.input.KeyListener;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import org.pf4j.Extension;
 
 import javax.inject.Inject;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
@@ -48,7 +54,7 @@ import java.util.function.Supplier;
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
-public class BirdHouse extends TickScript {
+public class BirdHouse extends TickScript implements KeyListener {
 	@Inject
 	private Config config;
 
@@ -68,6 +74,10 @@ public class BirdHouse extends TickScript {
 
 	private final List<Integer> emptied = new ArrayList<>();
 
+	@Getter
+	@Setter
+	private boolean manuallyStarted;
+
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -75,6 +85,7 @@ public class BirdHouse extends TickScript {
 		emptied.clear();
 
 		tasks.add(new Run());
+		addTask(StartRun.class);
 		tasks.add(new AddSeeds());
 		tasks.add(new HandleBank(config));
 		tasks.add(new BuildBirdHouse());
@@ -100,7 +111,7 @@ public class BirdHouse extends TickScript {
 
 		if (!isRunning() && HILL_HOUSE.contains(Players.getLocal()) && Inventory.getCount((i) -> Constants.LOG_IDS.contains(i.getId())) == 4) {
 			start();
-		} else if (isRunning() && Inventory.isEmpty() && !Bank.isOpen()) {
+		} else if (isRunning() && !manuallyStarted && Inventory.isEmpty() && !Bank.isOpen()) {
 			stop();
 		}
 	}
@@ -115,5 +126,25 @@ public class BirdHouse extends TickScript {
 
 	public boolean isUnderwater() {
 		return Players.getLocal().getWorldLocation().getRegionID() == UNDERWATER_REGION;
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (config.birdhouseHotkey().matches(e)) {
+			e.consume();
+			System.out.println("start");
+			manuallyStarted = true;
+			start();
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
 	}
 }
