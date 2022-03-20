@@ -22,6 +22,7 @@ import net.runelite.api.events.GameTick;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.StatChanged;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.input.KeyListener;
 import net.runelite.client.plugins.Plugin;
 
 import java.awt.event.KeyEvent;
@@ -168,12 +169,20 @@ public abstract class TickScript extends Plugin {
     @Override
     protected final void startUp() {
         executor = Executors.newSingleThreadScheduledExecutor();
+
+        if (this instanceof KeyListener) {
+            Static.getKeyManager().registerKeyListener((KeyListener) this);
+        }
     }
 
     @Override
     protected final void shutDown() {
         stop();
         executor.shutdownNow();
+
+        if (this instanceof KeyListener) {
+            Static.getKeyManager().unregisterKeyListener((KeyListener) this);
+        }
     }
 
     public void start() {

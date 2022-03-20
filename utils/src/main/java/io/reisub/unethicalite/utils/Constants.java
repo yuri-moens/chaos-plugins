@@ -22,6 +22,14 @@ public class Constants {
             ItemID.REDWOOD_LOGS
     );
 
+    public static final Set<Integer> DIGSITE_PENDANT_IDS = ImmutableSet.of(
+            ItemID.DIGSITE_PENDANT_1,
+            ItemID.DIGSITE_PENDANT_2,
+            ItemID.DIGSITE_PENDANT_3,
+            ItemID.DIGSITE_PENDANT_4,
+            ItemID.DIGSITE_PENDANT_5
+    );
+
     public static final int BIRD_HOUSE_EMPTY_SPACE = ObjectID.SPACE;
 
     public static final int MEADOW_NORTH_SPACE = NullObjectID.NULL_30565;
