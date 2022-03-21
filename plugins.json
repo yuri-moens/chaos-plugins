@@ -130,6 +130,13 @@
       "version": "1.0.6",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.0.6.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-21",
+      "sha512sum": "60C7BB26593641F0195B320D0C71A968178F119261FD0C6522DD7C5102606C71A3E85939E2E59F9823FE059F36FFDC639E48F0BBCD88FF7FA95E2009A3ABB825",
+      "version": "1.1.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.1.0.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -389,6 +396,19 @@
       "requires": "^1.0.0"
     }
   ]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
+  "name": "Chaos Mining",
+  "description": "Diggy, diggy hole",
+  "id": "chaosmining-plugin",
+  "releases": [{
+    "date": "2022-03-21",
+    "sha512sum": "F07A62E8D7616FBA679A38ACF6EEF38F7BAC272FCB7A5A25AF71A704AC41A68C492C8114EC19310862DF86F3582ADB3DB35B691B5DE87745815F1516D6214411",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/mining-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
@@ -691,6 +711,13 @@
       "sha512sum": "DF8A86E9B22D817998277985F6B400619E86319C81AB2F8DA35828386EA90EF770DF3EBED7E955AC163AA615E1F860F9AE280A0AA4381C0C3ABC40C76F8521C1",
       "version": "1.3.9",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.3.9.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-21",
+      "sha512sum": "FA831162304D38B0DFBC9D1736930AE2B80F980E43C22096CEE95CDC6A442E73A145A852C55CCB4989F18A95DCF42E9C12EF6E067C95E89A1F45CAD8727DBC7A",
+      "version": "1.4.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.4.0.jar",
       "requires": "^1.0.0"
     }
   ]
