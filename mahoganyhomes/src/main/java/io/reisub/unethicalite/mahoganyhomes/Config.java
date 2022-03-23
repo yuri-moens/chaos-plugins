@@ -1,0 +1,28 @@
+package io.reisub.unethicalite.mahoganyhomes;
+
+import net.runelite.client.config.Button;
+import net.runelite.client.config.ConfigGroup;
+import net.runelite.client.config.ConfigItem;
+
+@ConfigGroup("chaosmahoganyhomes")
+public interface Config extends net.runelite.client.config.Config {
+	@ConfigItem(
+			keyName = "plank",
+			name = "Plank",
+			description = "Select the plank type",
+			position = 0
+	)
+	default Plank plank() {
+		return Plank.TEAK;
+	}
+
+	@ConfigItem(
+			keyName = "startButton",
+			name = "Start/Stop",
+			description = "Start the script",
+			position = Integer.MAX_VALUE
+	)
+	default Button startButton() {
+		return new Button();
+	}
+}
