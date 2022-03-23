@@ -194,4 +194,14 @@ public class Constants {
             ItemID.LARGE_POUCH_5513,
             ItemID.MEDIUM_POUCH_5511
     );
+
+    public static final Set<Integer> EXPLORERS_RING_IDS = ImmutableSet.of(
+            ItemID.EXPLORERS_RING_2,
+            ItemID.EXPLORERS_RING_3,
+            ItemID.EXPLORERS_RING_4
+    );
+
+    public static final Set<Integer> HERB_PATCH_IDS = ImmutableSet.of(
+
+    );
 }
