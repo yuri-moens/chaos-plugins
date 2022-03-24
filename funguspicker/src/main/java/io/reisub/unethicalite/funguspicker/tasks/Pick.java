@@ -5,6 +5,7 @@ import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ItemID;
+import net.runelite.api.ObjectID;
 
 public class Pick extends Task {
     @Override
@@ -15,14 +16,14 @@ public class Pick extends Task {
     @Override
     public boolean validate() {
         return !Inventory.isFull()
-                && TileObjects.getNearest(0) != null; // TODO
+                && TileObjects.getNearest(ObjectID.FUNGI_ON_LOG) != null;
     }
 
     @Override
     public void execute() {
         int count = Inventory.getCount(ItemID.MORT_MYRE_FUNGUS);
 
-        TileObjects.getNearest(0).interact(0); // TODO
+        TileObjects.getNearest(ObjectID.FUNGI_ON_LOG).interact("Pick");
 
         Time.sleepTicksUntil(() -> count < Inventory.getCount(ItemID.MORT_MYRE_FUNGUS), 5);
     }

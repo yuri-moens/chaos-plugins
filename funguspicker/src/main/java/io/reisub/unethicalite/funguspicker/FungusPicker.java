@@ -37,7 +37,7 @@ public class FungusPicker extends TickScript {
 		return configManager.getConfig(Config.class);
 	}
 
-	public static final WorldPoint FUNGUS_LOCATION = new WorldPoint(0, 0, 0);
+	public static final WorldPoint FUNGUS_LOCATION = new WorldPoint(3667, 3255, 0);
 	public static final int MONASTERY_REGION = 10290;
 	public static final Set<Integer> VER_SINHAZA_REGION_IDS = ImmutableSet.of(
 			14386,

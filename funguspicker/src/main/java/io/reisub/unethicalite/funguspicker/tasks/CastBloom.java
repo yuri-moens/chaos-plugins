@@ -9,6 +9,7 @@ import dev.hoot.api.movement.Movement;
 import io.reisub.unethicalite.funguspicker.FungusPicker;
 import io.reisub.unethicalite.utils.api.Interact;
 import io.reisub.unethicalite.utils.tasks.Task;
+import net.runelite.api.ObjectID;
 import net.runelite.api.Skill;
 
 import javax.inject.Inject;
@@ -25,7 +26,7 @@ public class CastBloom extends Task {
     @Override
     public boolean validate() {
         return !Inventory.isFull()
-                && TileObjects.getNearest(0) == null // TODO
+                && TileObjects.getNearest(ObjectID.FUNGI_ON_LOG) == null
                 && Skills.getBoostedLevel(Skill.PRAYER) > 0;
     }
 

@@ -29,7 +29,7 @@ public class HandleBank extends BankTask {
     @Override
     public void execute() {
         if (Players.getLocal().getWorldLocation().getRegionID() == FungusPicker.MONASTERY_REGION) {
-            boolean interacted = Interact.interactWithInventoryOrEquipment(ItemID.DRAKANS_MEDALLION, "Rub", "Ver Sinhaza", 2);
+            boolean interacted = Interact.interactWithInventoryOrEquipment(ItemID.DRAKANS_MEDALLION, "Ver Sinhaza", null, 0);
 
             if (!interacted) {
                 plugin.stop("Couldn't find Drakan's medallion. Stopping plugin.");
@@ -37,6 +37,7 @@ public class HandleBank extends BankTask {
             }
 
             Time.sleepTicksUntil(() -> FungusPicker.VER_SINHAZA_REGION_IDS.contains(Players.getLocal().getWorldLocation().getRegionID()), 10);
+            Time.sleepTick();
         }
 
         open();

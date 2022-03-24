@@ -4,8 +4,10 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.funguspicker.FungusPicker;
+import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.CMovement;
 import io.reisub.unethicalite.utils.api.Interact;
+import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ItemID;
 
@@ -31,7 +33,7 @@ public class GoToFungus extends Task {
         int regionId = Players.getLocal().getWorldLocation().getRegionID();
 
         if (!FungusPicker.VER_SINHAZA_REGION_IDS.contains(regionId)) {
-            boolean interacted = Interact.interactWithInventoryOrEquipment(ItemID.DRAKANS_MEDALLION, "Rub", "Ver Sinhaza", 2);
+            boolean interacted = Interact.interactWithInventoryOrEquipment(ItemID.DRAKANS_MEDALLION, "Ver Sinhaza", null, 0);
 
             if (!interacted) {
                 plugin.stop("Couldn't find Drakan's medallion. Stopping plugin.");
@@ -41,6 +43,6 @@ public class GoToFungus extends Task {
             Time.sleepTicksUntil(() -> FungusPicker.VER_SINHAZA_REGION_IDS.contains(Players.getLocal().getWorldLocation().getRegionID()), 10);
         }
 
-        CMovement.walkTo(FungusPicker.FUNGUS_LOCATION);
+        CMovement.walkTo(FungusPicker.FUNGUS_LOCATION, () -> Inventory.getAll(Predicates.ids(Constants.DUELING_RING_IDS)).forEach((i) -> i.interact("Wear")));
     }
 }
