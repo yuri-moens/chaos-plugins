@@ -26,6 +26,6 @@ public class CastHumidify extends Task {
         Widget widget = Widgets.get(Lunar.HUMIDIFY.getWidget());
         widget.interact(1, MenuAction.CC_OP.getId(), -1, Lunar.HUMIDIFY.getWidget().getId());
 
-        Time.sleepTicks(3);
+        Time.sleepTicksUntil(() -> Inventory.contains(ItemID.WATERSKIN4), 5);
     }
 }
