@@ -8,6 +8,7 @@ import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import io.reisub.unethicalite.zmi.Zmi;
+import net.runelite.api.NullObjectID;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
 
@@ -30,7 +31,7 @@ public class RuneCraft extends Task {
             Zmi.pouchesAreEmpty = true;
         }
 
-        TileObject altar = TileObjects.getNearest(ObjectID.RUNECRAFTING_ALTAR);
+        TileObject altar = TileObjects.getNearest(ObjectID.ALTAR_29631);
         if (altar == null) {
             return;
         }
