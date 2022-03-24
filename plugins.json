@@ -18,6 +18,13 @@
       "version": "1.0.1",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/agility-1.0.1.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-24",
+      "sha512sum": "00E9ACAF469F635B5200B2D710ED131891882D3A06401373A61016DBC05EAE86AE567EE1A8883D481143718C94F78432E980972E2C4BC9697AA030654E79C40C",
+      "version": "1.0.2",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/agility-1.0.2.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -363,6 +370,19 @@
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
+  "name": "Chaos Farming",
+  "description": "Automated farm runs",
+  "id": "chaosfarming-plugin",
+  "releases": [{
+    "date": "2022-03-24",
+    "sha512sum": "BA28FF1EAC462B64814E24C623A73B644F7FFC6401DF187047DB9D1092080DE97DD7AFC9B934C8D5734C849018AE7E54E08B2BA172E5AAE0382AB32AA8FC23AE",
+    "version": "0.0.1",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/farming-0.0.1.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
   "name": "Chaos Herblore",
   "description": "You put the lime in the coconut, you drank them both up",
   "id": "chaosherblore-plugin",
@@ -396,6 +416,19 @@
       "requires": "^1.0.0"
     }
   ]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
+  "name": "Chaos Mahogany Homes",
+  "description": "Can we build it? Yes, we can!",
+  "id": "chaosmahoganyhomes-plugin",
+  "releases": [{
+    "date": "2022-03-24",
+    "sha512sum": "E2C6900FF5ED58D3740FC6AA1CCF842A8B7907620F4DC8227A1E51D02A9A43A5F7DC64574BF5B64A2E3343B8F71DA0D06E7167F2ED3CD10E0F5EED626B6197D9",
+    "version": "0.0.1",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/mahoganyhomes-0.0.1.jar",
+    "requires": "^1.0.0"
+  }]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
@@ -502,6 +535,19 @@
       "requires": "^1.0.0"
     }
   ]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
+  "name": "Chaos Superglass Make",
+  "description": "A super Superglass Make caster",
+  "id": "chaossuperglassmake-plugin",
+  "releases": [{
+    "date": "2022-03-24",
+    "sha512sum": "540D48C0CA8831A871305600EDFFF85F37DAF649BCEC9FCDC205167FD33FA6D9A9815953D1C84D84C6C4CFBC437DFE9E0A4392D6AFB20A35D107364F992E0C28",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/superglassmake-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
