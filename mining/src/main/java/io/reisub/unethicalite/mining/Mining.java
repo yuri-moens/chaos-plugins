@@ -7,6 +7,8 @@ import io.reisub.unethicalite.mining.tasks.GoToMiningArea;
 import io.reisub.unethicalite.mining.tasks.Mine;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.plugins.PluginDependency;
@@ -32,6 +34,10 @@ public class Mining extends TickScript {
 	{
 		return configManager.getConfig(Config.class);
 	}
+
+	@Getter
+	@Setter
+	private boolean arrived;
 
 	@Override
 	protected void onStart() {

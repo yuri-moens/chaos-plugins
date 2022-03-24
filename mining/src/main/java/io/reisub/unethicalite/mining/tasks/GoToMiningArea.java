@@ -5,12 +5,16 @@ import dev.hoot.api.entities.Players;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.movement.Movement;
 import io.reisub.unethicalite.mining.Config;
+import io.reisub.unethicalite.mining.Mining;
 import io.reisub.unethicalite.utils.api.CMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 
 import javax.inject.Inject;
 
 public class GoToMiningArea extends Task {
+    @Inject
+    private Mining plugin;
+
     @Inject
     private Config config;
 
@@ -37,6 +41,7 @@ public class GoToMiningArea extends Task {
             CMovement.walkTo(config.location().getMiningAreaPoint());
 
             Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(config.location().getMiningAreaPoint()), 20);
+            plugin.setArrived(true);
         } else {
             CMovement.walkTo(config.location().getMiningAreaPoint(), 2);
         }

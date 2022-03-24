@@ -122,6 +122,12 @@ public class Mine extends Task {
 
     private boolean isReady() {
         if (config.location().isThreeTick()) {
+            if (plugin.isArrived()) {
+                ticks.set(0);
+                plugin.setArrived(false);
+                return true;
+            }
+
             return ticks.get() % 3 == 0;
         } else {
             return Players.getLocal().isIdle();
