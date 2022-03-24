@@ -36,7 +36,8 @@ public class Agility extends TickScript {
 	}
 
 	public static final Set<WorldPoint> DELAY_POINTS = ImmutableSet.of(
-			new WorldPoint(3363, 2998, 0)
+			new WorldPoint(3363, 2998, 0),
+			new WorldPoint(2653, 3676, 0)
 	);
 
 	@Override
