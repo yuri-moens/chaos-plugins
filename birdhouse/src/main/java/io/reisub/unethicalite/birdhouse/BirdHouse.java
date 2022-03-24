@@ -31,6 +31,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.api.events.ConfigButtonClicked;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.config.ConfigManager;
@@ -44,6 +45,7 @@ import javax.inject.Inject;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Supplier;
 
 @PluginDescriptor(
@@ -104,6 +106,15 @@ public class BirdHouse extends TickScript implements KeyListener {
 	}
 
 	@Subscribe
+	private void onConfigButtonPressed(ConfigButtonClicked event) {
+		String name = this.getName().replaceAll(" ", "").toLowerCase(Locale.ROOT);
+
+		if (event.getGroup().equals(name) && event.getKey().equals("startButton")) {
+			manuallyStarted = true;
+		}
+	}
+
+	@Subscribe
 	private void onGameTick(GameTick event) {
 		if (!Utils.isLoggedIn()) {
 			return;
@@ -137,7 +148,6 @@ public class BirdHouse extends TickScript implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if (config.birdhouseHotkey().matches(e)) {
 			e.consume();
-			System.out.println("start");
 			manuallyStarted = true;
 			start();
 		}
