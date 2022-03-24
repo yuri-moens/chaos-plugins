@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.movement.Movement;
 import io.reisub.unethicalite.utils.api.Predicates;
@@ -54,7 +55,7 @@ public class Deposit extends Task {
             return;
         }
 
-        Inventory.getFirst(Predicates.ids(SANDSTONE_IDS)).useOn(drew);
+        GameThread.invoke(() -> Inventory.getFirst(Predicates.ids(SANDSTONE_IDS)).useOn(drew));
         Time.sleepTicksUntil(() -> !Inventory.isFull() || interrupted, 30);
     }
 
