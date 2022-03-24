@@ -195,6 +195,26 @@ public class Constants {
             ItemID.MEDIUM_POUCH_5511
     );
 
+    public static final Set<Integer> ARDOUGNE_CLOAK_IDS = ImmutableSet.of(
+            ItemID.ARDOUGNE_CLOAK_1,
+            ItemID.ARDOUGNE_CLOAK_2,
+            ItemID.ARDOUGNE_CLOAK_3,
+            ItemID.ARDOUGNE_CLOAK_4,
+            ItemID.ARDOUGNE_CLOAK,
+            ItemID.ARDOUGNE_MAX_CAPE
+    );
+
+    public static final Set<Integer> DUELING_RING_IDS = ImmutableSet.of(
+            ItemID.RING_OF_DUELING1,
+            ItemID.RING_OF_DUELING2,
+            ItemID.RING_OF_DUELING3,
+            ItemID.RING_OF_DUELING4,
+            ItemID.RING_OF_DUELING5,
+            ItemID.RING_OF_DUELING6,
+            ItemID.RING_OF_DUELING7,
+            ItemID.RING_OF_DUELING8
+    );
+
     public static final Set<Integer> EXPLORERS_RING_IDS = ImmutableSet.of(
             ItemID.EXPLORERS_RING_2,
             ItemID.EXPLORERS_RING_3,
