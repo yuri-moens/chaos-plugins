@@ -5,7 +5,9 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.game.Game;
 import dev.hoot.api.movement.Movement;
+import dev.hoot.api.packets.MovementPackets;
 import dev.hoot.bot.managers.Static;
+import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.coords.WorldPoint;
 
@@ -49,5 +51,25 @@ public class CMovement {
 
             Time.sleepTick();
         }
+    }
+
+    public static void sendMovementPacket(WorldPoint worldPoint) {
+        sendMovementPacket(worldPoint, false);
+    }
+
+    public static void sendMovementPacket(WorldPoint worldPoint, boolean ctrlDown) {
+        sendMovementPacket(worldPoint.getX(), worldPoint.getY(), ctrlDown);
+    }
+
+    public static void sendMovementPacket(int x, int y) {
+        sendMovementPacket(x, y, false);
+    }
+
+    public static void sendMovementPacket(int x, int y, boolean ctrlDown) {
+        Client client = Game.getClient();
+        client.setDestinationX(x - client.getBaseX());
+        client.setDestinationY(y - client.getBaseY());
+
+        Static.getClientThread().invoke(() -> MovementPackets.sendMovement(x, y, ctrlDown));
     }
 }
