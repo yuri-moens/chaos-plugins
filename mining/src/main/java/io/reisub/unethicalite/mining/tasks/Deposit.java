@@ -2,12 +2,15 @@ package io.reisub.unethicalite.mining.tasks;
 
 import com.google.common.collect.ImmutableSet;
 import dev.hoot.api.commons.Time;
+import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.movement.Movement;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ItemID;
+import net.runelite.api.NPC;
+import net.runelite.api.NpcID;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
 import net.runelite.api.events.ChatMessage;
@@ -46,12 +49,12 @@ public class Deposit extends Task {
             Movement.toggleRun();
         }
 
-        TileObject grinder = TileObjects.getNearest(ObjectID.GRINDER);
-        if (grinder == null) {
+        NPC drew = NPCs.getNearest(NpcID.DREW);
+        if (drew == null) {
             return;
         }
 
-        grinder.interact(0);
+        Inventory.getFirst(Predicates.ids(SANDSTONE_IDS)).useOn(drew);
         Time.sleepTicksUntil(() -> !Inventory.isFull() || interrupted, 30);
     }
 
