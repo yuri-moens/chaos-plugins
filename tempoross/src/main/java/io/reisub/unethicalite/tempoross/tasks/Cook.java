@@ -9,6 +9,7 @@ import dev.hoot.api.game.Game;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.packets.MovementPackets;
 import io.reisub.unethicalite.tempoross.Tempoross;
+import io.reisub.unethicalite.utils.api.CMovement;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ItemID;
@@ -77,7 +78,7 @@ public class Cook extends Task {
         WorldPoint target = plugin.getDudiPos().dx(7).dy(16);
 
         if (Players.getLocal().getWorldLocation().getY() < target.getY() - 5) {
-            MovementPackets.sendMovement(target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
+            CMovement.sendMovementPacket(target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
 
             if (!Time.sleepUntil(() -> Players.getLocal().isMoving(), 1500)) {
                 return;
