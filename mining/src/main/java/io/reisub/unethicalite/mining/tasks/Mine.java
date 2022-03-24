@@ -1,5 +1,6 @@
 package io.reisub.unethicalite.mining.tasks;
 
+import com.google.common.collect.ImmutableSet;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
@@ -7,6 +8,8 @@ import dev.hoot.api.items.Inventory;
 import dev.hoot.api.movement.Movement;
 import dev.hoot.bot.managers.Static;
 import io.reisub.unethicalite.mining.Config;
+import io.reisub.unethicalite.mining.Location;
+import io.reisub.unethicalite.mining.Mining;
 import io.reisub.unethicalite.mining.RockPosition;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -20,11 +23,26 @@ import net.runelite.client.eventbus.Subscribe;
 
 import javax.inject.Inject;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Mine extends Task {
     @Inject
+    private Mining plugin;
+
+    @Inject
     private Config config;
+
+    private final Set<Integer> DROP_IDS = ImmutableSet.of(
+            ItemID.SANDSTONE_1KG,
+            ItemID.SANDSTONE_2KG,
+            ItemID.SANDSTONE_5KG,
+            ItemID.SANDSTONE_10KG,
+            ItemID.GRANITE_500G,
+            ItemID.GRANITE_2KG,
+            ItemID.GRANITE_5KG
+    );
 
     private final AtomicInteger ticks = new AtomicInteger(0);
 
@@ -75,6 +93,12 @@ public class Mine extends Task {
 
         rock.interact(0);
 
+        List<Item> dropItems = Inventory.getAll(Predicates.ids(DROP_IDS));
+        if (shouldDrop() && !dropItems.isEmpty()) {
+            dropItems.forEach(Item::drop);
+            rock.interact(0);
+        }
+
         if (!config.location().isThreeTick()) {
             Time.sleepTicksUntil(() -> !Players.getLocal().isIdle(), 10);
         }
@@ -122,5 +146,13 @@ public class Mine extends Task {
     private void resetQueue() {
         rockPositions = new LinkedList<>();
         rockPositions.addAll(config.location().getRockPositions());
+    }
+
+    private boolean shouldDrop() {
+        if (config.drop()) {
+            return true;
+        }
+
+        return config.location() == Location.QUARRY_GRANITE;
     }
 }
