@@ -30,9 +30,9 @@ public class HandleBank extends BankTask {
     public void execute() {
         open();
 
-        CBank.depositAllExcept(false, ItemID.ASTRAL_RUNE);
+        Bank.depositAll(ItemID.MOLTEN_GLASS);
 
-        if (!TileItems.getAt(Players.getLocal().getWorldLocation(), ItemID.MOLTEN_GLASS).isEmpty()) {
+        if (TileItems.getAt(Players.getLocal().getWorldLocation(), ItemID.MOLTEN_GLASS).size() >= 27) {
             close();
             return;
         }

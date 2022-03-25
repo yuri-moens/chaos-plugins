@@ -27,14 +27,14 @@ public class PickupGlass extends Task {
     public boolean validate() {
         return config.pickupGlass()
                 && !Inventory.isFull()
-                && last + 3 < Static.getClient().getTickCount()
-                && !TileItems.getAt(Players.getLocal().getWorldLocation(), ItemID.MOLTEN_GLASS).isEmpty();
+                && last + 2 < Static.getClient().getTickCount()
+                && TileItems.getAt(Players.getLocal().getWorldLocation(), ItemID.MOLTEN_GLASS).size() >= 27;
     }
 
     @Override
     public void execute() {
-        TileItems.getAt(Players.getLocal().getWorldLocation(), ItemID.MOLTEN_GLASS).forEach((i) -> {
-            i.interact(0);
+        TileItems.getAt(Players.getLocal().getWorldLocation(), ItemID.MOLTEN_GLASS).subList(0, 27).forEach((i) -> {
+            i.interact("Take");
             Time.sleepTick();
         });
 
