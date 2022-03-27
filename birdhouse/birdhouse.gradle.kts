@@ -1,4 +1,4 @@
-version = "1.1.1"
+version = "1.2.0"
 
 project.extra["PluginName"] = "Chaos Bird House"
 project.extra["PluginDescription"] = "Mass bird slaughter"

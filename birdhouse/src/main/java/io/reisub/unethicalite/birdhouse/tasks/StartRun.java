@@ -56,6 +56,14 @@ public class StartRun extends BankTask {
             Bank.withdraw(seedId, 10, Bank.WithdrawMode.ITEM);
         }
 
+        switch (config.tpLocation()) {
+            case EDGEVILLE:
+            case FARMING_GUILD:
+            case FEROX_ENCLAVE_DUELING_RING:
+                Bank.withdraw(Predicates.ids(config.tpLocation().getTeleportItemIds()), 1, Bank.WithdrawMode.ITEM);
+                break;
+        }
+
         close();
         Time.sleepTicksUntil(() -> !Bank.isOpen(), 5);
 

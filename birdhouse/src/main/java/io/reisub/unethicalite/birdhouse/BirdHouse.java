@@ -22,6 +22,7 @@ import io.reisub.unethicalite.birdhouse.tasks.NoteSeaweed;
 import io.reisub.unethicalite.birdhouse.tasks.PickupSpore;
 import io.reisub.unethicalite.birdhouse.tasks.PlantSeaweed;
 import io.reisub.unethicalite.birdhouse.tasks.StartRun;
+import io.reisub.unethicalite.birdhouse.tasks.Teleport;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
@@ -74,6 +75,7 @@ public class BirdHouse extends TickScript implements KeyListener {
 	public static final Supplier<Widget> TOOLS = () -> Widgets.get(TOOL_WIDGET_ID, 0);
 	public static final Supplier<Widget> CLOSE = () -> Widgets.get(TOOL_WIDGET_ID, 1, 11);
 
+	@Getter
 	private final List<Integer> emptied = new ArrayList<>();
 
 	@Getter
@@ -103,6 +105,7 @@ public class BirdHouse extends TickScript implements KeyListener {
 		tasks.add(new NoteSeaweed(this));
 		tasks.add(new HarvestSeaweed(this, config));
 		tasks.add(new Deposit(this));
+		addTask(Teleport.class);
 	}
 
 	@Subscribe

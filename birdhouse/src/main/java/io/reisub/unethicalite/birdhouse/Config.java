@@ -48,6 +48,14 @@ public interface Config extends net.runelite.client.config.Config {
 	}
 
 	@ConfigItem(
+			keyName =  "tpAfterRun",
+			name = "TP after run",
+			description = "Select teleport location after finishing a run. This option only works when not farming seaweed.",
+			position = 4
+	)
+	default TPLocation tpLocation() { return TPLocation.NOWHERE; }
+
+	@ConfigItem(
 			keyName = "startButton",
 			name = "Force Start/Stop",
 			description = "The script should automatically start and stop. Use this button for manual overrides.",
