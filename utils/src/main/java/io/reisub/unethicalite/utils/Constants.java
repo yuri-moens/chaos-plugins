@@ -222,6 +222,31 @@ public class Constants {
             ItemID.EXPLORERS_RING_4
     );
 
+    public static final Set<Integer> AMULET_OF_GLORY_IDS = ImmutableSet.of(
+            ItemID.AMULET_OF_GLORY1,
+            ItemID.AMULET_OF_GLORY2,
+            ItemID.AMULET_OF_GLORY3,
+            ItemID.AMULET_OF_GLORY4,
+            ItemID.AMULET_OF_GLORY5,
+            ItemID.AMULET_OF_GLORY6,
+            ItemID.AMULET_OF_GLORY_T1,
+            ItemID.AMULET_OF_GLORY_T2,
+            ItemID.AMULET_OF_GLORY_T3,
+            ItemID.AMULET_OF_GLORY_T4,
+            ItemID.AMULET_OF_GLORY_T5,
+            ItemID.AMULET_OF_GLORY_T6,
+            ItemID.AMULET_OF_ETERNAL_GLORY
+    );
+
+    public static final Set<Integer> SKILL_NECKLACE_IDS = ImmutableSet.of(
+            ItemID.SKILLS_NECKLACE1,
+            ItemID.SKILLS_NECKLACE2,
+            ItemID.SKILLS_NECKLACE3,
+            ItemID.SKILLS_NECKLACE4,
+            ItemID.SKILLS_NECKLACE5,
+            ItemID.SKILLS_NECKLACE6
+    );
+
     public static final Set<Integer> HERB_PATCH_IDS = ImmutableSet.of(
 
     );
