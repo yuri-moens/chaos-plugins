@@ -2,6 +2,7 @@ package io.reisub.unethicalite.shopper.tasks;
 
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.game.Game;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.game.Worlds;
 import dev.hoot.api.items.Shop;
 import dev.hoot.api.packets.DialogPackets;
@@ -11,6 +12,8 @@ import io.reisub.unethicalite.shopper.Shopper;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.GameState;
 import net.runelite.api.World;
+import net.runelite.api.events.ChatMessage;
+import net.runelite.client.eventbus.Subscribe;
 
 import javax.inject.Inject;
 import java.util.LinkedList;
@@ -64,6 +67,13 @@ public class Hop extends Task {
 
         plugin.setHop(false);
         last = Static.getClient().getTickCount();
+    }
+
+    @Subscribe
+    private void onChatMessage(ChatMessage event) {
+        if (event.getMessage().contains("before using the World Switcher")) {
+            GameThread.invoke(DialogPackets::closeInterface);
+        }
     }
 
     private void initializeWorldQueue() {
