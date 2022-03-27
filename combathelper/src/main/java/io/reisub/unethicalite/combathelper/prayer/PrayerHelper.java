@@ -17,6 +17,8 @@ import dev.hoot.api.widgets.Widgets;
 import dev.hoot.bot.managers.interaction.InteractMethod;
 import dev.hoot.bot.managers.interaction.InteractionConfig;
 import io.reisub.unethicalite.combathelper.Helper;
+import io.reisub.unethicalite.utils.TickScript;
+import io.reisub.unethicalite.utils.Utils;
 import net.runelite.api.Actor;
 import net.runelite.api.AnimationID;
 import net.runelite.api.GameState;
@@ -104,11 +106,11 @@ public class PrayerHelper extends Helper {
         updatePlayers();
         recentBoulders.clear();
 
-        if (currentGorilla == null) {
+        if (config.demonicGorillaFlick() && currentGorilla == null) {
             currentGorilla = getCurrentGorilla();
         }
 
-        if (currentGorilla != null) {
+        if (config.demonicGorillaFlick() && currentGorilla != null) {
             List<DemonicGorilla.AttackStyle> styles = currentGorilla.getNextPosibleAttackStyles();
             DemonicGorilla.AttackStyle style;
 
@@ -211,20 +213,6 @@ public class PrayerHelper extends Helper {
                     break;
             }
         }
-
-        if (config.demonicGorillaFlick()) {
-            switch (actor.getAnimation()) {
-                case AnimationID.DEMONIC_GORILLA_MAGIC_ATTACK:
-                    setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
-                    break;
-                case AnimationID.DEMONIC_GORILLA_RANGED_ATTACK:
-                    setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
-                    break;
-                case AnimationID.DEMONIC_GORILLA_MELEE_ATTACK:
-                    setPrayer(QuickPrayer.PROTECT_FROM_MELEE, false);
-                    break;
-            }
-        }
     }
 
     public void keyPressed(KeyEvent e) {
@@ -262,7 +250,17 @@ public class PrayerHelper extends Helper {
 
     @Subscribe
     private void onInteractingChanged(InteractingChanged event) {
-        currentGorilla = getCurrentGorilla();
+        if (!Utils.isLoggedIn()) {
+            return;
+        }
+
+        if (event.getSource() == null || event.getTarget() == null) {
+            return;
+        }
+
+        if (event.getSource().equals(Players.getLocal()) && isNpcGorilla(event.getTarget().getId())) {
+            currentGorilla = getCurrentGorilla();
+        }
     }
 
     private void togglePrayer(Widget widget) {
