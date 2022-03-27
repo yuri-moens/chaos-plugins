@@ -22,15 +22,15 @@ public class HandleBank extends BankTask {
 
     @Override
     public boolean validate() {
-        return !Inventory.contains(ItemID.BUCKET_OF_SAND)
-                && isLastBankDurationAgo(Duration.ofSeconds(2));
+        return isLastBankDurationAgo(Duration.ofSeconds(2))
+                && (!Inventory.contains(ItemID.BUCKET_OF_SAND) || !Inventory.contains(ItemID.GIANT_SEAWEED, ItemID.SEAWEED, ItemID.SODA_ASH));
     }
 
     @Override
     public void execute() {
         open();
 
-        Bank.depositAll(ItemID.MOLTEN_GLASS);
+        CBank.depositAllExcept(false, ItemID.ASTRAL_RUNE, ItemID.AIR_RUNE, ItemID.FIRE_RUNE, ItemID.RUNE_POUCH);
 
         if (TileItems.getAt(Players.getLocal().getWorldLocation(), ItemID.MOLTEN_GLASS).size() >= 27) {
             close();

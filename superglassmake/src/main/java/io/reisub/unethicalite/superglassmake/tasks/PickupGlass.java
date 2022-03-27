@@ -8,7 +8,6 @@ import dev.hoot.bot.managers.Static;
 import io.reisub.unethicalite.superglassmake.Config;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ItemID;
-import net.runelite.api.TileItem;
 
 import javax.inject.Inject;
 
