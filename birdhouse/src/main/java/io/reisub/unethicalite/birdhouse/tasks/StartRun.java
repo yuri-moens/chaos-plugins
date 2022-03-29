@@ -49,8 +49,6 @@ public class StartRun extends BankTask {
 
         int seedId = getSeedId();
 
-        System.out.println("id: " + seedId);
-
         for (int i = 0; i < 4; i++) {
             Bank.withdraw(config.logs().getId(), 1, Bank.WithdrawMode.ITEM);
             Bank.withdraw(seedId, 10, Bank.WithdrawMode.ITEM);
