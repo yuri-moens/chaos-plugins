@@ -26,7 +26,7 @@ public class HandleBank extends BankTask {
 
     @Override
     public boolean validate() {
-        return isLastBankDurationAgo(Duration.ofSeconds(5))
+        return isLastBankDurationAgo(Duration.ofSeconds(2))
                 && !Inventory.contains(ItemID.MOLTEN_GLASS);
     }
 
