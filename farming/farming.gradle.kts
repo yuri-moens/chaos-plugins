@@ -1,7 +1,7 @@
 version = "0.0.1"
 
 project.extra["PluginName"] = "Chaos Farming"
-project.extra["PluginDescription"] = "Automated farm runs"
+project.extra["PluginDescription"] = "It's not much but it's honest work"
 
 dependencies {
     compileOnly(project(":utils"))
