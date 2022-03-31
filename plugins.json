@@ -144,6 +144,13 @@
       "version": "1.1.0",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.1.0.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-31",
+      "sha512sum": "3080E638B9BAA4B0C38486B3EA4FB9937B74CC73513EFB1B073CCC354AA47EB506998810F0DC19AE4D9AB8D8C92FA18377870072085FC3688C83A1668EF662E6",
+      "version": "1.2.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.2.0.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -286,6 +293,13 @@
       "version": "1.3.0",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.3.0.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-31",
+      "sha512sum": "8DC5D2A4EAD224F30C612EEE6116208EBB793A83473E916C062F1D15871DC6CAFB93640D38D76E96AF33F2963643928BC799C58700067AAA15D447A241BD3AF6",
+      "version": "1.3.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.3.1.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -370,6 +384,19 @@
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
+  "name": "Chaos Enchanter",
+  "description": "Such an enchanting plugin",
+  "id": "chaosenchanter-plugin",
+  "releases": [{
+    "date": "2022-03-31",
+    "sha512sum": "A50DD9CA4D2289ECC369F7565BBD88B9724CDA96E29316722A7C9B91186158067CEEA0F724CE2AC9310FC49604CF837FA4FDE309DD4A44031B25EBB9EFB74FDD",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/enchanter-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
   "name": "Chaos Farming",
   "description": "Automated farm runs",
   "id": "chaosfarming-plugin",
@@ -378,6 +405,32 @@
     "sha512sum": "BA28FF1EAC462B64814E24C623A73B644F7FFC6401DF187047DB9D1092080DE97DD7AFC9B934C8D5734C849018AE7E54E08B2BA172E5AAE0382AB32AA8FC23AE",
     "version": "0.0.1",
     "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/farming-0.0.1.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
+  "name": "Chaos Fungus Picker",
+  "description": "This is so fun, guy!",
+  "id": "chaosfunguspicker-plugin",
+  "releases": [{
+    "date": "2022-03-31",
+    "sha512sum": "8C4C4CF7066B2D4E2AE7896695DC5556803892BA05389CE4896D1653FBEA8A1406F9C5449FECBC7C60D2DAE99ADB8714684CD08DA460EB3C9EF6BFB857591157",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/funguspicker-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
+  "name": "Chaos Glassblower",
+  "description": "Huffs and puffs",
+  "id": "chaosglassblower-plugin",
+  "releases": [{
+    "date": "2022-03-31",
+    "sha512sum": "C13AE4CBF7B8C697586541D32D0EB03D88D50E58598E08E0ADC0C365ABF77D15EF504B5F8E0DF7B0F33C8A3BF43656496B7D0427D094A3584927A0B8A72F6ED6",
+    "version": "1.0.1",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/glassblower-1.0.1.jar",
     "requires": "^1.0.0"
   }]
 }, {
@@ -435,13 +488,22 @@
   "name": "Chaos Mining",
   "description": "Diggy, diggy hole",
   "id": "chaosmining-plugin",
-  "releases": [{
-    "date": "2022-03-21",
-    "sha512sum": "F07A62E8D7616FBA679A38ACF6EEF38F7BAC272FCB7A5A25AF71A704AC41A68C492C8114EC19310862DF86F3582ADB3DB35B691B5DE87745815F1516D6214411",
-    "version": "1.0.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/mining-1.0.0.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-03-21",
+      "sha512sum": "F07A62E8D7616FBA679A38ACF6EEF38F7BAC272FCB7A5A25AF71A704AC41A68C492C8114EC19310862DF86F3582ADB3DB35B691B5DE87745815F1516D6214411",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/mining-1.0.0.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-31",
+      "sha512sum": "55012A19A6B2239C1F2D23C53BF1F4C011EAF20AA954CC56DBE053C478DCF00E8CACFB63B3983E5546DEF723AF6CC0A95DE12B841E6746DC06443575F8F02A7E",
+      "version": "1.1.2",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/mining-1.1.2.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
@@ -475,6 +537,13 @@
       "sha512sum": "F64D463DBFBF486386B7BE9045AD9146EA43BEE5D28DC43B735F03ECAACCF3D5F35EE7D158B6C65C4A5F191E5E5E2AC3B0CB852175780FE04C1162901A618AA4",
       "version": "1.0.3",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/shopper-1.0.3.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-31",
+      "sha512sum": "05B6B35ECCD92630F5ED433F4C4C4BC6C479F0D78A24B3CF4462A3713F5DFFADDFA8AFC94502958BF9F1E17DB115675F21813219DF38732F79B8AD5800FCD02F",
+      "version": "1.0.4",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/shopper-1.0.4.jar",
       "requires": "^1.0.0"
     }
   ]
@@ -541,13 +610,22 @@
   "name": "Chaos Superglass Make",
   "description": "A super Superglass Make caster",
   "id": "chaossuperglassmake-plugin",
-  "releases": [{
-    "date": "2022-03-24",
-    "sha512sum": "540D48C0CA8831A871305600EDFFF85F37DAF649BCEC9FCDC205167FD33FA6D9A9815953D1C84D84C6C4CFBC437DFE9E0A4392D6AFB20A35D107364F992E0C28",
-    "version": "1.0.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/superglassmake-1.0.0.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-03-24",
+      "sha512sum": "540D48C0CA8831A871305600EDFFF85F37DAF649BCEC9FCDC205167FD33FA6D9A9815953D1C84D84C6C4CFBC437DFE9E0A4392D6AFB20A35D107364F992E0C28",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/superglassmake-1.0.0.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-31",
+      "sha512sum": "4C6B7B5DAE59AB8AEEA923209285BEEBEAFFBB84B7DCCD6E35B1A01E806000DACB808AE244C9DDD71F373DD4AA5FF5D648284A4A1D356893E993485A6D2E641B",
+      "version": "1.0.2",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/superglassmake-1.0.2.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
@@ -616,6 +694,13 @@
       "sha512sum": "5F66EC769EF233061BB82B2D88824A57D63B3B0C9AF086FFF5884CBA907E5591B1669000CDDD44C9E7BB4B9F69C48263E96C069B9041635286E6A86F48B67C8F",
       "version": "1.2.7",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.2.7.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-31",
+      "sha512sum": "FB3D77FDE5777175B1825C4F7F0DD189D4CF6CD3BD937EA0325CC6607FB7B8AF8F68ED98783530DB45A139C199E82E8E10B362EA1AD07091F08B2F9237C36DD0",
+      "version": "1.2.8",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/tempoross-1.2.8.jar",
       "requires": "^1.0.0"
     }
   ]
@@ -765,6 +850,13 @@
       "version": "1.4.0",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.4.0.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-31",
+      "sha512sum": "C6DD8441FAA221107BC8D45E73B076A0BB88284D96FF247FB79A24BF19AA83FD0297E7B6771143E5A4E371AB6D9447C5B447BCD1453F0331F2E524699069D109",
+      "version": "1.4.4",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.4.4.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -786,6 +878,13 @@
       "sha512sum": "7263CF8B47647EE7B5D5367DE69FBA2BF7DC15E48AE91FC9311834BE0492816ACD1D71CF864C58E92F3F0516A9CBA6ED526707C2F5E1B53A9AEEFC3C2E2F5385",
       "version": "1.0.1",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/zmi-1.0.1.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-03-31",
+      "sha512sum": "8472ECF4A1201ECABC25D656AC13F931D69445F0FC6B3272F930A5C132A7A25523A49B2E7F77AC9EE997295A77F3FC41A64580B93353D5EF82F6325D349C7DCA",
+      "version": "1.0.2",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/zmi-1.0.2.jar",
       "requires": "^1.0.0"
     }
   ]
