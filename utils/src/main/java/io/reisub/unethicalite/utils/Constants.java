@@ -1,12 +1,15 @@
 package io.reisub.unethicalite.utils;
 
 import com.google.common.collect.ImmutableSet;
+import dev.hoot.api.widgets.Widgets;
 import net.runelite.api.ItemID;
 import net.runelite.api.NpcID;
 import net.runelite.api.NullObjectID;
 import net.runelite.api.ObjectID;
+import net.runelite.api.widgets.Widget;
 
 import java.util.Set;
+import java.util.function.Supplier;
 
 public class Constants {
     public static final int MAKE_FIRST_ITEM_WIDGET_ID = 17694734;
@@ -248,8 +251,76 @@ public class Constants {
     );
 
     public static final Set<Integer> HERB_PATCH_IDS = ImmutableSet.of(
-
+            NullObjectID.NULL_8150,
+            NullObjectID.NULL_8151,
+            NullObjectID.NULL_8152,
+            NullObjectID.NULL_8153,
+            NullObjectID.NULL_9372,
+            NullObjectID.NULL_18816,
+            NullObjectID.NULL_27115,
+            NullObjectID.NULL_33176,
+            NullObjectID.NULL_33979
     );
+
+    public static final Set<Integer> HERB_SEED_IDS = ImmutableSet.of(
+            ItemID.GUAM_SEED,
+            ItemID.MARRENTILL_SEED,
+            ItemID.TARROMIN_SEED,
+            ItemID.HARRALANDER_SEED,
+            ItemID.RANARR_SEED,
+            ItemID.TOADFLAX_SEED,
+            ItemID.IRIT_SEED,
+            ItemID.AVANTOE_SEED,
+            ItemID.KWUARM_SEED,
+            ItemID.SNAPDRAGON_SEED,
+            ItemID.CADANTINE_SEED,
+            ItemID.LANTADYME_SEED,
+            ItemID.DWARF_WEED_SEED,
+            ItemID.TORSTOL_SEED
+    );
+
+    public static final Set<Integer> GRIMY_HERB_IDS = ImmutableSet.of(
+            ItemID.GRIMY_GUAM_LEAF,
+            ItemID.GRIMY_MARRENTILL,
+            ItemID.GRIMY_TARROMIN,
+            ItemID.GRIMY_HARRALANDER,
+            ItemID.GRIMY_RANARR_WEED,
+            ItemID.GRIMY_TOADFLAX,
+            ItemID.GRIMY_IRIT_LEAF,
+            ItemID.GRIMY_AVANTOE,
+            ItemID.GRIMY_KWUARM,
+            ItemID.GRIMY_SNAPDRAGON,
+            ItemID.GRIMY_CADANTINE,
+            ItemID.GRIMY_LANTADYME,
+            ItemID.GRIMY_DWARF_WEED,
+            ItemID.GRIMY_TORSTOL
+    );
+
+    public static final Set<Integer> COMPOST_IDS = ImmutableSet.of(
+            ItemID.COMPOST,
+            ItemID.SUPERCOMPOST,
+            ItemID.ULTRACOMPOST,
+            ItemID.BOTTOMLESS_COMPOST_BUCKET,
+            ItemID.BOTTOMLESS_COMPOST_BUCKET_22997
+    );
+
+    public static final int TOOL_WIDGET_ID = 125;
+    public static final Supplier<Widget> TOOLS_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 0);
+    public static final Supplier<Widget> TOOLS_CLOSE_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 1, 11);
+
+    public static final Supplier<Widget> TOOLS_WITHDRAW_DIBBER_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 9);
+    public static final Supplier<Widget> TOOLS_WITHDRAW_SPADE_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 10);
+    public static final Supplier<Widget> TOOLS_WITHDRAW_SECATEURS_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 11);
+    public static final Supplier<Widget> TOOLS_WITHDRAW_BOTTOMLESS_BUCKET_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 15);
+    public static final Supplier<Widget> TOOLS_WITHDRAW_COMPOST_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 17);
+    public static final Supplier<Widget> TOOLS_WITHDRAW_SUPERCOMPOST_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 18);
+    public static final Supplier<Widget> TOOLS_WITHDRAW_ULTRACOMPOST_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 19);
+
+    public static final Supplier<Widget> TOOLS_DEPOSIT_DIBBER_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID + 1, 2);
+    public static final Supplier<Widget> TOOLS_DEPOSIT_SPADE_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID + 1, 3);
+    public static final Supplier<Widget> TOOLS_DEPOSIT_SECATEURS_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID + 1, 4);
+    public static final Supplier<Widget> TOOLS_DEPOSIT_BOTTOMLESS_BUCKET_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID + 1, 8);
+    public static final Supplier<Widget> TOOLS_DEPOSIT_BUCKET_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID + 1, 9);
 
     public static final Set<Integer> BANK_OBJECT_IDS = ImmutableSet.of(
             ObjectID.BANK_BOOTH,
