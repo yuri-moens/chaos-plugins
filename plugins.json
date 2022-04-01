@@ -192,6 +192,19 @@
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
+  "name": "Chaos Chompy Chomper",
+  "description": "Chomps chompies",
+  "id": "chaoschompychomper-plugin",
+  "releases": [{
+    "date": "2022-04-01",
+    "sha512sum": "52FF6B0C720637216D097D2A2A04893FF4B40029BAD37E0B10961EEFDA87BCBD8137A5B7E8EA6219E9FD2CBA4FE90C0258F61A27B9E59AF98FD7F68F50199E11",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/chompychomper-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
   "name": "Chaos Combat Helper",
   "description": "Various utilities to make combat easier",
   "id": "chaoscombathelper-plugin",
@@ -300,6 +313,13 @@
       "version": "1.3.1",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.3.1.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-04-01",
+      "sha512sum": "8A8512485F7D789AEAC2528C0F5A57F22BEB141AB54E50F89184307DE5E471F242DDA4BA1686A80987C8B03B22033736E089E8D413E07B7773A49F1E86645235",
+      "version": "1.4.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/combathelper-1.4.0.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -398,15 +418,24 @@
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
   "name": "Chaos Farming",
-  "description": "Automated farm runs",
+  "description": "It's not much but it's honest work",
   "id": "chaosfarming-plugin",
-  "releases": [{
-    "date": "2022-03-24",
-    "sha512sum": "BA28FF1EAC462B64814E24C623A73B644F7FFC6401DF187047DB9D1092080DE97DD7AFC9B934C8D5734C849018AE7E54E08B2BA172E5AAE0382AB32AA8FC23AE",
-    "version": "0.0.1",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/farming-0.0.1.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-03-24",
+      "sha512sum": "BA28FF1EAC462B64814E24C623A73B644F7FFC6401DF187047DB9D1092080DE97DD7AFC9B934C8D5734C849018AE7E54E08B2BA172E5AAE0382AB32AA8FC23AE",
+      "version": "0.0.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/farming-0.0.1.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-04-01",
+      "sha512sum": "88A91B07138528E5B005623CD693189EB4D54A84B3AD5448F3FAD0E677E87B542002AC55B97455959BFF4AAAB373753C506A5F4E576A740DFD4D3CF77027E21E",
+      "version": "1.0.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/farming-1.0.1.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
