@@ -59,8 +59,8 @@ public abstract class TickScript extends Plugin {
 
     protected final List<Task> tasks = new ArrayList<>();
 
-    protected int minimumDelay = 150;
-    protected int maximumDelay = 200;
+    protected int minimumDelay = 250;
+    protected int maximumDelay = 300;
     protected Instant lastLogin = Instant.EPOCH;
     protected Instant lastActionTime = Instant.EPOCH;
     protected Duration lastActionTimeout = Duration.ofSeconds(3);
@@ -88,25 +88,29 @@ public abstract class TickScript extends Plugin {
             return;
         }
 
-        if (current == null) {
-            current = executor.schedule(this::tick, Rand.nextInt(minimumDelay, maximumDelay), TimeUnit.MILLISECONDS);
-        } else {
-            if (current.isDone()) {
-                if (next == null) {
-                    current = executor.schedule(this::tick, Rand.nextInt(minimumDelay, maximumDelay), TimeUnit.MILLISECONDS);
-                } else {
-                    current = next;
-                    next = null;
-                }
+        try {
+            if (current == null) {
+                current = executor.schedule(this::tick, Rand.nextInt(minimumDelay, maximumDelay), TimeUnit.MILLISECONDS);
             } else {
-                if (next == null) {
-                    next = executor.schedule(this::tick, Rand.nextInt(minimumDelay, maximumDelay), TimeUnit.MILLISECONDS);
+                if (current.isDone()) {
+                    if (next == null) {
+                        current = executor.schedule(this::tick, Rand.nextInt(minimumDelay, maximumDelay), TimeUnit.MILLISECONDS);
+                    } else {
+                        current = next;
+                        next = null;
+                    }
+                } else {
+                    if (next == null) {
+                        next = executor.schedule(this::tick, Rand.nextInt(minimumDelay, maximumDelay), TimeUnit.MILLISECONDS);
+                    }
                 }
             }
-        }
 
-        checkActionTimeout();
-        checkIdleLogout();
+            checkActionTimeout();
+            checkIdleLogout();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Subscribe
