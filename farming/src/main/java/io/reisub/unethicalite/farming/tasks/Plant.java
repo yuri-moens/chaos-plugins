@@ -3,6 +3,7 @@ package io.reisub.unethicalite.farming.tasks;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.game.Vars;
 import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.farming.Config;
@@ -78,19 +79,21 @@ public class Plant extends Task {
             return;
         }
 
+        final Item finalSeed = seed;
+
         Time.sleepTicksUntil(() -> !Players.getLocal().isAnimating(), 3);
-        seed.useOn(patch);
+        GameThread.invoke(() -> finalSeed.useOn(patch));
 
         if (!Time.sleepTicksUntil(() -> Vars.getBit(plugin.getCurrentLocation().getVarbit()) > 3, 20)) {
             return;
         }
 
-        Item compost = Inventory.getFirst(Predicates.ids(Constants.COMPOST_IDS));
+        final Item compost = Inventory.getFirst(Predicates.ids(Constants.COMPOST_IDS));
         if (compost == null) {
             return;
         }
 
-        compost.useOn(patch);
+        GameThread.invoke(() -> compost.useOn(patch));
         plugin.getCurrentLocation().setDone(true);
         Time.sleepTicks(3);
     }

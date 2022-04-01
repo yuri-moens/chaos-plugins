@@ -4,9 +4,9 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import io.reisub.unethicalite.farming.Config;
 import io.reisub.unethicalite.farming.Farming;
-import io.reisub.unethicalite.farming.Location;
 import io.reisub.unethicalite.utils.api.CMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
+import net.runelite.api.coords.WorldPoint;
 
 import javax.inject.Inject;
 
@@ -31,13 +31,14 @@ public class GoToPatch extends Task {
 
     @Override
     public void execute() {
+        WorldPoint current = Players.getLocal().getWorldLocation();
+
         if (plugin.getCurrentLocation().getTeleportable().teleport()) {
-            if (plugin.getCurrentLocation() == Location.HOSIDIUS) {
-                Time.sleepTicks(2);
-            }
-            Time.sleepTick();
+            Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation() != null && !Players.getLocal().getWorldLocation().equals(current), 10);
         }
 
-        CMovement.walkTo(plugin.getCurrentLocation().getPatchPoint());
+        if (Players.getLocal().distanceTo(plugin.getCurrentLocation().getPatchPoint()) > 10) {
+            CMovement.walkTo(plugin.getCurrentLocation().getPatchPoint());
+        }
     }
 }

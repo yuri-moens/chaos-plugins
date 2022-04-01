@@ -3,6 +3,7 @@ package io.reisub.unethicalite.farming.tasks;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.game.Vars;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.bot.managers.Static;
@@ -37,13 +38,13 @@ public class Pick extends Task {
             return;
         }
 
-        patch.interact("Pick");
+        GameThread.invoke(() -> patch.interact("Pick"));
         Time.sleepTicksUntil(() -> Players.getLocal().isAnimating(), 20);
 
         int current = Static.getClient().getTickCount();
 
         while (Static.getClient().getTickCount() <= current + 3) {
-            patch.interact("Pick");
+            GameThread.invoke(() -> patch.interact("Pick"));
             Time.sleep(150, 220);
         }
 

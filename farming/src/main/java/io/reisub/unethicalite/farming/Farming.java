@@ -78,6 +78,10 @@ public class Farming extends TickScript implements KeyListener {
 	protected void onStop() {
 		super.onStop();
 
+		for (Location location : locationQueue) {
+			location.setDone(false);
+		}
+
 		locationQueue.clear();
 	}
 

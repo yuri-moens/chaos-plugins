@@ -55,6 +55,8 @@ public class DepositTools extends Task {
             Constants.TOOLS_DEPOSIT_BOTTOMLESS_BUCKET_WIDGET.get().interact(0);
         }
 
+        Constants.TOOLS_CLOSE_WIDGET.get().interact("Close");
+
         plugin.stop("Finished farm run. Stopping plugin.");
     }
 }
