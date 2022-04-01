@@ -23,6 +23,7 @@ import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.interaction.InteractionPlugin;
 import net.runelite.client.plugins.itemstats.ItemStatPlugin;
+import net.runelite.client.plugins.zulrah.ZulrahPlugin;
 import org.pf4j.Extension;
 
 import javax.inject.Inject;
@@ -39,6 +40,7 @@ import java.util.concurrent.TimeUnit;
 )
 @PluginDependency(ItemStatPlugin.class)
 @PluginDependency(InteractionPlugin.class)
+@PluginDependency(ZulrahPlugin.class)
 @Slf4j
 @Extension
 public class CombatHelper extends Plugin {

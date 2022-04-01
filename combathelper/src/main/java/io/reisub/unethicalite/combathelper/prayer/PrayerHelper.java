@@ -47,6 +47,7 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.plugins.zulrah.ZulrahPlugin;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -64,6 +65,9 @@ import java.util.stream.Collectors;
 public class PrayerHelper extends Helper {
     @Inject
     private InteractionConfig interactionConfig;
+
+    @Inject
+    private ZulrahPlugin zulrahPlugin;
 
     private static final Set<Integer> DEMONIC_PROJECTILES = ImmutableSet.of(ProjectileID.DEMONIC_GORILLA_RANGED, ProjectileID.DEMONIC_GORILLA_MAGIC, ProjectileID.DEMONIC_GORILLA_BOULDER);
     private static final int JALTOK_JAD_MAGE_ATTACK = 7592;
@@ -147,6 +151,25 @@ public class PrayerHelper extends Helper {
                         break;
                 }
             }
+        }
+
+        if (config.zulrahPrayerFlick() && !zulrahPlugin.getZulrahData().isEmpty()) {
+            zulrahPlugin.getZulrahData().forEach(data -> {
+                data.getCurrentPhasePrayer().ifPresent(prayer -> {
+                    switch (prayer) {
+                        case PROTECT_FROM_MAGIC:
+                            if (currentOverhead != QuickPrayer.PROTECT_FROM_MAGIC) {
+                                setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
+                            }
+                            break;
+                        case PROTECT_FROM_MISSILES:
+                            if (currentOverhead != QuickPrayer.PROTECT_FROM_MISSILES) {
+                                setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
+                            }
+                            break;
+                    }
+                });
+            });
         }
 
         if (switchToInventory && !Tabs.isOpen(Tab.INVENTORY)) {

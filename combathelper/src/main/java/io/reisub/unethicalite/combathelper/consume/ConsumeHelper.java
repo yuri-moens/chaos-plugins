@@ -160,7 +160,11 @@ public class ConsumeHelper extends Helper {
                 && config.drinkPotions()
                 && event.getIndex() == VarPlayer.POISON.getId()
                 && Vars.getVarp(VarPlayer.POISON.getId()) > 0) {
-            shouldDrinkAntiPoison = true;
+            if (config.onlyCureVenom()) {
+                shouldDrinkAntiPoison = Vars.getVarp(VarPlayer.POISON.getId()) >= 1000000;
+            } else {
+                shouldDrinkAntiPoison = true;
+            }
         }
     }
 

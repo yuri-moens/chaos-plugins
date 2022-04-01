@@ -2,6 +2,8 @@ package io.reisub.unethicalite.combathelper.swap;
 
 import dev.hoot.api.commons.Rand;
 import dev.hoot.api.entities.NPCs;
+import dev.hoot.api.entities.Players;
+import dev.hoot.api.game.Combat;
 import dev.hoot.api.game.GameThread;
 import dev.hoot.api.game.Skills;
 import dev.hoot.api.game.Vars;
@@ -18,6 +20,8 @@ import net.runelite.api.Varbits;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
+import net.runelite.client.plugins.zulrah.ZulrahPlugin;
+import net.runelite.client.plugins.zulrah.constants.ZulrahType;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -30,6 +34,9 @@ import java.util.Set;
 public class SwapHelper extends Helper {
     @Inject
     private PrayerHelper prayerHelper;
+
+    @Inject
+    private ZulrahPlugin zulrahPlugin;
 
     private Set<Integer> meleeIds;
     private Set<Integer> rangedIds;
@@ -44,7 +51,7 @@ public class SwapHelper extends Helper {
 
     @Subscribe
     private void onGameTick(GameTick event) {
-        plugin.schedule(this::tick, Rand.nextInt(100, 120));
+        plugin.schedule(this::tick, Rand.nextInt(250, 300));
     }
 
     @Subscribe
@@ -73,18 +80,22 @@ public class SwapHelper extends Helper {
 
     public void keyPressed(KeyEvent e) {
         if (config.meleeHotkey().matches(e)) {
-            plugin.schedule(() -> swap(AttackStyle.MELEE), Rand.nextInt(100, 120));
+            plugin.schedule(() -> swap(AttackStyle.MELEE), Rand.nextInt(250, 300));
             e.consume();
         } else if (config.rangedHotkey().matches(e)) {
-            plugin.schedule(() -> swap(AttackStyle.RANGED), Rand.nextInt(100, 120));
+            plugin.schedule(() -> swap(AttackStyle.RANGED), Rand.nextInt(250, 300));
             e.consume();
         } else if (config.magicHotkey().matches(e)) {
-            plugin.schedule(() -> swap(AttackStyle.MAGIC), Rand.nextInt(100, 120));
+            plugin.schedule(() -> swap(AttackStyle.MAGIC), Rand.nextInt(250, 300));
             e.consume();
         }
     }
 
     private void tick() {
+        if (config.autoSwapZulrah() && !zulrahPlugin.getZulrahData().isEmpty()) {
+            zulrahSwap();
+        }
+
         if (plugin.getLastTarget() == null) return;
 
         NPC target = null;
@@ -210,5 +221,43 @@ public class SwapHelper extends Helper {
         if (plugin.getLastTarget() != null) {
             GameThread.invoke(() -> plugin.getLastTarget().interact("Attack"));
         }
+    }
+
+    private void zulrahSwap() {
+        AttackStyle current = getCurrentAttackStyle();
+
+        zulrahPlugin.getZulrahData().forEach(data -> {
+            data.getCurrentPhase().ifPresent(phase -> {
+                switch (phase.getZulrahNpc().getType()) {
+                    case MELEE:
+                    case RANGE:
+                        if (current != AttackStyle.MAGIC) {
+                            swap(AttackStyle.MAGIC);
+                        }
+                        break;
+                    case MAGIC:
+                        if (current != AttackStyle.RANGED) {
+                            swap(AttackStyle.RANGED);
+                        }
+                        break;
+                }
+            });
+        });
+    }
+
+    private AttackStyle getCurrentAttackStyle() {
+        Item weapon = Equipment.fromSlot(EquipmentInventorySlot.WEAPON);
+
+        if (weapon != null) {
+            if (meleeIds.contains(weapon.getId())) {
+                return AttackStyle.MELEE;
+            } else if (rangedIds.contains(weapon.getId())) {
+                return AttackStyle.RANGED;
+            } else if (magicIds.contains(weapon.getId())) {
+                return AttackStyle.MAGIC;
+            }
+        }
+
+        return AttackStyle.MELEE;
     }
 }

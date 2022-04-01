@@ -108,7 +108,7 @@ public interface Config extends net.runelite.client.config.Config {
 			name = "Potions Configuration",
 			description = "Configure when to pot",
 			closedByDefault = true,
-			position = 100
+			position = 99
 	)
 	String potsConfig = "potsConfig";
 
@@ -117,7 +117,7 @@ public interface Config extends net.runelite.client.config.Config {
 			name = "Drink potions",
 			description = "Enable automatic drinking of potions.",
 			section = "potsConfig",
-			position = 101
+			position = 100
 	)
 	default boolean drinkPotions() {
 		return true;
@@ -128,10 +128,21 @@ public interface Config extends net.runelite.client.config.Config {
 			name = "Drink anti-poison",
 			description = "Drink an anti-poison potion when poisoned.",
 			section = "potsConfig",
-			position = 102
+			position = 101
 	)
 	default boolean drinkAntiPoison() {
 		return true;
+	}
+
+	@ConfigItem(
+			keyName = "onlyCureVenom",
+			name = "Only cure venom",
+			description = "Drink an anti-poison or anti-venom potion when envenomed but not when poisoned.",
+			section = "potsConfig",
+			position = 102
+	)
+	default boolean onlyCureVenom() {
+		return false;
 	}
 
 	@ConfigItem(
@@ -649,6 +660,15 @@ public interface Config extends net.runelite.client.config.Config {
 	)
 	default boolean demonicGorillaFlick() { return true; }
 
+	@ConfigItem(
+			keyName = "zulrahPrayerFlick",
+			name = "Zulrah Auto Prayer Flick",
+			description = "Automatically swap prayers against Zulrah",
+			section = "prayerConfig",
+			position = 314
+	)
+	default boolean zulrahPrayerFlick() { return true; }
+
 	@ConfigSection(
 			keyName = "bonesConfig",
 			name = "Bones/ashes Configuration",
@@ -870,6 +890,15 @@ public interface Config extends net.runelite.client.config.Config {
 			position = 611
 	)
 	default ProtectionPrayer magicPrayer() { return ProtectionPrayer.PROTECT_FROM_MELEE; }
+
+	@ConfigItem(
+			keyName = "autoSwapZulrah",
+			name = "Auto swap Zulrah",
+			description = "Automatically swap sets against Zulrah",
+			section = "swapConfig",
+			position = 612
+	)
+	default boolean autoSwapZulrah() { return true; }
 
 	@ConfigSection(
 			keyName = "miscConfig",
