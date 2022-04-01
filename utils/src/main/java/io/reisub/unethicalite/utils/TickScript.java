@@ -25,6 +25,7 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.input.KeyListener;
 import net.runelite.client.plugins.Plugin;
 
+import javax.inject.Inject;
 import java.awt.event.KeyEvent;
 import java.time.Duration;
 import java.time.Instant;
@@ -40,6 +41,9 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public abstract class TickScript extends Plugin {
+    @Inject
+    private Config utilsConfig;
+
     @Getter
     private volatile boolean running;
 
@@ -59,8 +63,6 @@ public abstract class TickScript extends Plugin {
 
     protected final List<Task> tasks = new ArrayList<>();
 
-    protected int minimumDelay = 250;
-    protected int maximumDelay = 300;
     protected Instant lastLogin = Instant.EPOCH;
     protected Instant lastActionTime = Instant.EPOCH;
     protected Duration lastActionTimeout = Duration.ofSeconds(3);
@@ -88,20 +90,23 @@ public abstract class TickScript extends Plugin {
             return;
         }
 
+        int minDelay = Math.min(utilsConfig.minDelay(), utilsConfig.maxDelay());
+        int maxDelay = Math.max(utilsConfig.minDelay(), utilsConfig.maxDelay());
+
         try {
             if (current == null) {
-                current = executor.schedule(this::tick, Rand.nextInt(minimumDelay, maximumDelay), TimeUnit.MILLISECONDS);
+                current = executor.schedule(this::tick, Rand.nextInt(minDelay, maxDelay), TimeUnit.MILLISECONDS);
             } else {
                 if (current.isDone()) {
                     if (next == null) {
-                        current = executor.schedule(this::tick, Rand.nextInt(minimumDelay, maximumDelay), TimeUnit.MILLISECONDS);
+                        current = executor.schedule(this::tick, Rand.nextInt(minDelay, maxDelay), TimeUnit.MILLISECONDS);
                     } else {
                         current = next;
                         next = null;
                     }
                 } else {
                     if (next == null) {
-                        next = executor.schedule(this::tick, Rand.nextInt(minimumDelay, maximumDelay), TimeUnit.MILLISECONDS);
+                        next = executor.schedule(this::tick, Rand.nextInt(minDelay, maxDelay), TimeUnit.MILLISECONDS);
                     }
                 }
             }
