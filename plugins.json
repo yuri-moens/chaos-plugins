@@ -886,6 +886,13 @@
       "version": "1.4.4",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.4.4.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-04-01",
+      "sha512sum": "F67607E827837F26030EC8457368B63B967AC572B3BEFA243321FBD1F178CA0180AABDC74D5F52EE8F1DE53BD814904B7B9E745D0BB52085DD7FEF1BCA973E00",
+      "version": "1.4.5",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.4.5.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
