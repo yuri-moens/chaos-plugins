@@ -41,11 +41,9 @@ public class MakePotion extends Task {
 
         if (secondaries.size() == 0 || bases.size() == 0) return;
 
-        int quantity = Math.min(secondaries.size(), bases.size());
-
-        ItemPackets.useItemOnItem(secondaries.get(0), bases.get(0));
+        secondaries.get(0).useOn(bases.get(0));
         Time.sleepTicksUntil(Production::isOpen, 5);
 
-        WidgetPackets.queueResumePauseWidgetPacket(Constants.MAKE_FIRST_ITEM_WIDGET_ID, quantity);
+        Production.chooseOption(1);
     }
 }

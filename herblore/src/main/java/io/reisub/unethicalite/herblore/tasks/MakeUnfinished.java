@@ -14,6 +14,7 @@ import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 
 import javax.inject.Inject;
+import javax.swing.plaf.ProgressBarUI;
 import java.util.List;
 
 public class MakeUnfinished extends Task {
@@ -46,9 +47,9 @@ public class MakeUnfinished extends Task {
 
         int quantity = Math.min(herbs.size(), bases.size());
 
-        ItemPackets.useItemOnItem(herbs.get(0), bases.get(0));
+        herbs.get(0).useOn(bases.get(0));
         Time.sleepTicksUntil(Production::isOpen, 5);
 
-        WidgetPackets.queueResumePauseWidgetPacket(Constants.MAKE_FIRST_ITEM_WIDGET_ID, quantity);
+        Production.chooseOption(1);
     }
 }

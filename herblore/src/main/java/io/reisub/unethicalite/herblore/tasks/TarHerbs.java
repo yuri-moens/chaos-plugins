@@ -43,9 +43,9 @@ public class TarHerbs extends Task {
 
         int quantity = Math.min(herbs.size(), swampTar.getQuantity() / 15);
 
-        ItemPackets.useItemOnItem(swampTar, herbs.get(0));
+        swampTar.useOn(herbs.get(0));
         Time.sleepTicksUntil(Production::isOpen, 5);
 
-        WidgetPackets.queueResumePauseWidgetPacket(Constants.MAKE_FIRST_ITEM_WIDGET_ID, quantity);
+        Production.chooseOption(1);
     }
 }

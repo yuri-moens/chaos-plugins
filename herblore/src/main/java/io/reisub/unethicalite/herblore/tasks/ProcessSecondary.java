@@ -38,6 +38,6 @@ public class ProcessSecondary extends Task {
         List<Item> secondaries = Inventory.getAll(plugin.getBaseSecondaryIds());
         Item pestleAndMortar = Inventory.getFirst(ItemID.PESTLE_AND_MORTAR);
 
-        secondaries.forEach((i) -> ItemPackets.useItemOnItem(i, pestleAndMortar));
+        secondaries.forEach(pestleAndMortar::useOn);
     }
 }

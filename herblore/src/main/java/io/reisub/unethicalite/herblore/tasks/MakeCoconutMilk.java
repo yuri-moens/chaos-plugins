@@ -37,6 +37,6 @@ public class MakeCoconutMilk extends Task {
         List<Item> coconuts = Inventory.getAll(ItemID.COCONUT);
         Item hammer = Inventory.getFirst(ItemID.HAMMER, ItemID.IMCANDO_HAMMER);
 
-        coconuts.forEach((i) -> ItemPackets.useItemOnItem(hammer, i));
+        coconuts.forEach(hammer::useOn);
     }
 }
