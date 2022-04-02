@@ -1,7 +1,6 @@
 package io.reisub.unethicalite.herblore.tasks;
 
 import dev.hoot.api.items.Inventory;
-import dev.hoot.api.packets.ItemPackets;
 import io.reisub.unethicalite.herblore.Herblore;
 import io.reisub.unethicalite.herblore.HerbloreTask;
 import io.reisub.unethicalite.utils.enums.Activity;

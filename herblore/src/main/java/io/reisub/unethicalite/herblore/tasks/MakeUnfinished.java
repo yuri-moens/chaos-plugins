@@ -2,19 +2,15 @@ package io.reisub.unethicalite.herblore.tasks;
 
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.items.Inventory;
-import dev.hoot.api.packets.ItemPackets;
-import dev.hoot.api.packets.WidgetPackets;
 import dev.hoot.api.widgets.Production;
 import io.reisub.unethicalite.herblore.Herblore;
 import io.reisub.unethicalite.herblore.HerbloreTask;
-import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 
 import javax.inject.Inject;
-import javax.swing.plaf.ProgressBarUI;
 import java.util.List;
 
 public class MakeUnfinished extends Task {
