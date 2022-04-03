@@ -2,12 +2,14 @@ package io.reisub.unethicalite.herblore.tasks;
 
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.items.Bank;
+import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.herblore.Herblore;
 import io.reisub.unethicalite.herblore.Potion;
 import io.reisub.unethicalite.herblore.Secondary;
 import io.reisub.unethicalite.utils.api.CBank;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.BankTask;
+import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 
 import javax.inject.Inject;
@@ -90,13 +92,21 @@ public class HandleBank extends BankTask {
     private void deposit() {
         switch (plugin.getConfig().task()) {
             case TAR_HERBS:
-                CBank.depositAllExcept(ItemID.PESTLE_AND_MORTAR, ItemID.SWAMP_TAR);
+                CBank.depositAllExcept(false, ItemID.PESTLE_AND_MORTAR, ItemID.SWAMP_TAR);
                 break;
             case PROCESS_SECONDARIES:
-                CBank.depositAllExcept(ItemID.PESTLE_AND_MORTAR);
+                CBank.depositAllExcept(false, ItemID.PESTLE_AND_MORTAR);
                 break;
             case MAKE_COCONUT_MILK:
-                CBank.depositAllExcept( ItemID.HAMMER, ItemID.IMCANDO_HAMMER);
+                CBank.depositAllExcept(false, ItemID.HAMMER, ItemID.IMCANDO_HAMMER);
+                break;
+            case MAKE_POTION:
+                Item secondary = Inventory.getFirst(plugin.getConfig().potion().getSecondaryId());
+                if (secondary != null && secondary.isStackable()) {
+                    CBank.depositAllExcept(false, plugin.getConfig().potion().getSecondaryId());
+                } else {
+                    Bank.depositInventory();
+                }
                 break;
             default:
                 Bank.depositInventory();
@@ -376,8 +386,22 @@ public class HandleBank extends BankTask {
         if (potion.getUnfinishedId() == -1 || Bank.contains(potion.getUnfinishedId())) {
             int quantity = stackableSecondaries ? 27 : 14;
 
-            int baseCount = potion.getUnfinishedId() == -1 ? Bank.getCount(potion.getBaseId()) : Bank.getCount(potion.getUnfinishedId());
+            int baseCount;
+            int id;
+
+            if (potion.getUnfinishedId() == -1) {
+                baseCount = Bank.getCount(potion.getBaseId());
+                id = potion.getBaseId();
+            } else {
+                baseCount = Bank.getCount(potion.getUnfinishedId());
+                id = potion.getUnfinishedId();
+            }
+
             int secondaryCount = potion == Potion.ANTI_VENOM_PLUS ? Bank.getCount(ItemID.TORSTOL, ItemID.GRIMY_TORSTOL) : Bank.getCount(potion.getSecondaryId());
+
+            if (stackableSecondaries) {
+                secondaryCount += Inventory.getCount(true, potion.getSecondaryId());
+            }
 
             if (baseCount == 0) {
                 plugin.stop("Out of materials: no more bases");
@@ -387,7 +411,7 @@ public class HandleBank extends BankTask {
                 plugin.stop("Out of materials: no more secondaries");
             }
 
-            Bank.withdraw(potion.getBaseId(), quantity, Bank.WithdrawMode.ITEM);
+            Bank.withdraw(id, quantity, Bank.WithdrawMode.ITEM);
 
             if (potion == Potion.ANTI_VENOM_PLUS) {
                 withdrawEither(ItemID.TORSTOL, ItemID.GRIMY_TORSTOL, quantity);
@@ -406,6 +430,10 @@ public class HandleBank extends BankTask {
             int grimyHerbCount = Bank.getCount(potion.getHerb().getGrimyId());
             int herbCount = Bank.getCount(potion.getHerb().getCleanId());
             int secondaryCount = Bank.getCount(potion.getSecondaryId());
+
+            if (stackableSecondaries) {
+                secondaryCount += Inventory.getCount(true, potion.getSecondaryId());
+            }
 
             if (baseCount == 0) {
                 plugin.stop("Out of materials: no more bases");

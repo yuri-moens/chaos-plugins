@@ -64,12 +64,15 @@ public class Herblore extends TickScript {
 		int grimyHerbs = Inventory.getCount(getGrimyHerbIds());
 		int cleanHerbs = Inventory.getCount(getCleanHerbIds());
 		int bases = Inventory.getCount(getBaseIds());
+		int secondaries = Inventory.getCount(config.secondary().getOriginalId());
 
 		if (grimyHerbs == 0 && currentActivity == Activity.CLEANING_HERBS) {
 			setActivity(Activity.IDLE);
 		} else if (cleanHerbs == 0 && currentActivity == Activity.CREATING_UNFINISHED_POTIONS) {
 			setActivity(Activity.IDLE);
 		} else if (bases == 0 && currentActivity == Activity.CREATING_POTIONS) {
+			setActivity(Activity.IDLE);
+		} else if (secondaries == 0 && currentActivity == Activity.PROCESSING_SECONDARIES) {
 			setActivity(Activity.IDLE);
 		}
 	}
