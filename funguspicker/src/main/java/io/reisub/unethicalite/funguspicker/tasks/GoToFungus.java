@@ -3,6 +3,8 @@ package io.reisub.unethicalite.funguspicker.tasks;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.items.Inventory;
+import dev.hoot.api.widgets.Tab;
+import dev.hoot.api.widgets.Tabs;
 import io.reisub.unethicalite.funguspicker.FungusPicker;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.CMovement;
@@ -43,6 +45,15 @@ public class GoToFungus extends Task {
             Time.sleepTicksUntil(() -> FungusPicker.VER_SINHAZA_REGION_IDS.contains(Players.getLocal().getWorldLocation().getRegionID()), 10);
         }
 
-        CMovement.walkTo(FungusPicker.FUNGUS_LOCATION, () -> Inventory.getAll(Predicates.ids(Constants.DUELING_RING_IDS)).forEach((i) -> i.interact("Wear")));
+        CMovement.walkTo(FungusPicker.FUNGUS_LOCATION, () -> {
+            if (Tabs.isOpen(Tab.EQUIPMENT)) {
+                Tabs.openInterface(Tab.INVENTORY);
+            }
+
+            Inventory.getAll(Predicates.ids(Constants.DUELING_RING_IDS)).forEach((i) -> {
+                i.interact("Wear");
+                Tabs.openInterface(Tab.EQUIPMENT);
+            });
+        });
     }
 }
