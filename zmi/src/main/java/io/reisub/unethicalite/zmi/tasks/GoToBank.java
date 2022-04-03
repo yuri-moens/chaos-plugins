@@ -7,7 +7,6 @@ import dev.hoot.api.widgets.Prayers;
 import io.reisub.unethicalite.utils.tasks.Task;
 import io.reisub.unethicalite.zmi.Config;
 import net.runelite.api.ObjectID;
-import net.runelite.api.Prayer;
 import net.runelite.api.TileObject;
 
 import javax.inject.Inject;
@@ -31,18 +30,14 @@ public class GoToBank extends Task {
     @Override
     public void execute() {
         if (config.usePrayer()) {
-            if (!Prayers.isEnabled(Prayer.RAPID_HEAL)) {
-                Prayers.toggle(Prayer.RAPID_HEAL);
-            }
-
-            if (Prayers.getPoints() < 10) {
+            if (Prayers.getPoints() < 40) {
                 TileObject altar = TileObjects.getNearest(ObjectID.CHAOS_ALTAR_411);
                 if (altar == null) {
                     return;
                 }
 
                 altar.interact("Pray-at");
-                Time.sleepTicksUntil(() -> Prayers.getPoints() > 10, 20);
+                Time.sleepTicksUntil(() -> Prayers.getPoints() > 40, 20);
             }
         }
 

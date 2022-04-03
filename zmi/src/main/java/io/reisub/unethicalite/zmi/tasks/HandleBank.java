@@ -32,6 +32,8 @@ public class HandleBank extends BankTask {
 
     @Override
     public void execute() {
+        Time.sleepTick();
+
         if (!open("Eniola")) {
             return;
         }
@@ -50,30 +52,30 @@ public class HandleBank extends BankTask {
         );
 
         if (config.useStamina()
-                && isStaminaExpiring(Duration.ofSeconds(20))) {
+                && isStaminaExpiring(Duration.ofSeconds(25))) {
             drinkStamina();
         }
 
         int essenceId = Bank.contains(ItemID.DAEYALT_ESSENCE) ? ItemID.DAEYALT_ESSENCE : ItemID.PURE_ESSENCE;
 
         Bank.withdrawAll(essenceId, Bank.WithdrawMode.ITEM);
+        Time.sleepTicksUntil(Inventory::isFull, 3);
 
         Item giantPouch = Bank.Inventory.getFirst(ItemID.GIANT_POUCH);
         if (giantPouch != null) {
             Zmi.pouchesAreEmpty = false;
-            Time.sleepTick();
 
             CBank.bankInventoryInteract(giantPouch, "Fill");
             Pouch.GIANT.addHolding(Pouch.GIANT.getHoldAmount());
 
             Bank.withdrawAll(essenceId, Bank.WithdrawMode.ITEM);
+            Time.sleepTicksUntil(Inventory::isFull, 3);
         }
 
         List<Item> pouches = Bank.Inventory.getAll(ItemID.SMALL_POUCH, ItemID.MEDIUM_POUCH, ItemID.LARGE_POUCH);
         if (!pouches.isEmpty()) {
             Zmi.pouchesAreEmpty = false;
 
-            Time.sleepTick();
             for (Item pouch : pouches) {
                 CBank.bankInventoryInteract(pouch, "Fill");
 
@@ -81,9 +83,9 @@ public class HandleBank extends BankTask {
                 if (pouchEnum != null) {
                     pouchEnum.addHolding(pouchEnum.getHoldAmount());
                 }
-
-                Bank.withdrawAll(essenceId, Bank.WithdrawMode.ITEM);
             }
+
+            Bank.withdrawAll(essenceId, Bank.WithdrawMode.ITEM);
         }
     }
 }

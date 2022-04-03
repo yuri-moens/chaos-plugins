@@ -38,8 +38,10 @@ public class Zmi extends TickScript {
 	}
 
 	public static final WorldPoint NEAR_ALTAR = new WorldPoint(3058, 5579, 0);
+	public static final int OURANIA_CAVE_REGION = 12119;
 
 	public static boolean pouchesAreEmpty;
+	public static int lastEmpty;
 
 	@Override
 	protected void onStart() {

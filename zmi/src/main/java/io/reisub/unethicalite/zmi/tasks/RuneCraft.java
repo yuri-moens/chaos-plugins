@@ -4,15 +4,25 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.items.Inventory;
+import dev.hoot.api.widgets.Prayers;
+import dev.hoot.bot.managers.Static;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
+import io.reisub.unethicalite.zmi.Config;
 import io.reisub.unethicalite.zmi.Zmi;
-import net.runelite.api.NullObjectID;
 import net.runelite.api.ObjectID;
+import net.runelite.api.Prayer;
 import net.runelite.api.TileObject;
 
+import javax.inject.Inject;
+
 public class RuneCraft extends Task {
+    @Inject
+    private Config config;
+
+    private int last;
+
     @Override
     public String getStatus() {
         return "Crafting runes";
@@ -21,12 +31,13 @@ public class RuneCraft extends Task {
     @Override
     public boolean validate() {
         return Inventory.contains(Predicates.ids(Constants.ESSENCE_IDS))
-                && Players.getLocal().isIdle()
-                && !Players.getLocal().isMoving();
+                && Static.getClient().getTickCount() >= last + 3
+                && (!Players.getLocal().isMoving() || (Players.getLocal().getWorldLocation().equals(Zmi.NEAR_ALTAR)) && Static.getClient().getTickCount() < Zmi.lastEmpty + 10);
     }
 
     @Override
     public void execute() {
+        last = Static.getClient().getTickCount();
         if (!Inventory.isFull()) {
             Zmi.pouchesAreEmpty = true;
         }
@@ -37,6 +48,18 @@ public class RuneCraft extends Task {
         }
 
         altar.interact("Craft-rune");
-        Time.sleepTick();
+        if (Players.getLocal().distanceTo(altar) > 5) {
+            Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 5);
+
+            if (config.usePrayer()) {
+                if (!Prayers.isEnabled(Prayer.RAPID_HEAL)) {
+                    Prayers.toggle(Prayer.RAPID_HEAL);
+                }
+
+                if (!Prayers.isEnabled(Prayer.PIETY)) {
+                    Prayers.toggle(Prayer.PIETY);
+                }
+            }
+        }
     }
 }

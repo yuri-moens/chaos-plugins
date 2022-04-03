@@ -3,6 +3,7 @@ package io.reisub.unethicalite.zmi.tasks;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.items.Inventory;
+import dev.hoot.bot.managers.Static;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -18,15 +19,21 @@ public class EmptyPouch extends Task {
     public boolean validate() {
         return !Zmi.pouchesAreEmpty
                 && !Inventory.contains(Predicates.ids(Constants.ESSENCE_IDS))
-                && Players.getLocal().distanceTo(Zmi.NEAR_ALTAR) < 5
-                && Players.getLocal().isIdle();
+                && Players.getLocal().distanceTo(Zmi.NEAR_ALTAR) < 5;
     }
 
     @Override
     public void execute() {
         Inventory.getAll(Predicates.ids(Constants.ESSENCE_POUCH_IDS)).forEach((i) -> i.interact("Empty"));
-        if (!Time.sleepTicksUntil(() -> Inventory.contains(Predicates.ids(Constants.ESSENCE_IDS)), 3)) {
-            Zmi.pouchesAreEmpty = true;
+
+        if (Static.getClient().getTickCount() > Zmi.lastEmpty + 10) {
+            Time.sleepTicksUntil(Inventory::isFull, 3);
+        } else {
+            if (!Time.sleepTicksUntil(() -> Inventory.contains(Predicates.ids(Constants.ESSENCE_IDS)), 3)) {
+                Zmi.pouchesAreEmpty = true;
+            }
         }
+
+        Zmi.lastEmpty = Static.getClient().getTickCount();
     }
 }

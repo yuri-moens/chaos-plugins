@@ -12,6 +12,7 @@ import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ItemID;
+import net.runelite.api.widgets.Widget;
 
 public class RepairPouch extends Task {
     @Override
@@ -28,10 +29,20 @@ public class RepairPouch extends Task {
 
     @Override
     public void execute() {
-        Magic.cast(Lunar.NPC_CONTACT);
-        Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(75, 12)), 5);
+        Widget npcContact = Widgets.get(Lunar.NPC_CONTACT.getWidget());
+        if (npcContact == null) {
+            return;
+        }
 
-        Widgets.get(75, 12).interact("Dark Mage");
+        if (npcContact.hasAction("Dark Mage")) {
+            npcContact.interact("Dark Mage");
+        } else {
+            Magic.cast(Lunar.NPC_CONTACT);
+            Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(75, 12)), 5);
+
+            Widgets.get(75, 12).interact("Dark Mage");
+        }
+
         Time.sleepTicksUntil(Dialog::canContinue, 20);
 
         Dialog.invokeDialog(

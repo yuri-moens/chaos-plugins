@@ -20,8 +20,7 @@ public class Teleport extends Task {
     public boolean validate() {
         return !Inventory.contains(Predicates.ids(Constants.ESSENCE_IDS))
                 && Players.getLocal().distanceTo(Zmi.NEAR_ALTAR) < 5
-                && Zmi.pouchesAreEmpty
-                && Players.getLocal().isIdle();
+                && Zmi.pouchesAreEmpty;
     }
 
     @Override
