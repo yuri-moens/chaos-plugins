@@ -78,16 +78,17 @@ public class Farming extends TickScript implements KeyListener {
 	protected void onStop() {
 		super.onStop();
 
-		for (Location location : locationQueue) {
+		for (Location location : Location.values()) {
 			location.setDone(false);
 		}
 
 		locationQueue.clear();
+		currentLocation = null;
 	}
 
 	@Subscribe
 	private void onGameTick(GameTick event) {
-		if (locationQueue.isEmpty()) {
+		if (locationQueue.isEmpty() || !isRunning()) {
 			return;
 		}
 
@@ -99,6 +100,7 @@ public class Farming extends TickScript implements KeyListener {
 
 				if (location == null) {
 					stop("Finished all farming locations. Stopping script.");
+					break;
 				} else if (location.isEnabled(config)) {
 					currentLocation = location;
 					newLocation = true;
