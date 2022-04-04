@@ -23,7 +23,7 @@ public class Eat extends Task {
 
     @Override
     public boolean validate() {
-        return Skills.getBoostedLevel(Skill.HITPOINTS) <= config.eatHP()
+        return (Skills.getBoostedLevel(Skill.HITPOINTS) <= config.eatHP() || config.healAtBank())
                 && Inventory.contains(config.food())
                 && Static.getClient().getTickCount() > last + 3;
     }

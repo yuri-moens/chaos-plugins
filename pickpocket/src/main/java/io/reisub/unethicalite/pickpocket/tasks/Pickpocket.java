@@ -3,6 +3,7 @@ package io.reisub.unethicalite.pickpocket.tasks;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.Players;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.game.Skills;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.movement.Reachable;
@@ -53,7 +54,7 @@ public class Pickpocket extends Task {
             }
         }
 
-        target.interact("Pickpocket");
+        GameThread.invoke(() -> target.interact("Pickpocket"));
         plugin.setActivity(Activity.THIEVING);
     }
 }
