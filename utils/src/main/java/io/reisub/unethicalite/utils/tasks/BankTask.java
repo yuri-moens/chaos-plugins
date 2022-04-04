@@ -4,6 +4,7 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.items.Bank;
 import dev.hoot.api.items.Equipment;
 import dev.hoot.api.movement.Movement;
@@ -45,11 +46,11 @@ public abstract class BankTask extends Task {
 
         if (bankObject != null) {
             if (bankObject.hasAction("Bank")) {
-                bankObject.interact("Bank");
+                GameThread.invoke(() -> bankObject.interact("Bank"));
             } else if (bankObject.hasAction("Use")) {
-                bankObject.interact("Use");
+                GameThread.invoke(() -> bankObject.interact("Use"));
             } else {
-                bankObject.interact(0);
+                GameThread.invoke(() -> bankObject.interact(0));
             }
         } else {
             bankNpc = getBankNpc();
@@ -57,9 +58,9 @@ public abstract class BankTask extends Task {
             if (bankNpc == null) return false;
 
             if (bankNpc.hasAction("Bank")) {
-                bankNpc.interact("Bank");
+                GameThread.invoke(() -> bankNpc.interact("Bank"));
             } else {
-                bankNpc.interact(0);
+                GameThread.invoke(() -> bankNpc.interact(0));
             }
         }
 
@@ -94,7 +95,7 @@ public abstract class BankTask extends Task {
             return false;
         }
 
-        bankNpc.interact("Bank");
+        GameThread.invoke(() -> bankNpc.interact("Bank"));
 
         if (movingCheck > 0) {
             if (!Time.sleepTicksUntil(() -> Bank.isOpen() || Players.getLocal().isMoving(), movingCheck)) {
