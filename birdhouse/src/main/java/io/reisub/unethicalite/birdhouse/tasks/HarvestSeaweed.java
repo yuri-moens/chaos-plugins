@@ -3,6 +3,7 @@ package io.reisub.unethicalite.birdhouse.tasks;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.TileItems;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
 import io.reisub.unethicalite.birdhouse.Config;
@@ -36,14 +37,14 @@ public class HarvestSeaweed extends Task {
         if (seaweed.hasAction("Pick")) {
             int count = TileObjects.getAll((o) -> o.hasAction("Pick")).size();
 
-            seaweed.interact("Pick");
+            GameThread.invoke(() -> seaweed.interact("Pick"));
             Time.sleepTicksUntil(() -> TileObjects.getAll((o) -> o.hasAction("Pick")).size() < count
                             || (config.pickupSpores() && TileItems.getNearest(ItemID.SEAWEED_SPORE) != null)
                             || Inventory.isFull(), 120);
         } else {
             int count = TileObjects.getAll("Dead seaweed").size();
 
-            seaweed.interact("Clear");
+            GameThread.invoke(() -> seaweed.interact("Clear"));
             Time.sleepTicksUntil(() -> TileObjects.getAll("Dead seaweed").size() < count, 30);
         }
     }

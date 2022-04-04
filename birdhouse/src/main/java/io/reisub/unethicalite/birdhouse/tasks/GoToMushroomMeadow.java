@@ -3,6 +3,7 @@ package io.reisub.unethicalite.birdhouse.tasks;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.widgets.Widgets;
 import io.reisub.unethicalite.utils.Constants;
@@ -31,7 +32,7 @@ public class GoToMushroomMeadow extends Task {
             return;
         }
 
-        tree.interact(0);
+        GameThread.invoke(() -> tree.interact(0));
         Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetInfo.FOSSIL_MUSHROOM_TELEPORT)), 15);
 
         Widget mushroomMeadowWidget = Widgets.get(WidgetInfo.FOSSIL_MUSHROOM_MEADOW);

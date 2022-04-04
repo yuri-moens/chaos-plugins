@@ -3,6 +3,7 @@ package io.reisub.unethicalite.birdhouse.tasks;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileItems;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
 import io.reisub.unethicalite.birdhouse.Config;
@@ -35,7 +36,7 @@ public class PickupSpore extends Task {
         int quantity = Inventory.getCount(true, ItemID.SEAWEED_SPORE);
 
         do {
-            spore.interact("Take");
+            GameThread.invoke(() -> spore.interact("Take"));
             Time.sleep(250, 400);
         } while (!Players.getLocal().isMoving());
 

@@ -3,6 +3,7 @@ package io.reisub.unethicalite.birdhouse.tasks;
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.widgets.Dialog;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
@@ -49,7 +50,7 @@ public class GoToIsland extends Task {
         }
 
         while (Players.getLocal().distanceTo(BirdHouse.ISLAND) > 10) {
-            rowBoat.interact("Travel");
+            GameThread.invoke(() -> rowBoat.interact("Travel"));
             Time.sleepTicksUntil(Dialog::isViewingOptions, 15);
 
             Dialog.chooseOption(3);

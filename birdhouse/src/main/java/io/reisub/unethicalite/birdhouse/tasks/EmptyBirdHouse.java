@@ -2,6 +2,7 @@ package io.reisub.unethicalite.birdhouse.tasks;
 
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
 import io.reisub.unethicalite.utils.Constants;
@@ -35,7 +36,7 @@ public class EmptyBirdHouse extends Task {
 
     @Override
     public void execute() {
-        birdHouse.interact(2);
+        GameThread.invoke(() -> birdHouse.interact(2));
         if (!Time.sleepTicksUntil(() -> Inventory.contains(ItemID.CLOCKWORK), 15)) {
             return;
         }

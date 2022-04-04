@@ -2,6 +2,7 @@ package io.reisub.unethicalite.birdhouse.tasks;
 
 import dev.hoot.api.commons.Time;
 import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.GameThread;
 import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -29,7 +30,7 @@ public class BuildBirdHouse extends Task {
             return;
         }
 
-        space.interact(0);
+        GameThread.invoke(() -> space.interact(0));
         Time.sleepTicksUntil(() -> !Inventory.contains((i) -> Constants.BIRD_HOUSE_ITEM_IDS.contains(i.getId())), 5);
     }
 }

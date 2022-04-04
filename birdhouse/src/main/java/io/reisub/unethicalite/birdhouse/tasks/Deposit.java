@@ -67,7 +67,7 @@ public class Deposit extends BankTask {
             return;
         }
 
-        rope.interact("Climb");
+        GameThread.invoke(() -> rope.interact("Climb"));
         Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getRegionID() == 14908, 30);
 
         Inventory.getAll((i) -> i.hasAction("Wear")).forEach((i) -> i.interact("Wear"));

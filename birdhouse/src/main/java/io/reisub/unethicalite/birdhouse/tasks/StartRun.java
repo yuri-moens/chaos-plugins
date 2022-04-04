@@ -46,13 +46,8 @@ public class StartRun extends BankTask {
         Bank.withdraw((i) -> i.getId() == ItemID.IMCANDO_HAMMER || i.getId() == ItemID.HAMMER, 1, Bank.WithdrawMode.ITEM);
         Bank.withdraw(ItemID.CHISEL, 1, Bank.WithdrawMode.ITEM);
         Bank.withdraw(Predicates.ids(Constants.DIGSITE_PENDANT_IDS), 1, Bank.WithdrawMode.ITEM);
-
-        int seedId = getSeedId();
-
-        for (int i = 0; i < 4; i++) {
-            Bank.withdraw(config.logs().getId(), 1, Bank.WithdrawMode.ITEM);
-            Bank.withdraw(seedId, 10, Bank.WithdrawMode.ITEM);
-        }
+        Bank.withdraw(config.logs().getId(), 4, Bank.WithdrawMode.ITEM);
+        Bank.withdraw(getSeedId(), 40, Bank.WithdrawMode.ITEM);
 
         switch (config.tpLocation()) {
             case EDGEVILLE:

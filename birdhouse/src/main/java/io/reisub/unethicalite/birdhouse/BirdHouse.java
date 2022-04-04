@@ -5,7 +5,6 @@ import dev.hoot.api.entities.Players;
 import dev.hoot.api.items.Bank;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.api.widgets.Widgets;
-import dev.hoot.bot.managers.Static;
 import io.reisub.unethicalite.birdhouse.tasks.AddSeeds;
 import io.reisub.unethicalite.birdhouse.tasks.BuildBirdHouse;
 import io.reisub.unethicalite.birdhouse.tasks.CraftBirdhouse;
