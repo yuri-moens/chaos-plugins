@@ -38,7 +38,9 @@ public class CMovement {
             destination = destination.dx(Rand.nextInt(-radius, radius + 1)).dy(Rand.nextInt(-radius, radius + 1));
         }
 
-        while (Players.getLocal().distanceTo(destination) > DESTINATION_DISTANCE && Game.getClient().getTickCount() <= start + tickTimeout) {
+        while (Players.getLocal().distanceTo(destination) > DESTINATION_DISTANCE
+                && Game.getClient().getTickCount() <= start + tickTimeout
+                && (Static.getClient().getGameState() == GameState.LOADING || Static.getClient().getGameState() == GameState.LOGGED_IN)) {
             if (!Movement.isWalking() && Static.getClient().getGameState() != GameState.LOADING) {
                 Movement.walkTo(destination);
 
