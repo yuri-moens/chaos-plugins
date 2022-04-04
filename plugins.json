@@ -151,6 +151,13 @@
       "version": "1.2.0",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.2.0.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-04-04",
+      "sha512sum": "B3D921F5A49D7824FDD28F2154D9597A228AA9AD43DFE89215FC171704CD49C6B5428C3848BA90C156E5452E2537FB26AF3621B287959A1D27FA44A29A63C7AE",
+      "version": "1.2.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/birdhouse-1.2.1.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -442,13 +449,22 @@
   "name": "Chaos Fungus Picker",
   "description": "This is so fun, guy!",
   "id": "chaosfunguspicker-plugin",
-  "releases": [{
-    "date": "2022-03-31",
-    "sha512sum": "8C4C4CF7066B2D4E2AE7896695DC5556803892BA05389CE4896D1653FBEA8A1406F9C5449FECBC7C60D2DAE99ADB8714684CD08DA460EB3C9EF6BFB857591157",
-    "version": "1.0.0",
-    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/funguspicker-1.0.0.jar",
-    "requires": "^1.0.0"
-  }]
+  "releases": [
+    {
+      "date": "2022-03-31",
+      "sha512sum": "8C4C4CF7066B2D4E2AE7896695DC5556803892BA05389CE4896D1653FBEA8A1406F9C5449FECBC7C60D2DAE99ADB8714684CD08DA460EB3C9EF6BFB857591157",
+      "version": "1.0.0",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/funguspicker-1.0.0.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-04-04",
+      "sha512sum": "9F3AEE3DE4E7412CC4B7DD6D69254BC4F6F75E356D0B39FABF2E49875CF5AB40C072BDEF61BCB839A39A1BFA199D863F7103BE5ACBD44F567A6F51CBF01D0EE3",
+      "version": "1.0.1",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/funguspicker-1.0.1.jar",
+      "requires": "^1.0.0"
+    }
+  ]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
@@ -496,6 +512,13 @@
       "version": "1.0.3",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/herblore-1.0.3.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-04-04",
+      "sha512sum": "9E2512C89D4757E7BB1E9C2EFAE51FB731C122EBF3AF6DA8A885B78005CDD5AD60E0FA81CBF57C476EFA1EBB92F55BCBCAC603A1FE1287450729B0F9B3E8B753",
+      "version": "1.0.6",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/herblore-1.0.6.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -533,6 +556,32 @@
       "requires": "^1.0.0"
     }
   ]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
+  "name": "Chaos NMZ",
+  "description": "Turns nightmares into dreams",
+  "id": "chaosnmz-plugin",
+  "releases": [{
+    "date": "2022-04-04",
+    "sha512sum": "833D54055FF1F0A6E744CD12BBA8823EB28904BFC6AC08025625CF2ABBBD5F703EFC3C7177B4C5BF1C38245DF32471BA2A2A9070972AD9B49E07E0063423869F",
+    "version": "1.0.0",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/nmz-1.0.0.jar",
+    "requires": "^1.0.0"
+  }]
+}, {
+  "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
+  "provider": "ChaosEnergy",
+  "name": "Chaos Pickpocket",
+  "description": "Cor blimey mate, what are ye doing in me pockets?",
+  "id": "chaospickpocket-plugin",
+  "releases": [{
+    "date": "2022-04-04",
+    "sha512sum": "CC4B880B9FC1482A25CD58D8C7AD9C2D0276574B4C9073BC724767163E91AD925549892B206D2A9A50662498EA03146D731BD54A59E1468C5970167ACBCC9D88",
+    "version": "1.0.1",
+    "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/pickpocket-1.0.1.jar",
+    "requires": "^1.0.0"
+  }]
 }, {
   "projectUrl": "https://github.com/yuri-moens/chaos-plugins/issues",
   "provider": "ChaosEnergy",
@@ -893,6 +942,13 @@
       "version": "1.4.5",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.4.5.jar",
       "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-04-04",
+      "sha512sum": "96EAAD1F31493F347CCBD4F948C9981B3C76D7CE6B5E1F48A5796747B3CCC55C43F8DA6165475BF82A6C831DC12623543385D5F9EBB86478CA68C22EA038171B",
+      "version": "1.4.6",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/utils-1.4.6.jar",
+      "requires": "^1.0.0"
     }
   ]
 }, {
@@ -921,6 +977,13 @@
       "sha512sum": "8472ECF4A1201ECABC25D656AC13F931D69445F0FC6B3272F930A5C132A7A25523A49B2E7F77AC9EE997295A77F3FC41A64580B93353D5EF82F6325D349C7DCA",
       "version": "1.0.2",
       "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/zmi-1.0.2.jar",
+      "requires": "^1.0.0"
+    },
+    {
+      "date": "2022-04-04",
+      "sha512sum": "BE32B90CF01DF257C367F418681EFE44469099A43D7E314886C301AEF0C7EAA2974F1FB0B3FF76D5021CCD94BC52561EC65D6391F5635A5D5334DB149C04D1B5",
+      "version": "1.0.3",
+      "url": "https://raw.githubusercontent.com/yuri-moens/chaos-plugins/master/release/zmi-1.0.3.jar",
       "requires": "^1.0.0"
     }
   ]
