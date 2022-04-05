@@ -250,6 +250,14 @@ public class Constants {
             ItemID.SKILLS_NECKLACE6
     );
 
+    public static final Set<Integer> ALLOTMENT_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> FLOWER_PATCH_IDS = ImmutableSet.of(
+
+    );
+
     public static final Set<Integer> HERB_PATCH_IDS = ImmutableSet.of(
             NullObjectID.NULL_8150,
             NullObjectID.NULL_8151,
@@ -260,6 +268,94 @@ public class Constants {
             NullObjectID.NULL_27115,
             NullObjectID.NULL_33176,
             NullObjectID.NULL_33979
+    );
+
+    public static final Set<Integer> HOPS_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> BUSH_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> TREE_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> FRUIT_TREE_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> HARDWOOD_TREE_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> SPIRIT_TREE_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> SEAWEED_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> CACTUS_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> GRAPE_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> MUSHROOM_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> BELLADONNA_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> HESPORI_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> ANIMA_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> CALQUAT_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> CRYSTAL_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> CELASTRUS_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> REDWOOD_PATCH_IDS = ImmutableSet.of(
+
+    );
+
+    public static final Set<Integer> ALLOTMENT_SEED_IDS = ImmutableSet.of(
+            ItemID.POTATO_SEED,
+            ItemID.ONION_SEED,
+            ItemID.CABBAGE_SEED,
+            ItemID.TOMATO_SEED,
+            ItemID.SWEETCORN_SEED,
+            ItemID.STRAWBERRY_SEED,
+            ItemID.WATERMELON_SEED,
+            ItemID.SNAPE_GRASS_SEED
+    );
+
+    public static final Set<Integer> FLOWER_SEED_IDS = ImmutableSet.of(
+            ItemID.MARIGOLD_SEED,
+            ItemID.ROSEMARY_SEED,
+            ItemID.NASTURTIUM_SEED,
+            ItemID.WOAD_SEED,
+            ItemID.LIMPWURT_SEED,
+            ItemID.WHITE_LILY_SEED
     );
 
     public static final Set<Integer> HERB_SEED_IDS = ImmutableSet.of(
@@ -277,6 +373,82 @@ public class Constants {
             ItemID.LANTADYME_SEED,
             ItemID.DWARF_WEED_SEED,
             ItemID.TORSTOL_SEED
+    );
+
+    public static final Set<Integer> HOPS_SEED_IDS = ImmutableSet.of(
+            ItemID.BARLEY_SEED,
+            ItemID.HAMMERSTONE_SEED,
+            ItemID.ASGARNIAN_SEED,
+            ItemID.JUTE_SEED,
+            ItemID.YANILLIAN_SEED,
+            ItemID.KRANDORIAN_SEED,
+            ItemID.WILDBLOOD_SEED
+    );
+
+    public static final Set<Integer> BUSH_SEED_IDS = ImmutableSet.of(
+            ItemID.REDBERRY_SEED,
+            ItemID.CADAVABERRY_SEED,
+            ItemID.DWELLBERRY_SEED,
+            ItemID.JANGERBERRY_SEED,
+            ItemID.WHITEBERRY_SEED,
+            ItemID.POISON_IVY_SEED
+    );
+
+    public static final Set<Integer> TREE_SEED_IDS = ImmutableSet.of(
+            ItemID.ACORN,
+            ItemID.WILLOW_SEED,
+            ItemID.MAPLE_SEED,
+            ItemID.YEW_SEED,
+            ItemID.MAGIC_SEED,
+            ItemID.APPLE_TREE_SEED,
+            ItemID.BANANA_TREE_SEED,
+            ItemID.ORANGE_TREE_SEED,
+            ItemID.CURRY_TREE_SEED,
+            ItemID.PINEAPPLE_SEED,
+            ItemID.PAPAYA_TREE_SEED,
+            ItemID.DRAGONFRUIT_TREE_SEED,
+            ItemID.TEAK_SEED,
+            ItemID.MAHOGANY_SEED,
+            ItemID.CALQUAT_TREE_SEED,
+            ItemID.CRYSTAL_SEED,
+            ItemID.SPIRIT_SEED,
+            ItemID.CELASTRUS_SEED,
+            ItemID.REDWOOD_TREE_SEED
+    );
+
+    public static final Set<Integer> TREE_SAPLING_IDS = ImmutableSet.of(
+            ItemID.OAK_SAPLING,
+            ItemID.WILLOW_SAPLING,
+            ItemID.MAPLE_SAPLING,
+            ItemID.YEW_SAPLING,
+            ItemID.MAGIC_SAPLING
+    );
+
+    public static final Set<Integer> FRUIT_TREE_SAPLING_IDS = ImmutableSet.of(
+            ItemID.APPLE_SAPLING,
+            ItemID.BANANA_SAPLING,
+            ItemID.ORANGE_SAPLING,
+            ItemID.CURRY_SAPLING,
+            ItemID.PINEAPPLE_SAPLING,
+            ItemID.PAPAYA_SAPLING,
+            ItemID.PALM_SAPLING,
+            ItemID.DRAGONFRUIT_SAPLING
+    );
+
+    public static final Set<Integer> HARDWOOD_TREE_SAPLING_IDS = ImmutableSet.of(
+            ItemID.TEAK_SAPLING,
+            ItemID.MAHOGANY_SAPLING
+    );
+
+    public static final Set<Integer> ANIMA_SEED_IDS = ImmutableSet.of(
+            ItemID.KRONOS_SEED,
+            ItemID.IASOR_SEED,
+            ItemID.ATTAS_SEED
+    );
+
+    public static final Set<Integer> CACTUS_SEED_IDS = ImmutableSet.of(
+            ItemID.CACTUS_SEED,
+            ItemID.POTATO_CACTUS_SEED
     );
 
     public static final Set<Integer> GRIMY_HERB_IDS = ImmutableSet.of(
@@ -315,6 +487,7 @@ public class Constants {
     public static final Supplier<Widget> TOOLS_WITHDRAW_COMPOST_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 17);
     public static final Supplier<Widget> TOOLS_WITHDRAW_SUPERCOMPOST_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 18);
     public static final Supplier<Widget> TOOLS_WITHDRAW_ULTRACOMPOST_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 19);
+    public static final Supplier<Widget> TOOLS_WITHDRAW_PLANT_CURE_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 19); // TODO id
 
     public static final Supplier<Widget> TOOLS_DEPOSIT_DIBBER_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID + 1, 2);
     public static final Supplier<Widget> TOOLS_DEPOSIT_SPADE_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID + 1, 3);
