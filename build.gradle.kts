@@ -16,9 +16,12 @@ project.extra["GithubUserName"] = "yuri-moens"
 project.extra["GithubRepoName"] = "chaos-plugins"
 
 apply<BootstrapPlugin>()
+apply<VersionPlugin>()
+apply<UpdateVersionsPlugin>()
 
 allprojects {
     group = "io.reisub"
+    version = ProjectVersions.rlVersion
     apply<MavenPublishPlugin>()
 
     repositories {
@@ -41,6 +44,7 @@ subprojects {
         jcenter {
             content {
                 excludeGroupByRegex("com\\.openosrs.*")
+                excludeGroupByRegex("com\\.runelite.*")
             }
         }
 
@@ -97,14 +101,11 @@ subprojects {
             dirMode = 493
             fileMode = 420
         }
+    }
+}
 
-        withType<Jar> {
-            doLast {
-                copy {
-                    from("./build/libs/")
-                    into("../release/")
-                }
-            }
-        }
+tasks {
+    register<Delete>("bootstrapClean") {
+        delete("release/")
     }
 }

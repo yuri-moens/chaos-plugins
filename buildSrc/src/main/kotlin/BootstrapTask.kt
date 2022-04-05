@@ -37,15 +37,13 @@ open class BootstrapTask : DefaultTask() {
             val bootstrapDir = File("${project.projectDir}")
             val bootstrapReleaseDir = File("${project.projectDir}/release")
 
+            bootstrapDir.mkdirs()
             bootstrapReleaseDir.mkdirs()
 
             val plugins = ArrayList<JSONObject>()
-            val baseBootstrap = getBootstrap("$bootstrapDir/plugins.json")
-                ?: throw RuntimeException("Base bootstrap is null!")
 
             project.subprojects.forEach {
                 if (it.project.properties.containsKey("PluginName") && it.project.properties.containsKey("PluginDescription") && (it.project.extra.get("PluginName") as String) != "Chaos Test") {
-                    var pluginAdded = false
                     val plugin = it.project.tasks["jar"].outputs.files.singleFile
 
                     val releases = ArrayList<JsonBuilder>()
@@ -73,27 +71,7 @@ open class BootstrapTask : DefaultTask() {
                         "releases" to releases.toTypedArray()
                     ).jsonObject()
 
-                    for (i in 0 until baseBootstrap.length()) {
-                        val item = baseBootstrap.getJSONObject(i)
-
-                        if (item.get("id") != nameToId(it.project.extra.get("PluginName") as String)) {
-                            continue
-                        }
-
-                        if (it.project.version.toString() in item.getJSONArray("releases").toString()) {
-                            pluginAdded = true
-                            plugins.add(item)
-                            break
-                        }
-
-                        plugins.add(JsonMerger(arrayMergeMode = JsonMerger.ArrayMergeMode.MERGE_ARRAY).merge(item, pluginObject))
-                        pluginAdded = true
-                    }
-
-                    if (!pluginAdded)
-                    {
-                        plugins.add(pluginObject)
-                    }
+                    plugins.add(pluginObject)
 
                     plugin.copyTo(
                         Paths.get(bootstrapReleaseDir.toString(), "${it.project.name}-${it.project.version}.jar").toFile(),
@@ -102,13 +80,8 @@ open class BootstrapTask : DefaultTask() {
                 }
             }
 
-            val pluginsOut = ArrayList<String>()
-            for (json in plugins) {
-                pluginsOut.add(json.toString(2))
-            }
-
             File(bootstrapDir, "plugins.json").printWriter().use { out ->
-                out.println(pluginsOut.toString())
+                out.println(plugins.toString())
             }
         }
 
