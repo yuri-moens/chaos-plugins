@@ -416,6 +416,28 @@ public class Constants {
             ItemID.REDWOOD_TREE_SEED
     );
 
+    public static final Set<Integer> TREE_SEEDLING_IDS = ImmutableSet.of(
+            ItemID.OAK_SEEDLING,
+            ItemID.WILLOW_SEEDLING,
+            ItemID.MAPLE_SEEDLING,
+            ItemID.YEW_SEEDLING,
+            ItemID.MAGIC_SEEDLING,
+            ItemID.APPLE_SEEDLING,
+            ItemID.BANANA_SEEDLING,
+            ItemID.ORANGE_SEEDLING,
+            ItemID.CURRY_SEEDLING,
+            ItemID.PINEAPPLE_SEEDLING,
+            ItemID.PAPAYA_SEEDLING,
+            ItemID.DRAGONFRUIT_SEEDLING,
+            ItemID.TEAK_SEEDLING,
+            ItemID.MAHOGANY_SEEDLING,
+            ItemID.CALQUAT_SEEDLING,
+            ItemID.CRYSTAL_SEEDLING,
+            ItemID.SPIRIT_SEEDLING,
+            ItemID.CELASTRUS_SEEDLING,
+            ItemID.REDWOOD_SEEDLING
+    );
+
     public static final Set<Integer> TREE_SAPLING_IDS = ImmutableSet.of(
             ItemID.OAK_SAPLING,
             ItemID.WILLOW_SAPLING,
@@ -451,6 +473,25 @@ public class Constants {
             ItemID.POTATO_CACTUS_SEED
     );
 
+    public static final Set<Integer> COMPOST_IDS = ImmutableSet.of(
+            ItemID.COMPOST,
+            ItemID.SUPERCOMPOST,
+            ItemID.ULTRACOMPOST,
+            ItemID.BOTTOMLESS_COMPOST_BUCKET,
+            ItemID.BOTTOMLESS_COMPOST_BUCKET_22997
+    );
+
+    public static final Set<Integer> WATERING_CAN_IDS = ImmutableSet.of(
+            ItemID.WATERING_CAN1,
+            ItemID.WATERING_CAN2,
+            ItemID.WATERING_CAN3,
+            ItemID.WATERING_CAN4,
+            ItemID.WATERING_CAN5,
+            ItemID.WATERING_CAN6,
+            ItemID.WATERING_CAN7,
+            ItemID.WATERING_CAN8
+    );
+
     public static final Set<Integer> GRIMY_HERB_IDS = ImmutableSet.of(
             ItemID.GRIMY_GUAM_LEAF,
             ItemID.GRIMY_MARRENTILL,
@@ -466,14 +507,6 @@ public class Constants {
             ItemID.GRIMY_LANTADYME,
             ItemID.GRIMY_DWARF_WEED,
             ItemID.GRIMY_TORSTOL
-    );
-
-    public static final Set<Integer> COMPOST_IDS = ImmutableSet.of(
-            ItemID.COMPOST,
-            ItemID.SUPERCOMPOST,
-            ItemID.ULTRACOMPOST,
-            ItemID.BOTTOMLESS_COMPOST_BUCKET,
-            ItemID.BOTTOMLESS_COMPOST_BUCKET_22997
     );
 
     public static final int TOOL_WIDGET_ID = 125;
