@@ -250,12 +250,36 @@ public class Constants {
             ItemID.SKILLS_NECKLACE6
     );
 
-    public static final Set<Integer> ALLOTMENT_PATCH_IDS = ImmutableSet.of(
+    public static final Set<Integer> COMPOST_BIN_IDS = ImmutableSet.of( // TODO port phasmatys
+            NullObjectID.NULL_7836,
+            NullObjectID.NULL_7837,
+            NullObjectID.NULL_7839,
+            NullObjectID.NULL_27112
+    );
 
+    public static final Set<Integer> ALLOTMENT_PATCH_IDS = ImmutableSet.of(
+            NullObjectID.NULL_8550,
+            NullObjectID.NULL_8551,
+            NullObjectID.NULL_8552,
+            NullObjectID.NULL_8553,
+            NullObjectID.NULL_8554,
+            NullObjectID.NULL_8555,
+            NullObjectID.NULL_8556,
+            NullObjectID.NULL_8557,
+            NullObjectID.NULL_21950,
+            NullObjectID.NULL_27113,
+            NullObjectID.NULL_27114,
+            NullObjectID.NULL_33693,
+            NullObjectID.NULL_33694
     );
 
     public static final Set<Integer> FLOWER_PATCH_IDS = ImmutableSet.of(
-
+            NullObjectID.NULL_7847,
+            NullObjectID.NULL_7848,
+            NullObjectID.NULL_7849,
+            NullObjectID.NULL_7850,
+            NullObjectID.NULL_27111,
+            NullObjectID.NULL_33649
     );
 
     public static final Set<Integer> HERB_PATCH_IDS = ImmutableSet.of(
@@ -275,15 +299,15 @@ public class Constants {
     );
 
     public static final Set<Integer> BUSH_PATCH_IDS = ImmutableSet.of(
-
+            NullObjectID.NULL_34006
     );
 
     public static final Set<Integer> TREE_PATCH_IDS = ImmutableSet.of(
-
+            NullObjectID.NULL_33732
     );
 
     public static final Set<Integer> FRUIT_TREE_PATCH_IDS = ImmutableSet.of(
-
+            NullObjectID.NULL_34007
     );
 
     public static final Set<Integer> HARDWOOD_TREE_PATCH_IDS = ImmutableSet.of(
@@ -291,7 +315,7 @@ public class Constants {
     );
 
     public static final Set<Integer> SPIRIT_TREE_PATCH_IDS = ImmutableSet.of(
-
+            NullObjectID.NULL_33733
     );
 
     public static final Set<Integer> SEAWEED_PATCH_IDS = ImmutableSet.of(
@@ -299,7 +323,7 @@ public class Constants {
     );
 
     public static final Set<Integer> CACTUS_PATCH_IDS = ImmutableSet.of(
-
+            NullObjectID.NULL_33761
     );
 
     public static final Set<Integer> GRAPE_PATCH_IDS = ImmutableSet.of(
@@ -315,11 +339,11 @@ public class Constants {
     );
 
     public static final Set<Integer> HESPORI_PATCH_IDS = ImmutableSet.of(
-
+            NullObjectID.NULL_34630
     );
 
     public static final Set<Integer> ANIMA_PATCH_IDS = ImmutableSet.of(
-
+            NullObjectID.NULL_33998
     );
 
     public static final Set<Integer> CALQUAT_PATCH_IDS = ImmutableSet.of(
@@ -331,11 +355,11 @@ public class Constants {
     );
 
     public static final Set<Integer> CELASTRUS_PATCH_IDS = ImmutableSet.of(
-
+            NullObjectID.NULL_34629
     );
 
     public static final Set<Integer> REDWOOD_PATCH_IDS = ImmutableSet.of(
-
+            NullObjectID.NULL_34055
     );
 
     public static final Set<Integer> ALLOTMENT_SEED_IDS = ImmutableSet.of(
@@ -607,7 +631,8 @@ public class Constants {
             ObjectID.BANK_CHEST_40473,
             ObjectID.BANK_CHEST_41315,
             ObjectID.BANK_CHEST_41493,
-            ObjectID.BANK_CHEST_43697
+            ObjectID.BANK_CHEST_43697,
+            NullObjectID.NULL_12308
     );
 
     public static final Set<Integer> BANK_NPC_IDS = ImmutableSet.of(
