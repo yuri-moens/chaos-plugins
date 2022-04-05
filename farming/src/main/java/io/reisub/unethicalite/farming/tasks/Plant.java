@@ -9,12 +9,16 @@ import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.farming.Config;
 import io.reisub.unethicalite.farming.Farming;
 import io.reisub.unethicalite.farming.Location;
+import io.reisub.unethicalite.farming.PatchImplementation;
+import io.reisub.unethicalite.farming.PatchState;
 import io.reisub.unethicalite.farming.SeedsMode;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.Item;
 import net.runelite.api.TileObject;
+import net.runelite.client.plugins.timetracking.farming.CropState;
+import net.runelite.client.plugins.timetracking.farming.Produce;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -35,7 +39,14 @@ public class Plant extends Task {
     public boolean validate() {
         TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
 
-        return patch != null && Vars.getBit(plugin.getCurrentLocation().getVarbit()) <= 3;
+        if (patch == null) {
+            return false;
+        }
+
+        int varbit = Vars.getBit(plugin.getCurrentLocation().getVarbit());
+        PatchState patchState = PatchImplementation.HERB.forVarbitValue(varbit);
+
+        return patchState != null && patchState.getProduce() == Produce.WEEDS && patchState.getCropState() == CropState.GROWING;
     }
 
     @Override

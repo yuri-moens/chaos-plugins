@@ -43,6 +43,14 @@ public interface Config extends net.runelite.client.config.Config {
 	)
 	default boolean useXericsTalisman() { return false; }
 
+	@ConfigItem(
+			keyName = "oneClickMode",
+			name = "One click mode",
+			description = "Enable one click mode to quickly do farming actions manually",
+			position = 3
+	)
+	default boolean oneClickMode() { return false; }
+
 	@ConfigSection(
 			keyName = "herbConfig",
 			name = "Herbs",

@@ -1,6 +1,10 @@
 package io.reisub.unethicalite.farming;
 
 import com.google.inject.Provides;
+import dev.hoot.api.entities.TileObjects;
+import dev.hoot.api.game.GameThread;
+import dev.hoot.api.items.Inventory;
+import dev.hoot.bot.managers.Static;
 import io.reisub.unethicalite.farming.tasks.Clear;
 import io.reisub.unethicalite.farming.tasks.Cure;
 import io.reisub.unethicalite.farming.tasks.DepositTools;
@@ -12,9 +16,15 @@ import io.reisub.unethicalite.farming.tasks.Plant;
 import io.reisub.unethicalite.farming.tasks.WithdrawTools;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
+import io.reisub.unethicalite.utils.api.Predicates;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.Item;
+import net.runelite.api.MenuAction;
+import net.runelite.api.TileObject;
 import net.runelite.api.events.GameTick;
+import net.runelite.api.events.MenuEntryAdded;
+import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.input.KeyListener;
@@ -104,6 +114,44 @@ public class Farming extends TickScript implements KeyListener {
 				}
 			}
 		}
+	}
+
+	@Subscribe
+	private void onMenuEntryAdded(MenuEntryAdded event) {
+		if (!config.oneClickMode() || event.getType() == MenuAction.EXAMINE_ITEM.getId()) {
+			return;
+		}
+
+		if (TileObjects.getNearest(Predicates.ids(OneClick.ONE_CLICK_MAP.get(event.getIdentifier()))) == null) {
+			return;
+		}
+
+		if (OneClick.ONE_CLICK_MAP.containsKey(event.getIdentifier())) {
+			Static.getClient().insertMenuItem(
+					OneClick.ONE_CLICK_FARMING,
+					"",
+					MenuAction.UNKNOWN.getId(),
+					event.getIdentifier(),
+					event.getActionParam0(),
+					event.getActionParam1(),
+					true
+			);
+		}
+	}
+
+	@Subscribe
+	private void onMenuOptionClicked(MenuOptionClicked event) {
+		if (!event.getMenuOption().equals(OneClick.ONE_CLICK_FARMING)) {
+			return;
+		}
+
+		Item item = Inventory.getFirst(event.getId());
+		TileObject nearest = TileObjects.getNearest(Predicates.ids(OneClick.ONE_CLICK_MAP.get(event.getId())));
+		if (item == null || nearest == null) {
+			return;
+		}
+
+		GameThread.invoke(() -> item.useOn(nearest));
 	}
 
 	@Override
