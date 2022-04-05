@@ -122,21 +122,27 @@ public class Farming extends TickScript implements KeyListener {
 			return;
 		}
 
-		if (TileObjects.getNearest(Predicates.ids(OneClick.ONE_CLICK_MAP.get(event.getIdentifier()))) == null) {
+		if (OneClick.ONE_CLICK_GAME_OBJECTS_MAP.containsKey(event.getIdentifier())) {
+			if (TileObjects.getNearest(Predicates.ids(OneClick.ONE_CLICK_GAME_OBJECTS_MAP.get(event.getIdentifier()))) == null) {
+				return;
+			}
+		} else if (OneClick.ONE_CLICK_ITEMS_MAP.containsKey(event.getIdentifier())) {
+			if (!Inventory.contains(Predicates.ids(OneClick.ONE_CLICK_ITEMS_MAP.get(event.getIdentifier())))) {
+				return;
+			}
+		} else {
 			return;
 		}
 
-		if (OneClick.ONE_CLICK_MAP.containsKey(event.getIdentifier())) {
-			Static.getClient().insertMenuItem(
-					OneClick.ONE_CLICK_FARMING,
-					"",
-					MenuAction.UNKNOWN.getId(),
-					event.getIdentifier(),
-					event.getActionParam0(),
-					event.getActionParam1(),
-					true
-			);
-		}
+		Static.getClient().insertMenuItem(
+				OneClick.ONE_CLICK_FARMING,
+				"",
+				MenuAction.UNKNOWN.getId(),
+				event.getIdentifier(),
+				event.getActionParam0(),
+				event.getActionParam1(),
+				true
+		);
 	}
 
 	@Subscribe
@@ -146,12 +152,22 @@ public class Farming extends TickScript implements KeyListener {
 		}
 
 		Item item = Inventory.getFirst(event.getId());
-		TileObject nearest = TileObjects.getNearest(Predicates.ids(OneClick.ONE_CLICK_MAP.get(event.getId())));
-		if (item == null || nearest == null) {
-			return;
-		}
 
-		GameThread.invoke(() -> item.useOn(nearest));
+		if (OneClick.ONE_CLICK_GAME_OBJECTS_MAP.containsKey(event.getId())) {
+			TileObject nearest = TileObjects.getNearest(Predicates.ids(OneClick.ONE_CLICK_GAME_OBJECTS_MAP.get(event.getId())));
+			if (item == null || nearest == null) {
+				return;
+			}
+
+			GameThread.invoke(() -> item.useOn(nearest));
+		} else if (OneClick.ONE_CLICK_ITEMS_MAP.containsKey(event.getId())) {
+			Item other = Inventory.getFirst(Predicates.ids(OneClick.ONE_CLICK_ITEMS_MAP.get(event.getId())));
+			if (item == null || other == null) {
+				return;
+			}
+
+			GameThread.invoke(() -> item.useOn(other));
+		}
 	}
 
 	@Override
