@@ -2,6 +2,7 @@ package io.reisub.unethicalite.farming;
 
 import com.google.inject.Provides;
 import io.reisub.unethicalite.farming.tasks.Clear;
+import io.reisub.unethicalite.farming.tasks.Cure;
 import io.reisub.unethicalite.farming.tasks.DepositTools;
 import io.reisub.unethicalite.farming.tasks.GoToPatch;
 import io.reisub.unethicalite.farming.tasks.HandleBank;
@@ -67,10 +68,11 @@ public class Farming extends TickScript implements KeyListener {
 		addTask(HandleBank.class);
 		addTask(GoToPatch.class);
 		addTask(WithdrawTools.class);
+		addTask(Note.class);
+		addTask(Cure.class);
 		addTask(Clear.class);
 		addTask(Pick.class);
 		addTask(Plant.class);
-		addTask(Note.class);
 		addTask(DepositTools.class);
 	}
 
@@ -93,17 +95,12 @@ public class Farming extends TickScript implements KeyListener {
 		}
 
 		if (currentLocation == null || currentLocation.isDone()) {
-			boolean newLocation = false;
-
-			while (!newLocation) {
+			while (!locationQueue.isEmpty()) {
 				Location location = locationQueue.poll();
 
-				if (location == null) {
-					stop("Finished all farming locations. Stopping script.");
-					break;
-				} else if (location.isEnabled(config)) {
+				if (location != null && location.isEnabled(config)) {
 					currentLocation = location;
-					newLocation = true;
+					break;
 				}
 			}
 		}
