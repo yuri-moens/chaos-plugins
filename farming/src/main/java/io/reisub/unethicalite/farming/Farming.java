@@ -118,7 +118,7 @@ public class Farming extends TickScript implements KeyListener {
 
 	@Subscribe
 	private void onMenuEntryAdded(MenuEntryAdded event) {
-		if (!config.oneClickMode() || event.getType() == MenuAction.EXAMINE_ITEM.getId()) {
+		if (!config.oneClickMode() || event.getType() != MenuAction.EXAMINE_ITEM.getId()) {
 			return;
 		}
 
