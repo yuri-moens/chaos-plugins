@@ -43,8 +43,9 @@ public class GetTask extends Task {
             Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(75, 12)), 5);
 
             Widgets.get(75, 12).interact("Amy");
-            Time.sleepTicksUntil(Dialog::canContinue, 20);
         }
+
+        Time.sleepTicksUntil(Dialog::canContinue, 20);
 
         DialogOption chooseOption = null;
 
