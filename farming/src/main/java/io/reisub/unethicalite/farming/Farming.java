@@ -140,6 +140,8 @@ public class Farming extends TickScript implements KeyListener {
 			return;
 		}
 
+		CropState compostBinState = getCompostBinState();
+
 		if (OneClick.ONE_CLICK_GAME_OBJECTS_MAP.containsKey(event.getIdentifier())) {
 			if (TileObjects.getNearest(Predicates.ids(OneClick.ONE_CLICK_GAME_OBJECTS_MAP.get(event.getIdentifier()))) == null) {
 				return;
@@ -152,11 +154,14 @@ public class Farming extends TickScript implements KeyListener {
 			if (config.oneClickNote() && NPCs.getNearest(Predicates.ids(OneClick.ONE_CLICK_NPCS_MAP.get(event.getIdentifier()))) == null) {
 				return;
 			}
+		} else if (event.getIdentifier() == ItemID.VOLCANIC_ASH) {
+			if (compostBinState != CropState.HARVESTABLE) {
+				return;
+			}
 		} else {
 			String name = Text.removeTags(event.getTarget());
-			CropState cropState = getCompostBinState();
 
-			if (!compostProduceSet.contains(name) || cropState == null || cropState == CropState.GROWING || cropState == CropState.HARVESTABLE) {
+			if (!compostProduceSet.contains(name) || compostBinState == null || compostBinState == CropState.GROWING || compostBinState == CropState.HARVESTABLE) {
 				return;
 			}
 		}

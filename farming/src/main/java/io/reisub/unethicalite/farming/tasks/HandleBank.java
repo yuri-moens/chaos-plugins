@@ -34,7 +34,7 @@ public class HandleBank extends BankTask {
 
     @Override
     public void execute() {
-        open();
+        open(true);
 
         CBank.depositAllExcept(
                 ItemID.SEED_DIBBER,
