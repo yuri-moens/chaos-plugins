@@ -31,15 +31,33 @@ public abstract class BankTask extends Task {
     }
 
     protected boolean open() {
-        return open(15);
+        return open(false);
+    }
+
+    protected boolean open(boolean openMainTab) {
+        return open(15, openMainTab);
     }
 
     protected boolean open(int waitTicks) {
         return open(waitTicks, 3);
     }
 
+    protected boolean open(int waitTicks, boolean openMainTab) {
+        return open(waitTicks, 3, openMainTab);
+    }
+
     protected boolean open(int waitTicks, int movingCheck) {
-        if (Bank.isOpen()) return true;
+        return open(waitTicks, movingCheck, false);
+    }
+
+    protected boolean open(int waitTicks, int movingCheck, boolean openMainTab) {
+        if (Bank.isOpen()) {
+            if (openMainTab) {
+                Bank.openMainTab();
+            }
+
+            return true;
+        }
 
         TileObject bankObject = getBankObject();
         NPC bankNpc;
@@ -74,19 +92,39 @@ public abstract class BankTask extends Task {
 
         last = Instant.now();
 
+        if (Bank.isOpen() && openMainTab) {
+            Bank.openMainTab();
+        }
+
         return Bank.isOpen();
     }
 
     protected boolean open(String name) {
-        return open(name, 15);
+        return open(name, 15, false);
+    }
+
+    protected boolean open(String name, boolean openMainTab) {
+        return open(name, 15, openMainTab);
     }
 
     protected boolean open(String name, int waitTicks) {
-        return open(name, waitTicks, 3);
+        return open(name, waitTicks, false);
+    }
+
+    protected boolean open(String name, int waitTicks, boolean openMainTab) {
+        return open(name, waitTicks, 3, openMainTab);
     }
 
     protected boolean open(String name, int waitTicks, int movingCheck) {
+        return open(name, waitTicks, movingCheck, false);
+    }
+
+    protected boolean open(String name, int waitTicks, int movingCheck, boolean openMainTab) {
         if (Bank.isOpen()) {
+            if (openMainTab) {
+                Bank.openMainTab();
+            }
+
             return true;
         }
 
@@ -106,6 +144,10 @@ public abstract class BankTask extends Task {
         Time.sleepTicksUntil(Bank::isOpen, waitTicks);
 
         last = Instant.now();
+
+        if (Bank.isOpen() && openMainTab) {
+            Bank.openMainTab();
+        }
 
         return Bank.isOpen();
     }
