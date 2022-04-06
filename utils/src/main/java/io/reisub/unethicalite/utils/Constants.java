@@ -250,11 +250,75 @@ public class Constants {
             ItemID.SKILLS_NECKLACE6
     );
 
-    public static final Set<Integer> COMPOST_BIN_IDS = ImmutableSet.of( // TODO port phasmatys
+    public static final Set<Integer> COMPOST_BIN_IDS = ImmutableSet.of(
             NullObjectID.NULL_7836,
             NullObjectID.NULL_7837,
+            NullObjectID.NULL_7838,
             NullObjectID.NULL_7839,
-            NullObjectID.NULL_27112
+            NullObjectID.NULL_27112,
+            NullObjectID.NULL_34631
+    );
+
+    public static final Set<Integer> NOTABLE_PRODUCE_IDS = ImmutableSet.of(
+            ItemID.POTATO,
+            ItemID.ONION,
+            ItemID.TOMATO,
+            ItemID.SWEETCORN,
+            ItemID.STRAWBERRY,
+            ItemID.WATERMELON,
+            ItemID.SNAPE_GRASS,
+            ItemID.MARIGOLDS,
+            ItemID.ROSEMARY,
+            ItemID.NASTURTIUMS,
+            ItemID.WOAD_LEAF,
+            ItemID.LIMPWURT_ROOT,
+            ItemID.WHITE_LILY,
+            ItemID.GRIMY_GUAM_LEAF,
+            ItemID.GRIMY_MARRENTILL,
+            ItemID.GRIMY_TARROMIN,
+            ItemID.GRIMY_HARRALANDER,
+            ItemID.GRIMY_RANARR_WEED,
+            ItemID.GRIMY_TOADFLAX,
+            ItemID.GRIMY_IRIT_LEAF,
+            ItemID.GRIMY_AVANTOE,
+            ItemID.GRIMY_KWUARM,
+            ItemID.GRIMY_SNAPDRAGON,
+            ItemID.GRIMY_CADANTINE,
+            ItemID.GRIMY_LANTADYME,
+            ItemID.GRIMY_DWARF_WEED,
+            ItemID.GRIMY_TORSTOL,
+            ItemID.BARLEY,
+            ItemID.HAMMERSTONE_HOPS,
+            ItemID.ASGARNIAN_HOPS,
+            ItemID.JUTE_FIBRE,
+            ItemID.YANILLIAN_HOPS,
+            ItemID.KRANDORIAN_HOPS,
+            ItemID.WILDBLOOD_HOPS,
+            ItemID.REDBERRIES,
+            ItemID.CADAVA_BERRIES,
+            ItemID.DWELLBERRIES,
+            ItemID.JANGERBERRIES,
+            ItemID.WHITE_BERRIES,
+            ItemID.POISON_IVY_BERRIES,
+            ItemID.COOKING_APPLE,
+            ItemID.BANANA,
+            ItemID.ORANGE,
+            ItemID.CURRY_LEAF,
+            ItemID.PINEAPPLE,
+            ItemID.PAPAYA_FRUIT,
+            ItemID.COCONUT,
+            ItemID.DRAGONFRUIT,
+            ItemID.GIANT_SEAWEED,
+            ItemID.GRAPES,
+            ItemID.MUSHROOM,
+            ItemID.CACTUS_SPINE,
+            ItemID.POTATO_CACTUS
+    );
+
+    public static final Set<Integer> TOOL_LEPRECHAUN_IDS = ImmutableSet.of(
+            NpcID.TOOL_LEPRECHAUN,
+            NpcID.TOOL_LEPRECHAUN_757,
+            NpcID.TOOL_LEPRECHAUN_7757
     );
 
     public static final Set<Integer> ALLOTMENT_PATCH_IDS = ImmutableSet.of(
