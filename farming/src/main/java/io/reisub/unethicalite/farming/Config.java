@@ -55,6 +55,8 @@ public interface Config extends net.runelite.client.config.Config {
 			keyName = "oneClickNote",
 			name = "One click note",
 			description = "Enable one click mode on any produce that can be noted",
+			hidden = true,
+			unhide = "oneClickMode",
 			position = 4
 	)
 	default boolean oneClickNote() { return false; }
@@ -63,7 +65,9 @@ public interface Config extends net.runelite.client.config.Config {
 			keyName = "oneClickCompostProduce",
 			name = "One click compost produce",
 			description = "Choose what produce to put in the compost bin",
-			position = 4
+			hidden = true,
+			unhide = "oneClickMode",
+			position = 5
 	)
 	default String oneClickCompostProduce() { return "Watermelon\nPineapple"; }
 
