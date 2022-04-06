@@ -12,6 +12,7 @@ public class OneClick {
     public static final String ONE_CLICK_FARMING = "One Click Farming";
     public static final Map<Integer, Set<Integer>> ONE_CLICK_GAME_OBJECTS_MAP;
     public static final Map<Integer, Set<Integer>> ONE_CLICK_ITEMS_MAP;
+    public static final Map<Integer, Set<Integer>> ONE_CLICK_NPCS_MAP;
 
     static {
         ImmutableMap.Builder<Integer, Set<Integer>> builder = ImmutableMap.builder();
@@ -111,5 +112,13 @@ public class OneClick {
         }
 
         ONE_CLICK_ITEMS_MAP = builder.build();
+
+        builder = ImmutableMap.builder();
+
+        for (int i : Constants.NOTABLE_PRODUCE_IDS) {
+            builder.put(i, Constants.TOOL_LEPRECHAUN_IDS);
+        }
+
+        ONE_CLICK_NPCS_MAP = builder.build();
     }
 }

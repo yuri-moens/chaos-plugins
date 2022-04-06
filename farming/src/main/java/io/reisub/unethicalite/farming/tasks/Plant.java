@@ -6,6 +6,7 @@ import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.game.GameThread;
 import dev.hoot.api.game.Vars;
 import dev.hoot.api.items.Inventory;
+import dev.hoot.api.utils.MessageUtils;
 import io.reisub.unethicalite.farming.Config;
 import io.reisub.unethicalite.farming.Farming;
 import io.reisub.unethicalite.farming.Location;
@@ -58,7 +59,8 @@ public class Plant extends Task {
 
         List<Item> seeds = Inventory.getAll(Predicates.ids(Constants.HERB_SEED_IDS));
         if (seeds == null || seeds.isEmpty()) {
-            plugin.stop("No seeds to plant. Stopping plugin.");
+            plugin.getCurrentLocation().setDone(true);
+            MessageUtils.addMessage("No seeds found. Skipping location.");
             return;
         }
 

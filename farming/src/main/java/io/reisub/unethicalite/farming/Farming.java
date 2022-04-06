@@ -1,8 +1,10 @@
 package io.reisub.unethicalite.farming;
 
 import com.google.inject.Provides;
+import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.TileObjects;
 import dev.hoot.api.game.GameThread;
+import dev.hoot.api.game.Vars;
 import dev.hoot.api.items.Inventory;
 import dev.hoot.bot.managers.Static;
 import io.reisub.unethicalite.farming.tasks.Clear;
@@ -14,28 +16,36 @@ import io.reisub.unethicalite.farming.tasks.Note;
 import io.reisub.unethicalite.farming.tasks.Pick;
 import io.reisub.unethicalite.farming.tasks.Plant;
 import io.reisub.unethicalite.farming.tasks.WithdrawTools;
+import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.Predicates;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Item;
+import net.runelite.api.ItemID;
 import net.runelite.api.MenuAction;
+import net.runelite.api.NPC;
 import net.runelite.api.TileObject;
+import net.runelite.api.Varbits;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.MenuEntryAdded;
 import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.api.util.Text;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.input.KeyListener;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.plugins.timetracking.farming.CropState;
 import org.pf4j.Extension;
 
 import javax.inject.Inject;
 import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Set;
 
 @PluginDescriptor(
 		name = "Chaos Farming",
@@ -55,11 +65,15 @@ public class Farming extends TickScript implements KeyListener {
 		return configManager.getConfig(Config.class);
 	}
 
+	private static final int FARMING_GUILD_REGION = 4922;
+
 	@Getter
 	private final Queue<Location> locationQueue = new LinkedList<>();
 
 	@Getter
 	private Location currentLocation;
+
+	private Set<String> compostProduceSet;
 
 	@Override
 	protected void onStart() {
@@ -100,6 +114,10 @@ public class Farming extends TickScript implements KeyListener {
 
 	@Subscribe
 	private void onGameTick(GameTick event) {
+		if (compostProduceSet == null) {
+			compostProduceSet = Utils.parseStringList(config.oneClickCompostProduce());
+		}
+
 		if (locationQueue.isEmpty() || !isRunning()) {
 			return;
 		}
@@ -130,8 +148,17 @@ public class Farming extends TickScript implements KeyListener {
 			if (!Inventory.contains(Predicates.ids(OneClick.ONE_CLICK_ITEMS_MAP.get(event.getIdentifier())))) {
 				return;
 			}
+		} else if (OneClick.ONE_CLICK_NPCS_MAP.containsKey(event.getIdentifier())) {
+			if (config.oneClickNote() && NPCs.getNearest(Predicates.ids(OneClick.ONE_CLICK_NPCS_MAP.get(event.getIdentifier()))) == null) {
+				return;
+			}
 		} else {
-			return;
+			String name = Text.removeTags(event.getTarget());
+			CropState cropState = getCompostBinState();
+
+			if (!compostProduceSet.contains(name) || cropState == null || cropState == CropState.GROWING || cropState == CropState.HARVESTABLE) {
+				return;
+			}
 		}
 
 		Static.getClient().insertMenuItem(
@@ -152,21 +179,58 @@ public class Farming extends TickScript implements KeyListener {
 		}
 
 		Item item = Inventory.getFirst(event.getId());
+		if (item == null) {
+			return;
+		}
+
+		CropState compostBinState = getCompostBinState();
 
 		if (OneClick.ONE_CLICK_GAME_OBJECTS_MAP.containsKey(event.getId())) {
 			TileObject nearest = TileObjects.getNearest(Predicates.ids(OneClick.ONE_CLICK_GAME_OBJECTS_MAP.get(event.getId())));
-			if (item == null || nearest == null) {
+			if (nearest == null) {
 				return;
 			}
 
 			GameThread.invoke(() -> item.useOn(nearest));
 		} else if (OneClick.ONE_CLICK_ITEMS_MAP.containsKey(event.getId())) {
 			Item other = Inventory.getFirst(Predicates.ids(OneClick.ONE_CLICK_ITEMS_MAP.get(event.getId())));
-			if (item == null || other == null) {
+			if (other == null) {
 				return;
 			}
 
 			GameThread.invoke(() -> item.useOn(other));
+		} else if (event.getId() == ItemID.VOLCANIC_ASH && compostBinState == CropState.HARVESTABLE) {
+			TileObject bin = TileObjects.getNearest(Predicates.ids(Constants.COMPOST_BIN_IDS));
+			if (bin == null) {
+				return;
+			}
+
+			GameThread.invoke(() -> item.useOn(bin));
+		} else if (compostProduceSet.contains(item.getName()) && (compostBinState == CropState.EMPTY || compostBinState == CropState.FILLING)) {
+			TileObject bin = TileObjects.getNearest(Predicates.ids(Constants.COMPOST_BIN_IDS));
+			if (bin == null) {
+				return;
+			}
+
+			GameThread.invoke(() -> item.useOn(bin));
+		} else if (config.oneClickNote() && OneClick.ONE_CLICK_NPCS_MAP.containsKey(event.getId())) {
+			NPC nearest = NPCs.getNearest(Predicates.ids(OneClick.ONE_CLICK_NPCS_MAP.get(event.getId())));
+			if (nearest == null) {
+				return;
+			}
+
+			GameThread.invoke(() -> item.useOn(nearest));
+		}
+	}
+
+	@Subscribe
+	private void onConfigChanged(ConfigChanged event) {
+		if (!event.getGroup().equals("chaosfarming")) {
+			return;
+		}
+
+		if (event.getKey().equals("oneClickCompostProduce")) {
+			compostProduceSet = Utils.parseStringList(config.oneClickCompostProduce());
 		}
 	}
 
@@ -186,5 +250,23 @@ public class Farming extends TickScript implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 
+	}
+
+	private CropState getCompostBinState() {
+		PatchState patchState;
+
+		if (Utils.isInRegion(FARMING_GUILD_REGION)) {
+			int varbit = Vars.getBit(Varbits.FARMING_7912);
+			patchState = PatchImplementation.GIANT_COMPOST.forVarbitValue(varbit);
+		} else {
+			int varbit = Vars.getBit(Varbits.FARMING_4775);
+			patchState = PatchImplementation.COMPOST.forVarbitValue(varbit);
+		}
+
+		if (patchState == null) {
+			return null;
+		} else {
+			return patchState.getCropState();
+		}
 	}
 }
