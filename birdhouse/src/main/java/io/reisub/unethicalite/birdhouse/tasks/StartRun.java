@@ -33,11 +33,7 @@ public class StartRun extends BankTask {
 
     @Override
     public void execute() {
-        open();
-
-        if (!Bank.isMainTabOpen()) {
-            Bank.openMainTab();
-        }
+        open(true);
 
         if (!Inventory.isEmpty()) {
             Bank.depositInventory();
