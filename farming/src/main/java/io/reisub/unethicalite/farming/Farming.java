@@ -79,15 +79,11 @@ public class Farming extends TickScript implements KeyListener {
 	protected void onStart() {
 		super.onStart();
 
-		locationQueue.add(Location.FARMING_GUILD);
-		locationQueue.add(Location.ARDOUGNE);
-		locationQueue.add(Location.CATHERBY);
-		locationQueue.add(Location.FALADOR);
-		locationQueue.add(Location.PORT_PHASMATYS);
-		locationQueue.add(Location.HOSIDIUS);
-		locationQueue.add(Location.HARMONY_ISLAND);
-		locationQueue.add(Location.TROLL_STRONGHOLD);
-		locationQueue.add(Location.WEISS);
+		for (Location location : Location.values()) {
+			if (location.isEnabled(config)) {
+				locationQueue.add(location);
+			}
+		}
 
 		addTask(HandleBank.class);
 		addTask(GoToPatch.class);
@@ -126,7 +122,7 @@ public class Farming extends TickScript implements KeyListener {
 			while (!locationQueue.isEmpty()) {
 				Location location = locationQueue.poll();
 
-				if (location != null && location.isEnabled(config)) {
+				if (location != null) {
 					currentLocation = location;
 					break;
 				}

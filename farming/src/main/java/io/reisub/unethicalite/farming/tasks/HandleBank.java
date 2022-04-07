@@ -117,7 +117,7 @@ public class HandleBank extends BankTask {
     }
 
     private void withdrawSeeds() {
-        int seedsNeeded = plugin.getLocationQueue().size();
+        int seedsNeeded = plugin.getCurrentLocation() == null ? plugin.getLocationQueue().size() : plugin.getLocationQueue().size() + 1;
         int withdrawn = 0;
 
         List<Item> seeds = Bank.getAll(Predicates.ids(Constants.HERB_SEED_IDS));
