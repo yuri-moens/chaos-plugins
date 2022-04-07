@@ -21,6 +21,7 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.plugins.cerberus.CerberusPlugin;
 import net.runelite.client.plugins.interaction.InteractionPlugin;
 import net.runelite.client.plugins.itemstats.ItemStatPlugin;
 import net.runelite.client.plugins.zulrah.ZulrahPlugin;
@@ -40,6 +41,7 @@ import java.util.concurrent.TimeUnit;
 )
 @PluginDependency(ItemStatPlugin.class)
 @PluginDependency(InteractionPlugin.class)
+@PluginDependency(CerberusPlugin.class)
 @PluginDependency(ZulrahPlugin.class)
 @Slf4j
 @Extension

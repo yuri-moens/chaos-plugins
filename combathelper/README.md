@@ -10,6 +10,7 @@ This plugin aids players in combat with various useful features. Currently offer
 * Teleport to house hotkey
 * Prayer flicking and swapping
   * Hotkeys
+  * Cerberus
   * Demonic Gorillas
   * Jad
   * Zulrah
@@ -23,6 +24,7 @@ This plugin aids players in combat with various useful features. Currently offer
 
 The plugin won't work without these dependencies.
 
+* [Cerberus](https://github.com/xKylee/plugins-release)
 * [Interaction](https://github.com/unethicalite/unethicalite)
 * [Item Stats](https://github.com/runelite/runelite)
 * [Zulrah](https://github.com/xKylee/plugins-release)

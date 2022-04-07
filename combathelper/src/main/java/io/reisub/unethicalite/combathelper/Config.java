@@ -669,6 +669,15 @@ public interface Config extends net.runelite.client.config.Config {
 	)
 	default boolean zulrahPrayerFlick() { return true; }
 
+	@ConfigItem(
+			keyName = "cerberusPrayerFlick",
+			name = "Cerberus Auto Prayer Flick",
+			description = "Automatically swap prayers against Cerberus",
+			section = "prayerConfig",
+			position = 315
+	)
+	default boolean cerberusPrayerFlick() { return true; }
+
 	@ConfigSection(
 			keyName = "bonesConfig",
 			name = "Bones/ashes Configuration",

@@ -1,6 +1,5 @@
 package io.reisub.unethicalite.combathelper.prayer;
 
-import io.reisub.unethicalite.combathelper.prayer.QuickPrayer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

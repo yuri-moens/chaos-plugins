@@ -2,8 +2,6 @@ package io.reisub.unethicalite.combathelper.swap;
 
 import dev.hoot.api.commons.Rand;
 import dev.hoot.api.entities.NPCs;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.game.Combat;
 import dev.hoot.api.game.GameThread;
 import dev.hoot.api.game.Skills;
 import dev.hoot.api.game.Vars;
@@ -21,7 +19,6 @@ import net.runelite.api.events.GameTick;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.zulrah.ZulrahPlugin;
-import net.runelite.client.plugins.zulrah.constants.ZulrahType;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
