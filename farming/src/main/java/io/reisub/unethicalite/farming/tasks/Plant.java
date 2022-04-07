@@ -47,7 +47,10 @@ public class Plant extends Task {
         int varbit = Vars.getBit(plugin.getCurrentLocation().getVarbit());
         PatchState patchState = PatchImplementation.HERB.forVarbitValue(varbit);
 
-        return patchState != null && patchState.getProduce() == Produce.WEEDS && patchState.getCropState() == CropState.GROWING;
+        return !plugin.getCurrentLocation().isDone()
+                && patchState != null
+                && patchState.getProduce() == Produce.WEEDS
+                && patchState.getCropState() == CropState.GROWING;
     }
 
     @Override
