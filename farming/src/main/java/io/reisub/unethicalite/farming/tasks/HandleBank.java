@@ -7,6 +7,7 @@ import io.reisub.unethicalite.farming.Config;
 import io.reisub.unethicalite.farming.Farming;
 import io.reisub.unethicalite.farming.Location;
 import io.reisub.unethicalite.utils.Constants;
+import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.CBank;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.BankTask;
@@ -18,6 +19,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class HandleBank extends BankTask {
     @Inject
@@ -119,6 +121,7 @@ public class HandleBank extends BankTask {
     private void withdrawSeeds() {
         int seedsNeeded = plugin.getCurrentLocation() == null ? plugin.getLocationQueue().size() : plugin.getLocationQueue().size() + 1;
         int withdrawn = 0;
+        Set<String> seedsToKeep = Utils.parseStringList(config.seedsToKeep());
 
         List<Item> seeds = Bank.getAll(Predicates.ids(Constants.HERB_SEED_IDS));
 
@@ -140,9 +143,19 @@ public class HandleBank extends BankTask {
             case HIGHEST_FIRST:
             case LOWEST_FIRST_HIGHEST_ON_DISEASE_FREE:
                 for (Item seed : seeds) {
-                    withdrawn += seed.getQuantity();
+                    int quantity = seedsToKeep.contains(seed.getName()) ? seed.getQuantity() - config.amountToKeep() : seed.getQuantity();
 
-                    Bank.withdrawAll(seed.getId(), Bank.WithdrawMode.ITEM);
+                    if (quantity <= 0) {
+                        continue;
+                    }
+
+                    withdrawn += quantity;
+
+                     if (quantity >= seedsNeeded) {
+                         Bank.withdrawAll(seed.getId(), Bank.WithdrawMode.ITEM);
+                     } else {
+                         Bank.withdraw(seed.getId(), quantity, Bank.WithdrawMode.ITEM);
+                     }
 
                     if (withdrawn >= seedsNeeded) {
                         break;
@@ -153,13 +166,17 @@ public class HandleBank extends BankTask {
             case HIGHEST_FIRST_PER_TWO:
             case LOWEST_FIRST_HIGHEST_ON_DISEASE_FREE_PER_TWO:
                 for (Item seed : seeds) {
-                    if (seed.getQuantity() > 1) {
-                        withdrawn += 2;
-                    } else {
-                        withdrawn += 1;
+                    int quantity = seedsToKeep.contains(seed.getName()) ? seed.getQuantity() - config.amountToKeep() : seed.getQuantity();
+
+                    if (quantity <= 0) {
+                        continue;
+                    } else if (quantity > 1) {
+                        quantity = 2;
                     }
 
-                    Bank.withdraw(seed.getId(), 2, Bank.WithdrawMode.ITEM);
+                    withdrawn += quantity;
+
+                    Bank.withdraw(seed.getId(), quantity, Bank.WithdrawMode.ITEM);
 
                     if (withdrawn >= seedsNeeded) {
                         break;
