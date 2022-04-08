@@ -78,4 +78,14 @@ public class Utils extends Plugin {
 
 		return integers;
 	}
+
+	public static void parseStringOrIntegerList(String list, Set<Integer> integers, Set<String> strings) {
+		for (String s : parseStringList(list)) {
+			try {
+				integers.add(Integer.parseInt(s));
+			} catch (NumberFormatException e) {
+				strings.add(s);
+			}
+		}
+	}
 }
