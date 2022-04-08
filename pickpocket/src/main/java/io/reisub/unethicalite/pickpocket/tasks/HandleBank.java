@@ -45,7 +45,7 @@ public class HandleBank extends BankTask {
     @Override
     public void execute() {
         if (!open()) {
-            CMovement.walkTo(config.target().getNearestBankLocation(), 1);
+            CMovement.walkTo(plugin.getNearestLocation().getBankLocation(), 1);
 
             return;
         }

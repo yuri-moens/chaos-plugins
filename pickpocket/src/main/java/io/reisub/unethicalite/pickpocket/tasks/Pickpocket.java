@@ -34,6 +34,7 @@ public class Pickpocket extends Task {
         return plugin.getCurrentActivity() == Activity.IDLE
                 && !Inventory.isFull()
                 && Players.getLocal().getModelHeight() != 1000
+                && (!config.healAtBank() || !Inventory.contains(config.food()))
                 && (Inventory.contains(config.food()) || Skills.getBoostedLevel(Skill.HITPOINTS) > config.eatHP());
     }
 
@@ -41,7 +42,7 @@ public class Pickpocket extends Task {
     public void execute() {
         NPC target = NPCs.getNearest(Predicates.ids(config.target().getIds()));
         if (target == null) {
-            CMovement.walkTo(config.target().getNearestPickpocketLocation(), 2);
+            CMovement.walkTo(plugin.getNearestLocation().getPickpocketLocation(), 2);
 
             return;
         }

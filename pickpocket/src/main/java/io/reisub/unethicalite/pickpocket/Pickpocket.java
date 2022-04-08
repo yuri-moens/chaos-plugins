@@ -7,6 +7,7 @@ import io.reisub.unethicalite.pickpocket.tasks.HandleBank;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.enums.Activity;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Actor;
 import net.runelite.api.Skill;
@@ -40,9 +41,14 @@ public class Pickpocket extends TickScript {
 		return configManager.getConfig(Config.class);
 	}
 
+	@Getter
+	private Target.Location nearestLocation;
+
 	@Override
 	protected void onStart() {
 		super.onStart();
+
+		nearestLocation = config.target().getNearest();
 
 		addTask(Eat.class);
 		addTask(HandleBank.class);
@@ -51,6 +57,10 @@ public class Pickpocket extends TickScript {
 
 	@Subscribe
 	private void onAnimationChanged(AnimationChanged event) {
+		if (!isRunning()) {
+			return;
+		}
+
 		Actor actor = event.getActor();
 		if (actor == null || !actor.equals(Players.getLocal())) return;
 
