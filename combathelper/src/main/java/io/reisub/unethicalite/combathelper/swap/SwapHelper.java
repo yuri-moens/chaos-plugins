@@ -1,5 +1,7 @@
 package io.reisub.unethicalite.combathelper.swap;
 
+import com.openosrs.client.util.WeaponMap;
+import com.openosrs.client.util.WeaponStyle;
 import dev.hoot.api.commons.Rand;
 import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.game.GameThread;
@@ -10,6 +12,7 @@ import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.combathelper.Helper;
 import io.reisub.unethicalite.combathelper.prayer.PrayerHelper;
 import io.reisub.unethicalite.combathelper.prayer.QuickPrayer;
+import io.reisub.unethicalite.utils.Utils;
 import net.runelite.api.EquipmentInventorySlot;
 import net.runelite.api.Item;
 import net.runelite.api.NPC;
@@ -36,14 +39,15 @@ public class SwapHelper extends Helper {
     private ZulrahPlugin zulrahPlugin;
 
     private Set<Integer> meleeIds;
+    private Set<String> meleeNames;
     private Set<Integer> rangedIds;
+    private Set<String> rangedNames;
     private Set<Integer> magicIds;
+    private Set<String> magicNames;
 
     @Override
     public void startUp() {
-        meleeIds = parseIds(config.meleeGear());
-        rangedIds = parseIds(config.rangedGear());
-        magicIds = parseIds(config.magicGear());
+        parseGear();
     }
 
     @Subscribe
@@ -57,33 +61,31 @@ public class SwapHelper extends Helper {
             return;
         }
 
-        meleeIds = parseIds(config.meleeGear());
-        rangedIds = parseIds(config.rangedGear());
-        magicIds = parseIds(config.magicGear());
+        parseGear();
     }
 
-    private Set<Integer> parseIds(String idsString) {
-        if (idsString.equals("")) return new HashSet<>();
+    private void parseGear() {
+        meleeIds = new HashSet<>();
+        meleeNames = new HashSet<>();
+        rangedIds = new HashSet<>();
+        rangedNames = new HashSet<>();
+        magicIds = new HashSet<>();
+        magicNames = new HashSet<>();
 
-        String[] idStrings = idsString.split(";");
-        Set<Integer> ids = new HashSet<>();
-
-        for (String idString : idStrings) {
-            ids.add(Integer.parseInt(idString.trim()));
-        }
-
-        return ids;
+        Utils.parseStringOrIntegerList(config.meleeGear(), meleeIds, meleeNames);
+        Utils.parseStringOrIntegerList(config.rangedGear(), rangedIds, rangedNames);
+        Utils.parseStringOrIntegerList(config.magicGear(), magicIds, magicNames);
     }
 
     public void keyPressed(KeyEvent e) {
         if (config.meleeHotkey().matches(e)) {
-            plugin.schedule(() -> swap(AttackStyle.MELEE), Rand.nextInt(250, 300));
+            plugin.schedule(() -> swap(WeaponStyle.MELEE), Rand.nextInt(250, 300));
             e.consume();
         } else if (config.rangedHotkey().matches(e)) {
-            plugin.schedule(() -> swap(AttackStyle.RANGED), Rand.nextInt(250, 300));
+            plugin.schedule(() -> swap(WeaponStyle.RANGE), Rand.nextInt(250, 300));
             e.consume();
         } else if (config.magicHotkey().matches(e)) {
-            plugin.schedule(() -> swap(AttackStyle.MAGIC), Rand.nextInt(250, 300));
+            plugin.schedule(() -> swap(WeaponStyle.MAGIC), Rand.nextInt(250, 300));
             e.consume();
         }
     }
@@ -93,7 +95,9 @@ public class SwapHelper extends Helper {
             zulrahSwap();
         }
 
-        if (plugin.getLastTarget() == null) return;
+        if (plugin.getLastTarget() == null || !config.autoSwap()) {
+            return;
+        }
 
         NPC target = null;
 
@@ -104,66 +108,77 @@ public class SwapHelper extends Helper {
 
         if (target == null || target.getComposition().getOverheadIcon() == null) return;
 
-        int weaponId = Equipment.fromSlot(EquipmentInventorySlot.WEAPON).getId();
+        WeaponStyle currentStyle = getCurrentWeaponStyle();
 
         switch (target.getComposition().getOverheadIcon()) {
             case DEFLECT_MAGE:
             case MAGIC:
-                if (magicIds.contains(weaponId)) {
-                    swap(AttackStyle.RANGED, AttackStyle.MELEE);
+                if (currentStyle == WeaponStyle.MAGIC) {
+                    swap(WeaponStyle.RANGE, WeaponStyle.MELEE);
                 }
                 break;
             case DEFLECT_RANGE:
             case RANGED:
-                if (rangedIds.contains(weaponId)) {
-                    swap(AttackStyle.MAGIC, AttackStyle.MELEE);
+                if (currentStyle == WeaponStyle.RANGE) {
+                    swap(WeaponStyle.MAGIC, WeaponStyle.MELEE);
                 }
                 break;
             case DEFLECT_MELEE:
             case MELEE:
-                if (meleeIds.contains(weaponId)) {
-                    swap(AttackStyle.RANGED, AttackStyle.MAGIC);
+                if (currentStyle == WeaponStyle.MELEE) {
+                    swap(WeaponStyle.RANGE, WeaponStyle.MAGIC);
                 }
                 break;
             case MAGE_MELEE:
-                if (magicIds.contains(weaponId) || meleeIds.contains(weaponId)) {
-                    swap(AttackStyle.RANGED);
+                if (currentStyle == WeaponStyle.MAGIC || currentStyle == WeaponStyle.MELEE) {
+                    swap(WeaponStyle.RANGE);
                 }
                 break;
             case RANGE_MAGE:
-                if (rangedIds.contains(weaponId) || magicIds.contains(weaponId)) {
-                    swap(AttackStyle.MELEE);
+                if (currentStyle == WeaponStyle.RANGE || currentStyle == WeaponStyle.MAGIC) {
+                    swap(WeaponStyle.MELEE);
                 }
                 break;
             case RANGE_MELEE:
-                if (rangedIds.contains(weaponId) || meleeIds.contains(weaponId)) {
-                    swap(AttackStyle.MAGIC);
+                if (currentStyle == WeaponStyle.RANGE || currentStyle == WeaponStyle.MELEE) {
+                    swap(WeaponStyle.MAGIC);
                 }
                 break;
         }
     }
 
-    private void swap(AttackStyle... styles) {
-        for (AttackStyle style : styles) {
-            Set<Integer> ids = new HashSet<>();
+    private void swap(WeaponStyle... styles) {
+        for (WeaponStyle style : styles) {
+            Set<Integer> ids;
+            Set<String> names;
 
             switch(style) {
                 case MELEE:
                     ids = meleeIds;
+                    names = meleeNames;
                     break;
-                case RANGED:
+                case RANGE:
                     ids = rangedIds;
+                    names = rangedNames;
                     break;
                 case MAGIC:
                     ids = magicIds;
+                    names = magicNames;
                     break;
+                default:
+                    ids = null;
+                    names = null;
             }
 
-            final Set<Integer> finalIds = ids;
+            List<Item> items = Inventory.getAll(i -> {
+                for (String name : names) {
+                    if (i.getName().contains(name)) {
+                        return true;
+                    }
+                }
 
-            if (finalIds.isEmpty()) continue;
-
-            List<Item> items = Inventory.getAll((i) -> finalIds.contains(i.getId()));
+                return ids.contains(i.getId());
+            });
 
             if (!items.isEmpty()) {
                 for (Item item : items) {
@@ -187,7 +202,7 @@ public class SwapHelper extends Helper {
                             prayers.add(config.meleePrayer().getQuickPrayer());
                         }
                         break;
-                    case RANGED:
+                    case RANGE:
                         if (config.swapOffensivePrayers()) {
                             prayers.addAll(QuickPrayer.getBestRangedBuff(level, Vars.getBit(Varbits.RIGOUR_UNLOCKED.getId()) != 0));
                         }
@@ -221,40 +236,32 @@ public class SwapHelper extends Helper {
     }
 
     private void zulrahSwap() {
-        AttackStyle current = getCurrentAttackStyle();
+        WeaponStyle current = getCurrentWeaponStyle();
 
-        zulrahPlugin.getZulrahData().forEach(data -> {
-            data.getCurrentPhase().ifPresent(phase -> {
-                switch (phase.getZulrahNpc().getType()) {
-                    case MELEE:
-                    case RANGE:
-                        if (current != AttackStyle.MAGIC) {
-                            swap(AttackStyle.MAGIC);
-                        }
-                        break;
-                    case MAGIC:
-                        if (current != AttackStyle.RANGED) {
-                            swap(AttackStyle.RANGED);
-                        }
-                        break;
-                }
-            });
-        });
+        zulrahPlugin.getZulrahData().forEach(data -> data.getCurrentPhase().ifPresent(phase -> {
+            switch (phase.getZulrahNpc().getType()) {
+                case MELEE:
+                case RANGE:
+                    if (current != WeaponStyle.MAGIC) {
+                        swap(WeaponStyle.MAGIC);
+                    }
+                    break;
+                case MAGIC:
+                    if (current != WeaponStyle.RANGE) {
+                        swap(WeaponStyle.RANGE);
+                    }
+                    break;
+            }
+        }));
     }
 
-    private AttackStyle getCurrentAttackStyle() {
+    private WeaponStyle getCurrentWeaponStyle() {
         Item weapon = Equipment.fromSlot(EquipmentInventorySlot.WEAPON);
 
-        if (weapon != null) {
-            if (meleeIds.contains(weapon.getId())) {
-                return AttackStyle.MELEE;
-            } else if (rangedIds.contains(weapon.getId())) {
-                return AttackStyle.RANGED;
-            } else if (magicIds.contains(weapon.getId())) {
-                return AttackStyle.MAGIC;
-            }
+        if (weapon == null) {
+            return WeaponStyle.MELEE;
+        } else {
+            return WeaponMap.StyleMap.get(weapon.getId());
         }
-
-        return AttackStyle.MELEE;
     }
 }

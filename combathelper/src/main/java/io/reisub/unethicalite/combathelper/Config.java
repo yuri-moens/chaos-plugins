@@ -781,8 +781,8 @@ public interface Config extends net.runelite.client.config.Config {
 
 	@ConfigItem(
 			keyName = "meleeGear",
-			name = "Melee gear IDs",
-			description = "IDs of your melee gear separated with a semicolon",
+			name = "Melee gear",
+			description = "Names or IDs of your melee gear. Names match any item containing the name, meaning 'Dharok's platelegs' matches all degradation values. Separate by line, semicolon or comma.",
 			section = "swapConfig",
 			position = 601
 	)
@@ -803,8 +803,8 @@ public interface Config extends net.runelite.client.config.Config {
 
 	@ConfigItem(
 			keyName = "rangedGear",
-			name = "Ranged gear IDs",
-			description = "IDs of your ranged gear separated with a semicolon",
+			name = "Ranged gear",
+			description = "Names or IDs of your ranged gear. Names match any item containing the name, meaning 'Dharok's platelegs' matches all degradation values. Separate by line, semicolon or comma.",
 			section = "swapConfig",
 			position = 603
 	)
@@ -825,8 +825,8 @@ public interface Config extends net.runelite.client.config.Config {
 
 	@ConfigItem(
 			keyName = "magicGear",
-			name = "Magic gear IDs",
-			description = "IDs of your magic gear separated with a semicolon",
+			name = "Magic gear",
+			description = "Names or IDs of your magic gear. Names match any item containing the name, meaning 'Dharok's platelegs' matches all degradation values. Separate by line, semicolon or comma.",
 			section = "swapConfig",
 			position = 605
 	)
@@ -901,11 +901,20 @@ public interface Config extends net.runelite.client.config.Config {
 	default ProtectionPrayer magicPrayer() { return ProtectionPrayer.PROTECT_FROM_MELEE; }
 
 	@ConfigItem(
+			keyName = "autoSwap",
+			name = "Auto swap",
+			description = "Automatically swap sets depending on prayer of target",
+			section = "swapConfig",
+			position = 612
+	)
+	default boolean autoSwap() { return true; }
+
+	@ConfigItem(
 			keyName = "autoSwapZulrah",
 			name = "Auto swap Zulrah",
 			description = "Automatically swap sets against Zulrah",
 			section = "swapConfig",
-			position = 612
+			position = 613
 	)
 	default boolean autoSwapZulrah() { return true; }
 
