@@ -124,20 +124,20 @@ public enum Location {
 
     public boolean isEnabled(Config config) {
         switch(this) {
+            case FARMING_GUILD:
+                return config.guildHerb();
             case ARDOUGNE:
                 return config.ardougneHerb();
             case CATHERBY:
                 return config.catherbyHerb();
             case FALADOR:
                 return config.faladorHerb();
-            case FARMING_GUILD:
-                return config.guildHerb();
-            case HARMONY_ISLAND:
-                return config.harmonyHerb();
-            case HOSIDIUS:
-                return config.hosidiusHerb();
             case PORT_PHASMATYS:
                 return config.portPhasmatysHerb();
+            case HOSIDIUS:
+                return config.hosidiusHerb();
+            case HARMONY_ISLAND:
+                return config.harmonyHerb();
             case TROLL_STRONGHOLD:
                 return config.trollStrongholdHerb();
             case WEISS:

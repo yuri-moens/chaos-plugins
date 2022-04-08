@@ -11,19 +11,70 @@ import java.awt.event.KeyEvent;
 
 @ConfigGroup("chaosfarming")
 public interface Config extends net.runelite.client.config.Config {
+	@ConfigSection(
+			keyName = "seedsConfig",
+			name = "Seeds",
+			description = "Configure seeds",
+			position = 0
+	)
+	String seedsConfig = "seedsConfig";
+
+	@ConfigItem(
+			keyName = "manualMode",
+			name = "Manual",
+			description = "Use manual seeds mode, more info in the readme",
+			section = "seedsConfig",
+			position = 1
+	)
+	default boolean manualMode() { return false; }
+
 	@ConfigItem(
 			keyName = "seedsMode",
 			name = "Seeds mode",
 			description = "Choose which seeds to plant, more information in the readme",
-			position = 0
+			section = "seedsConfig",
+			hide = "manualMode",
+			position = 2
 	)
 	default SeedsMode seedsMode() { return SeedsMode.LOWEST_FIRST; }
+
+	@ConfigItem(
+			keyName = "manualSeeds",
+			name = "Manual seeds",
+			description = "Choose which seeds to use",
+			hidden = true,
+			unhide = "manualMode",
+			section = "seedsConfig",
+			position = 3
+	)
+	default String manualSeeds() { return "Snapdragon seed\nRanarr seed"; }
+
+	@ConfigItem(
+			keyName = "manualSeedsSplit",
+			name = "Split seeds evenly",
+			description = "Split manually chosen seeds as evenly as possible, otherwise take as many as possible of each until we have enough seeds",
+			hidden = true,
+			unhide = "manualMode",
+			section = "seedsConfig",
+			position = 4
+	)
+	default boolean manualSeedsSplit() { return true; }
+
+	@ConfigItem(
+			keyName = "diseaseFreeSeeds",
+			name = "Disease free seeds",
+			description = "Choose which seeds to use on disease free patches",
+			section = "seedsConfig",
+			position = 5
+	)
+	default String diseaseFreeSeeds() { return "Snapdragon seed\nRanarr seed"; }
 
 	@ConfigItem(
 			keyName = "seedsToKeep",
 			name = "Seeds to keep",
 			description = "Choose which seeds to keep some of in your bank, useful for seeds used in farming contracts",
-			position = 1
+			section = "seedsConfig",
+			position = 6
 	)
 	default String seedsToKeep() { return "Snapdragon seed\nCadantine seed\nLantadyme seed\nDwarf weed seed\nTorstol seed"; }
 
@@ -31,15 +82,25 @@ public interface Config extends net.runelite.client.config.Config {
 			keyName = "amountToKeep",
 			name = "Amount to keep",
 			description = "Choose how many seeds to keep of each kind",
-			position = 2
+			section = "seedsConfig",
+			position = 7
 	)
 	default int amountToKeep() { return 10; }
+
+	@ConfigSection(
+			keyName = "teleportItemsConfig",
+			name = "Teleport items",
+			description = "Configure teleport items",
+			position = 100
+	)
+	String teleportItemsConfig = "teleportItemsConfig";
 
 	@ConfigItem(
 			keyName = "useExplorersRing",
 			name = "Use Explorer's ring",
 			description = "Use the Explorer's ring to teleport to Falador",
-			position = 2
+			section = "teleportItemsConfig",
+			position = 101
 	)
 	default boolean useExplorersRing() { return false; }
 
@@ -47,7 +108,8 @@ public interface Config extends net.runelite.client.config.Config {
 			keyName = "useArdougneCloak",
 			name = "Use Ardougne cloak",
 			description = "Use the Ardougne cloak to teleport to Ardougne",
-			position = 3
+			section = "teleportItemsConfig",
+			position = 102
 	)
 	default boolean useArdougneCloak() { return false; }
 
@@ -55,7 +117,8 @@ public interface Config extends net.runelite.client.config.Config {
 			keyName = "useXericsTalisman",
 			name = "Use Xeric's talisman",
 			description = "Use Xeric's talisman to teleport to Hosidius",
-			position = 4
+			section = "teleportItemsConfig",
+			position = 103
 	)
 	default boolean useXericsTalisman() { return false; }
 
@@ -102,7 +165,7 @@ public interface Config extends net.runelite.client.config.Config {
 			keyName = "herbConfig",
 			name = "Herbs",
 			description = "Configure what herb patches to farm",
-			position = 200
+			position = 300
 	)
 	String herbConfig = "herbConfig";
 
@@ -111,7 +174,7 @@ public interface Config extends net.runelite.client.config.Config {
 			name = "Falador",
 			description = "Enable patch",
 			section = "herbConfig",
-			position = 201
+			position = 301
 	)
 	default boolean faladorHerb() { return true; }
 
@@ -120,7 +183,7 @@ public interface Config extends net.runelite.client.config.Config {
 			name = "Port Phasmatys",
 			description = "Enable patch",
 			section = "herbConfig",
-			position = 202
+			position = 302
 	)
 	default boolean portPhasmatysHerb() { return true; }
 
@@ -129,7 +192,7 @@ public interface Config extends net.runelite.client.config.Config {
 			name = "Catherby",
 			description = "Enable patch",
 			section = "herbConfig",
-			position = 203
+			position = 303
 	)
 	default boolean catherbyHerb() { return true; }
 
@@ -138,7 +201,7 @@ public interface Config extends net.runelite.client.config.Config {
 			name = "Ardougne",
 			description = "Enable patch",
 			section = "herbConfig",
-			position = 204
+			position = 304
 	)
 	default boolean ardougneHerb() { return true; }
 
@@ -147,7 +210,7 @@ public interface Config extends net.runelite.client.config.Config {
 			name = "Hosidius",
 			description = "Enable patch",
 			section = "herbConfig",
-			position = 205
+			position = 305
 	)
 	default boolean hosidiusHerb() { return true; }
 
@@ -156,7 +219,7 @@ public interface Config extends net.runelite.client.config.Config {
 			name = "Farming Guild",
 			description = "Enable patch",
 			section = "herbConfig",
-			position = 206
+			position = 306
 	)
 	default boolean guildHerb() { return false; }
 
@@ -165,7 +228,7 @@ public interface Config extends net.runelite.client.config.Config {
 			name = "Troll Stronghold",
 			description = "Enable patch",
 			section = "herbConfig",
-			position = 207
+			position = 307
 	)
 	default boolean trollStrongholdHerb() { return false; }
 
@@ -174,7 +237,7 @@ public interface Config extends net.runelite.client.config.Config {
 			name = "Weiss",
 			description = "Enable patch",
 			section = "herbConfig",
-			position = 208
+			position = 308
 	)
 	default boolean weissHerb() { return false; }
 
@@ -183,7 +246,7 @@ public interface Config extends net.runelite.client.config.Config {
 			name = "Harmony Island",
 			description = "Enable patch",
 			section = "herbConfig",
-			position = 209
+			position = 309
 	)
 	default boolean harmonyHerb() { return false; }
 

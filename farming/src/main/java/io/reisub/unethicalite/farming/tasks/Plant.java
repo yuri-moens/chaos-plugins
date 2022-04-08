@@ -12,8 +12,8 @@ import io.reisub.unethicalite.farming.Farming;
 import io.reisub.unethicalite.farming.Location;
 import io.reisub.unethicalite.farming.PatchImplementation;
 import io.reisub.unethicalite.farming.PatchState;
-import io.reisub.unethicalite.farming.SeedsMode;
 import io.reisub.unethicalite.utils.Constants;
+import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.Item;
@@ -67,24 +67,23 @@ public class Plant extends Task {
             return;
         }
 
+        List<Item> diseaseFreeSeeds = Inventory.getAll(Predicates.names(Utils.parseStringList(config.diseaseFreeSeeds())));
+
         Item seed = null;
 
-        if (config.seedsMode() == SeedsMode.LOWEST_FIRST_HIGHEST_ON_DISEASE_FREE || config.seedsMode() == SeedsMode.LOWEST_FIRST_HIGHEST_ON_DISEASE_FREE_PER_TWO) {
+        if (!diseaseFreeSeeds.isEmpty()) {
             if (plugin.getCurrentLocation() == Location.TROLL_STRONGHOLD || plugin.getCurrentLocation() == Location.WEISS) {
-                for (Item s : seeds) {
-                    if (seed == null) {
-                        seed = s;
-                    } else if (s.getId() > seed.getId()) {
-                        seed = s;
-                    }
-                }
+                seed = diseaseFreeSeeds.get(0);
             } else {
                 for (Item s : seeds) {
-                    if (seed == null) {
-                        seed = s;
-                    } else if (s.getId() < seed.getId()) {
-                        seed = s;
+                    if (!diseaseFreeSeeds.contains(s)) {
+                         seed = s;
+                         break;
                     }
+                }
+
+                if (seed == null) {
+                    seed = seeds.get(0);
                 }
             }
         } else {

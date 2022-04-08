@@ -113,76 +113,82 @@ public class HandleBank extends BankTask {
 
         for (Map.Entry<Integer, Integer> entry : runes.entrySet()) {
             if (entry.getValue() > 0) {
-                Bank.withdraw(entry.getKey(), entry.getValue(), Bank.WithdrawMode.ITEM);
+                if (!Bank.contains(entry.getKey())) {
+                    Bank.withdraw(ItemID.RUNE_POUCH, 1, Bank.WithdrawMode.ITEM);
+                } else {
+                    Bank.withdraw(entry.getKey(), entry.getValue(), Bank.WithdrawMode.ITEM);
+                }
             }
         }
     }
 
     private void withdrawSeeds() {
-        int seedsNeeded = plugin.getCurrentLocation() == null ? plugin.getLocationQueue().size() : plugin.getLocationQueue().size() + 1;
+        int quantityOfSeedsNeeded = plugin.getCurrentLocation() == null ? plugin.getLocationQueue().size() : plugin.getLocationQueue().size() + 1;
         int withdrawn = 0;
         Set<String> seedsToKeep = Utils.parseStringList(config.seedsToKeep());
 
-        List<Item> seeds = Bank.getAll(Predicates.ids(Constants.HERB_SEED_IDS));
+        List<Item> seeds;
+        int wantedPerSeed = quantityOfSeedsNeeded;
+        boolean hasWithdrawn;
 
-        switch (config.seedsMode()) {
-            case LOWEST_FIRST:
-            case LOWEST_FIRST_HIGHEST_ON_DISEASE_FREE:
-            case LOWEST_FIRST_PER_TWO:
-            case LOWEST_FIRST_HIGHEST_ON_DISEASE_FREE_PER_TWO:
-                seeds.sort(Comparator.comparingInt(Item::getId));
-                break;
-            case HIGHEST_FIRST:
-            case HIGHEST_FIRST_PER_TWO:
-                seeds.sort(Comparator.comparingInt(Item::getId).reversed());
-                break;
-        }
+        do {
+            hasWithdrawn = false;
 
-        switch (config.seedsMode()) {
-            case LOWEST_FIRST:
-            case HIGHEST_FIRST:
-            case LOWEST_FIRST_HIGHEST_ON_DISEASE_FREE:
-                for (Item seed : seeds) {
-                    int quantity = seedsToKeep.contains(seed.getName()) ? seed.getQuantity() - config.amountToKeep() : seed.getQuantity();
+            if (config.manualMode()) {
+                Set<String> manualSeeds = Utils.parseStringList(config.manualSeeds());
+                seeds = Bank.getAll(Predicates.names(manualSeeds));
 
-                    if (quantity <= 0) {
-                        continue;
-                    }
+                wantedPerSeed = config.manualSeedsSplit() ? (quantityOfSeedsNeeded + seeds.size() - 1) / seeds.size() : quantityOfSeedsNeeded;
+            } else {
+                seeds = Bank.getAll(Predicates.ids(Constants.HERB_SEED_IDS));
 
-                    withdrawn += quantity;
-
-                     if (quantity >= seedsNeeded) {
-                         Bank.withdrawAll(seed.getId(), Bank.WithdrawMode.ITEM);
-                     } else {
-                         Bank.withdraw(seed.getId(), quantity, Bank.WithdrawMode.ITEM);
-                     }
-
-                    if (withdrawn >= seedsNeeded) {
+                switch (config.seedsMode()) {
+                    case LOWEST_FIRST:
+                    case LOWEST_FIRST_PER_TWO:
+                        seeds.sort(Comparator.comparingInt(Item::getId));
                         break;
-                    }
+                    case HIGHEST_FIRST:
+                    case HIGHEST_FIRST_PER_TWO:
+                        seeds.sort(Comparator.comparingInt(Item::getId).reversed());
+                        break;
                 }
-                break;
-            case LOWEST_FIRST_PER_TWO:
-            case HIGHEST_FIRST_PER_TWO:
-            case LOWEST_FIRST_HIGHEST_ON_DISEASE_FREE_PER_TWO:
-                for (Item seed : seeds) {
-                    int quantity = seedsToKeep.contains(seed.getName()) ? seed.getQuantity() - config.amountToKeep() : seed.getQuantity();
 
-                    if (quantity <= 0) {
-                        continue;
-                    } else if (quantity > 1) {
-                        quantity = 2;
-                    }
+                switch (config.seedsMode()) {
+                    case LOWEST_FIRST_PER_TWO:
+                    case HIGHEST_FIRST_PER_TWO:
+                        wantedPerSeed = 2;
+                        break;
+                }
+            }
 
-                    withdrawn += quantity;
+            for (Item seed : seeds) {
+                int quantity = seedsToKeep.contains(seed.getName()) ? seed.getQuantity() - config.amountToKeep() : seed.getQuantity();
 
+                if (quantity <= 0) {
+                    continue;
+                }
+
+                quantity = Math.min(quantity, wantedPerSeed);
+
+                withdrawn += quantity;
+                hasWithdrawn = true;
+
+                if (quantity >= quantityOfSeedsNeeded) {
+                    Bank.withdrawAll(seed.getId(), Bank.WithdrawMode.ITEM);
+                } else {
                     Bank.withdraw(seed.getId(), quantity, Bank.WithdrawMode.ITEM);
-
-                    if (withdrawn >= seedsNeeded) {
-                        break;
-                    }
                 }
-                break;
-        }
+
+                if (withdrawn >= quantityOfSeedsNeeded) {
+                    break;
+                }
+            }
+
+            if (hasWithdrawn && withdrawn < quantityOfSeedsNeeded) {
+                Time.sleepTick();
+                quantityOfSeedsNeeded -= withdrawn;
+                withdrawn = 0;
+            }
+        } while (withdrawn == 0 && hasWithdrawn);
     }
 }
