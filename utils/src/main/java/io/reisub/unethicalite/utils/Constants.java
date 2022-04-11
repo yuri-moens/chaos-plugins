@@ -604,11 +604,11 @@ public class Constants {
     public static final Supplier<Widget> TOOLS_WITHDRAW_DIBBER_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 9);
     public static final Supplier<Widget> TOOLS_WITHDRAW_SPADE_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 10);
     public static final Supplier<Widget> TOOLS_WITHDRAW_SECATEURS_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 11);
+    public static final Supplier<Widget> TOOLS_WITHDRAW_PLANT_CURE_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 14);
     public static final Supplier<Widget> TOOLS_WITHDRAW_BOTTOMLESS_BUCKET_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 15);
     public static final Supplier<Widget> TOOLS_WITHDRAW_COMPOST_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 17);
     public static final Supplier<Widget> TOOLS_WITHDRAW_SUPERCOMPOST_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 18);
     public static final Supplier<Widget> TOOLS_WITHDRAW_ULTRACOMPOST_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 19);
-    public static final Supplier<Widget> TOOLS_WITHDRAW_PLANT_CURE_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 19); // TODO id
 
     public static final Supplier<Widget> TOOLS_DEPOSIT_DIBBER_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID + 1, 2);
     public static final Supplier<Widget> TOOLS_DEPOSIT_SPADE_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID + 1, 3);
