@@ -3,6 +3,7 @@ package io.reisub.unethicalite.utils;
 import com.google.inject.Provides;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.game.Game;
+import dev.hoot.bot.managers.Static;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.GameState;
 import net.runelite.api.Player;
@@ -43,17 +44,28 @@ public class Utils extends Plugin {
 		return Game.getClient() != null && Game.getState() == GameState.LOGGED_IN;
 	}
 
-	public static boolean isInRegion(int regionId) {
+	public static boolean isInRegion(int... regionIds) {
 		Player player = Players.getLocal();
 
-		return player.getWorldLocation() != null
-				&& player.getWorldLocation().getRegionID() == regionId;
+		if (player.getWorldLocation() == null) {
+			return false;
+		}
+
+		for (int regionId : regionIds) {
+			if (player.getWorldLocation().getRegionID() == regionId) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
-	public static boolean isInMapRegion(int regionId) {
-		for (int id : Game.getClient().getMapRegions()) {
-			if (id == regionId) {
-				return true;
+	public static boolean isInMapRegion(int... regionIds) {
+		for (int id : Static.getClient().getMapRegions()) {
+			for (int regionId : regionIds) {
+				if (id == regionId) {
+					return true;
+				}
 			}
 		}
 
