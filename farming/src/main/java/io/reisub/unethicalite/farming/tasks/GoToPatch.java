@@ -19,7 +19,7 @@ public class GoToPatch extends Task {
 
     @Override
     public String getStatus() {
-        return "Going to " + plugin.getCurrentLocation().name() + " patch";
+        return "Going to " + plugin.getCurrentLocation().getName() + " patch";
     }
 
     @Override

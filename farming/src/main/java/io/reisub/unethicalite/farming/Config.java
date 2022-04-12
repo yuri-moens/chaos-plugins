@@ -257,7 +257,7 @@ public interface Config extends net.runelite.client.config.Config {
 			section = "herbConfig",
 			position = 310
 	)
-	default String herbOrder() { return "Farming Guild\nArdougne\nCatherby\nFalador\nPort Phasmatys\nHosidius\nHarmony Island\nTroll Stronhold\nWeiss"; }
+	default String herbOrder() { return "Farming Guild\nArdougne\nCatherby\nFalador\nPort Phasmatys\nHosidius\nHarmony Island\nTroll Stronghold\nWeiss"; }
 
 	@ConfigItem(
 			keyName = "farmingHotkey",

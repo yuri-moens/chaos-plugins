@@ -96,7 +96,7 @@ public enum Location {
             }
     ),
     PORT_PHASMATYS(
-            "Porty Phasmatys",
+            "Port Phasmatys",
             new WorldPoint(3606, 3531, 0),
             Varbits.FARMING_4774,
             () -> {
