@@ -13,8 +13,9 @@ import net.runelite.client.plugins.PluginDescriptor;
 import org.pf4j.Extension;
 
 import javax.inject.Singleton;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 @PluginDescriptor(
 		name = "Chaos Utils",
@@ -72,8 +73,8 @@ public class Utils extends Plugin {
 		return false;
 	}
 
-	public static Set<String> parseStringList(String list) {
-		Set<String> strings = new HashSet<>();
+	public static SortedSet<String> parseStringList(String list) {
+		SortedSet<String> strings = new TreeSet<>();
 
 		for (String string : list.split("[\\n;,]")) {
 			string = string.split("//")[0].trim();
@@ -83,8 +84,8 @@ public class Utils extends Plugin {
 		return strings;
 	}
 
-	public static Set<Integer> parseIntegerList(String list) {
-		Set<Integer> integers = new HashSet<>();
+	public static SortedSet<Integer> parseIntegerList(String list) {
+		SortedSet<Integer> integers = new TreeSet<>();
 
 		parseStringList(list).forEach(s -> integers.add(Integer.parseInt(s)));
 

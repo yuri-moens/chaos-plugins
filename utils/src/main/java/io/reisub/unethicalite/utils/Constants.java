@@ -616,6 +616,11 @@ public class Constants {
     public static final Supplier<Widget> TOOLS_DEPOSIT_BOTTOMLESS_BUCKET_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID + 1, 8);
     public static final Supplier<Widget> TOOLS_DEPOSIT_BUCKET_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID + 1, 9);
 
+    public static final Set<Integer> CRAFTING_CAPE_IDS = ImmutableSet.of(
+            ItemID.CRAFTING_CAPE,
+            ItemID.CRAFTING_CAPET
+    );
+
     public static final Set<Integer> BANK_OBJECT_IDS = ImmutableSet.of(
             ObjectID.BANK_BOOTH,
             ObjectID.BANK_BOOTH_10083,
