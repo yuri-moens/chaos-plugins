@@ -251,6 +251,15 @@ public interface Config extends net.runelite.client.config.Config {
 	default boolean harmonyHerb() { return false; }
 
 	@ConfigItem(
+			keyName = "herbOrder",
+			name = "Order",
+			description = "Order in which to do the locations. Any enabled location not in this order list will simply be added to the end.",
+			section = "herbConfig",
+			position = 310
+	)
+	default String herbOrder() { return "Farming Guild\nArdougne\nCatherby\nFalador\nPort Phasmatys\nHosidius\nHarmony Island\nTroll Stronhold\nWeiss"; }
+
+	@ConfigItem(
 			keyName = "farmingHotkey",
 			name = "Hotkey",
 			description = "Choose the hotkey to start a farm run",

@@ -25,6 +25,7 @@ import net.runelite.api.widgets.Widget;
 @Getter
 public enum Location {
     ARDOUGNE(
+            "Ardougne",
             new WorldPoint(2670, 3376, 0),
             Varbits.FARMING_4774,
             () -> {
@@ -32,11 +33,13 @@ public enum Location {
             }
     ),
     CATHERBY(
+            "Catherby",
             new WorldPoint(2813, 3465, 0),
             Varbits.FARMING_4774,
             () -> false
     ),
     FALADOR(
+            "Falador",
             new WorldPoint(3058, 3310, 0),
             Varbits.FARMING_4774,
             () -> {
@@ -44,6 +47,7 @@ public enum Location {
             }
     ),
     FARMING_GUILD(
+            "Farming Guild",
             new WorldPoint(1239, 3728, 0),
             Varbits.FARMING_4775,
             () -> {
@@ -66,11 +70,13 @@ public enum Location {
             }
     ),
     HARMONY_ISLAND(
+            "Harmony Island",
             new WorldPoint(3790, 2839, 0),
             Varbits.FARMING_4772,
             () -> Location.tpThroughHouse(37589)
     ),
     HOSIDIUS(
+            "Hosidius",
             new WorldPoint(1740, 3550, 0),
             Varbits.FARMING_4774,
             () -> {
@@ -90,6 +96,7 @@ public enum Location {
             }
     ),
     PORT_PHASMATYS(
+            "Porty Phasmatys",
             new WorldPoint(3606, 3531, 0),
             Varbits.FARMING_4774,
             () -> {
@@ -105,16 +112,19 @@ public enum Location {
             }
     ),
     TROLL_STRONGHOLD(
+            "Troll Stronghold",
             new WorldPoint(2828, 3694, 0),
             Varbits.FARMING_4771,
             () -> Location.tpThroughHouse(33179)
     ),
     WEISS(
+            "Weiss",
             new WorldPoint(2847, 3935, 0),
             Varbits.FARMING_4771,
             () -> Location.tpThroughHouse(37581)
     );
 
+    private final String name;
     private final WorldPoint patchPoint;
     private final Varbits varbit;
     private final Teleportable teleportable;

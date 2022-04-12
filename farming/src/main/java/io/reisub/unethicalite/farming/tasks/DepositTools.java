@@ -8,7 +8,9 @@ import dev.hoot.api.items.Inventory;
 import dev.hoot.api.widgets.Widgets;
 import io.reisub.unethicalite.farming.Farming;
 import io.reisub.unethicalite.utils.Constants;
+import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
+import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 import net.runelite.api.NPC;
 
@@ -57,6 +59,11 @@ public class DepositTools extends Task {
         }
 
         Constants.TOOLS_CLOSE_WIDGET.get().interact("Close");
+
+        Item cape = Inventory.getFirst(Predicates.ids(Constants.CRAFTING_CAPE_IDS));
+        if (cape != null) {
+            cape.interact("Teleport");
+        }
 
         plugin.stop("Finished farm run. Stopping plugin.");
     }

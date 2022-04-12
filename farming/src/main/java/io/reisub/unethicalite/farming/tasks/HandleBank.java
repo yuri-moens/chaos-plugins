@@ -120,6 +120,10 @@ public class HandleBank extends BankTask {
                 }
             }
         }
+
+        if (Bank.contains(ItemID.CRAFTING_CAPE, ItemID.CRAFTING_CAPET)) {
+            Bank.withdraw(dev.hoot.api.commons.Predicates.ids(ItemID.CRAFTING_CAPE, ItemID.CRAFTING_CAPET), 1, Bank.WithdrawMode.ITEM);
+        }
     }
 
     private void withdrawSeeds() {

@@ -79,11 +79,7 @@ public class Farming extends TickScript implements KeyListener {
 	protected void onStart() {
 		super.onStart();
 
-		for (Location location : Location.values()) {
-			if (location.isEnabled(config)) {
-				locationQueue.add(location);
-			}
-		}
+		buildLocationQueue();
 
 		addTask(HandleBank.class);
 		addTask(GoToPatch.class);
@@ -268,6 +264,23 @@ public class Farming extends TickScript implements KeyListener {
 			return null;
 		} else {
 			return patchState.getCropState();
+		}
+	}
+
+	private void buildLocationQueue() {
+		for (String name : Utils.parseStringList(config.herbOrder())) {
+			for (Location location : Location.values()) {
+				if (location.isEnabled(config) && name.equalsIgnoreCase(location.getName())) {
+					locationQueue.add(location);
+					break;
+				}
+			}
+		}
+
+		for (Location location : Location.values()) {
+			if (location.isEnabled(config) && !locationQueue.contains(location)) {
+				locationQueue.add(location);
+			}
 		}
 	}
 }
