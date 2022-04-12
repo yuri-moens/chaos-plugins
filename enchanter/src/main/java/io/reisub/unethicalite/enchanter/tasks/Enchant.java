@@ -23,6 +23,10 @@ public class Enchant extends Task {
 
     @Override
     public boolean validate() {
+        if (!config.spell().getSpell().canCast()) {
+            return false;
+        }
+
         if (config.item() == EnchantItem.ALL) {
             return Inventory.contains(Predicates.ids(EnchantItem.getAllItemsFor(config.spell())));
         } else {
@@ -41,6 +45,10 @@ public class Enchant extends Task {
         }
 
         items.forEach((i) -> {
+            if (!config.spell().getSpell().canCast()) {
+                return;
+            }
+
             Magic.cast(config.spell().getSpell(), i);
             Time.sleepTicks(3);
         });
