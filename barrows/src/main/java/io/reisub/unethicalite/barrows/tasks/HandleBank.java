@@ -4,6 +4,7 @@ import dev.hoot.api.commons.Time;
 import dev.hoot.api.items.Bank;
 import dev.hoot.api.items.Equipment;
 import dev.hoot.api.items.Inventory;
+import dev.hoot.api.widgets.Dialog;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.barrows.Config;
 import io.reisub.unethicalite.utils.Constants;
@@ -134,7 +135,16 @@ public class HandleBank extends BankTask {
             plugin.stop("Not enough runes for 100 trident charges. Stopping plugin.");
         }
 
-        // TODO unequip staff if necessary and charge it, then re-equip
+        Equipment.fromSlot(EquipmentInventorySlot.WEAPON).interact("Remove");
+        Time.sleepTicksUntil(() -> Inventory.contains(Predicates.ids(Constants.TRIDENT_IDS)), 5);
+
+        Inventory.getFirst(ItemID.DEATH_RUNE).useOn(Inventory.getFirst(Predicates.ids(Constants.TRIDENT_IDS)));
+        Time.sleepTicksUntil(Dialog::isEnterInputOpen, 3);
+
+        Dialog.enterInput(99999);
+        Time.sleepTicksUntil(Dialog::canContinue, 10);
+
+        Inventory.getFirst(Predicates.ids(Constants.TRIDENT_IDS)).interact("Wield");
 
         open();
 
