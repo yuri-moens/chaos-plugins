@@ -5,12 +5,15 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum Percentage {
-    WHATEVER(0, 0),
-    DEATH_RUNES(1, 1),
-    MAX_DEATH_RUNES(2, 1),
-    MAX(0, 0);
+public enum Potential {
+    WHATEVER(0, 0, false),
+    DEATH_RUNES(631, 755, false),
+    MAX_DEATH_RUNES(631, 755, true),
+    BLOOD_RUNES(756, 880, false),
+    MAX_BLOOD_RUNES(756, 880, true),
+    MAX(881, 1012, true);
 
-    private final int skeletonsToKill;
-    private final int bloodwormsToKill;
+    private final int minimum;
+    private final int maximum;
+    private final boolean tryMaximum;
 }

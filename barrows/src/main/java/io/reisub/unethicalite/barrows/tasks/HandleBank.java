@@ -7,8 +7,11 @@ import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.barrows.Config;
 import io.reisub.unethicalite.utils.Constants;
+import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.CBank;
+import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.BankTask;
+import net.runelite.api.EquipmentInventorySlot;
 import net.runelite.api.ItemID;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.client.eventbus.Subscribe;
@@ -28,13 +31,16 @@ public class HandleBank extends BankTask {
 
     @Override
     public boolean validate() {
-        return plugin.isInFeroxEnclave()
-                && isLastBankDurationAgo(Duration.ofSeconds(5))
+        return Utils.isInRegion(Barrows.FEROX_ENCLAVE_REGIONS)
+                && isLastBankDurationAgo(Duration.ofSeconds(2))
                 && (
                         !Inventory.contains((i) -> Constants.PRAYER_RESTORE_POTION_IDS.contains(i.getId()))
+                                || (!Inventory.contains(Predicates.ids(Constants.DUELING_RING_IDS)) && !Equipment.contains(Predicates.ids(Constants.DUELING_RING_IDS)))
                                 || Inventory.getCount(config.food()) < config.foodQuantity()
                                 || shouldRechargeStaff
                                 || ibanStaffAlmostEmpty
+                                || Inventory.contains(i -> i.getName().contains("Clue scroll"))
+                                || Inventory.contains(Predicates.ids(Constants.BARROWS_UNDEGRADED_IDS))
                 );
     }
 
@@ -45,12 +51,18 @@ public class HandleBank extends BankTask {
             plugin.stop("Iban staff is almost empty. Stopping plugin.");
         }
 
-        open();
+        if (!open(true)) {
+            return;
+        }
 
         if (shouldRechargeStaff) {
             shouldRechargeStaff = false;
             rechargeStaff();
         }
+
+        Inventory.getAll(Predicates.ids(Constants.BARROWS_UNDEGRADED_IDS)).forEach(i -> Bank.depositAll(i.getId()));
+
+        Inventory.getAll(i -> i.getName().contains("Clue scroll")).forEach(i -> Bank.depositAll(i.getId()));
 
         if (!Inventory.contains((i) -> Constants.PRAYER_RESTORE_POTION_IDS.contains(i.getId()))) {
             if (Bank.contains(ItemID.PRAYER_POTION4)) {
@@ -73,11 +85,19 @@ public class HandleBank extends BankTask {
                 plugin.stop("Out of food. Stopping plugin.");
             }
 
-            if (foodQuantity > 4) {
-                Bank.withdraw(config.food(), foodQuantity, Bank.WithdrawMode.ITEM);
-            } else {
-                for (int i = 0; i < foodQuantity; i++) {
-                    Bank.withdraw(config.food(), 1, Bank.WithdrawMode.ITEM);
+            Bank.withdraw(config.food(), foodQuantity, Bank.WithdrawMode.ITEM);
+        }
+
+        if (!Inventory.contains(Predicates.ids(Constants.DUELING_RING_IDS)) && !Equipment.contains(Predicates.ids(Constants.DUELING_RING_IDS))) {
+            if (!Bank.contains(Predicates.ids(Constants.DUELING_RING_IDS))) {
+                plugin.stop("Out of rings of dueling. Stopping plugin.");
+            }
+
+            Bank.withdraw(Predicates.ids(Constants.DUELING_RING_IDS), 1, Bank.WithdrawMode.ITEM);
+
+            if (Equipment.fromSlot(EquipmentInventorySlot.RING) == null) {
+                if (Time.sleepTicksUntil(() -> Inventory.contains(Predicates.ids(Constants.DUELING_RING_IDS)), 5)) {
+                    Inventory.getFirst(Predicates.ids(Constants.DUELING_RING_IDS)).interact("Wear");
                 }
             }
         }
@@ -85,7 +105,7 @@ public class HandleBank extends BankTask {
 
     @Subscribe
     private void onChatMessage(ChatMessage event) {
-        if (event.getMessage().contains("Your staff has 100 charges left")) {
+        if (event.getMessage().contains("has 100 charges left")) {
             if (Equipment.contains(ItemID.TRIDENT_OF_THE_SEAS_E, ItemID.TRIDENT_OF_THE_SEAS)) {
                 shouldRechargeStaff = true;
             } else if (Equipment.contains(ItemID.IBANS_STAFF, ItemID.IBANS_STAFF_U, ItemID.IBANS_STAFF_1410)) {
@@ -95,13 +115,6 @@ public class HandleBank extends BankTask {
     }
 
     private void rechargeStaff() {
-        if (Bank.getCount(true, ItemID.DEATH_RUNE) <= 100
-                || Bank.getCount(true, ItemID.CHAOS_RUNE) <= 100
-                || Bank.getCount(true, ItemID.FIRE_RUNE) <= 500
-                || Bank.getCount(true, "Coins") <= 1000) {
-            plugin.stop("Not enough runes for 100 trident charges. Stopping plugin.");
-        }
-
         if (Inventory.getFreeSlots() < 5) {
             Bank.depositAll(config.food());
         }
@@ -113,6 +126,13 @@ public class HandleBank extends BankTask {
 
         close();
         Time.sleepTicksUntil(() -> !Bank.isOpen(), 5);
+
+        if (Inventory.getCount(true, ItemID.DEATH_RUNE) <= 100
+                || Inventory.getCount(true, ItemID.CHAOS_RUNE) <= 100
+                || Inventory.getCount(true, ItemID.FIRE_RUNE) <= 500
+                || Inventory.getCount(true, "Coins") <= 1000) {
+            plugin.stop("Not enough runes for 100 trident charges. Stopping plugin.");
+        }
 
         // TODO unequip staff if necessary and charge it, then re-equip
 
