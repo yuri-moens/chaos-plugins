@@ -648,6 +648,14 @@ public class Constants {
             ItemID.VERACS_PLATESKIRT
     );
 
+    public static final Set<Integer> TRIDENT_IDS = ImmutableSet.of(
+            ItemID.TRIDENT_OF_THE_SEAS_E,
+            ItemID.TRIDENT_OF_THE_SEAS,
+            ItemID.TRIDENT_OF_THE_SEAS_FULL,
+            ItemID.TRIDENT_OF_THE_SWAMP_E,
+            ItemID.TRIDENT_OF_THE_SWAMP
+    );
+
     public static final Set<Integer> BANK_OBJECT_IDS = ImmutableSet.of(
             ObjectID.BANK_BOOTH,
             ObjectID.BANK_BOOTH_10083,
