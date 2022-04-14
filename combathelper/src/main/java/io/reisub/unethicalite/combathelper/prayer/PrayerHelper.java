@@ -26,7 +26,6 @@ import net.runelite.api.Hitsplat;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 import net.runelite.api.Player;
-import net.runelite.api.Prayer;
 import net.runelite.api.Projectile;
 import net.runelite.api.ProjectileID;
 import net.runelite.api.Skill;
@@ -47,10 +46,6 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.Subscribe;
-import net.runelite.client.plugins.cerberus.CerberusPlugin;
-import net.runelite.client.plugins.cerberus.domain.Cerberus;
-import net.runelite.client.plugins.cerberus.domain.CerberusAttack;
-import net.runelite.client.plugins.zulrah.ZulrahPlugin;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -68,12 +63,6 @@ import java.util.stream.Collectors;
 public class PrayerHelper extends Helper {
     @Inject
     private InteractionConfig interactionConfig;
-
-    @Inject
-    private ZulrahPlugin zulrahPlugin;
-
-    @Inject
-    private CerberusPlugin cerberusPlugin;
 
     private static final Set<Integer> DEMONIC_PROJECTILES = ImmutableSet.of(ProjectileID.DEMONIC_GORILLA_RANGED, ProjectileID.DEMONIC_GORILLA_MAGIC, ProjectileID.DEMONIC_GORILLA_BOULDER);
     private static final int JALTOK_JAD_MAGE_ATTACK = 7592;
@@ -159,58 +148,6 @@ public class PrayerHelper extends Helper {
             }
         }
 
-        if (config.zulrahPrayerFlick() && !zulrahPlugin.getZulrahData().isEmpty()) {
-            zulrahPlugin.getZulrahData().forEach(data -> {
-                data.getCurrentPhasePrayer().ifPresent(prayer -> {
-                    switch (prayer) {
-                        case PROTECT_FROM_MAGIC:
-                            if (currentOverhead != QuickPrayer.PROTECT_FROM_MAGIC) {
-                                setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
-                            }
-                            break;
-                        case PROTECT_FROM_MISSILES:
-                            if (currentOverhead != QuickPrayer.PROTECT_FROM_MISSILES) {
-                                setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
-                            }
-                            break;
-                    }
-                });
-            });
-        }
-
-        if (config.cerberusPrayerFlick() && cerberusPlugin.getCerberus() != null) {
-            List<CerberusAttack> upcomingAttacks = cerberusPlugin.getUpcomingAttacks();
-            Prayer prayer = null;
-
-            if (upcomingAttacks != null && !upcomingAttacks.isEmpty()) {
-                prayer = upcomingAttacks.get(0).getAttack().getPrayer();
-            }
-
-            if (prayer == null) {
-                prayer = cerberusPlugin.getPrayer();
-            }
-
-            if (prayer != null) {
-                switch (prayer) {
-                    case PROTECT_FROM_MELEE:
-                        if (currentOverhead != QuickPrayer.PROTECT_FROM_MELEE) {
-                            setPrayer(QuickPrayer.PROTECT_FROM_MELEE, false);
-                        }
-                        break;
-                    case PROTECT_FROM_MISSILES:
-                        if (currentOverhead != QuickPrayer.PROTECT_FROM_MISSILES && (cerberusPlugin.getUpcomingAttacks().get(0).getAttack() == Cerberus.Attack.GHOST_RANGED || cerberusPlugin.getCerberus().getLastTripleAttack() != null)) {
-                            setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
-                        }
-                        break;
-                    case PROTECT_FROM_MAGIC:
-                        if (currentOverhead != QuickPrayer.PROTECT_FROM_MAGIC) {
-                            setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
-                        }
-                        break;
-                }
-            }
-        }
-
         if (switchToInventory && !Tabs.isOpen(Tab.INVENTORY)) {
             Tabs.openInterface(Tab.INVENTORY);
             switchToInventory = false;
@@ -281,13 +218,7 @@ public class PrayerHelper extends Helper {
         int level = Skills.getLevel(Skill.PRAYER);
 
         if (config.prayerFlickHotkey().matches(e)) {
-            if (toggleFlicking) {
-                toggledOff = true;
-            } else {
-                firstFlick = true;
-            }
-
-            toggleFlicking = !toggleFlicking;
+            toggleFlicking();
             e.consume();
         } else if (config.hotkeyMelee().matches(e)) {
             setPrayer(QuickPrayer.PROTECT_FROM_MELEE);
@@ -355,6 +286,20 @@ public class PrayerHelper extends Helper {
                 Tabs.openInterface(Tab.INVENTORY);
             }
         }, 0);
+    }
+
+    public void toggleFlicking() {
+        if (toggleFlicking) {
+            toggledOff = true;
+        } else {
+            firstFlick = true;
+        }
+
+        toggleFlicking = !toggleFlicking;
+    }
+
+    public boolean isFlicking() {
+        return toggleFlicking;
     }
 
     public void setPrayer(QuickPrayer quickPrayer) {

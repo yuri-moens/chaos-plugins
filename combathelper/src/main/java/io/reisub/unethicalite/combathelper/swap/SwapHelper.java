@@ -1,19 +1,17 @@
 package io.reisub.unethicalite.combathelper.swap;
 
-import com.openosrs.client.util.WeaponMap;
 import com.openosrs.client.util.WeaponStyle;
 import dev.hoot.api.commons.Rand;
 import dev.hoot.api.entities.NPCs;
+import dev.hoot.api.game.Combat;
 import dev.hoot.api.game.GameThread;
 import dev.hoot.api.game.Skills;
 import dev.hoot.api.game.Vars;
-import dev.hoot.api.items.Equipment;
 import dev.hoot.api.items.Inventory;
 import io.reisub.unethicalite.combathelper.Helper;
 import io.reisub.unethicalite.combathelper.prayer.PrayerHelper;
 import io.reisub.unethicalite.combathelper.prayer.QuickPrayer;
 import io.reisub.unethicalite.utils.Utils;
-import net.runelite.api.EquipmentInventorySlot;
 import net.runelite.api.Item;
 import net.runelite.api.NPC;
 import net.runelite.api.Skill;
@@ -21,7 +19,6 @@ import net.runelite.api.Varbits;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
-import net.runelite.client.plugins.zulrah.ZulrahPlugin;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -34,9 +31,6 @@ import java.util.Set;
 public class SwapHelper extends Helper {
     @Inject
     private PrayerHelper prayerHelper;
-
-    @Inject
-    private ZulrahPlugin zulrahPlugin;
 
     private Set<Integer> meleeIds;
     private Set<String> meleeNames;
@@ -91,10 +85,6 @@ public class SwapHelper extends Helper {
     }
 
     private void tick() {
-        if (config.autoSwapZulrah() && !zulrahPlugin.getZulrahData().isEmpty()) {
-            zulrahSwap();
-        }
-
         if (plugin.getLastTarget() == null || !config.autoSwap()) {
             return;
         }
@@ -108,7 +98,7 @@ public class SwapHelper extends Helper {
 
         if (target == null || target.getComposition().getOverheadIcon() == null) return;
 
-        WeaponStyle currentStyle = getCurrentWeaponStyle();
+        WeaponStyle currentStyle = Combat.getCurrentWeaponStyle();
 
         switch (target.getComposition().getOverheadIcon()) {
             case DEFLECT_MAGE:
@@ -147,7 +137,7 @@ public class SwapHelper extends Helper {
         }
     }
 
-    private void swap(WeaponStyle... styles) {
+    public void swap(boolean offensivePrayers, boolean defensivePrayers, WeaponStyle... styles) {
         for (WeaponStyle style : styles) {
             Set<Integer> ids;
             Set<String> names;
@@ -194,29 +184,29 @@ public class SwapHelper extends Helper {
 
                 switch(style) {
                     case MELEE:
-                        if (config.swapOffensivePrayers()) {
+                        if (offensivePrayers) {
                             prayers.addAll(QuickPrayer.getBestMeleeBuff(level, Vars.getBit(Varbits.CAMELOT_TRAINING_ROOM_STATUS.getId()) == 8));
                         }
 
-                        if (config.swapDefensivePrayers()) {
+                        if (defensivePrayers) {
                             prayers.add(config.meleePrayer().getQuickPrayer());
                         }
                         break;
                     case RANGE:
-                        if (config.swapOffensivePrayers()) {
+                        if (offensivePrayers) {
                             prayers.addAll(QuickPrayer.getBestRangedBuff(level, Vars.getBit(Varbits.RIGOUR_UNLOCKED.getId()) != 0));
                         }
 
-                        if (config.swapDefensivePrayers()) {
+                        if (defensivePrayers) {
                             prayers.add(config.rangedPrayer().getQuickPrayer());
                         }
                         break;
                     case MAGIC:
-                        if (config.swapOffensivePrayers()) {
+                        if (offensivePrayers) {
                             prayers.addAll(QuickPrayer.getBestMagicBuff(level, Vars.getBit(Varbits.AUGURY_UNLOCKED.getId()) != 0));
                         }
 
-                        if (config.swapDefensivePrayers()) {
+                        if (defensivePrayers) {
                             prayers.add(config.magicPrayer().getQuickPrayer());
                         }
                         break;
@@ -235,33 +225,7 @@ public class SwapHelper extends Helper {
         }
     }
 
-    private void zulrahSwap() {
-        WeaponStyle current = getCurrentWeaponStyle();
-
-        zulrahPlugin.getZulrahData().forEach(data -> data.getCurrentPhase().ifPresent(phase -> {
-            switch (phase.getZulrahNpc().getType()) {
-                case MELEE:
-                case RANGE:
-                    if (current != WeaponStyle.MAGIC) {
-                        swap(WeaponStyle.MAGIC);
-                    }
-                    break;
-                case MAGIC:
-                    if (current != WeaponStyle.RANGE) {
-                        swap(WeaponStyle.RANGE);
-                    }
-                    break;
-            }
-        }));
-    }
-
-    private WeaponStyle getCurrentWeaponStyle() {
-        Item weapon = Equipment.fromSlot(EquipmentInventorySlot.WEAPON);
-
-        if (weapon == null) {
-            return WeaponStyle.MELEE;
-        } else {
-            return WeaponMap.StyleMap.get(weapon.getId());
-        }
+    public void swap(WeaponStyle... styles) {
+        swap(config.swapOffensivePrayers(), config.swapDefensivePrayers(), styles);
     }
 }

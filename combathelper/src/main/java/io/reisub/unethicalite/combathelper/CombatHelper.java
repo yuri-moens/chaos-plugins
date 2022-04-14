@@ -6,6 +6,7 @@ import dev.hoot.api.game.Game;
 import dev.hoot.bot.managers.Static;
 import io.reisub.unethicalite.combathelper.alch.AlchHelper;
 import io.reisub.unethicalite.combathelper.bones.BonesHelper;
+import io.reisub.unethicalite.combathelper.boss.BossHelper;
 import io.reisub.unethicalite.combathelper.consume.ConsumeHelper;
 import io.reisub.unethicalite.combathelper.misc.MiscHelper;
 import io.reisub.unethicalite.combathelper.prayer.PrayerHelper;
@@ -28,16 +29,18 @@ import net.runelite.client.plugins.zulrah.ZulrahPlugin;
 import org.pf4j.Extension;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@Singleton
 @PluginDescriptor(
 		name = "Chaos Combat Helper",
 		description = "Various utilities to make combat easier",
-		enabledByDefault = false
+		enabledByDefault = true
 )
 @PluginDependency(ItemStatPlugin.class)
 @PluginDependency(InteractionPlugin.class)
@@ -60,6 +63,14 @@ public class CombatHelper extends Plugin {
 	private ScheduledExecutorService executor;
 	private List<Helper> helpers;
 
+	@Inject
+	@Getter
+	private PrayerHelper prayerHelper;
+
+	@Inject
+	@Getter
+	private SwapHelper swapHelper;
+
 	@Override
 	protected void startUp() {
 		log.info("Starting Chaos Combat Helper");
@@ -67,12 +78,13 @@ public class CombatHelper extends Plugin {
 		executor = Executors.newSingleThreadScheduledExecutor();
 		helpers = new ArrayList<>();
 
-		helpers.add(injector.getInstance(PrayerHelper.class));
+		helpers.add(prayerHelper);
 		helpers.add(injector.getInstance(ConsumeHelper.class));
 		helpers.add(injector.getInstance(BonesHelper.class));
 		helpers.add(injector.getInstance(AlchHelper.class));
-		helpers.add(injector.getInstance(SwapHelper.class));
+		helpers.add(swapHelper);
 		helpers.add(injector.getInstance(MiscHelper.class));
+		helpers.add(injector.getInstance(BossHelper.class));
 
 		for (Helper helper : helpers) {
 			helper.startUp();
@@ -84,7 +96,7 @@ public class CombatHelper extends Plugin {
 
 	@Override
 	protected void shutDown() {
-		log.info("Stopping Chaos Combat Helper");
+		log.info("Stopping Chaos Combat Helper"); // 2c933632
 
 		for (Helper helper : helpers) {
 			Static.getKeyManager().unregisterKeyListener(helper);
