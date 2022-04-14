@@ -621,6 +621,33 @@ public class Constants {
             ItemID.CRAFTING_CAPET
     );
 
+    public static final Set<Integer> BARROWS_UNDEGRADED_IDS = ImmutableSet.of(
+            ItemID.AHRIMS_HOOD,
+            ItemID.AHRIMS_STAFF,
+            ItemID.AHRIMS_ROBETOP,
+            ItemID.AHRIMS_ROBESKIRT,
+            ItemID.DHAROKS_HELM,
+            ItemID.DHAROKS_GREATAXE,
+            ItemID.DHAROKS_PLATEBODY,
+            ItemID.DHAROKS_PLATELEGS,
+            ItemID.GUTHANS_HELM,
+            ItemID.GUTHANS_WARSPEAR,
+            ItemID.GUTHANS_PLATEBODY,
+            ItemID.GUTHANS_CHAINSKIRT,
+            ItemID.KARILS_COIF,
+            ItemID.KARILS_CROSSBOW,
+            ItemID.KARILS_LEATHERTOP,
+            ItemID.KARILS_LEATHERSKIRT,
+            ItemID.TORAGS_HELM,
+            ItemID.TORAGS_HAMMERS,
+            ItemID.TORAGS_PLATEBODY,
+            ItemID.TORAGS_PLATELEGS,
+            ItemID.VERACS_HELM,
+            ItemID.VERACS_FLAIL,
+            ItemID.VERACS_BRASSARD,
+            ItemID.VERACS_PLATESKIRT
+    );
+
     public static final Set<Integer> BANK_OBJECT_IDS = ImmutableSet.of(
             ObjectID.BANK_BOOTH,
             ObjectID.BANK_BOOTH_10083,
