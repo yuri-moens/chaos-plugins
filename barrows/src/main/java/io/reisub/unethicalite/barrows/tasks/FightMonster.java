@@ -5,11 +5,13 @@ import dev.hoot.api.entities.NPCs;
 import dev.hoot.api.entities.Players;
 import dev.hoot.api.game.GameThread;
 import dev.hoot.api.movement.Reachable;
+import dev.hoot.api.widgets.Prayers;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.barrows.Brother;
 import io.reisub.unethicalite.barrows.Config;
 import io.reisub.unethicalite.barrows.Potential;
 import io.reisub.unethicalite.barrows.Room;
+import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.NPC;
@@ -19,6 +21,9 @@ import javax.inject.Inject;
 public class FightMonster extends Task {
     @Inject
     private Barrows plugin;
+
+    @Inject
+    private CombatHelper combatHelper;
 
     @Inject
     private Config config;
@@ -67,6 +72,10 @@ public class FightMonster extends Task {
 
     @Override
     public void execute() {
+        if (!combatHelper.getPrayerHelper().isFlicking() && Prayers.getPoints() > 0) {
+            combatHelper.getPrayerHelper().toggleFlicking();
+        }
+
         GameThread.invoke(() -> target.interact("Attack"));
         Time.sleepTicksUntil(() -> Players.getLocal().getInteracting() != null, 3);
     }
