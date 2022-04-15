@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.TileObjects;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.TileObjects;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ObjectID;

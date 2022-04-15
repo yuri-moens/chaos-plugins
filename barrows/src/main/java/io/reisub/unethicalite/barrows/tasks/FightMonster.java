@@ -1,11 +1,11 @@
 package io.reisub.unethicalite.barrows.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.NPCs;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.game.GameThread;
-import dev.hoot.api.movement.Reachable;
-import dev.hoot.api.widgets.Prayers;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.NPCs;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.game.GameThread;
+import dev.unethicalite.api.movement.Reachable;
+import dev.unethicalite.api.widgets.Prayers;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.barrows.Brother;
 import io.reisub.unethicalite.barrows.Config;

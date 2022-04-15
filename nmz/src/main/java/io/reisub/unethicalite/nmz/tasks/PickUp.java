@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.nmz.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.game.GameThread;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.game.GameThread;
 import io.reisub.unethicalite.nmz.Config;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.Predicates;

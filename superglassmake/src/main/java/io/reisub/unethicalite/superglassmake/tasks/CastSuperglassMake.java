@@ -1,12 +1,12 @@
 package io.reisub.unethicalite.superglassmake.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.entities.TileItems;
-import dev.hoot.api.items.Bank;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.magic.Lunar;
-import dev.hoot.api.magic.Magic;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.entities.TileItems;
+import dev.unethicalite.api.items.Bank;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.magic.Lunar;
+import dev.unethicalite.api.magic.Magic;
 import io.reisub.unethicalite.superglassmake.Config;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ItemID;

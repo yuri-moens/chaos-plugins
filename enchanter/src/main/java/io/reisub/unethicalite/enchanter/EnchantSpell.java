@@ -1,6 +1,6 @@
 package io.reisub.unethicalite.enchanter;
 
-import dev.hoot.api.magic.Regular;
+import dev.unethicalite.api.magic.Regular;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.herblore;
 
 import com.google.inject.Provides;
-import dev.hoot.api.game.Game;
-import dev.hoot.api.items.Inventory;
+import dev.unethicalite.api.game.Game;
+import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.herblore.tasks.Clean;
 import io.reisub.unethicalite.herblore.tasks.HandleBank;
 import io.reisub.unethicalite.herblore.tasks.MakePotion;

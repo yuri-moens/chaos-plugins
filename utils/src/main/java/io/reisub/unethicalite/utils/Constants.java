@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.utils;
 
 import com.google.common.collect.ImmutableSet;
-import dev.hoot.api.widgets.Widgets;
+import dev.unethicalite.api.widgets.Widgets;
 import net.runelite.api.ItemID;
 import net.runelite.api.NpcID;
 import net.runelite.api.NullObjectID;

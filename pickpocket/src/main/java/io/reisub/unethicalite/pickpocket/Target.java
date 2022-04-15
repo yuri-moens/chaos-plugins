@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.pickpocket;
 
 import com.google.common.collect.ImmutableSet;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.game.Skills;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.game.Skills;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Value;

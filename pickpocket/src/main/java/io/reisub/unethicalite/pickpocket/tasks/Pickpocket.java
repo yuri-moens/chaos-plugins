@@ -1,12 +1,12 @@
 package io.reisub.unethicalite.pickpocket.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.NPCs;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.game.GameThread;
-import dev.hoot.api.game.Skills;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.movement.Reachable;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.NPCs;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.game.GameThread;
+import dev.unethicalite.api.game.Skills;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.movement.Reachable;
 import io.reisub.unethicalite.pickpocket.Config;
 import io.reisub.unethicalite.utils.api.CMovement;
 import io.reisub.unethicalite.utils.api.Predicates;

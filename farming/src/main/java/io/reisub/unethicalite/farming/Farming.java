@@ -1,12 +1,12 @@
 package io.reisub.unethicalite.farming;
 
 import com.google.inject.Provides;
-import dev.hoot.api.entities.NPCs;
-import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.game.GameThread;
-import dev.hoot.api.game.Vars;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.bot.managers.Static;
+import dev.unethicalite.api.entities.NPCs;
+import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.game.GameThread;
+import dev.unethicalite.api.game.Vars;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.farming.tasks.Clear;
 import io.reisub.unethicalite.farming.tasks.Cure;
 import io.reisub.unethicalite.farming.tasks.DepositTools;

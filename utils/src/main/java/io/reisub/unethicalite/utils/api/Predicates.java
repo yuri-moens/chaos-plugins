@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.utils.api;
 
-import dev.hoot.api.EntityNameable;
-import dev.hoot.api.Identifiable;
+import dev.unethicalite.api.EntityNameable;
+import dev.unethicalite.api.Identifiable;
 
 import java.util.Collection;
 import java.util.Set;

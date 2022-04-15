@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.mta.tasks;
 
-import dev.hoot.api.game.Combat;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.bot.managers.Static;
+import dev.unethicalite.api.game.Combat;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;

@@ -1,10 +1,10 @@
 package io.reisub.unethicalite.barrows.tasks;
 
 import com.openosrs.client.util.WeaponStyle;
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.game.Combat;
-import dev.hoot.api.items.Inventory;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.game.Combat;
+import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.utils.Utils;

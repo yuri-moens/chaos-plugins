@@ -2,7 +2,7 @@ package io.reisub.unethicalite.chompychomper;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
-import dev.hoot.api.entities.Players;
+import dev.unethicalite.api.entities.Players;
 import io.reisub.unethicalite.chompychomper.tasks.Fill;
 import io.reisub.unethicalite.chompychomper.tasks.Inflate;
 import io.reisub.unethicalite.chompychomper.tasks.Pluck;

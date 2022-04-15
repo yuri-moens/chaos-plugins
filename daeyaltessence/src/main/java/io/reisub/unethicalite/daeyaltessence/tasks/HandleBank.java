@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.daeyaltessence.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.items.Inventory;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.daeyaltessence.Config;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.CBank;

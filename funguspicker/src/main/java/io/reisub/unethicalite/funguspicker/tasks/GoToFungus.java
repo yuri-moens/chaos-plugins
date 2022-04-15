@@ -1,10 +1,10 @@
 package io.reisub.unethicalite.funguspicker.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.widgets.Tab;
-import dev.hoot.api.widgets.Tabs;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.widgets.Tab;
+import dev.unethicalite.api.widgets.Tabs;
 import io.reisub.unethicalite.funguspicker.FungusPicker;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.CMovement;

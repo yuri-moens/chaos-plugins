@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.pickpocket.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.game.Skills;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.bot.managers.Static;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.game.Skills;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.pickpocket.Config;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.Skill;

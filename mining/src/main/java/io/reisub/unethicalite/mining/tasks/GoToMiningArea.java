@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.mining.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.movement.Movement;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.mining.Config;
 import io.reisub.unethicalite.mining.Mining;
 import io.reisub.unethicalite.utils.api.CMovement;

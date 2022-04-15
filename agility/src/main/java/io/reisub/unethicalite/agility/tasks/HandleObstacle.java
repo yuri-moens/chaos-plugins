@@ -1,10 +1,10 @@
 package io.reisub.unethicalite.agility.tasks;
 
 import com.google.common.collect.ImmutableSet;
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.movement.Movement;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.agility.Agility;
 import io.reisub.unethicalite.agility.Config;
 import io.reisub.unethicalite.agility.Course;

@@ -1,12 +1,12 @@
 package io.reisub.unethicalite.shopper.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.game.Game;
-import dev.hoot.api.game.GameThread;
-import dev.hoot.api.game.Worlds;
-import dev.hoot.api.items.Shop;
-import dev.hoot.api.packets.DialogPackets;
-import dev.hoot.bot.managers.Static;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.game.Game;
+import dev.unethicalite.api.game.GameThread;
+import dev.unethicalite.api.game.Worlds;
+import dev.unethicalite.api.items.Shop;
+import dev.unethicalite.api.packets.DialogPackets;
+import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.shopper.Config;
 import io.reisub.unethicalite.shopper.Shopper;
 import io.reisub.unethicalite.utils.tasks.Task;

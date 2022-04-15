@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.zmi.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.widgets.Prayers;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.widgets.Prayers;
 import io.reisub.unethicalite.utils.tasks.Task;
 import io.reisub.unethicalite.zmi.Config;
 import net.runelite.api.ObjectID;

@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.utils.tasks;
 
-import dev.hoot.api.commons.Rand;
-import dev.hoot.api.game.Game;
-import dev.hoot.api.movement.Movement;
+import dev.unethicalite.api.commons.Rand;
+import dev.unethicalite.api.game.Game;
+import dev.unethicalite.api.movement.Movement;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

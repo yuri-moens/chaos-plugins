@@ -1,12 +1,12 @@
 package io.reisub.unethicalite.mta.tasks;
 
 import com.google.common.collect.ImmutableSet;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.game.GameThread;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.magic.Magic;
-import dev.hoot.api.magic.Regular;
-import dev.hoot.bot.managers.Static;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.game.GameThread;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.magic.Magic;
+import dev.unethicalite.api.magic.Regular;
+import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.mta.Mta;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.Predicates;

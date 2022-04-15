@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.enchanter.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.magic.Magic;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.magic.Magic;
 import io.reisub.unethicalite.enchanter.Config;
 import io.reisub.unethicalite.enchanter.EnchantItem;
 import io.reisub.unethicalite.utils.api.Predicates;

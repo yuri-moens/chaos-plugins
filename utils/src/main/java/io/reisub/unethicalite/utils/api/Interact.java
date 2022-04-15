@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.utils.api;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.items.Equipment;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.widgets.Dialog;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.items.Equipment;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.widgets.Dialog;
 import net.runelite.api.Item;
 
 import java.util.Collection;

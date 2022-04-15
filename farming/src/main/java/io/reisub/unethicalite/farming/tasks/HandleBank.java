@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.farming.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.items.Bank;
-import dev.hoot.api.items.Inventory;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.items.Bank;
+import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.farming.Config;
 import io.reisub.unethicalite.farming.Farming;
 import io.reisub.unethicalite.farming.Location;
@@ -48,7 +48,7 @@ public class HandleBank extends BankTask {
                 ItemID.OPEN_HERB_SACK
         );
 
-        Bank.withdraw(dev.hoot.api.commons.Predicates.ids(ItemID.OPEN_HERB_SACK, ItemID.HERB_SACK), 1, Bank.WithdrawMode.ITEM);
+        Bank.withdraw(dev.unethicalite.api.commons.Predicates.ids(ItemID.OPEN_HERB_SACK, ItemID.HERB_SACK), 1, Bank.WithdrawMode.ITEM);
 
         withdrawTeleportItems();
         withdrawSeeds();
@@ -122,7 +122,7 @@ public class HandleBank extends BankTask {
         }
 
         if (Bank.contains(ItemID.CRAFTING_CAPE, ItemID.CRAFTING_CAPET)) {
-            Bank.withdraw(dev.hoot.api.commons.Predicates.ids(ItemID.CRAFTING_CAPE, ItemID.CRAFTING_CAPET), 1, Bank.WithdrawMode.ITEM);
+            Bank.withdraw(dev.unethicalite.api.commons.Predicates.ids(ItemID.CRAFTING_CAPE, ItemID.CRAFTING_CAPET), 1, Bank.WithdrawMode.ITEM);
         }
     }
 

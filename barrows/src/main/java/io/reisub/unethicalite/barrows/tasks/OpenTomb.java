@@ -1,12 +1,12 @@
 package io.reisub.unethicalite.barrows.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.movement.Movement;
-import dev.hoot.api.widgets.Dialog;
-import dev.hoot.api.widgets.DialogOption;
-import dev.hoot.bot.managers.Static;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.movement.Movement;
+import dev.unethicalite.api.widgets.Dialog;
+import dev.unethicalite.api.widgets.DialogOption;
+import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.barrows.Brother;
 import io.reisub.unethicalite.utils.Utils;

@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.mta;
 
 import com.google.inject.Provides;
-import dev.hoot.bot.managers.Static;
+import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.mta.tasks.BonesTo;
 import io.reisub.unethicalite.mta.tasks.EatPeach;
 import io.reisub.unethicalite.mta.tasks.Enchant;

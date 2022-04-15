@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.smithing;
 
 import com.google.inject.Provides;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.items.Inventory;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.smithing.tasks.HandleBank;
 import io.reisub.unethicalite.smithing.tasks.Smith;
 import io.reisub.unethicalite.utils.TickScript;

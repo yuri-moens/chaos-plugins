@@ -1,13 +1,13 @@
 package io.reisub.unethicalite.combathelper.swap;
 
 import com.openosrs.client.util.WeaponStyle;
-import dev.hoot.api.commons.Rand;
-import dev.hoot.api.entities.NPCs;
-import dev.hoot.api.game.Combat;
-import dev.hoot.api.game.GameThread;
-import dev.hoot.api.game.Skills;
-import dev.hoot.api.game.Vars;
-import dev.hoot.api.items.Inventory;
+import dev.unethicalite.api.commons.Rand;
+import dev.unethicalite.api.entities.NPCs;
+import dev.unethicalite.api.game.Combat;
+import dev.unethicalite.api.game.GameThread;
+import dev.unethicalite.api.game.Skills;
+import dev.unethicalite.api.game.Vars;
+import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.combathelper.Helper;
 import io.reisub.unethicalite.combathelper.prayer.PrayerHelper;
 import io.reisub.unethicalite.combathelper.prayer.QuickPrayer;

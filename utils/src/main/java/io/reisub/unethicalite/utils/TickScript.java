@@ -1,11 +1,11 @@
 package io.reisub.unethicalite.utils;
 
-import dev.hoot.api.commons.Rand;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.game.Game;
-import dev.hoot.api.input.Keyboard;
-import dev.hoot.api.utils.MessageUtils;
-import dev.hoot.bot.managers.Static;
+import dev.unethicalite.api.commons.Rand;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.game.Game;
+import dev.unethicalite.api.input.Keyboard;
+import dev.unethicalite.api.utils.MessageUtils;
+import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import lombok.Getter;

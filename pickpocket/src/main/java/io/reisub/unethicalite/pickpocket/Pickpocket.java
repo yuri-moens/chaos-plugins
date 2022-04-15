@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.pickpocket;
 
 import com.google.inject.Provides;
-import dev.hoot.api.entities.Players;
+import dev.unethicalite.api.entities.Players;
 import io.reisub.unethicalite.pickpocket.tasks.Eat;
 import io.reisub.unethicalite.pickpocket.tasks.HandleBank;
 import io.reisub.unethicalite.utils.TickScript;

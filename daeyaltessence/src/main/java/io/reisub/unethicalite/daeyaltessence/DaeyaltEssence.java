@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.daeyaltessence;
 
 import com.google.inject.Provides;
-import dev.hoot.api.entities.Players;
+import dev.unethicalite.api.entities.Players;
 import io.reisub.unethicalite.daeyaltessence.tasks.GoToMine;
 import io.reisub.unethicalite.daeyaltessence.tasks.HandleBank;
 import io.reisub.unethicalite.daeyaltessence.tasks.Mine;

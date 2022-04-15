@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.birdhouse.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.items.Bank;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.widgets.Dialog;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.items.Bank;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.widgets.Dialog;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
 import io.reisub.unethicalite.birdhouse.Config;
 import io.reisub.unethicalite.utils.Constants;

@@ -1,15 +1,15 @@
 package io.reisub.unethicalite.combathelper.alch;
 
-import dev.hoot.api.commons.Rand;
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.game.Game;
-import dev.hoot.api.items.Equipment;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.magic.Magic;
-import dev.hoot.api.magic.Regular;
-import dev.hoot.api.utils.MessageUtils;
-import dev.hoot.api.widgets.Tab;
-import dev.hoot.api.widgets.Tabs;
+import dev.unethicalite.api.commons.Rand;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.game.Game;
+import dev.unethicalite.api.items.Equipment;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.magic.Magic;
+import dev.unethicalite.api.magic.Regular;
+import dev.unethicalite.api.utils.MessageUtils;
+import dev.unethicalite.api.widgets.Tab;
+import dev.unethicalite.api.widgets.Tabs;
 import io.reisub.unethicalite.combathelper.Helper;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;

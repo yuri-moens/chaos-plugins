@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.barrows;
 
 import com.google.common.collect.ImmutableSet;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.movement.Reachable;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.movement.Reachable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

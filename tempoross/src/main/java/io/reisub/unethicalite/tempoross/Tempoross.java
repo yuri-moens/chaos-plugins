@@ -2,11 +2,11 @@ package io.reisub.unethicalite.tempoross;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
-import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.game.Game;
-import dev.hoot.api.game.Vars;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.widgets.Widgets;
+import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.game.Game;
+import dev.unethicalite.api.game.Vars;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.tempoross.tasks.Attack;
 import io.reisub.unethicalite.tempoross.tasks.Cook;
 import io.reisub.unethicalite.tempoross.tasks.DodgeFire;

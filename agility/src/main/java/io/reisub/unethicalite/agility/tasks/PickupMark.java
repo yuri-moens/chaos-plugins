@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.agility.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.entities.TileItems;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.entities.TileItems;
 import io.reisub.unethicalite.agility.Config;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.Skill;

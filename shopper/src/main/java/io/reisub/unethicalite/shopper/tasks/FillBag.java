@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.shopper.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.items.Inventory;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.shopper.Shopper;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ItemID;

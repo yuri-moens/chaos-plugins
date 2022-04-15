@@ -1,12 +1,12 @@
 package io.reisub.unethicalite.utils.api;
 
-import dev.hoot.api.commons.Rand;
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.game.Game;
-import dev.hoot.api.movement.Movement;
-import dev.hoot.api.packets.MovementPackets;
-import dev.hoot.bot.managers.Static;
+import dev.unethicalite.api.commons.Rand;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.game.Game;
+import dev.unethicalite.api.movement.Movement;
+import dev.unethicalite.api.packets.MovementPackets;
+import dev.unethicalite.managers.Static;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.coords.WorldPoint;

@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.shopper.tasks;
 
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.items.Shop;
-import dev.hoot.api.packets.DialogPackets;
-import dev.hoot.bot.managers.Static;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.items.Shop;
+import dev.unethicalite.api.packets.DialogPackets;
+import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.shopper.Config;
 import io.reisub.unethicalite.utils.tasks.Task;
 

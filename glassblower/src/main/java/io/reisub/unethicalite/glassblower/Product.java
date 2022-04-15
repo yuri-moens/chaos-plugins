@@ -1,6 +1,6 @@
 package io.reisub.unethicalite.glassblower;
 
-import dev.hoot.api.game.Skills;
+import dev.unethicalite.api.game.Skills;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.runelite.api.Skill;

@@ -1,10 +1,10 @@
 package io.reisub.unethicalite.smithing.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.widgets.Widgets;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.smithing.Config;
 import io.reisub.unethicalite.smithing.Smithing;
 import io.reisub.unethicalite.utils.Constants;

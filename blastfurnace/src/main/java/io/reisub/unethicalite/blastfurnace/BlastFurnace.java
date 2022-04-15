@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.blastfurnace;
 
 import com.google.inject.Provides;
-import dev.hoot.api.items.Inventory;
+import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.blastfurnace.tasks.DepositMaterials;
 import io.reisub.unethicalite.blastfurnace.tasks.HandleBank;
 import io.reisub.unethicalite.blastfurnace.tasks.TakeBars;

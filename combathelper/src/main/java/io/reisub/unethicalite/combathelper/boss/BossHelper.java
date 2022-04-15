@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.combathelper.boss;
 
 import com.openosrs.client.util.WeaponStyle;
-import dev.hoot.api.game.Combat;
+import dev.unethicalite.api.game.Combat;
 import io.reisub.unethicalite.combathelper.Helper;
 import io.reisub.unethicalite.combathelper.prayer.PrayerHelper;
 import io.reisub.unethicalite.combathelper.prayer.QuickPrayer;

@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.mining.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.magic.Lunar;
-import dev.hoot.api.widgets.Widgets;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.magic.Lunar;
+import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ItemID;
 import net.runelite.api.MenuAction;

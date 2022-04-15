@@ -1,10 +1,10 @@
 package io.reisub.unethicalite.mahoganyhomes.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.magic.Lunar;
-import dev.hoot.api.widgets.Dialog;
-import dev.hoot.api.widgets.DialogOption;
-import dev.hoot.api.widgets.Widgets;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.magic.Lunar;
+import dev.unethicalite.api.widgets.Dialog;
+import dev.unethicalite.api.widgets.DialogOption;
+import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.mahoganyhomes.Config;
 import io.reisub.unethicalite.mahoganyhomes.MahoganyHomes;
 import io.reisub.unethicalite.utils.tasks.Task;

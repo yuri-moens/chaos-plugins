@@ -1,10 +1,10 @@
 package io.reisub.unethicalite.superglassmake.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.entities.TileItems;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.bot.managers.Static;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.entities.TileItems;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.superglassmake.Config;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ItemID;

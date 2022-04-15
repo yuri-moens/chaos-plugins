@@ -1,13 +1,13 @@
 package io.reisub.unethicalite.zmi.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.magic.Lunar;
-import dev.hoot.api.magic.Magic;
-import dev.hoot.api.widgets.Dialog;
-import dev.hoot.api.widgets.DialogOption;
-import dev.hoot.api.widgets.Widgets;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.magic.Lunar;
+import dev.unethicalite.api.magic.Magic;
+import dev.unethicalite.api.widgets.Dialog;
+import dev.unethicalite.api.widgets.DialogOption;
+import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;

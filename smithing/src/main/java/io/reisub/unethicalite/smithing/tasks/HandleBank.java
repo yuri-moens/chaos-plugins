@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.smithing.tasks;
 
-import dev.hoot.api.items.Bank;
-import dev.hoot.api.items.Equipment;
-import dev.hoot.api.items.Inventory;
+import dev.unethicalite.api.items.Bank;
+import dev.unethicalite.api.items.Equipment;
+import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.smithing.Config;
 import io.reisub.unethicalite.smithing.Smithing;
 import io.reisub.unethicalite.utils.api.CBank;

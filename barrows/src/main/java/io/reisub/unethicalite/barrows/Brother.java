@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.barrows;
 
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.game.Vars;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.game.Vars;
 import io.reisub.unethicalite.utils.Utils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

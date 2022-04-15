@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.barrows.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.game.Skills;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.game.Skills;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.tasks.Task;

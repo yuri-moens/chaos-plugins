@@ -1,10 +1,10 @@
 package io.reisub.unethicalite.birdhouse.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.entities.TileItems;
-import dev.hoot.api.game.GameThread;
-import dev.hoot.api.items.Inventory;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.entities.TileItems;
+import dev.unethicalite.api.game.GameThread;
+import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
 import io.reisub.unethicalite.birdhouse.Config;
 import io.reisub.unethicalite.utils.tasks.Task;

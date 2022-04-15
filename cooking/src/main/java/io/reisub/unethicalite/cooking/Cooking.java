@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.cooking;
 
 import com.google.inject.Provides;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.items.Inventory;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.cooking.tasks.Cook;
 import io.reisub.unethicalite.cooking.tasks.Drop;
 import io.reisub.unethicalite.cooking.tasks.HandleBank;

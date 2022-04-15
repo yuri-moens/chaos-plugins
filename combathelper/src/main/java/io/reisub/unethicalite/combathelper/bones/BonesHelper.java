@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.combathelper.bones;
 
-import dev.hoot.api.commons.Rand;
-import dev.hoot.api.items.Inventory;
+import dev.unethicalite.api.commons.Rand;
+import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.combathelper.Helper;
 import net.runelite.api.Item;
 import net.runelite.api.events.ItemContainerChanged;

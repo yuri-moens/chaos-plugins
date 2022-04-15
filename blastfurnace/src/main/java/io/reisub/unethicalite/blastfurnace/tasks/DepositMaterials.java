@@ -1,11 +1,11 @@
 package io.reisub.unethicalite.blastfurnace.tasks;
 
-import dev.hoot.api.commons.Rand;
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.items.Equipment;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.movement.Movement;
+import dev.unethicalite.api.commons.Rand;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.items.Equipment;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.blastfurnace.BlastFurnace;
 import io.reisub.unethicalite.blastfurnace.Config;
 import io.reisub.unethicalite.utils.enums.Activity;

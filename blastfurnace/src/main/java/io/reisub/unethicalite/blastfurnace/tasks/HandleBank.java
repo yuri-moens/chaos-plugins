@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.blastfurnace.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.game.Vars;
-import dev.hoot.api.items.Bank;
-import dev.hoot.api.items.Inventory;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.game.Vars;
+import dev.unethicalite.api.items.Bank;
+import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.blastfurnace.BlastFurnace;
 import io.reisub.unethicalite.blastfurnace.Config;
 import io.reisub.unethicalite.utils.api.CBank;

@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.utils.api;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.items.Bank;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.items.Bank;
 import net.runelite.api.Item;
 
 import java.util.Arrays;

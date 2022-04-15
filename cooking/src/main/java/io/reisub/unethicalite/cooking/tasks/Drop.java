@@ -1,10 +1,10 @@
 package io.reisub.unethicalite.cooking.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.game.Game;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.movement.Movement;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.game.Game;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.cooking.Config;
 import io.reisub.unethicalite.cooking.Cooking;
 import io.reisub.unethicalite.utils.enums.Activity;

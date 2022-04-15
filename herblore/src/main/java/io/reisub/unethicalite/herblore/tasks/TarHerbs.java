@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.herblore.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.widgets.Production;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.widgets.Production;
 import io.reisub.unethicalite.herblore.Herblore;
 import io.reisub.unethicalite.herblore.HerbloreTask;
 import io.reisub.unethicalite.utils.enums.Activity;

@@ -2,7 +2,7 @@ package io.reisub.unethicalite.barrows;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
-import dev.hoot.api.game.Vars;
+import dev.unethicalite.api.game.Vars;
 import io.reisub.unethicalite.barrows.tasks.DrinkPool;
 import io.reisub.unethicalite.barrows.tasks.DrinkPrayerPotion;
 import io.reisub.unethicalite.barrows.tasks.EnterCrypt;

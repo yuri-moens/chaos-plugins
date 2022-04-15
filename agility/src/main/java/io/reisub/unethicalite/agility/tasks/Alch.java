@@ -1,14 +1,14 @@
 package io.reisub.unethicalite.agility.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.game.Vars;
-import dev.hoot.api.items.Equipment;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.magic.Magic;
-import dev.hoot.api.magic.Regular;
-import dev.hoot.api.movement.Movement;
-import dev.hoot.bot.managers.Static;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.game.Vars;
+import dev.unethicalite.api.items.Equipment;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.magic.Magic;
+import dev.unethicalite.api.magic.Regular;
+import dev.unethicalite.api.movement.Movement;
+import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.agility.Agility;
 import io.reisub.unethicalite.agility.Config;
 import io.reisub.unethicalite.utils.api.Predicates;

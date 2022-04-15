@@ -1,15 +1,15 @@
 package io.reisub.unethicalite.birdhouse.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.magic.Ancient;
-import dev.hoot.api.magic.Lunar;
-import dev.hoot.api.magic.Magic;
-import dev.hoot.api.magic.Necromancy;
-import dev.hoot.api.magic.Regular;
-import dev.hoot.api.widgets.Dialog;
-import dev.hoot.api.widgets.Widgets;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.magic.Ancient;
+import dev.unethicalite.api.magic.Lunar;
+import dev.unethicalite.api.magic.Magic;
+import dev.unethicalite.api.magic.Necromancy;
+import dev.unethicalite.api.magic.Regular;
+import dev.unethicalite.api.widgets.Dialog;
+import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
 import io.reisub.unethicalite.birdhouse.Config;
 import io.reisub.unethicalite.birdhouse.TPLocation;

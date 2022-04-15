@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.combathelper;
 
 import com.google.inject.Provides;
-import dev.hoot.api.entities.Players;
-import dev.hoot.api.game.Game;
-import dev.hoot.bot.managers.Static;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.game.Game;
+import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.combathelper.alch.AlchHelper;
 import io.reisub.unethicalite.combathelper.bones.BonesHelper;
 import io.reisub.unethicalite.combathelper.boss.BossHelper;

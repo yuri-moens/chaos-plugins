@@ -1,19 +1,16 @@
 package io.reisub.unethicalite.mining.tasks;
 
 import com.google.common.collect.ImmutableSet;
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.NPCs;
-import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.game.GameThread;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.movement.Movement;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.NPCs;
+import dev.unethicalite.api.game.GameThread;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ItemID;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
-import net.runelite.api.ObjectID;
-import net.runelite.api.TileObject;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.client.eventbus.Subscribe;
 

@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.shopper.tasks;
 
-import dev.hoot.api.items.Bank;
-import dev.hoot.api.items.Inventory;
-import dev.hoot.api.movement.Movement;
+import dev.unethicalite.api.items.Bank;
+import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.shopper.Config;
 import io.reisub.unethicalite.shopper.Shopper;
 import io.reisub.unethicalite.utils.api.CBank;

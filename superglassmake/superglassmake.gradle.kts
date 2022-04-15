@@ -1,4 +1,4 @@
-version = "1.0.2"
+version = "1.0.3"
 
 project.extra["PluginName"] = "Chaos Superglass Make"
 project.extra["PluginDescription"] = "A super Superglass Make caster"

@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.bankpin;
 
 import com.google.inject.Provides;
-import dev.hoot.api.input.Keyboard;
-import dev.hoot.api.widgets.Widgets;
+import dev.unethicalite.api.input.Keyboard;
+import dev.unethicalite.api.widgets.Widgets;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.WidgetClosed;

@@ -1,8 +1,7 @@
 package io.reisub.unethicalite.chompychomper.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.NPCs;
-import dev.hoot.api.game.GameThread;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.game.GameThread;
 import io.reisub.unethicalite.chompychomper.ChompyChomper;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;

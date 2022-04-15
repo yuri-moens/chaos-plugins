@@ -1,6 +1,6 @@
 package io.reisub.unethicalite.birdhouse.tasks;
 
-import dev.hoot.api.entities.Players;
+import dev.unethicalite.api.entities.Players;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.CMovement;

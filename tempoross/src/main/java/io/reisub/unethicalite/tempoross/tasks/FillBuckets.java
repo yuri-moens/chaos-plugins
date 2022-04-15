@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
-import dev.hoot.api.commons.Time;
-import dev.hoot.api.entities.NPCs;
-import dev.hoot.api.entities.TileObjects;
-import dev.hoot.api.items.Inventory;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.NPCs;
+import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;

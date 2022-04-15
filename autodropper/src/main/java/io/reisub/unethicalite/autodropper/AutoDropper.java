@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.autodropper;
 
 import com.google.inject.Provides;
-import dev.hoot.api.game.Game;
-import dev.hoot.api.items.Inventory;
+import dev.unethicalite.api.game.Game;
+import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.GameState;
