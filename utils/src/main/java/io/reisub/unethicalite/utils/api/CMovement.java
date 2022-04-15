@@ -32,15 +32,17 @@ public class CMovement {
     }
 
     public static void walkTo(WorldPoint destination, int radius, Runnable task, int tickTimeout) {
+        walkTo(destination, radius, task, tickTimeout, DESTINATION_DISTANCE);
+    }
+
+    public static void walkTo(WorldPoint destination, int radius, Runnable task, int tickTimeout, int destinationDistance) {
         int start = Game.getClient().getTickCount();
 
         if (radius > 0) {
             destination = destination.dx(Rand.nextInt(-radius, radius + 1)).dy(Rand.nextInt(-radius, radius + 1));
         }
 
-        while (Players.getLocal().distanceTo(destination) > DESTINATION_DISTANCE
-                && Game.getClient().getTickCount() <= start + tickTimeout
-                && (Static.getClient().getGameState() == GameState.LOADING || Static.getClient().getGameState() == GameState.LOGGED_IN)) {
+        do {
             if (!Movement.isWalking() && Static.getClient().getGameState() != GameState.LOADING) {
                 Movement.walkTo(destination);
 
@@ -52,7 +54,9 @@ public class CMovement {
             }
 
             Time.sleepTick();
-        }
+        } while (Players.getLocal().distanceTo(destination) > DESTINATION_DISTANCE
+                && Game.getClient().getTickCount() <= start + tickTimeout
+                && (Static.getClient().getGameState() == GameState.LOADING || Static.getClient().getGameState() == GameState.LOGGED_IN));
     }
 
     public static void sendMovementPacket(WorldPoint worldPoint) {
