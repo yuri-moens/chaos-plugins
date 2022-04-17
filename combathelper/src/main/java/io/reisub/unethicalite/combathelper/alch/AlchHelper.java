@@ -28,10 +28,10 @@ import java.util.function.Predicate;
 @Singleton
 public class AlchHelper extends Helper {
     private final static String FINISHED_TASK_MSG = "You have completed your task!";
-    private static final Varbits[] AMOUNT_VARBITS = {
+    private static final int[] AMOUNT_VARBITS = {
             Varbits.RUNE_POUCH_AMOUNT1, Varbits.RUNE_POUCH_AMOUNT2, Varbits.RUNE_POUCH_AMOUNT3
     };
-    private static final Varbits[] RUNE_VARBITS = {
+    private static final int[] RUNE_VARBITS = {
             Varbits.RUNE_POUCH_RUNE1, Varbits.RUNE_POUCH_RUNE2, Varbits.RUNE_POUCH_RUNE3
     };
 

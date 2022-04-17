@@ -185,7 +185,7 @@ public class SwapHelper extends Helper {
                 switch(style) {
                     case MELEE:
                         if (offensivePrayers) {
-                            prayers.addAll(QuickPrayer.getBestMeleeBuff(level, Vars.getBit(Varbits.CAMELOT_TRAINING_ROOM_STATUS.getId()) == 8));
+                            prayers.addAll(QuickPrayer.getBestMeleeBuff(level, Vars.getBit(Varbits.CAMELOT_TRAINING_ROOM_STATUS) == 8));
                         }
 
                         if (defensivePrayers) {
@@ -194,7 +194,7 @@ public class SwapHelper extends Helper {
                         break;
                     case RANGE:
                         if (offensivePrayers) {
-                            prayers.addAll(QuickPrayer.getBestRangedBuff(level, Vars.getBit(Varbits.RIGOUR_UNLOCKED.getId()) != 0));
+                            prayers.addAll(QuickPrayer.getBestRangedBuff(level, Vars.getBit(Varbits.RIGOUR_UNLOCKED) != 0));
                         }
 
                         if (defensivePrayers) {
@@ -203,7 +203,7 @@ public class SwapHelper extends Helper {
                         break;
                     case MAGIC:
                         if (offensivePrayers) {
-                            prayers.addAll(QuickPrayer.getBestMagicBuff(level, Vars.getBit(Varbits.AUGURY_UNLOCKED.getId()) != 0));
+                            prayers.addAll(QuickPrayer.getBestMagicBuff(level, Vars.getBit(Varbits.AUGURY_UNLOCKED) != 0));
                         }
 
                         if (defensivePrayers) {

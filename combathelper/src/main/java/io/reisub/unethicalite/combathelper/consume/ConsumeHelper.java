@@ -307,7 +307,7 @@ public class ConsumeHelper extends Helper {
                 shouldUseSpecial = false;
             }
 
-            if (Vars.getBit(Varbits.PVP_SPEC_ORB.getId()) == 0 && shouldUseSpecial) {
+            if (Vars.getBit(Varbits.PVP_SPEC_ORB) == 0 && shouldUseSpecial) {
                 Combat.toggleSpec();
             }
 

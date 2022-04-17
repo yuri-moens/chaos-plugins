@@ -230,13 +230,13 @@ public class PrayerHelper extends Helper {
             setPrayer(QuickPrayer.PROTECT_FROM_MAGIC);
             e.consume();
         } else if (config.hotkeyMeleeBuff().matches(e)) {
-            setPrayers(QuickPrayer.getBestMeleeBuff(level, Vars.getBit(Varbits.CAMELOT_TRAINING_ROOM_STATUS.getId()) == 8));
+            setPrayers(QuickPrayer.getBestMeleeBuff(level, Vars.getBit(Varbits.CAMELOT_TRAINING_ROOM_STATUS) == 8));
             e.consume();
         } else if (config.hotkeyRangedBuff().matches(e)) {
-            setPrayers(QuickPrayer.getBestRangedBuff(level, Vars.getBit(Varbits.RIGOUR_UNLOCKED.getId()) != 0));
+            setPrayers(QuickPrayer.getBestRangedBuff(level, Vars.getBit(Varbits.RIGOUR_UNLOCKED) != 0));
             e.consume();
         } else if (config.hotkeyMagicBuff().matches(e)) {
-            setPrayers(QuickPrayer.getBestMagicBuff(level, Vars.getBit(Varbits.AUGURY_UNLOCKED.getId()) != 0));
+            setPrayers(QuickPrayer.getBestMagicBuff(level, Vars.getBit(Varbits.AUGURY_UNLOCKED) != 0));
             e.consume();
         }
     }
