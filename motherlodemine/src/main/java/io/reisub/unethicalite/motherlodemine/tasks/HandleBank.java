@@ -35,6 +35,6 @@ public class HandleBank extends BankTask {
     public void execute() {
         open();
 
-        CBank.depositAllExcept(false, ItemID.HAMMER, ItemID.GOLDEN_NUGGET);
+        CBank.depositAllExcept(false, ItemID.IMCANDO_HAMMER, ItemID.HAMMER, ItemID.GOLDEN_NUGGET);
     }
 }
