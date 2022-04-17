@@ -36,6 +36,7 @@ public class DrinkPrayerPotion extends Task {
         Brother current = plugin.getCurrentBrother();
 
         return Prayers.getPoints() == 0
+                && Inventory.contains(Predicates.ids(Constants.PRAYER_RESTORE_POTION_IDS))
                 && (prayerDrainTimer != null && prayerDrainTimer.getDuration().toMillis() > 4000)
                 && (current == Brother.DHAROK || current == Brother.AHRIM || current == Brother.KARIL)
                 && Static.getClient().getHintArrowNpc() != null
