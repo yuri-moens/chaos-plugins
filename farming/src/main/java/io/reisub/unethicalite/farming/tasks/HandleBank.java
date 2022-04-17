@@ -39,6 +39,7 @@ public class HandleBank extends BankTask {
         open(true);
 
         CBank.depositAllExcept(
+                false,
                 ItemID.SEED_DIBBER,
                 ItemID.SPADE,
                 ItemID.MAGIC_SECATEURS,

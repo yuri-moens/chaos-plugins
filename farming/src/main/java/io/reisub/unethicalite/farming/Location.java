@@ -126,7 +126,7 @@ public enum Location {
 
     private final String name;
     private final WorldPoint patchPoint;
-    private final Varbits varbit;
+    private final int varbit;
     private final Teleportable teleportable;
 
     @Setter
