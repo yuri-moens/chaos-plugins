@@ -13,6 +13,7 @@ import net.runelite.client.plugins.PluginDescriptor;
 import org.pf4j.Extension;
 
 import javax.inject.Singleton;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -60,6 +61,10 @@ public class Utils extends Plugin {
 		return false;
 	}
 
+	public static boolean isInRegion(Collection<Integer> regionIds) {
+		return isInRegion(regionIds.stream().mapToInt(i -> i).toArray());
+	}
+
 	public static boolean isInMapRegion(int... regionIds) {
 		for (int id : Static.getClient().getMapRegions()) {
 			for (int regionId : regionIds) {
@@ -70,6 +75,10 @@ public class Utils extends Plugin {
 		}
 
 		return false;
+	}
+
+	public static boolean isInMapRegion(Collection<Integer> regionIds) {
+		return isInMapRegion(regionIds.stream().mapToInt(i -> i).toArray());
 	}
 
 	public static Set<String> parseStringList(String list) {
