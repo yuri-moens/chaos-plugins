@@ -2,6 +2,7 @@ package io.reisub.unethicalite.barrows.tasks;
 
 import com.openosrs.client.util.WeaponStyle;
 import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.coords.RectangularArea;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.game.Combat;
 import dev.unethicalite.api.items.Inventory;
@@ -11,7 +12,7 @@ import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.CMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ItemID;
-import net.runelite.api.coords.WorldArea;
+import net.runelite.api.coords.WorldPoint;
 
 import javax.inject.Inject;
 
@@ -35,10 +36,11 @@ public class EnterCrypt extends Task {
 
     @Override
     public void execute() {
-        WorldArea digArea = plugin.getCurrentBrother().getLocation()
+        WorldPoint digAreaPoint = plugin.getCurrentBrother().getLocation()
                 .dx(-1)
-                .dy(-1)
-                .createWorldArea(3, 3);
+                .dy(-1);
+
+        RectangularArea digArea = new RectangularArea(digAreaPoint, 3, 3);
 
         if (digArea.contains(Players.getLocal())) {
             Inventory.getFirst(ItemID.SPADE).interact(0);

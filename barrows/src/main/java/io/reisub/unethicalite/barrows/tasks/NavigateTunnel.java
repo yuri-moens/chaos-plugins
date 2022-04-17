@@ -106,8 +106,6 @@ public class NavigateTunnel extends Task {
                 Time.sleepTicksUntil(() -> Room.isInCorridor() || !Players.getLocal().isMoving(), 30);
             }
         }
-
-        Time.sleepTick();
     }
 
     public TileObject getDoor() {

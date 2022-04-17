@@ -1,16 +1,15 @@
 package io.reisub.unethicalite.barrows;
 
 import com.google.common.collect.ImmutableSet;
+import dev.unethicalite.api.coords.RectangularArea;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.movement.Reachable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.runelite.api.NullObjectID;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
-import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
 
 import java.util.LinkedList;
@@ -20,15 +19,15 @@ import java.util.function.Predicate;
 
 @RequiredArgsConstructor
 public enum Room {
-    SW(new WorldArea(3528, 9671, 13, 13, 0)),
-    W(new WorldArea(3528, 9688, 13, 13, 0)),
-    NW(new WorldArea(3528, 9705, 13, 13, 0)),
-    N(new WorldArea(3545, 9705, 13, 13, 0)),
-    NE(new WorldArea(3562, 9705, 13, 13, 0)),
-    E(new WorldArea(3562, 9688, 13, 13, 0)),
-    SE(new WorldArea(3562, 9671, 13, 13, 0)),
-    S(new WorldArea(3545, 9671, 13, 13, 0)),
-    C(new WorldArea(3545, 9688, 13, 13, 0));
+    SW(new RectangularArea(new WorldPoint(3529, 9672, 0), 11, 11)),
+    W(new RectangularArea(new WorldPoint(3529, 9689, 0), 11, 11)),
+    NW(new RectangularArea(new WorldPoint(3529, 9706, 0), 11, 11)),
+    N(new RectangularArea(new WorldPoint(3546, 9706, 0), 11, 11)),
+    NE(new RectangularArea(new WorldPoint(3563, 9706, 0), 11, 11)),
+    E(new RectangularArea(new WorldPoint(3563, 9689, 0), 11, 11)),
+    SE(new RectangularArea(new WorldPoint(3563, 9672, 0), 11, 11)),
+    S(new RectangularArea(new WorldPoint(3546, 9672, 0), 11, 11)),
+    C(new RectangularArea(new WorldPoint(3546, 9689, 0), 11, 11));
 
     static {
         for (Room room : Room.values()) {
@@ -103,7 +102,7 @@ public enum Room {
             && object.hasAction("Open");
 
     @Getter
-    private final WorldArea area;
+    private final RectangularArea area;
 
     @Getter
     @Setter
@@ -257,17 +256,7 @@ public enum Room {
     }
 
     public static boolean isInCorridor() {
-        Room current = getCurrentRoom();
-        if (current == null) {
-            return true;
-        }
-
-        WorldPoint center = current.area.getCenter();
-        while (Reachable.getCollisionFlag(center) > 0) {
-            center = center.dy(-1);
-        }
-
-        return !Reachable.isWalkable(center);
+        return getCurrentRoom() == null;
     }
 
     private TileObject getNearestDoor(WorldPoint location1, WorldPoint location2) {
@@ -277,29 +266,29 @@ public enum Room {
     }
 
     public TileObject getNorthDoor() {
-        WorldPoint location1 = new WorldPoint(area.getX() + 6, area.getY() + 13, area.getPlane());
-        WorldPoint location2 = new WorldPoint(area.getX() + 7, area.getY() + 13, area.getPlane());
+        WorldPoint location1 = new WorldPoint(area.getMinX() + 5, area.getMinY() + 12, area.getPlane());
+        WorldPoint location2 = new WorldPoint(area.getMinX() + 6, area.getMinY() + 12, area.getPlane());
 
         return getNearestDoor(location1, location2);
     }
 
     public TileObject getEastDoor() {
-        WorldPoint location1 = new WorldPoint(area.getX() + 13, area.getY() + 6, area.getPlane());
-        WorldPoint location2 = new WorldPoint(area.getX() + 13, area.getY() + 7, area.getPlane());
+        WorldPoint location1 = new WorldPoint(area.getMinX() + 12, area.getMinY() + 5, area.getPlane());
+        WorldPoint location2 = new WorldPoint(area.getMinX() + 12, area.getMinY() + 6, area.getPlane());
 
         return getNearestDoor(location1, location2);
     }
 
     public TileObject getSouthDoor() {
-        WorldPoint location1 = new WorldPoint(area.getX() + 6, area.getY(), area.getPlane());
-        WorldPoint location2 = new WorldPoint(area.getX() + 7, area.getY(), area.getPlane());
+        WorldPoint location1 = new WorldPoint(area.getMinX() + 5, area.getMinY() - 1, area.getPlane());
+        WorldPoint location2 = new WorldPoint(area.getMinX() + 6, area.getMinY() - 1, area.getPlane());
 
         return getNearestDoor(location1, location2);
     }
 
     public TileObject getWestDoor() {
-        WorldPoint location1 = new WorldPoint(area.getX(), area.getY() + 6, area.getPlane());
-        WorldPoint location2 = new WorldPoint(area.getX(), area.getY() + 7, area.getPlane());
+        WorldPoint location1 = new WorldPoint(area.getMinX() - 1, area.getMinY() + 5, area.getPlane());
+        WorldPoint location2 = new WorldPoint(area.getMinX() - 1, area.getMinY() + 6, area.getPlane());
 
         return getNearestDoor(location1, location2);
     }
