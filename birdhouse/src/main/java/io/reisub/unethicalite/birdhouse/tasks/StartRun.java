@@ -53,8 +53,19 @@ public class StartRun extends BankTask {
                 break;
         }
 
+        if (Bank.contains(Predicates.ids(Constants.GRACEFUL_GLOVES))) {
+            Bank.withdraw(Predicates.ids(Constants.GRACEFUL_CAPE), 1, Bank.WithdrawMode.ITEM);
+            Bank.withdraw(Predicates.ids(Constants.GRACEFUL_BOOTS), 1, Bank.WithdrawMode.ITEM);
+            Bank.withdraw(Predicates.ids(Constants.GRACEFUL_GLOVES), 1, Bank.WithdrawMode.ITEM);
+            Bank.withdraw(Predicates.ids(Constants.GRACEFUL_HOOD), 1, Bank.WithdrawMode.ITEM);
+            Bank.withdraw(Predicates.ids(Constants.GRACEFUL_TOP), 1, Bank.WithdrawMode.ITEM);
+            Bank.withdraw(Predicates.ids(Constants.GRACEFUL_LEGS), 1, Bank.WithdrawMode.ITEM);
+        }
+
         close();
         Time.sleepTicksUntil(() -> !Bank.isOpen(), 5);
+
+        Inventory.getAll(i -> i.getName().startsWith("Graceful")).forEach(i -> i.interact("Wear"));
 
         Item pendant = Inventory.getFirst(Predicates.ids(Constants.DIGSITE_PENDANT_IDS));
         if (pendant == null) {
