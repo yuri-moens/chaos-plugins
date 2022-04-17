@@ -1,6 +1,7 @@
 package io.reisub.unethicalite.motherlodemine.tasks;
 
 import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.coords.RectangularArea;
 import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.items.Inventory;
@@ -8,7 +9,6 @@ import io.reisub.unethicalite.motherlodemine.MotherlodeMine;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.TileObject;
-import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.eventbus.Subscribe;
@@ -19,9 +19,9 @@ public class Mine extends Task {
     @Inject
     private MotherlodeMine plugin;
 
-    private static final WorldArea MINING_AREA = new WorldArea(
+    private static final RectangularArea MINING_AREA = new RectangularArea(
             new WorldPoint(3747, 5676, 0),
-            new WorldPoint(3755, 5685, 0)
+            new WorldPoint(3754, 5684, 0)
     );
 
     private TileObject oreVein;
@@ -57,11 +57,15 @@ public class Mine extends Task {
 
     @Subscribe
     private void onGameTick(GameTick event) {
-        if (oreVein != null && plugin.getCurrentActivity() == Activity.MINING) {
-            TileObject oreVeinCheck = TileObjects.getFirstAt(oreVein.getWorldLocation(), o -> o.hasAction("Mine"));
-            if (oreVeinCheck == null) {
-                oreVein = null;
+        if (plugin.isRunning() && plugin.getCurrentActivity() == Activity.MINING) {
+            if (oreVein == null) {
                 plugin.setActivity(Activity.IDLE);
+            } else {
+                TileObject oreVeinCheck = TileObjects.getFirstAt(oreVein.getWorldLocation(), o -> o.hasAction("Mine"));
+                if (oreVeinCheck == null) {
+                    oreVein = null;
+                    plugin.setActivity(Activity.IDLE);
+                }
             }
         }
     }
