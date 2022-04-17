@@ -53,6 +53,7 @@ public class MotherlodeMine extends TickScript {
 	}
 
 	private static final Set<Integer> MOTHERLODE_MAP_REGIONS = ImmutableSet.of(14679, 14680, 14681, 14935, 14936, 14937, 15191, 15192, 15193);
+	private static final int UPSTAIRS_VARBIT = 2086;
 	private static final int SACK_LARGE_SIZE = 162;
 	private static final int SACK_SIZE = 81;
 
@@ -148,7 +149,7 @@ public class MotherlodeMine extends TickScript {
 	}
 
 	public boolean isUpstairs() {
-		return Vars.getBit(2086) == 1;
+		return Vars.getBit(UPSTAIRS_VARBIT) == 1;
 	}
 
 	private boolean inMlm() {
