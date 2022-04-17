@@ -7,7 +7,6 @@ import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.movement.Reachable;
 import dev.unethicalite.api.widgets.Prayers;
 import io.reisub.unethicalite.barrows.Barrows;
-import io.reisub.unethicalite.barrows.Brother;
 import io.reisub.unethicalite.barrows.Config;
 import io.reisub.unethicalite.barrows.Potential;
 import io.reisub.unethicalite.barrows.Room;
@@ -49,7 +48,7 @@ public class FightMonster extends Task {
             return false;
         }
 
-        int potential = getPotentialWithLastBrother();
+        int potential = plugin.getPotentialWithLastBrother();
 
         if (Room.getCurrentRoom() == Room.C && potential < config.potential().getMinimum()) {
             target = NPCs.getNearest(n -> n.hasAction("Attack") && Reachable.isInteractable(n));
@@ -78,23 +77,5 @@ public class FightMonster extends Task {
 
         GameThread.invoke(() -> target.interact("Attack"));
         Time.sleepTicksUntil(() -> Players.getLocal().getInteracting() != null, 3);
-    }
-
-    private int getPotentialWithLastBrother() {
-        int potentional = plugin.getRewardPotential();
-
-        for (Brother brother : Brother.values()) {
-            if (!brother.isDead()) {
-                switch (plugin.getCurrentBrother()) {
-                    case KARIL:
-                    case AHRIM:
-                        return plugin.getRewardPotential() + 100;
-                    default:
-                        return plugin.getRewardPotential() + 117;
-                }
-            }
-        }
-
-        return potentional;
     }
 }

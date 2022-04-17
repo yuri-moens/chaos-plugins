@@ -270,28 +270,38 @@ public enum Room {
         return !Reachable.isWalkable(center);
     }
 
-    public TileObject getNorthDoor() {
-        WorldPoint door = new WorldPoint(area.getX() + 6, area.getY() + 13, area.getPlane());
+    private TileObject getNearestDoor(WorldPoint location1, WorldPoint location2) {
+        WorldPoint nearest = Players.getLocal().getWorldLocation().distanceToHypotenuse(location1) < Players.getLocal().getWorldLocation().distanceToHypotenuse(location2) ? location1 : location2;
 
-        return TileObjects.getFirstAt(door, DOOR_PREDICATE);
+        return TileObjects.getFirstAt(nearest, DOOR_PREDICATE);
+    }
+
+    public TileObject getNorthDoor() {
+        WorldPoint location1 = new WorldPoint(area.getX() + 6, area.getY() + 13, area.getPlane());
+        WorldPoint location2 = new WorldPoint(area.getX() + 7, area.getY() + 13, area.getPlane());
+
+        return getNearestDoor(location1, location2);
     }
 
     public TileObject getEastDoor() {
-        WorldPoint door = new WorldPoint(area.getX() + 13, area.getY() + 6, area.getPlane());
+        WorldPoint location1 = new WorldPoint(area.getX() + 13, area.getY() + 6, area.getPlane());
+        WorldPoint location2 = new WorldPoint(area.getX() + 13, area.getY() + 7, area.getPlane());
 
-        return TileObjects.getFirstAt(door, DOOR_PREDICATE);
+        return getNearestDoor(location1, location2);
     }
 
     public TileObject getSouthDoor() {
-        WorldPoint door = new WorldPoint(area.getX() + 6, area.getY(), area.getPlane());
+        WorldPoint location1 = new WorldPoint(area.getX() + 6, area.getY(), area.getPlane());
+        WorldPoint location2 = new WorldPoint(area.getX() + 7, area.getY(), area.getPlane());
 
-        return TileObjects.getFirstAt(door, DOOR_PREDICATE);
+        return getNearestDoor(location1, location2);
     }
 
     public TileObject getWestDoor() {
-        WorldPoint door = new WorldPoint(area.getX(), area.getY() + 6, area.getPlane());
+        WorldPoint location1 = new WorldPoint(area.getX(), area.getY() + 6, area.getPlane());
+        WorldPoint location2 = new WorldPoint(area.getX(), area.getY() + 7, area.getPlane());
 
-        return TileObjects.getFirstAt(door, DOOR_PREDICATE);
+        return getNearestDoor(location1, location2);
     }
 
     private boolean canGoNorth() {

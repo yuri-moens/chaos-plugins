@@ -168,14 +168,22 @@ public class Barrows extends TickScript {
 		buildKillOrder();
 	}
 
-	public int getRewardPotential() {
-		int potential = 0;
+	public int getPotentialWithLastBrother() {
+		int potentional = getRewardPotential();
 
 		for (Brother brother : Brother.values()) {
-			potential += Vars.getBit(brother.getKilledVarbit());
+			if (!brother.isDead()) {
+				switch (getCurrentBrother()) {
+					case KARIL:
+					case AHRIM:
+						return getRewardPotential() + 100;
+					default:
+						return getRewardPotential() + 117;
+				}
+			}
 		}
 
-		return potential * 2 + Vars.getBit(Varbits.BARROWS_REWARD_POTENTIAL);
+		return potentional;
 	}
 
 	private void buildKillOrder() {
@@ -188,4 +196,13 @@ public class Barrows extends TickScript {
 		}
 	}
 
+	private int getRewardPotential() {
+		int potential = 0;
+
+		for (Brother brother : Brother.values()) {
+			potential += Vars.getBit(brother.getKilledVarbit());
+		}
+
+		return potential * 2 + Vars.getBit(Varbits.BARROWS_REWARD_POTENTIAL);
+	}
 }

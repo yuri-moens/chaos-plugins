@@ -2,16 +2,20 @@ package io.reisub.unethicalite.barrows.tasks;
 
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.widgets.Widgets;
 import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.barrows.Barrows;
+import io.reisub.unethicalite.barrows.Config;
 import io.reisub.unethicalite.barrows.Room;
 import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.TileObject;
+import net.runelite.api.events.ChatMessage;
 import net.runelite.api.widgets.WidgetInfo;
+import net.runelite.client.eventbus.Subscribe;
 
 import javax.inject.Inject;
 import java.util.Queue;
@@ -21,10 +25,14 @@ public class NavigateTunnel extends Task {
     private Barrows plugin;
 
     @Inject
+    private Config config;
+
+    @Inject
     private CombatHelper combatHelper;
 
     private Room navigatingFrom;
     private Room navigatingTo;
+    private boolean stuck;
 
     @Override
     public String getStatus() {
@@ -43,7 +51,6 @@ public class NavigateTunnel extends Task {
             return false;
         }
 
-
         if (plugin.getTunnelPath() == null || plugin.getTunnelPath().isEmpty()) {
             Queue<Room> path = Room.findPath();
             plugin.setTunnelPath(path);
@@ -54,8 +61,6 @@ public class NavigateTunnel extends Task {
             if (plugin.getTunnelPath().isEmpty()) {
                 return false;
             }
-
-            System.out.println(plugin.getTunnelPath());
         }
 
         if (navigatingFrom == null || navigatingTo == current) {
@@ -63,8 +68,8 @@ public class NavigateTunnel extends Task {
             navigatingTo = plugin.getTunnelPath().peek();
         }
 
-        return Static.getClient().getHintArrowNpc() == null
-                && Players.getLocal().getInteracting() == null
+        return (Static.getClient().getHintArrowNpc() == null || Static.getClient().getHintArrowNpc().isDead())
+                && (Players.getLocal().getInteracting() == null || Players.getLocal().getInteracting().isDead() || plugin.getPotentialWithLastBrother() > config.potential().getMaximum())
                 && navigatingTo != null;
     }
 
@@ -79,15 +84,26 @@ public class NavigateTunnel extends Task {
             return;
         }
 
-        GameThread.invoke(() -> door.interact("Open"));
+        if (stuck) {
+            door = TileObjects.getNearest(Room.DOOR_PREDICATE);
+            stuck = false;
+        }
+
+        final TileObject finalDoor = door;
+
+        GameThread.invoke(() -> finalDoor.interact("Open"));
+
+        if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 3)) {
+            return;
+        }
 
         if (Room.isInCorridor()) {
-            Time.sleepTicksUntil(() -> Room.getCurrentRoom() == navigatingTo, 20);
+            Time.sleepTicksUntil(() -> Room.getCurrentRoom() == navigatingTo || !Players.getLocal().isMoving(), 30);
         } else {
             if (navigatingTo == Room.C) {
-                Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetInfo.BARROWS_FIRST_PUZZLE)), 20);
+                Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetInfo.BARROWS_FIRST_PUZZLE)) || !Players.getLocal().isMoving(), 30);
             } else {
-                Time.sleepTicksUntil(Room::isInCorridor, 20);
+                Time.sleepTicksUntil(() -> Room.isInCorridor() || !Players.getLocal().isMoving(), 30);
             }
         }
 
@@ -117,5 +133,12 @@ public class NavigateTunnel extends Task {
         }
 
         return null;
+    }
+
+    @Subscribe
+    private void onChatMessage(ChatMessage event) {
+        if (plugin.isRunning() && event.getMessage().contains("I can't reach that!")) {
+            stuck = true;
+        }
     }
 }

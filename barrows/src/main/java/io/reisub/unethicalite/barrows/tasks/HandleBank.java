@@ -87,6 +87,7 @@ public class HandleBank extends BankTask {
             }
 
             Bank.withdraw(config.food(), foodQuantity, Bank.WithdrawMode.ITEM);
+            Time.sleepTicksUntil(() -> Inventory.getCount(config.food()) >= config.foodQuantity(), 3);
         }
 
         if (!Inventory.contains(Predicates.ids(Constants.DUELING_RING_IDS)) && !Equipment.contains(Predicates.ids(Constants.DUELING_RING_IDS))) {
@@ -97,7 +98,7 @@ public class HandleBank extends BankTask {
             Bank.withdraw(Predicates.ids(Constants.DUELING_RING_IDS), 1, Bank.WithdrawMode.ITEM);
 
             if (Equipment.fromSlot(EquipmentInventorySlot.RING) == null) {
-                if (Time.sleepTicksUntil(() -> Inventory.contains(Predicates.ids(Constants.DUELING_RING_IDS)), 5)) {
+                if (Time.sleepTicksUntil(() -> Inventory.contains(Predicates.ids(Constants.DUELING_RING_IDS)), 3)) {
                     Inventory.getFirst(Predicates.ids(Constants.DUELING_RING_IDS)).interact("Wear");
                 }
             }

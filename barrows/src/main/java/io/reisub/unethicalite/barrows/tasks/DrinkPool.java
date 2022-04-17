@@ -2,6 +2,7 @@ package io.reisub.unethicalite.barrows.tasks;
 
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.game.Skills;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.utils.Utils;
@@ -28,7 +29,7 @@ public class DrinkPool extends Task {
 
     @Override
     public void execute() {
-        pool.interact("Drink");
+        GameThread.invoke(() -> pool.interact("Drink"));
         Time.sleepTicksUntil(() -> Skills.getBoostedLevel(Skill.PRAYER) == Skills.getLevel(Skill.PRAYER), 20);
         Time.sleepTicks(3);
     }

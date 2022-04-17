@@ -22,7 +22,7 @@ public enum Brother {
 
     private final String name;
     private final WorldPoint location;
-    private final Varbits killedVarbit;
+    private final int killedVarbit;
     private final WorldPoint pointNextToStairs;
     private final WorldArea cryptArea;
 
