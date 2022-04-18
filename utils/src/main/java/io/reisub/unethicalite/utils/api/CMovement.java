@@ -54,7 +54,7 @@ public class CMovement {
             }
 
             Time.sleepTick();
-        } while (Players.getLocal().distanceTo(destination) > DESTINATION_DISTANCE
+        } while (Players.getLocal().distanceTo(destination) > destinationDistance
                 && Game.getClient().getTickCount() <= start + tickTimeout
                 && (Static.getClient().getGameState() == GameState.LOADING || Static.getClient().getGameState() == GameState.LOGGED_IN));
     }
