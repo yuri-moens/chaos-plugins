@@ -8,6 +8,7 @@ import dev.unethicalite.api.widgets.Prayers;
 import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.barrows.Brother;
+import io.reisub.unethicalite.barrows.Room;
 import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -65,6 +66,29 @@ public class FightBrother extends Task {
             Time.sleepTicks(2);
             Movement.walk(currentBrother.getPointNextToStairs());
             Time.sleepTicks(1);
+        }
+
+        if (currentLocation.getPlane() == 0) {
+            if (currentBrother == Brother.DHAROK || currentBrother == Brother.TORAG || currentBrother == Brother.VERAC || currentBrother == Brother.GUTHAN) {
+                Room currentRoom = Room.getCurrentRoom();
+                if (currentRoom == null) {
+                    return;
+                }
+
+                WorldPoint ladderTile = Room.getCurrentRoom().getLadderTile();
+
+                if (ladderTile != null && currentLocation.distanceTo(ladderTile) > 1) {
+                    WorldPoint target;
+                    if (Math.abs(currentLocation.getY() - ladderTile.getY()) <= 3) {
+                        target = currentLocation.getX() > ladderTile.getX() ? ladderTile.dx(-1) : ladderTile.dx(1);
+                    } else {
+                        target = currentLocation.getY() > ladderTile.getY() ? ladderTile.dy(-1) : ladderTile.dy(1);
+                    }
+
+                    Movement.walk(target);
+                    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(target), 10);
+                }
+            }
         }
     }
 }

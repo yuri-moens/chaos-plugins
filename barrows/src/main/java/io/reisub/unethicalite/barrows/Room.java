@@ -19,15 +19,15 @@ import java.util.function.Predicate;
 
 @RequiredArgsConstructor
 public enum Room {
-    SW(new RectangularArea(new WorldPoint(3529, 9672, 0), 11, 11)),
-    W(new RectangularArea(new WorldPoint(3529, 9689, 0), 11, 11)),
-    NW(new RectangularArea(new WorldPoint(3529, 9706, 0), 11, 11)),
-    N(new RectangularArea(new WorldPoint(3546, 9706, 0), 11, 11)),
-    NE(new RectangularArea(new WorldPoint(3563, 9706, 0), 11, 11)),
-    E(new RectangularArea(new WorldPoint(3563, 9689, 0), 11, 11)),
-    SE(new RectangularArea(new WorldPoint(3563, 9672, 0), 11, 11)),
-    S(new RectangularArea(new WorldPoint(3546, 9672, 0), 11, 11)),
-    C(new RectangularArea(new WorldPoint(3546, 9689, 0), 11, 11));
+    SW(new RectangularArea(new WorldPoint(3529, 9672, 0), 11, 11), new WorldPoint(3534, 9678, 0)),
+    W(new RectangularArea(new WorldPoint(3529, 9689, 0), 11, 11), null),
+    NW(new RectangularArea(new WorldPoint(3529, 9706, 0), 11, 11), new WorldPoint(3534, 9712, 0)),
+    N(new RectangularArea(new WorldPoint(3546, 9706, 0), 11, 11), null),
+    NE(new RectangularArea(new WorldPoint(3563, 9706, 0), 11, 11), new WorldPoint(3568, 9712,0)),
+    E(new RectangularArea(new WorldPoint(3563, 9689, 0), 11, 11), null),
+    SE(new RectangularArea(new WorldPoint(3563, 9672, 0), 11, 11), new WorldPoint(3568, 9678,0)),
+    S(new RectangularArea(new WorldPoint(3546, 9672, 0), 11, 11), null),
+    C(new RectangularArea(new WorldPoint(3546, 9689, 0), 11, 11), null);
 
     static {
         for (Room room : Room.values()) {
@@ -103,6 +103,9 @@ public enum Room {
 
     @Getter
     private final RectangularArea area;
+
+    @Getter
+    private final WorldPoint ladderTile;
 
     @Getter
     @Setter

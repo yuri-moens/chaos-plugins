@@ -6,6 +6,7 @@ import dev.unethicalite.api.coords.RectangularArea;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.game.Combat;
 import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.utils.Utils;
@@ -40,7 +41,7 @@ public class EnterCrypt extends Task {
                 .dx(-1)
                 .dy(-1);
 
-        RectangularArea digArea = new RectangularArea(digAreaPoint, 3, 3);
+        RectangularArea digArea = new RectangularArea(digAreaPoint, 2, 2);
 
         if (digArea.contains(Players.getLocal())) {
             Inventory.getFirst(ItemID.SPADE).interact(0);
@@ -52,6 +53,10 @@ public class EnterCrypt extends Task {
         CMovement.walkTo(plugin.getCurrentBrother().getLocation(), 1);
 
         if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 3)) {
+            if (Players.getLocal().distanceTo(plugin.getCurrentBrother().getLocation()) < 8) {
+                Movement.walk(plugin.getCurrentBrother().getLocation());
+            }
+
             return;
         }
 
@@ -76,7 +81,9 @@ public class EnterCrypt extends Task {
                 break;
         }
 
-        Time.sleepTicksUntil(() -> digArea.contains(Players.getLocal()), 30);
+        if (!Time.sleepTicksUntil(() -> digArea.contains(Players.getLocal()) || !Players.getLocal().isMoving(), 30)) {
+            return;
+        }
 
         Inventory.getFirst(ItemID.SPADE).interact(0);
 
