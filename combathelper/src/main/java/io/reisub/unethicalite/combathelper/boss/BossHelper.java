@@ -2,10 +2,9 @@ package io.reisub.unethicalite.combathelper.boss;
 
 import com.openosrs.client.util.WeaponStyle;
 import dev.unethicalite.api.game.Combat;
+import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.combathelper.Helper;
-import io.reisub.unethicalite.combathelper.prayer.PrayerHelper;
 import io.reisub.unethicalite.combathelper.prayer.QuickPrayer;
-import io.reisub.unethicalite.combathelper.swap.SwapHelper;
 import net.runelite.api.Prayer;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.eventbus.Subscribe;
@@ -21,10 +20,7 @@ import java.util.List;
 @Singleton
 public class BossHelper extends Helper {
     @Inject
-    private PrayerHelper prayerHelper;
-
-    @Inject
-    private SwapHelper swapHelper;
+    private CombatHelper plugin;
 
     @Inject
     private CerberusPlugin cerberusPlugin;
@@ -62,15 +58,15 @@ public class BossHelper extends Helper {
         if (prayer != null) {
             switch (prayer) {
                 case PROTECT_FROM_MELEE:
-                    prayerHelper.setPrayer(QuickPrayer.PROTECT_FROM_MELEE, false);
+                    plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MELEE, false);
                     break;
                 case PROTECT_FROM_MISSILES:
                     if (cerberusPlugin.getUpcomingAttacks().get(0).getAttack() == Cerberus.Attack.GHOST_RANGED || cerberusPlugin.getCerberus().getLastTripleAttack() != null) {
-                        prayerHelper.setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
+                        plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
                     }
                     break;
                 case PROTECT_FROM_MAGIC:
-                    prayerHelper.setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
+                    plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
                     break;
             }
         }
@@ -84,12 +80,12 @@ public class BossHelper extends Helper {
                 case MELEE:
                 case RANGE:
                     if (current != WeaponStyle.MAGIC) {
-                        swapHelper.swap(WeaponStyle.MAGIC);
+                        plugin.getSwapHelper().swap(true, false, WeaponStyle.MAGIC);
                     }
                     break;
                 case MAGIC:
                     if (current != WeaponStyle.RANGE) {
-                        swapHelper.swap(WeaponStyle.RANGE);
+                        plugin.getSwapHelper().swap(true, false, WeaponStyle.RANGE);
                     }
                     break;
             }
@@ -101,10 +97,10 @@ public class BossHelper extends Helper {
             data.getCurrentPhasePrayer().ifPresent(prayer -> {
                 switch (prayer) {
                     case PROTECT_FROM_MAGIC:
-                        prayerHelper.setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
+                        plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
                         break;
                     case PROTECT_FROM_MISSILES:
-                        prayerHelper.setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
+                        plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
                         break;
                 }
             });

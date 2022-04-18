@@ -96,7 +96,7 @@ public class CombatHelper extends Plugin {
 
 	@Override
 	protected void shutDown() {
-		log.info("Stopping Chaos Combat Helper"); // 2c933632
+		log.info("Stopping Chaos Combat Helper");
 
 		for (Helper helper : helpers) {
 			Static.getKeyManager().unregisterKeyListener(helper);

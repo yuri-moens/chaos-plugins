@@ -331,7 +331,11 @@ public class PrayerHelper extends Helper {
             currentOverhead = QuickPrayer.PROTECT_FROM_MELEE;
         }
 
-        swapPrayers = quickPrayers;
+        if (swapPrayers == null) {
+            swapPrayers = quickPrayers;
+        } else {
+            swapPrayers.addAll(quickPrayers);
+        }
     }
 
     private DemonicGorilla getCurrentGorilla() {

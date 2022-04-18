@@ -95,7 +95,7 @@ public enum QuickPrayer {
         return null;
     }
 
-    private static QuickPrayer getBestDefence(int level) {
+    public static QuickPrayer getBestDefence(int level) {
         if (level >= STEEL_SKIN.level) {
             return STEEL_SKIN;
         } else if (level >= ROCK_SKIN.level) {

@@ -967,4 +967,15 @@ public interface Config extends net.runelite.client.config.Config {
 	default Keybind tpHotkey() {
 		return new Keybind(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK);
 	}
+
+	@ConfigItem(
+			keyName = "vengeanceHotkey",
+			name = "Vengeance hotkey",
+			description = "Hotkey for casting Vengeance",
+			section = "miscConfig",
+			position = 705
+	)
+	default Keybind vengeanceHotkey() {
+		return new Keybind(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK);
+	}
 }

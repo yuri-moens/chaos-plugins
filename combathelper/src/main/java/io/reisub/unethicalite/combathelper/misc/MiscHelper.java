@@ -5,6 +5,7 @@ import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.game.Game;
 import dev.unethicalite.api.items.Equipment;
+import dev.unethicalite.api.magic.Lunar;
 import dev.unethicalite.api.magic.Magic;
 import dev.unethicalite.api.magic.Regular;
 import dev.unethicalite.api.utils.MessageUtils;
@@ -65,11 +66,11 @@ public class MiscHelper extends Helper {
                 MessageUtils.addMessage("Disabled PK teleport");
             }
             e.consume();
-        }
-
-        if (config.tpHotkey().matches(e)) {
+        } else if (config.tpHotkey().matches(e)) {
             plugin.schedule(this::teleport, Rand.nextInt(100, 150));
             e.consume();
+        } else if (config.vengeanceHotkey().matches(e)) {
+            plugin.schedule(this::castVengeance, Rand.nextInt(100, 150));
         }
     }
 
@@ -85,7 +86,15 @@ public class MiscHelper extends Helper {
     }
 
     private void teleport() {
-        Magic.cast(Regular.TELEPORT_TO_HOUSE);
-        Time.sleep(1500, 1800);
+        if (Regular.TELEPORT_TO_HOUSE.canCast()) {
+            Magic.cast(Regular.TELEPORT_TO_HOUSE);
+            Time.sleep(1500, 1800);
+        }
+    }
+
+    private void castVengeance() {
+        if (Lunar.VENGEANCE.canCast()) {
+            Magic.cast(Lunar.VENGEANCE);
+        }
     }
 }
