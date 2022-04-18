@@ -3,6 +3,7 @@ package io.reisub.unethicalite.barrows.tasks;
 import com.google.common.collect.ImmutableMap;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.barrows.Room;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -35,10 +36,10 @@ public class SolvePuzzle extends Task {
 
     @Override
     public void execute() {
-        puzzleAnswer.interact("Select");
+        GameThread.invoke(() -> puzzleAnswer.interact("Select"));
         Time.sleepTick();
 
-        TileObjects.getNearest(Room.DOOR_PREDICATE).interact(0);
+        GameThread.invoke(() -> TileObjects.getNearest(Room.DOOR_PREDICATE).interact(0));
         Time.sleepTicksUntil(Room::isInCorridor, 5);
 
         puzzleAnswer = null;
