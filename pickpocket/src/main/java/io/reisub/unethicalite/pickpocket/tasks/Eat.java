@@ -6,6 +6,7 @@ import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.pickpocket.Config;
 import io.reisub.unethicalite.utils.tasks.Task;
+import net.runelite.api.ItemID;
 import net.runelite.api.Skill;
 
 import javax.inject.Inject;
@@ -23,14 +24,14 @@ public class Eat extends Task {
 
     @Override
     public boolean validate() {
-        return (Skills.getBoostedLevel(Skill.HITPOINTS) <= config.eatHP() || config.healAtBank())
-                && Inventory.contains(config.food())
+        return (Skills.getBoostedLevel(Skill.HITPOINTS) <= config.eatHP() || config.healAtBank() || Inventory.isFull())
+                && Inventory.contains(i -> i.hasAction("Eat", "Drink") && i.getId() != ItemID.BLOOD_PINT)
                 && Static.getClient().getTickCount() > last + 3;
     }
 
     @Override
     public void execute() {
-        Inventory.getFirst(config.food()).interact(0);
+        Inventory.getFirst(i -> i.hasAction("Eat", "Drink") && i.getId() != ItemID.BLOOD_PINT).interact(0);
         Time.sleepTick();
 
         last = Static.getClient().getTickCount();

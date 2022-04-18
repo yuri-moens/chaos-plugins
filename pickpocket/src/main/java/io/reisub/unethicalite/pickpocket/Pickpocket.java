@@ -2,8 +2,12 @@ package io.reisub.unethicalite.pickpocket;
 
 import com.google.inject.Provides;
 import dev.unethicalite.api.entities.Players;
+import io.reisub.unethicalite.pickpocket.tasks.CastShadowVeil;
+import io.reisub.unethicalite.pickpocket.tasks.ClearInventory;
 import io.reisub.unethicalite.pickpocket.tasks.Eat;
+import io.reisub.unethicalite.pickpocket.tasks.EquipDodgyNecklace;
 import io.reisub.unethicalite.pickpocket.tasks.HandleBank;
+import io.reisub.unethicalite.pickpocket.tasks.TakeWine;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -50,7 +54,11 @@ public class Pickpocket extends TickScript {
 
 		nearestLocation = config.target().getNearest();
 
+		addTask(ClearInventory.class);
+		addTask(TakeWine.class);
 		addTask(Eat.class);
+		addTask(CastShadowVeil.class);
+		addTask(EquipDodgyNecklace.class);
 		addTask(HandleBank.class);
 		addTask(io.reisub.unethicalite.pickpocket.tasks.Pickpocket.class);
 	}

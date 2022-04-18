@@ -36,8 +36,6 @@ public interface Config extends net.runelite.client.config.Config {
 			keyName = "foodQuantity",
 			name = "Quantity",
 			description = "Choose how much food to take from bank",
-			hidden = true,
-			hide = "healAtBank",
 			position = 3
 	)
 	default int foodQuantity() { return 5; }
@@ -49,6 +47,22 @@ public interface Config extends net.runelite.client.config.Config {
 			position = 4
 	)
 	default boolean healAtBank() { return false; }
+
+	@ConfigItem(
+			keyName = "dodgyNecklacesQuantity",
+			name = "Dodgy necklaces",
+			description = "Choose how many Dodgy necklaces to take from bank, including the one equipped",
+			position = 5
+	)
+	default int dodgyNecklacesQuantity() { return 0; }
+
+	@ConfigItem(
+			keyName = "castShadowVeil",
+			name = "Cast Shadow Veil",
+			description = "Enable to keep the Shadow Veil buff up while thieving",
+			position = 6
+	)
+	default boolean castShadowVeil() { return false; }
 
 	@ConfigItem(
 			keyName = "startButton",
