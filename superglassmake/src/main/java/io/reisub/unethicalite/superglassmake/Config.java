@@ -10,8 +10,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "pickupGlass",
       name = "Pickup glass",
       description = "Pickup any glass spilling out of the inventory.",
-      position = 0
-  )
+      position = 0)
   default boolean pickupGlass() {
     return true;
   }
@@ -20,8 +19,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "useSodaAshFirst",
       name = "Use soda ash first",
       description = "Use all the soda ash before using giant seaweed.",
-      position = 1
-  )
+      position = 1)
   default boolean useSodaAshFirst() {
     return true;
   }
@@ -30,8 +28,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
-      position = Integer.MAX_VALUE
-  )
+      position = Integer.MAX_VALUE)
   default Button startButton() {
     return new Button();
   }

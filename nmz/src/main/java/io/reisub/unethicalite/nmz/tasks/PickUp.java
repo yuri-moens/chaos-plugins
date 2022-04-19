@@ -15,11 +15,8 @@ import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
 
 public class PickUp extends Task {
-  @Inject
-  private Config config;
-
   private static final int NMZ_MAP_REGION = 9033;
-
+  @Inject private Config config;
   private TileObject powerUp;
 
   @Override

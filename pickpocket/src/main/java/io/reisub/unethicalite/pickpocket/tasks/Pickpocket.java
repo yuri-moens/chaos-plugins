@@ -13,7 +13,7 @@ import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.pickpocket.Config;
 import io.reisub.unethicalite.pickpocket.Target;
 import io.reisub.unethicalite.utils.Utils;
-import io.reisub.unethicalite.utils.api.CMovement;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -27,11 +27,9 @@ import net.runelite.api.events.ChatMessage;
 import net.runelite.client.eventbus.Subscribe;
 
 public class Pickpocket extends Task {
-  @Inject
-  private io.reisub.unethicalite.pickpocket.Pickpocket plugin;
+  @Inject private io.reisub.unethicalite.pickpocket.Pickpocket plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   private int lastStun;
 
@@ -47,7 +45,8 @@ public class Pickpocket extends Task {
         && !Inventory.isFull()
         && Players.getLocal().getModelHeight() != 1000
         && (!config.healAtBank() || !Inventory.contains(config.food()))
-        && (Inventory.contains(config.food()) || Skills.getBoostedLevel(Skill.HITPOINTS) > config.eatHP());
+        && (Inventory.contains(config.food())
+            || Skills.getBoostedLevel(Skill.HITPOINTS) > config.eatHp());
   }
 
   @Override
@@ -57,14 +56,14 @@ public class Pickpocket extends Task {
       if (config.target() == Target.VALLESSIA_VON_PITT) {
         goToVallessia();
       } else {
-        CMovement.walkTo(plugin.getNearestLocation().getPickpocketLocation(), 2);
+        ChaosMovement.walkTo(plugin.getNearestLocation().getPickpocketLocation(), 2);
       }
 
       return;
     }
 
     if (!Reachable.isInteractable(target)) {
-      CMovement.walkTo(target.getWorldLocation());
+      ChaosMovement.walkTo(target.getWorldLocation());
 
       if (!Time.sleepTicksUntil(() -> Reachable.isInteractable(target), 20)) {
         return;
@@ -82,7 +81,8 @@ public class Pickpocket extends Task {
 
     if (event.getMessage().contains("You attempt to pick")) {
       plugin.setActivity(Activity.THIEVING);
-    } else if (event.getMessage().contains("Your dodgy necklace") || event.getMessage().contains("Your attempt to steal goes unnoticed")) {
+    } else if (event.getMessage().contains("Your dodgy necklace")
+        || event.getMessage().contains("Your attempt to steal goes unnoticed")) {
       plugin.setActivity(Activity.IDLE);
     } else if (event.getMessage().contains("You've been stunned")) {
       plugin.setActivity(Activity.IDLE);
@@ -103,7 +103,8 @@ public class Pickpocket extends Task {
     TileObject door = TileObjects.getFirstAt(doorLocation, ObjectID.DOOR_39406);
     if (door != null) {
       door.interact("Open");
-      Time.sleepTicksUntil(() -> TileObjects.getFirstAt(doorLocation.dy(-1), ObjectID.DOOR_39408) != null, 20);
+      Time.sleepTicksUntil(
+          () -> TileObjects.getFirstAt(doorLocation.dy(-1), ObjectID.DOOR_39408) != null, 20);
     }
 
     Movement.walk(doorLocation);

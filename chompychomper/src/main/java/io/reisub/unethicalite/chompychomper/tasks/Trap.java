@@ -18,20 +18,18 @@ import net.runelite.api.NpcID;
 import net.runelite.api.coords.WorldPoint;
 
 public class Trap extends Task {
-  @Inject
-  private ChompyChomper plugin;
-
-  private final Set<WorldPoint> TRAP_LOCATIONS = ImmutableSet.of(
-      new WorldPoint(2341, 3063, 0),
-      new WorldPoint(2340, 3062, 0),
-      new WorldPoint(2339, 3061, 0),
-      new WorldPoint(2339, 3060, 0),
-      new WorldPoint(2336, 3060, 0),
-      new WorldPoint(2336, 3059, 0),
-      new WorldPoint(2336, 3058, 0),
-      new WorldPoint(2336, 3057, 0),
-      new WorldPoint(2336, 3056, 0)
-  );
+  private static final Set<WorldPoint> TRAP_LOCATIONS =
+      ImmutableSet.of(
+          new WorldPoint(2341, 3063, 0),
+          new WorldPoint(2340, 3062, 0),
+          new WorldPoint(2339, 3061, 0),
+          new WorldPoint(2339, 3060, 0),
+          new WorldPoint(2336, 3060, 0),
+          new WorldPoint(2336, 3059, 0),
+          new WorldPoint(2336, 3058, 0),
+          new WorldPoint(2336, 3057, 0),
+          new WorldPoint(2336, 3056, 0));
+  @Inject private ChompyChomper plugin;
 
   @Override
   public String getStatus() {
@@ -54,10 +52,12 @@ public class Trap extends Task {
     Movement.walk(nearest);
     Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(nearest), 20);
 
-    Inventory.getAll(ItemID.BLOATED_TOAD).forEach((i) -> {
-      i.interact(0);
-      Time.sleepTicks(4);
-    });
+    Inventory.getAll(ItemID.BLOATED_TOAD)
+        .forEach(
+            (i) -> {
+              i.interact(0);
+              Time.sleepTicks(4);
+            });
   }
 
   private WorldPoint findNearestEmptyTrapLocation() {
@@ -78,7 +78,10 @@ public class Trap extends Task {
         }
       }
 
-      if (empty && (nearest == null || Players.getLocal().distanceTo(trapLocation) < Players.getLocal().distanceTo(nearest))) {
+      if (empty
+          && (nearest == null
+              || Players.getLocal().distanceTo(trapLocation)
+                  < Players.getLocal().distanceTo(nearest))) {
         nearest = trapLocation;
       }
     }

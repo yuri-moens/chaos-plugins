@@ -20,14 +20,11 @@ import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.Subscribe;
 
 public class NavigateTunnel extends Task {
-  @Inject
-  private Barrows plugin;
+  @Inject private Barrows plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
-  @Inject
-  private CombatHelper combatHelper;
+  @Inject private CombatHelper combatHelper;
 
   private Room navigatingFrom;
   private Room navigatingTo;
@@ -106,8 +103,10 @@ public class NavigateTunnel extends Task {
     } else {
       if (navigatingTo == Room.C) {
         Time.sleepTicksUntil(
-            () -> Widgets.isVisible(Widgets.get(WidgetInfo.BARROWS_FIRST_PUZZLE))
-                || !Players.getLocal().isMoving(), 30);
+            () ->
+                Widgets.isVisible(Widgets.get(WidgetInfo.BARROWS_FIRST_PUZZLE))
+                    || !Players.getLocal().isMoving(),
+            30);
       } else {
         Time.sleepTicksUntil(() -> Room.isInCorridor() || !Players.getLocal().isMoving(), 30);
       }

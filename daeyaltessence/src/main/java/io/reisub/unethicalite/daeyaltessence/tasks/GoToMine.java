@@ -5,7 +5,7 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.daeyaltessence.DaeyaltEssence;
-import io.reisub.unethicalite.utils.api.CMovement;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
@@ -21,12 +21,13 @@ public class GoToMine extends Task {
 
   @Override
   public boolean validate() {
-    return Players.getLocal().getWorldLocation().getRegionID() != DaeyaltEssence.ESSENCE_MINE_REGION;
+    return Players.getLocal().getWorldLocation().getRegionID()
+        != DaeyaltEssence.ESSENCE_MINE_REGION;
   }
 
   @Override
   public void execute() {
-    CMovement.walkTo(ESSENCE_MINE_LADDER, 1);
+    ChaosMovement.walkTo(ESSENCE_MINE_LADDER, 1);
 
     TileObject ladder = TileObjects.getNearest(ObjectID.STAIRCASE_39092);
     if (ladder == null) {
@@ -34,7 +35,11 @@ public class GoToMine extends Task {
     }
 
     ladder.interact(0);
-    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getRegionID() == DaeyaltEssence.ESSENCE_MINE_REGION, 20);
+    Time.sleepTicksUntil(
+        () ->
+            Players.getLocal().getWorldLocation().getRegionID()
+                == DaeyaltEssence.ESSENCE_MINE_REGION,
+        20);
 
     Time.sleepTicks(2);
 

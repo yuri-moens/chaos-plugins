@@ -28,23 +28,19 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Pickpocket",
     description = "Cor blimey mate, what are ye doing in me pockets?",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @PluginDependency(ItemStatPlugin.class)
 @Slf4j
 @Extension
 public class Pickpocket extends TickScript {
-  @Inject
-  private Config config;
+  @Inject private Config config;
+  @Getter private Target.Location nearestLocation;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  @Getter
-  private Target.Location nearestLocation;
 
   @Override
   protected void onStart() {
@@ -68,12 +64,15 @@ public class Pickpocket extends TickScript {
     }
 
     Actor actor = event.getActor();
-    if (actor == null || !actor.equals(Players.getLocal())) return;
+    if (actor == null || !actor.equals(Players.getLocal())) {
+      return;
+    }
 
     switch (Players.getLocal().getAnimation()) {
       case 388:
         setActivity(Activity.IDLE);
         break;
+      default:
     }
   }
 

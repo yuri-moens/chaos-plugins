@@ -36,30 +36,25 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Motherlode Mine",
     description = "Diggy, diggy hole",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class MotherlodeMine extends TickScript {
-  @Inject
-  private Config config;
+  private static final Set<Integer> MOTHERLODE_MAP_REGIONS =
+      ImmutableSet.of(14679, 14680, 14681, 14935, 14936, 14937, 15191, 15192, 15193);
+  private static final int UPSTAIRS_VARBIT = 2086;
+  private static final int SACK_LARGE_SIZE = 162;
+  private static final int SACK_SIZE = 81;
+  @Inject private Config config;
+  private int curSackSize;
+  private int maxSackSize;
+  @Getter private boolean sackFull;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  private static final Set<Integer> MOTHERLODE_MAP_REGIONS = ImmutableSet.of(14679, 14680, 14681, 14935, 14936, 14937, 15191, 15192, 15193);
-  private static final int UPSTAIRS_VARBIT = 2086;
-  private static final int SACK_LARGE_SIZE = 162;
-  private static final int SACK_SIZE = 81;
-
-  private int curSackSize;
-  private int maxSackSize;
-
-  @Getter
-  private boolean sackFull;
 
   @Override
   protected void onStart() {
@@ -98,12 +93,14 @@ public class MotherlodeMine extends TickScript {
       case AnimationID.MINING_MOTHERLODE_3A:
         setActivity(Activity.MINING);
         break;
+      default:
     }
   }
 
   @Subscribe
   private void onGameObjectDespawned(GameObjectDespawned event) {
-    if (currentActivity == Activity.REPAIRING && event.getGameObject().getName().equals("Broken strut")) {
+    if (currentActivity == Activity.REPAIRING
+        && event.getGameObject().getName().equals("Broken strut")) {
       setActivity(Activity.IDLE);
     }
   }
@@ -125,8 +122,7 @@ public class MotherlodeMine extends TickScript {
           ItemID.UNCUT_EMERALD,
           ItemID.UNCUT_RUBY,
           ItemID.UNCUT_DIAMOND,
-          ItemID.UNCUT_DRAGONSTONE
-      )) {
+          ItemID.UNCUT_DRAGONSTONE)) {
         setActivity(Activity.IDLE);
       }
     } else if (currentActivity == Activity.MINING) {

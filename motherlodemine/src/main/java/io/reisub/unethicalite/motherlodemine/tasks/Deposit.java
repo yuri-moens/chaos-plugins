@@ -14,14 +14,9 @@ import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
 
 public class Deposit extends Task {
-  @Inject
-  private MotherlodeMine plugin;
-
-  private static final RectangularArea HOPPER_AREA = new RectangularArea(
-      new WorldPoint(3741, 5657, 0),
-      new WorldPoint(3755, 5674, 0)
-  );
-
+  private static final RectangularArea HOPPER_AREA =
+      new RectangularArea(new WorldPoint(3741, 5657, 0), new WorldPoint(3755, 5674, 0));
+  @Inject private MotherlodeMine plugin;
   private TileObject hopper;
 
   @Override

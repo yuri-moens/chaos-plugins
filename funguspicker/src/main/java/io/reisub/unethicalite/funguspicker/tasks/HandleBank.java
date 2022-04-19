@@ -15,8 +15,7 @@ import javax.inject.Inject;
 import net.runelite.api.ItemID;
 
 public class HandleBank extends BankTask {
-  @Inject
-  private FungusPicker plugin;
+  @Inject private FungusPicker plugin;
 
   @Override
   public boolean validate() {
@@ -28,14 +27,20 @@ public class HandleBank extends BankTask {
   @Override
   public void execute() {
     if (Players.getLocal().getWorldLocation().getRegionID() == FungusPicker.MONASTERY_REGION) {
-      boolean interacted = Interact.interactWithInventoryOrEquipment(ItemID.DRAKANS_MEDALLION, "Ver Sinhaza", null, 0);
+      boolean interacted =
+          Interact.interactWithInventoryOrEquipment(
+              ItemID.DRAKANS_MEDALLION, "Ver Sinhaza", null, 0);
 
       if (!interacted) {
         plugin.stop("Couldn't find Drakan's medallion. Stopping plugin.");
         return;
       }
 
-      Time.sleepTicksUntil(() -> FungusPicker.VER_SINHAZA_REGION_IDS.contains(Players.getLocal().getWorldLocation().getRegionID()), 10);
+      Time.sleepTicksUntil(
+          () ->
+              FungusPicker.VER_SINHAZA_REGION_IDS.contains(
+                  Players.getLocal().getWorldLocation().getRegionID()),
+          10);
       Time.sleepTick();
     }
 

@@ -5,7 +5,7 @@ import dev.unethicalite.api.items.Equipment;
 import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.smithing.Config;
 import io.reisub.unethicalite.smithing.Smithing;
-import io.reisub.unethicalite.utils.api.CBank;
+import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.time.Duration;
@@ -33,7 +33,8 @@ public class HandleBank extends BankTask {
       return;
     }
 
-    if (!Inventory.contains(ItemID.HAMMER, ItemID.IMCANDO_HAMMER) && !Equipment.contains(ItemID.IMCANDO_HAMMER)) {
+    if (!Inventory.contains(ItemID.HAMMER, ItemID.IMCANDO_HAMMER)
+        && !Equipment.contains(ItemID.IMCANDO_HAMMER)) {
       if (Bank.contains(ItemID.IMCANDO_HAMMER)) {
         Bank.withdraw(ItemID.IMCANDO_HAMMER, 1, Bank.WithdrawMode.ITEM);
       } else {
@@ -41,7 +42,8 @@ public class HandleBank extends BankTask {
       }
     }
 
-    CBank.depositAllExcept(false, ItemID.HAMMER, ItemID.IMCANDO_HAMMER, config.metal().getBarId());
+    ChaosBank.depositAllExcept(
+        false, ItemID.HAMMER, ItemID.IMCANDO_HAMMER, config.metal().getBarId());
 
     if (Bank.getCount(true, config.metal().getBarId()) >= config.product().getRequiredBars()) {
       Bank.withdrawAll(config.metal().getBarId(), Bank.WithdrawMode.ITEM);

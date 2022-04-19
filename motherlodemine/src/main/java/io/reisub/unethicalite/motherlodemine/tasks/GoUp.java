@@ -13,11 +13,9 @@ import net.runelite.api.ItemID;
 import net.runelite.api.TileObject;
 
 public class GoUp extends Task {
-  @Inject
-  private MotherlodeMine plugin;
+  @Inject private MotherlodeMine plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public String getStatus() {
@@ -34,7 +32,8 @@ public class GoUp extends Task {
 
   @Override
   public void execute() {
-    TileObject ladder = TileObjects.getNearest(o -> o.getName().equals("Ladder") && o.hasAction("Climb"));
+    TileObject ladder =
+        TileObjects.getNearest(o -> o.getName().equals("Ladder") && o.hasAction("Climb"));
     if (ladder == null) {
       return;
     }

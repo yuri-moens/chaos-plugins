@@ -24,11 +24,9 @@ import net.runelite.client.plugins.timetracking.farming.CropState;
 import net.runelite.client.plugins.timetracking.farming.Produce;
 
 public class Plant extends Task {
-  @Inject
-  private Farming plugin;
+  @Inject private Farming plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public String getStatus() {
@@ -66,12 +64,14 @@ public class Plant extends Task {
       return;
     }
 
-    List<Item> diseaseFreeSeeds = Inventory.getAll(Predicates.names(Utils.parseStringList(config.diseaseFreeSeeds())));
+    List<Item> diseaseFreeSeeds =
+        Inventory.getAll(Predicates.names(Utils.parseStringList(config.diseaseFreeSeeds())));
 
     Item seed = null;
 
     if (!diseaseFreeSeeds.isEmpty()) {
-      if (plugin.getCurrentLocation() == Location.TROLL_STRONGHOLD || plugin.getCurrentLocation() == Location.WEISS) {
+      if (plugin.getCurrentLocation() == Location.TROLL_STRONGHOLD
+          || plugin.getCurrentLocation() == Location.WEISS) {
         seed = diseaseFreeSeeds.get(0);
       } else {
         for (Item s : seeds) {

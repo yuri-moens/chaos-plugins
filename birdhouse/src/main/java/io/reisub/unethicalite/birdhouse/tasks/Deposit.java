@@ -34,8 +34,7 @@ public class Deposit extends BankTask {
 
   @Override
   public boolean validate() {
-    return plugin.isUnderwater()
-        && TileObjects.getAll("Seaweed").size() == 2;
+    return plugin.isUnderwater() && TileObjects.getAll("Seaweed").size() == 2;
   }
 
   @Override
@@ -58,8 +57,8 @@ public class Deposit extends BankTask {
       BUCKET.get().interact("Store-5");
     }
 
-    if (Inventory.contains(ItemID.BOTTOMLESS_COMPOST_BUCKET,
-        ItemID.BOTTOMLESS_COMPOST_BUCKET_22997)) {
+    if (Inventory.contains(
+        ItemID.BOTTOMLESS_COMPOST_BUCKET, ItemID.BOTTOMLESS_COMPOST_BUCKET_22997)) {
       BOTTOMLESS_BUCKET.get().interact("Store");
     }
 

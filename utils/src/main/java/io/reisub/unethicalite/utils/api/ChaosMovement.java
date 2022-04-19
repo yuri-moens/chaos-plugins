@@ -11,7 +11,7 @@ import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.coords.WorldPoint;
 
-public class CMovement {
+public class ChaosMovement {
   private static final int DEFAULT_TIMEOUT = 100;
   private static final int DESTINATION_DISTANCE = 8;
 
@@ -35,11 +35,13 @@ public class CMovement {
     walkTo(destination, radius, task, tickTimeout, DESTINATION_DISTANCE);
   }
 
-  public static void walkTo(WorldPoint destination, int radius, Runnable task, int tickTimeout, int destinationDistance) {
+  public static void walkTo(
+      WorldPoint destination, int radius, Runnable task, int tickTimeout, int destinationDistance) {
     int start = Game.getClient().getTickCount();
 
     if (radius > 0) {
-      destination = destination.dx(Rand.nextInt(-radius, radius + 1)).dy(Rand.nextInt(-radius, radius + 1));
+      destination =
+          destination.dx(Rand.nextInt(-radius, radius + 1)).dy(Rand.nextInt(-radius, radius + 1));
     }
 
     do {
@@ -56,7 +58,8 @@ public class CMovement {
       Time.sleepTick();
     } while (Players.getLocal().distanceTo(destination) > destinationDistance
         && Game.getClient().getTickCount() <= start + tickTimeout
-        && (Static.getClient().getGameState() == GameState.LOADING || Static.getClient().getGameState() == GameState.LOGGED_IN));
+        && (Static.getClient().getGameState() == GameState.LOADING
+            || Static.getClient().getGameState() == GameState.LOGGED_IN));
   }
 
   public static void sendMovementPacket(WorldPoint worldPoint) {

@@ -18,14 +18,11 @@ import net.runelite.client.plugins.zulrah.ZulrahPlugin;
 
 @Singleton
 public class BossHelper extends Helper {
-  @Inject
-  private CombatHelper plugin;
+  @Inject private CombatHelper plugin;
 
-  @Inject
-  private CerberusPlugin cerberusPlugin;
+  @Inject private CerberusPlugin cerberusPlugin;
 
-  @Inject
-  private ZulrahPlugin zulrahPlugin;
+  @Inject private ZulrahPlugin zulrahPlugin;
 
   @Subscribe
   private void onGameTick(GameTick event) {
@@ -60,13 +57,15 @@ public class BossHelper extends Helper {
           plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MELEE, false);
           break;
         case PROTECT_FROM_MISSILES:
-          if (cerberusPlugin.getUpcomingAttacks().get(0).getAttack() == Cerberus.Attack.GHOST_RANGED || cerberusPlugin.getCerberus().getLastTripleAttack() != null) {
+          if (cerberusPlugin.getUpcomingAttacks().get(0).getAttack() == Cerberus.Attack.GHOST_RANGED
+              || cerberusPlugin.getCerberus().getLastTripleAttack() != null) {
             plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
           }
           break;
         case PROTECT_FROM_MAGIC:
           plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
           break;
+        default:
       }
     }
   }
@@ -74,35 +73,51 @@ public class BossHelper extends Helper {
   private void zulrahSwap() {
     WeaponStyle current = Combat.getCurrentWeaponStyle();
 
-    zulrahPlugin.getZulrahData().forEach(data -> data.getCurrentPhase().ifPresent(phase -> {
-      switch (phase.getZulrahNpc().getType()) {
-        case MELEE:
-        case RANGE:
-          if (current != WeaponStyle.MAGIC) {
-            plugin.getSwapHelper().swap(true, false, WeaponStyle.MAGIC);
-          }
-          break;
-        case MAGIC:
-          if (current != WeaponStyle.RANGE) {
-            plugin.getSwapHelper().swap(true, false, WeaponStyle.RANGE);
-          }
-          break;
-      }
-    }));
+    zulrahPlugin
+        .getZulrahData()
+        .forEach(
+            data ->
+                data.getCurrentPhase()
+                    .ifPresent(
+                        phase -> {
+                          switch (phase.getZulrahNpc().getType()) {
+                            case MELEE:
+                            case RANGE:
+                              if (current != WeaponStyle.MAGIC) {
+                                plugin.getSwapHelper().swap(true, false, WeaponStyle.MAGIC);
+                              }
+                              break;
+                            case MAGIC:
+                              if (current != WeaponStyle.RANGE) {
+                                plugin.getSwapHelper().swap(true, false, WeaponStyle.RANGE);
+                              }
+                              break;
+                            default:
+                          }
+                        }));
   }
 
   private void zulrahFlick() {
-    zulrahPlugin.getZulrahData().forEach(data -> {
-      data.getCurrentPhasePrayer().ifPresent(prayer -> {
-        switch (prayer) {
-          case PROTECT_FROM_MAGIC:
-            plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
-            break;
-          case PROTECT_FROM_MISSILES:
-            plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
-            break;
-        }
-      });
-    });
+    zulrahPlugin
+        .getZulrahData()
+        .forEach(
+            data ->
+                data.getCurrentPhasePrayer()
+                    .ifPresent(
+                        prayer -> {
+                          switch (prayer) {
+                            case PROTECT_FROM_MAGIC:
+                              plugin
+                                  .getPrayerHelper()
+                                  .setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
+                              break;
+                            case PROTECT_FROM_MISSILES:
+                              plugin
+                                  .getPrayerHelper()
+                                  .setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
+                              break;
+                            default:
+                          }
+                        }));
   }
 }

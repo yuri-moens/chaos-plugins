@@ -10,8 +10,7 @@ import net.runelite.api.events.ChatMessage;
 import net.runelite.client.eventbus.Subscribe;
 
 public class FillBag extends Task {
-  @Inject
-  private Shopper plugin;
+  @Inject private Shopper plugin;
 
   @Override
   public String getStatus() {

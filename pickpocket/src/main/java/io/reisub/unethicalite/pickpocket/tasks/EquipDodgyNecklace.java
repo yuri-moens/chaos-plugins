@@ -11,8 +11,7 @@ import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 
 public class EquipDodgyNecklace extends Task {
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public String getStatus() {
@@ -22,7 +21,8 @@ public class EquipDodgyNecklace extends Task {
   @Override
   public boolean validate() {
     return config.dodgyNecklacesQuantity() > 0
-        && (Equipment.fromSlot(EquipmentInventorySlot.AMULET) == null || Equipment.fromSlot(EquipmentInventorySlot.AMULET).getId() != ItemID.DODGY_NECKLACE)
+        && (Equipment.fromSlot(EquipmentInventorySlot.AMULET) == null
+            || Equipment.fromSlot(EquipmentInventorySlot.AMULET).getId() != ItemID.DODGY_NECKLACE)
         && Inventory.contains(ItemID.DODGY_NECKLACE);
   }
 

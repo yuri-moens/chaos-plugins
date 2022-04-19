@@ -8,8 +8,7 @@ import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 
 public class Clean extends Task {
-  @Inject
-  private Herblore plugin;
+  @Inject private Herblore plugin;
 
   @Override
   public String getStatus() {
@@ -20,7 +19,10 @@ public class Clean extends Task {
   public boolean validate() {
     HerbloreTask task = plugin.getConfig().task();
 
-    return (task == HerbloreTask.CLEAN_HERBS || task == HerbloreTask.MAKE_UNFINISHED || task == HerbloreTask.MAKE_POTION || task == HerbloreTask.TAR_HERBS)
+    return (task == HerbloreTask.CLEAN_HERBS
+            || task == HerbloreTask.MAKE_UNFINISHED
+            || task == HerbloreTask.MAKE_POTION
+            || task == HerbloreTask.TAR_HERBS)
         && plugin.getCurrentActivity() == Activity.IDLE
         && Inventory.contains(plugin.getGrimyHerbIds());
   }

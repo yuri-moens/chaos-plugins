@@ -22,8 +22,7 @@ public enum Location {
           add(new RockPosition(new WorldPoint(3167, 2913, 0), new WorldPoint(3166, 2914, 0)));
         }
       },
-      true
-  ),
+      true),
   QUARRY_GRANITE(
       new WorldPoint(3167, 2908, 0),
       ImmutableSet.of(ObjectID.ROCKS_11387),
@@ -35,8 +34,7 @@ public enum Location {
           add(new RockPosition(new WorldPoint(3167, 2911, 0), new WorldPoint(3167, 2910, 0)));
         }
       },
-      true
-  );
+      true);
 
   private final WorldPoint miningAreaPoint;
   private final Set<Integer> rockIds;

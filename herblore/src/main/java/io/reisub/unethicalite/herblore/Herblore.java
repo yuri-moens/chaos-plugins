@@ -26,15 +26,12 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Herblore",
     description = "You put the lime in the coconut, you drank them both up",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Extension
 @Slf4j
 public class Herblore extends TickScript {
-  @Inject
-  @Getter
-  private Config config;
+  @Inject @Getter private Config config;
 
   @Provides
   Config provideConfig(ConfigManager configManager) {
@@ -57,9 +54,10 @@ public class Herblore extends TickScript {
 
   @Subscribe
   private void onItemContainerChanged(ItemContainerChanged event) {
-    if (!Utils.isLoggedIn() || event.getItemContainer() != Game.getClient().getItemContainer(InventoryID.INVENTORY))
+    if (!Utils.isLoggedIn()
+        || event.getItemContainer() != Game.getClient().getItemContainer(InventoryID.INVENTORY)) {
       return;
-
+    }
 
     int grimyHerbs = Inventory.getCount(getGrimyHerbIds());
     int cleanHerbs = Inventory.getCount(getCleanHerbIds());
@@ -89,11 +87,11 @@ public class Herblore extends TickScript {
     Herb herb = getHerb();
 
     if (herb == null) {
-      return new int[]{};
+      return new int[] {};
     } else if (herb == Herb.ALL) {
       return Herb.getAllGrimyIds();
     } else {
-      return new int[]{herb.getGrimyId()};
+      return new int[] {herb.getGrimyId()};
     }
   }
 
@@ -101,11 +99,11 @@ public class Herblore extends TickScript {
     Herb herb = getHerb();
 
     if (herb == null) {
-      return new int[]{};
+      return new int[] {};
     } else if (herb == Herb.ALL) {
       return Herb.getAllCleanIds();
     } else {
-      return new int[]{herb.getCleanId()};
+      return new int[] {herb.getCleanId()};
     }
   }
 
@@ -114,19 +112,19 @@ public class Herblore extends TickScript {
 
     switch (herb) {
       case ALL:
-        return new int[]{
-            Herb.GUAM_LEAF.getGrimyId(),
-            Herb.MARRENTILL.getGrimyId(),
-            Herb.TARROMIN.getGrimyId(),
-            Herb.HARRALANDER.getGrimyId()
+        return new int[] {
+          Herb.GUAM_LEAF.getGrimyId(),
+          Herb.MARRENTILL.getGrimyId(),
+          Herb.TARROMIN.getGrimyId(),
+          Herb.HARRALANDER.getGrimyId()
         };
       case GUAM_LEAF:
       case MARRENTILL:
       case TARROMIN:
       case HARRALANDER:
-        return new int[]{herb.getGrimyId()};
+        return new int[] {herb.getGrimyId()};
       default:
-        return new int[]{};
+        return new int[] {};
     }
   }
 
@@ -135,19 +133,19 @@ public class Herblore extends TickScript {
 
     switch (herb) {
       case ALL:
-        return new int[]{
-            Herb.GUAM_LEAF.getCleanId(),
-            Herb.MARRENTILL.getCleanId(),
-            Herb.TARROMIN.getCleanId(),
-            Herb.HARRALANDER.getCleanId()
+        return new int[] {
+          Herb.GUAM_LEAF.getCleanId(),
+          Herb.MARRENTILL.getCleanId(),
+          Herb.TARROMIN.getCleanId(),
+          Herb.HARRALANDER.getCleanId()
         };
       case GUAM_LEAF:
       case MARRENTILL:
       case TARROMIN:
       case HARRALANDER:
-        return new int[]{herb.getCleanId()};
+        return new int[] {herb.getCleanId()};
       default:
-        return new int[]{};
+        return new int[] {};
     }
   }
 
@@ -158,14 +156,16 @@ public class Herblore extends TickScript {
       int i = 0;
 
       for (Secondary secondary : Secondary.values()) {
-        if (secondary == Secondary.ALL) continue;
+        if (secondary == Secondary.ALL) {
+          continue;
+        }
 
         ids[i++] = secondary.getOriginalId();
       }
 
       return ids;
     } else {
-      return new int[]{config.secondary().getOriginalId()};
+      return new int[] {config.secondary().getOriginalId()};
     }
   }
 
@@ -173,17 +173,17 @@ public class Herblore extends TickScript {
     Potion potion = config.potion();
 
     if (potion.getHerb() == null || potion.getSecondaryId() == -1) {
-      return new int[]{potion.getBaseId()};
+      return new int[] {potion.getBaseId()};
     } else {
-      return new int[]{potion.getHerb().getUnfinishedId()};
+      return new int[] {potion.getHerb().getUnfinishedId()};
     }
   }
 
   public int[] getSecondaryIds() {
     if (config.potion().getSecondaryId() == -1) {
-      return new int[]{config.potion().getHerb().getCleanId()};
+      return new int[] {config.potion().getHerb().getCleanId()};
     } else {
-      return new int[]{config.potion().getSecondaryId()};
+      return new int[] {config.potion().getSecondaryId()};
     }
   }
 }

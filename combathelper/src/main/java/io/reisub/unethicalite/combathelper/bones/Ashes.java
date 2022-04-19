@@ -17,17 +17,23 @@ public enum Ashes {
   private final int id;
 
   static Ashes[] allBelow(Ashes ashes) {
-    if (ashes == NONE) return new Ashes[0];
+    if (ashes == NONE) {
+      return new Ashes[0];
+    }
 
     Ashes[] allBelow = new Ashes[ashes.ordinal()];
     int i = 0;
 
     for (Ashes a : Ashes.values()) {
-      if (a == NONE) continue;
+      if (a == NONE) {
+        continue;
+      }
 
       allBelow[i++] = a;
 
-      if (a == ashes) break;
+      if (a == ashes) {
+        break;
+      }
     }
 
     return allBelow;

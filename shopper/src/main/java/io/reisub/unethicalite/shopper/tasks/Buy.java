@@ -10,10 +10,8 @@ import java.util.Map;
 import javax.inject.Inject;
 
 public class Buy extends Task {
-  @Inject
-  private Shopper plugin;
-
   private final Map<BuyItem, Integer> buyMap = new HashMap<>();
+  @Inject private Shopper plugin;
 
   @Override
   public String getStatus() {
@@ -68,9 +66,7 @@ public class Buy extends Task {
       plugin.setHop(true);
     }
 
-    return !buyMap.isEmpty()
-        && itemsLeftToBuy
-        && !Inventory.isFull();
+    return !buyMap.isEmpty() && itemsLeftToBuy && !Inventory.isFull();
   }
 
   @Override

@@ -18,11 +18,8 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.ui.overlay.infobox.LoopTimer;
 
 public class DrinkPrayerPotion extends Task {
-  @Inject
-  private Barrows plugin;
-
   private static final long PRAYER_DRAIN_INTERVAL_MS = 18200;
-
+  @Inject private Barrows plugin;
   private LoopTimer prayerDrainTimer;
 
   @Override
@@ -53,13 +50,8 @@ public class DrinkPrayerPotion extends Task {
       boolean isInCrypt = Utils.isInRegion(Barrows.CRYPT_REGION);
 
       if (isInCrypt && prayerDrainTimer == null) {
-        prayerDrainTimer = new LoopTimer(
-            PRAYER_DRAIN_INTERVAL_MS,
-            ChronoUnit.MILLIS,
-            null,
-            plugin,
-            true
-        );
+        prayerDrainTimer =
+            new LoopTimer(PRAYER_DRAIN_INTERVAL_MS, ChronoUnit.MILLIS, null, plugin, true);
       } else if (!isInCrypt && prayerDrainTimer != null) {
         prayerDrainTimer = null;
       }

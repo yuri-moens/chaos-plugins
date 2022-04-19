@@ -26,25 +26,19 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Chompy Chomper",
     description = "Chomps chompies",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class ChompyChomper extends TickScript {
-  @Inject
-  private Config config;
+  public static final Set<Integer> FILLED_BELLOW_IDS =
+      ImmutableSet.of(ItemID.OGRE_BELLOWS_1, ItemID.OGRE_BELLOWS_2, ItemID.OGRE_BELLOWS_3);
+  @Inject private Config config;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  public static final Set<Integer> FILLED_BELLOW_IDS = ImmutableSet.of(
-      ItemID.OGRE_BELLOWS_1,
-      ItemID.OGRE_BELLOWS_2,
-      ItemID.OGRE_BELLOWS_3
-  );
 
   @Override
   protected void onStart() {
@@ -59,7 +53,9 @@ public class ChompyChomper extends TickScript {
 
   @Subscribe
   private void onInteractingChanged(InteractingChanged event) {
-    if (!isRunning() || event.getSource() == null || !event.getSource().equals(Players.getLocal())) {
+    if (!isRunning()
+        || event.getSource() == null
+        || !event.getSource().equals(Players.getLocal())) {
       return;
     }
 

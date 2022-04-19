@@ -15,8 +15,7 @@ public class Pick extends Task {
 
   @Override
   public boolean validate() {
-    return !Inventory.isFull()
-        && TileObjects.getNearest(ObjectID.FUNGI_ON_LOG) != null;
+    return !Inventory.isFull() && TileObjects.getNearest(ObjectID.FUNGI_ON_LOG) != null;
   }
 
   @Override

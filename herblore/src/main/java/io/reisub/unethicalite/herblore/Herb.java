@@ -32,7 +32,10 @@ public enum Herb {
     int i = 0;
 
     for (Herb herb : Herb.values()) {
-      if (herb == Herb.ALL) continue;
+      if (herb == Herb.ALL) {
+        continue;
+      }
+
       ids[i++] = herb.getGrimyId();
     }
 
@@ -44,7 +47,10 @@ public enum Herb {
     int i = 0;
 
     for (Herb herb : Herb.values()) {
-      if (herb == Herb.ALL) continue;
+      if (herb == Herb.ALL) {
+        continue;
+      }
+
       ids[i++] = herb.getCleanId();
     }
 

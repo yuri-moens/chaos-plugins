@@ -39,8 +39,7 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Combat Helper",
     description = "Various utilities to make combat easier",
-    enabledByDefault = true
-)
+    enabledByDefault = true)
 @PluginDependency(ItemStatPlugin.class)
 @PluginDependency(InteractionPlugin.class)
 @PluginDependency(CerberusPlugin.class)
@@ -48,27 +47,17 @@ import org.pf4j.Extension;
 @Slf4j
 @Extension
 public class CombatHelper extends Plugin {
-  @Inject
-  private Config config;
+  @Inject private Config config;
+  @Getter private Actor lastTarget;
+  private ScheduledExecutorService executor;
+  private List<Helper> helpers;
+  @Inject @Getter private PrayerHelper prayerHelper;
+  @Inject @Getter private SwapHelper swapHelper;
 
   @Provides
   Config provideConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  @Getter
-  private Actor lastTarget;
-
-  private ScheduledExecutorService executor;
-  private List<Helper> helpers;
-
-  @Inject
-  @Getter
-  private PrayerHelper prayerHelper;
-
-  @Inject
-  @Getter
-  private SwapHelper swapHelper;
 
   @Override
   protected void startUp() {
@@ -114,7 +103,9 @@ public class CombatHelper extends Plugin {
 
   @Subscribe
   private void onInteractingChanged(InteractingChanged event) {
-    if (!isLoggedIn()) return;
+    if (!isLoggedIn()) {
+      return;
+    }
 
     if (event.getSource() == Players.getLocal() && event.getTarget() != null) {
       lastTarget = Players.getLocal().getInteracting();
@@ -123,7 +114,9 @@ public class CombatHelper extends Plugin {
 
   @Subscribe
   private void onActorDeath(ActorDeath event) {
-    if (!isLoggedIn()) return;
+    if (!isLoggedIn()) {
+      return;
+    }
 
     if (lastTarget == null || lastTarget.isDead()) {
       lastTarget = null;

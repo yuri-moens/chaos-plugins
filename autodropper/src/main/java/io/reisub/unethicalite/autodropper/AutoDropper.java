@@ -32,26 +32,21 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Auto Dropper",
     description = "Serial litterer",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @Slf4j
 public class AutoDropper extends Plugin implements KeyListener {
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
-  @Inject
-  private KeyManager keyManager;
+  @Inject private KeyManager keyManager;
+  private ScheduledExecutorService executor;
+  private String[] itemNames;
+  private int[] itemIds;
+  private ConfigList configList;
 
   @Provides
   Config provideConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  private ScheduledExecutorService executor;
-  private String[] itemNames;
-  private int[] itemIds;
-
-  private ConfigList configList;
 
   @Override
   protected void startUp() {
@@ -96,8 +91,7 @@ public class AutoDropper extends Plugin implements KeyListener {
   }
 
   @Override
-  public void keyTyped(KeyEvent e) {
-  }
+  public void keyTyped(KeyEvent e) {}
 
   @Override
   public void keyPressed(KeyEvent e) {
@@ -107,8 +101,7 @@ public class AutoDropper extends Plugin implements KeyListener {
   }
 
   @Override
-  public void keyReleased(KeyEvent e) {
-  }
+  public void keyReleased(KeyEvent e) {}
 
   private void drop() {
     List<Item> items = Inventory.getAll(Predicates.ids(configList.getIntegers()));

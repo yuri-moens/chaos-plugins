@@ -15,8 +15,8 @@ import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.pickpocket.Config;
 import io.reisub.unethicalite.pickpocket.Pickpocket;
 import io.reisub.unethicalite.pickpocket.Target;
-import io.reisub.unethicalite.utils.api.CBank;
-import io.reisub.unethicalite.utils.api.CMovement;
+import io.reisub.unethicalite.utils.api.ChaosBank;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.BankTask;
@@ -36,23 +36,19 @@ import net.runelite.client.plugins.itemstats.StatsChanges;
 import net.runelite.client.plugins.itemstats.stats.Stats;
 
 public class HandleBank extends BankTask {
-  @Inject
-  private ItemStatChanges statChanges;
+  @Inject private ItemStatChanges statChanges;
 
-  @Inject
-  private Pickpocket plugin;
+  @Inject private Pickpocket plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public boolean validate() {
     return plugin.getCurrentActivity() == Activity.IDLE
         && Players.getLocal().getModelHeight() != 1000
-        && (
-        Inventory.isFull()
-            || (!Inventory.contains(config.food()) && Skills.getBoostedLevel(Skill.HITPOINTS) <= config.eatHP())
-    );
+        && (Inventory.isFull()
+            || (!Inventory.contains(config.food())
+                && Skills.getBoostedLevel(Skill.HITPOINTS) <= config.eatHp()));
   }
 
   @Override
@@ -61,14 +57,21 @@ public class HandleBank extends BankTask {
       if (config.target() == Target.VALLESSIA_VON_PITT) {
         goToSepulchreBank();
       } else {
-        CMovement.walkTo(plugin.getNearestLocation().getBankLocation(), 1);
+        ChaosMovement.walkTo(plugin.getNearestLocation().getBankLocation(), 1);
       }
 
       return;
     }
 
     if (config.target() == Target.VALLESSIA_VON_PITT) {
-      CBank.depositAllExcept(false, i -> i.getName().startsWith("Vyre noble") || i.getId() == ItemID.COSMIC_RUNE || i.getId() == ItemID.RUNE_POUCH || i.getName().startsWith("Rogue") || i.getName().contains("em bag"));
+      ChaosBank.depositAllExcept(
+          false,
+          i ->
+              i.getName().startsWith("Vyre noble")
+                  || i.getId() == ItemID.COSMIC_RUNE
+                  || i.getId() == ItemID.RUNE_POUCH
+                  || i.getName().startsWith("Rogue")
+                  || i.getName().contains("em bag"));
     } else {
       Bank.depositInventory();
     }
@@ -79,9 +82,16 @@ public class HandleBank extends BankTask {
       withdrawCosmics();
     }
 
-    Item gemBag = Bank.Inventory.getFirst(Predicates.ids(ImmutableSet.of(ItemID.GEM_BAG, ItemID.GEM_BAG_12020, ItemID.GEM_BAG_25628, ItemID.OPEN_GEM_BAG)));
+    Item gemBag =
+        Bank.Inventory.getFirst(
+            Predicates.ids(
+                ImmutableSet.of(
+                    ItemID.GEM_BAG,
+                    ItemID.GEM_BAG_12020,
+                    ItemID.GEM_BAG_25628,
+                    ItemID.OPEN_GEM_BAG)));
     if (gemBag != null) {
-      CBank.bankInventoryInteract(gemBag, "Empty");
+      ChaosBank.bankInventoryInteract(gemBag, "Empty");
     }
 
     Item food = Bank.getFirst(config.food());
@@ -132,20 +142,22 @@ public class HandleBank extends BankTask {
   }
 
   private void withdrawNecklaces() {
-    int necklacesToWithdraw = config.dodgyNecklacesQuantity()
-        - Inventory.getCount(ItemID.DODGY_NECKLACE)
-        - Equipment.getCount(ItemID.DODGY_NECKLACE);
+    int necklacesToWithdraw =
+        config.dodgyNecklacesQuantity()
+            - Inventory.getCount(ItemID.DODGY_NECKLACE)
+            - Equipment.getCount(ItemID.DODGY_NECKLACE);
 
     if (necklacesToWithdraw > 0 && Bank.contains(ItemID.DODGY_NECKLACE)) {
       Bank.withdraw(ItemID.DODGY_NECKLACE, necklacesToWithdraw, Bank.WithdrawMode.ITEM);
 
-      if (Equipment.fromSlot(EquipmentInventorySlot.AMULET) == null || Equipment.fromSlot(EquipmentInventorySlot.AMULET).getId() != ItemID.DODGY_NECKLACE) {
+      if (Equipment.fromSlot(EquipmentInventorySlot.AMULET) == null
+          || Equipment.fromSlot(EquipmentInventorySlot.AMULET).getId() != ItemID.DODGY_NECKLACE) {
         Time.sleepTicksUntil(() -> Inventory.contains(ItemID.DODGY_NECKLACE), 3);
 
         Item necklace = Bank.Inventory.getFirst(ItemID.DODGY_NECKLACE);
 
         if (necklace != null) {
-          CBank.bankInventoryInteract(necklace, "Wear");
+          ChaosBank.bankInventoryInteract(necklace, "Wear");
         }
       }
     }
@@ -171,17 +183,19 @@ public class HandleBank extends BankTask {
     TileObject door = TileObjects.getFirstAt(doorLocation, ObjectID.DOOR_39406);
     if (door != null) {
       door.interact("Open");
-      Time.sleepTicksUntil(() -> TileObjects.getFirstAt(doorLocation.dy(-1), ObjectID.DOOR_39408) != null, 10);
+      Time.sleepTicksUntil(
+          () -> TileObjects.getFirstAt(doorLocation.dy(-1), ObjectID.DOOR_39408) != null, 10);
     }
 
     Movement.walk(doorLocation.dy(-1));
-    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(doorLocation.dy(-1)), 10);
+    Time.sleepTicksUntil(
+        () -> Players.getLocal().getWorldLocation().equals(doorLocation.dy(-1)), 10);
 
     door = TileObjects.getFirstAt(doorLocation.dy(-1), ObjectID.DOOR_39408);
     if (door != null) {
       door.interact("Close");
     }
 
-    CMovement.walkTo(config.target().getNearest().getBankLocation());
+    ChaosMovement.walkTo(config.target().getNearest().getBankLocation());
   }
 }

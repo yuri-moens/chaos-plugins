@@ -18,7 +18,8 @@ public class CastHumidify extends Task {
   @Override
   public boolean validate() {
     return Inventory.contains(ItemID.WATERSKIN0)
-        && !Inventory.contains(ItemID.WATERSKIN1, ItemID.WATERSKIN2, ItemID.WATERSKIN3, ItemID.WATERSKIN4);
+        && !Inventory.contains(
+            ItemID.WATERSKIN1, ItemID.WATERSKIN2, ItemID.WATERSKIN3, ItemID.WATERSKIN4);
   }
 
   @Override

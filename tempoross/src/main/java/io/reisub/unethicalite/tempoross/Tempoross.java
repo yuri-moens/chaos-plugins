@@ -62,71 +62,40 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Tempoross",
     description = "Plays the Tempoross minigame",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Tempoross extends TickScript {
-  @Inject
-  private Config config;
-
-  @Inject
-  private Client client;
-
-  @Provides
-  public Config getConfig(ConfigManager configManager) {
-    return configManager.getConfig(Config.class);
-  }
-
   private static final String WAVE_INCOMING_MESSAGE = "a colossal wave closes in...";
   private static final String WAVE_FAILED_MESSAGE = "the wave slams into you";
   private static final String TETHER_MESSAGE = "you securely tether yourself";
   private static final String UNTETHER_MESSAGE = "you untether yourself";
   private static final String TEMPOROSS_VULNERABLE_MESSAGE = "tempoross is vulnerable";
   private static final String FINISHED_GAME = "the spirit anglers will ferry you back";
-
   private static final int VARB_IS_TETHERED = 11895;
   private static final int TEMPOROSS_REGION = 12078;
   private static final int UNKAH_REWARD_POOL_REGION = 12588;
   private static final int UNKAH_BOAT_REGION = 12332;
+  @Inject private Config config;
+  @Inject private Client client;
+  @Getter private volatile boolean waveIncoming;
+  @Getter private volatile int phase = 1;
+  @Getter private volatile int playersReady;
+  @Getter private volatile int energy;
+  @Getter private volatile int essence;
+  @Getter private volatile int stormIntensity;
+  @Getter private volatile int rawFish;
+  @Getter private volatile int cookedFish;
+  @Getter private volatile WorldPoint dudiPos = null;
+  @Getter private volatile boolean finished;
+  @Getter @Setter private volatile int cookedFishRequired;
+  @Getter private volatile int lastDoubleSpawn;
 
-  @Getter
-  private volatile boolean waveIncoming;
-
-  @Getter
-  private volatile int phase = 1;
-
-  @Getter
-  private volatile int playersReady;
-
-  @Getter
-  private volatile int energy;
-
-  @Getter
-  private volatile int essence;
-
-  @Getter
-  private volatile int stormIntensity;
-
-  @Getter
-  private volatile int rawFish;
-
-  @Getter
-  private volatile int cookedFish;
-
-  @Getter
-  private volatile WorldPoint dudiPos = null;
-
-  @Getter
-  private volatile boolean finished;
-
-  @Getter
-  @Setter
-  private volatile int cookedFishRequired;
-
-  @Getter
-  private volatile int lastDoubleSpawn;
+  @Provides
+  public Config getConfig(ConfigManager configManager) {
+    return configManager.getConfig(Config.class);
+  }
 
   @Override
   protected void onStart() {
@@ -169,7 +138,9 @@ public class Tempoross extends TickScript {
   @Subscribe
   private void onChatMessage(ChatMessage chatMessage) {
     if (chatMessage.getType() != ChatMessageType.GAMEMESSAGE
-        && chatMessage.getType() != ChatMessageType.SPAM) return;
+        && chatMessage.getType() != ChatMessageType.SPAM) {
+      return;
+    }
 
     String message = Text.standardize(chatMessage.getMessage());
     if (message.contains(WAVE_INCOMING_MESSAGE)) {
@@ -188,9 +159,13 @@ public class Tempoross extends TickScript {
 
   @Subscribe
   private void onAnimationChanged(AnimationChanged event) {
-    if (!Utils.isLoggedIn()) return;
+    if (!Utils.isLoggedIn()) {
+      return;
+    }
 
-    if (client.getLocalPlayer() == null || event.getActor() != client.getLocalPlayer()) return;
+    if (client.getLocalPlayer() == null || event.getActor() != client.getLocalPlayer()) {
+      return;
+    }
 
     switch (client.getLocalPlayer().getAnimation()) {
       case AnimationID.COOKING_RANGE:
@@ -208,6 +183,7 @@ public class Tempoross extends TickScript {
           setActivity(Activity.FILLING_BUCKETS);
         }
         break;
+      default:
     }
   }
 
@@ -255,7 +231,8 @@ public class Tempoross extends TickScript {
       setActivity(Activity.IDLE);
     } else if (Inventory.isFull() && currentActivity == Activity.FISHING) {
       setActivity(Activity.IDLE);
-    } else if ((cookedFish == 0 || cookedFishRequired == 0) && currentActivity == Activity.STOCKING_CANNON) {
+    } else if ((cookedFish == 0 || cookedFishRequired == 0)
+        && currentActivity == Activity.STOCKING_CANNON) {
       if (cookedFishRequired == 0) {
         if (phase == 1) {
           cookedFishRequired = 19;
@@ -274,16 +251,18 @@ public class Tempoross extends TickScript {
 
   @Subscribe
   private void onGameObjectDespawned(GameObjectDespawned gameObjectDespawned) {
-    if (!isInTemporossArea()) return;
+    if (!isInTemporossArea()) {
+      return;
+    }
 
     int id = gameObjectDespawned.getGameObject().getId();
 
-    Set<Integer> brokenMastsTotems = ImmutableSet.of(
-        ObjectID.DAMAGED_MAST_40996,
-        ObjectID.DAMAGED_MAST_40997,
-        ObjectID.DAMAGED_TOTEM_POLE,
-        ObjectID.DAMAGED_TOTEM_POLE_41011
-    );
+    Set<Integer> brokenMastsTotems =
+        ImmutableSet.of(
+            ObjectID.DAMAGED_MAST_40996,
+            ObjectID.DAMAGED_MAST_40997,
+            ObjectID.DAMAGED_TOTEM_POLE,
+            ObjectID.DAMAGED_TOTEM_POLE_41011);
 
     if (brokenMastsTotems.contains(id)) {
       if (currentActivity == Activity.REPAIRING) {
@@ -305,7 +284,8 @@ public class Tempoross extends TickScript {
 
   @Subscribe
   private void onHitsplatApplied(HitsplatApplied event) {
-    if (event.getActor().getName().contains("Spirit pool") && event.getHitsplat().getHitsplatType() == Hitsplat.HitsplatType.DAMAGE_ME) {
+    if (event.getActor().getName().contains("Spirit pool")
+        && event.getHitsplat().getHitsplatType() == Hitsplat.HitsplatType.DAMAGE_ME) {
       if (currentActivity == Activity.ATTACKING && phase <= 3 && essence <= 10) {
         setActivity(Activity.IDLE);
       }
@@ -325,19 +305,11 @@ public class Tempoross extends TickScript {
   }
 
   public WorldArea getBoatArea() {
-    return new WorldArea(
-        dudiPos.dx(-3).dy(-13),
-        7,
-        23
-    );
+    return new WorldArea(dudiPos.dx(-3).dy(-13), 7, 23);
   }
 
   public WorldArea getIslandArea() {
-    return new WorldArea(
-        dudiPos.dx(-3),
-        20,
-        30
-    );
+    return new WorldArea(dudiPos.dx(-3), 20, 30);
   }
 
   @Override
@@ -362,14 +334,18 @@ public class Tempoross extends TickScript {
 
   private int parseWidget(int group, int id) {
     Widget widget = Widgets.get(group, id);
-    if (widget == null || widget.getText().equals("")) return 0;
+    if (widget == null || widget.getText().equals("")) {
+      return 0;
+    }
 
     Pattern regex = Pattern.compile("\\d+|None");
     Matcher matcher = regex.matcher(widget.getText());
 
     if (matcher.find()) {
       String match = matcher.group(0);
-      if (match.equals("None")) return 0;
+      if (match.equals("None")) {
+        return 0;
+      }
 
       return Integer.parseInt(match);
     }

@@ -22,7 +22,8 @@ public class HandleBank extends BankTask {
   @Override
   public boolean validate() {
     return !Inventory.contains(config.foodId())
-        && (!config.sonicMode() || TileItems.getFirstAt(Players.getLocal().getWorldLocation(), config.foodId()) == null)
+        && (!config.sonicMode()
+            || TileItems.getFirstAt(Players.getLocal().getWorldLocation(), config.foodId()) == null)
         && isLastBankDurationAgo(Duration.ofSeconds(5));
   }
 

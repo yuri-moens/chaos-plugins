@@ -4,17 +4,15 @@ import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.Players;
 import io.reisub.unethicalite.farming.Config;
 import io.reisub.unethicalite.farming.Farming;
-import io.reisub.unethicalite.utils.api.CMovement;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.coords.WorldPoint;
 
 public class GoToPatch extends Task {
-  @Inject
-  private Farming plugin;
+  @Inject private Farming plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public String getStatus() {
@@ -33,11 +31,15 @@ public class GoToPatch extends Task {
     WorldPoint current = Players.getLocal().getWorldLocation();
 
     if (plugin.getCurrentLocation().getTeleportable().teleport()) {
-      Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation() != null && !Players.getLocal().getWorldLocation().equals(current), 10);
+      Time.sleepTicksUntil(
+          () ->
+              Players.getLocal().getWorldLocation() != null
+                  && !Players.getLocal().getWorldLocation().equals(current),
+          10);
     }
 
     if (Players.getLocal().distanceTo(plugin.getCurrentLocation().getPatchPoint()) > 10) {
-      CMovement.walkTo(plugin.getCurrentLocation().getPatchPoint());
+      ChaosMovement.walkTo(plugin.getCurrentLocation().getPatchPoint());
     }
   }
 }

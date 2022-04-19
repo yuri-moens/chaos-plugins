@@ -14,8 +14,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "farmSeaweed",
       name = "Farm seaweed",
       description = "Harvest and plant seaweed after a birdhouse run.",
-      position = 0
-  )
+      position = 0)
   default boolean farmSeaweed() {
     return true;
   }
@@ -24,8 +23,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "pickupSpores",
       name = "Pick up spores",
       description = "Pick up spores when underwater.",
-      position = 1
-  )
+      position = 1)
   default boolean pickupSpores() {
     return true;
   }
@@ -34,8 +32,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "birdhouseHotkey",
       name = "Start hotkey",
       description = "Start a birdhouse run from a bank.",
-      position = 2
-  )
+      position = 2)
   default Keybind birdhouseHotkey() {
     return new Keybind(KeyEvent.VK_F11, InputEvent.CTRL_DOWN_MASK);
   }
@@ -44,8 +41,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "logs",
       name = "Logs",
       description = "Select which logs to use.",
-      position = 3
-  )
+      position = 3)
   default Log logs() {
     return Log.YEW;
   }
@@ -53,10 +49,10 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "tpAfterRun",
       name = "TP after run",
-      description = "Select teleport location after finishing a run. This option only works when "
-          + "not farming seaweed.",
-      position = 4
-  )
+      description =
+          "Select teleport location after finishing a run. This option only works when "
+              + "not farming seaweed.",
+      position = 4)
   default TeleportLocation tpLocation() {
     return TeleportLocation.NOWHERE;
   }
@@ -64,10 +60,10 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "startButton",
       name = "Force Start/Stop",
-      description = "The script should automatically start and stop. Use this button for manual "
-          + "overrides.",
-      position = Integer.MAX_VALUE
-  )
+      description =
+          "The script should automatically start and stop. Use this button for manual "
+              + "overrides.",
+      position = Integer.MAX_VALUE)
   default Button startButton() {
     return new Button();
   }

@@ -10,8 +10,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "powerSurge",
       name = "Power surge",
       description = "Enable power surge pick up",
-      position = 0
-  )
+      position = 0)
   default boolean powerSurge() {
     return true;
   }
@@ -20,8 +19,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "recurrentDamage",
       name = "Recurrent damage",
       description = "Enable recurrent damage pick up",
-      position = 1
-  )
+      position = 1)
   default boolean recurrentDamage() {
     return true;
   }
@@ -30,8 +28,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "zapper",
       name = "Zapper",
       description = "Enable zapper pick up",
-      position = 2
-  )
+      position = 2)
   default boolean zapper() {
     return true;
   }
@@ -40,8 +37,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "ultimateForce",
       name = "Ultimate force",
       description = "Enable ultimate force pick up",
-      position = 3
-  )
+      position = 3)
   default boolean ultimateForce() {
     return false;
   }
@@ -50,8 +46,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
-      position = Integer.MAX_VALUE
-  )
+      position = Integer.MAX_VALUE)
   default Button startButton() {
     return new Button();
   }

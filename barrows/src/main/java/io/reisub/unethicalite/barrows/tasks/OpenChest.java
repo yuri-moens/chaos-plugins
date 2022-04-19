@@ -23,8 +23,10 @@ public class OpenChest extends Task {
         && !Room.isInCorridor()
         && (Static.getClient().getHintArrowNpc() == null
             || Static.getClient().getHintArrowNpc().isDead())
-        && (chest = TileObjects.getNearest(
-            o -> o.getId() == NullObjectID.NULL_20973 && o.hasAction("Open"))) != null;
+        && (chest =
+                TileObjects.getNearest(
+                    o -> o.getId() == NullObjectID.NULL_20973 && o.hasAction("Open")))
+            != null;
   }
 
   @Override
@@ -32,7 +34,10 @@ public class OpenChest extends Task {
     GameThread.invoke(() -> chest.interact("Open"));
 
     Time.sleepTicksUntil(
-        () -> TileObjects.getNearest(o -> o.getId() == NullObjectID.NULL_20973
-            && o.hasAction("Search")) != null, 20);
+        () ->
+            TileObjects.getNearest(
+                    o -> o.getId() == NullObjectID.NULL_20973 && o.hasAction("Search"))
+                != null,
+        20);
   }
 }

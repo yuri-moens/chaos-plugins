@@ -19,23 +19,18 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Mining",
     description = "Diggy, diggy hole",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Mining extends TickScript {
-  @Inject
-  private Config config;
+  @Inject private Config config;
+  @Getter @Setter private boolean arrived;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  @Getter
-  @Setter
-  private boolean arrived;
 
   @Override
   protected void onStart() {

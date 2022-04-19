@@ -13,8 +13,7 @@ import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 
 public class MakeUnfinished extends Task {
-  @Inject
-  private Herblore plugin;
+  @Inject private Herblore plugin;
 
   @Override
   public String getStatus() {
@@ -36,9 +35,12 @@ public class MakeUnfinished extends Task {
     plugin.setActivity(Activity.CREATING_UNFINISHED_POTIONS);
 
     List<Item> herbs = Inventory.getAll(plugin.getCleanHerbIds());
-    List<Item> bases = Inventory.getAll(ItemID.VIAL_OF_WATER, ItemID.VIAL_OF_BLOOD, ItemID.COCONUT_MILK);
+    List<Item> bases =
+        Inventory.getAll(ItemID.VIAL_OF_WATER, ItemID.VIAL_OF_BLOOD, ItemID.COCONUT_MILK);
 
-    if (herbs.size() == 0 || bases.size() == 0) return;
+    if (herbs.size() == 0 || bases.size() == 0) {
+      return;
+    }
 
     int quantity = Math.min(herbs.size(), bases.size());
 

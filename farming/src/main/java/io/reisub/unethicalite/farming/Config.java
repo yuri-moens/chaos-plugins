@@ -14,17 +14,33 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "seedsConfig",
       name = "Seeds",
       description = "Configure seeds",
-      position = 0
-  )
+      position = 0)
   String seedsConfig = "seedsConfig";
+  @ConfigSection(
+      keyName = "teleportItemsConfig",
+      name = "Teleport items",
+      description = "Configure teleport items",
+      position = 100)
+  String teleportItemsConfig = "teleportItemsConfig";
+  @ConfigSection(
+      keyName = "oneClickConfig",
+      name = "One click",
+      description = "Configure one click mode",
+      position = 200)
+  String oneClickConfig = "oneClickConfig";
+  @ConfigSection(
+      keyName = "herbConfig",
+      name = "Herbs",
+      description = "Configure what herb patches to farm",
+      position = 300)
+  String herbConfig = "herbConfig";
 
   @ConfigItem(
       keyName = "manualMode",
       name = "Manual",
       description = "Use manual seeds mode, more info in the readme",
       section = "seedsConfig",
-      position = 1
-  )
+      position = 1)
   default boolean manualMode() {
     return false;
   }
@@ -35,8 +51,7 @@ public interface Config extends net.runelite.client.config.Config {
       description = "Choose which seeds to plant, more information in the readme",
       section = "seedsConfig",
       hide = "manualMode",
-      position = 2
-  )
+      position = 2)
   default SeedsMode seedsMode() {
     return SeedsMode.LOWEST_FIRST;
   }
@@ -48,8 +63,7 @@ public interface Config extends net.runelite.client.config.Config {
       hidden = true,
       unhide = "manualMode",
       section = "seedsConfig",
-      position = 3
-  )
+      position = 3)
   default String manualSeeds() {
     return "Snapdragon seed\nRanarr seed";
   }
@@ -57,12 +71,13 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "manualSeedsSplit",
       name = "Split seeds evenly",
-      description = "Split manually chosen seeds as evenly as possible, otherwise take as many as possible of each until we have enough seeds",
+      description =
+          "Split manually chosen seeds as evenly as possible, otherwise take as many as possible "
+          + "of each until we have enough seeds",
       hidden = true,
       unhide = "manualMode",
       section = "seedsConfig",
-      position = 4
-  )
+      position = 4)
   default boolean manualSeedsSplit() {
     return true;
   }
@@ -72,8 +87,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Disease free seeds",
       description = "Choose which seeds to use on disease free patches",
       section = "seedsConfig",
-      position = 5
-  )
+      position = 5)
   default String diseaseFreeSeeds() {
     return "Snapdragon seed\nRanarr seed";
   }
@@ -81,10 +95,11 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "seedsToKeep",
       name = "Seeds to keep",
-      description = "Choose which seeds to keep some of in your bank, useful for seeds used in farming contracts",
+      description =
+          "Choose which seeds to keep some of in your bank, useful for seeds used in farming "
+          + "contracts",
       section = "seedsConfig",
-      position = 6
-  )
+      position = 6)
   default String seedsToKeep() {
     return "Snapdragon seed\nCadantine seed\nLantadyme seed\nDwarf weed seed\nTorstol seed";
   }
@@ -94,27 +109,17 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Amount to keep",
       description = "Choose how many seeds to keep of each kind",
       section = "seedsConfig",
-      position = 7
-  )
+      position = 7)
   default int amountToKeep() {
     return 10;
   }
-
-  @ConfigSection(
-      keyName = "teleportItemsConfig",
-      name = "Teleport items",
-      description = "Configure teleport items",
-      position = 100
-  )
-  String teleportItemsConfig = "teleportItemsConfig";
 
   @ConfigItem(
       keyName = "useExplorersRing",
       name = "Use Explorer's ring",
       description = "Use the Explorer's ring to teleport to Falador",
       section = "teleportItemsConfig",
-      position = 101
-  )
+      position = 101)
   default boolean useExplorersRing() {
     return false;
   }
@@ -124,8 +129,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Use Ardougne cloak",
       description = "Use the Ardougne cloak to teleport to Ardougne",
       section = "teleportItemsConfig",
-      position = 102
-  )
+      position = 102)
   default boolean useArdougneCloak() {
     return false;
   }
@@ -135,27 +139,17 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Use Xeric's talisman",
       description = "Use Xeric's talisman to teleport to Hosidius",
       section = "teleportItemsConfig",
-      position = 103
-  )
+      position = 103)
   default boolean useXericsTalisman() {
     return false;
   }
-
-  @ConfigSection(
-      keyName = "oneClickConfig",
-      name = "One click",
-      description = "Configure one click mode",
-      position = 200
-  )
-  String oneClickConfig = "oneClickConfig";
 
   @ConfigItem(
       keyName = "oneClickMode",
       name = "One click mode",
       description = "Enable one click mode to quickly do farming actions manually",
       section = "oneClickConfig",
-      position = 201
-  )
+      position = 201)
   default boolean oneClickMode() {
     return false;
   }
@@ -167,8 +161,7 @@ public interface Config extends net.runelite.client.config.Config {
       hidden = true,
       unhide = "oneClickMode",
       section = "oneClickConfig",
-      position = 202
-  )
+      position = 202)
   default boolean oneClickNote() {
     return false;
   }
@@ -180,27 +173,17 @@ public interface Config extends net.runelite.client.config.Config {
       hidden = true,
       unhide = "oneClickMode",
       section = "oneClickConfig",
-      position = 203
-  )
+      position = 203)
   default String oneClickCompostProduce() {
     return "Watermelon\nPineapple";
   }
-
-  @ConfigSection(
-      keyName = "herbConfig",
-      name = "Herbs",
-      description = "Configure what herb patches to farm",
-      position = 300
-  )
-  String herbConfig = "herbConfig";
 
   @ConfigItem(
       keyName = "faladorHerb",
       name = "Falador",
       description = "Enable patch",
       section = "herbConfig",
-      position = 301
-  )
+      position = 301)
   default boolean faladorHerb() {
     return true;
   }
@@ -210,8 +193,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Port Phasmatys",
       description = "Enable patch",
       section = "herbConfig",
-      position = 302
-  )
+      position = 302)
   default boolean portPhasmatysHerb() {
     return true;
   }
@@ -221,8 +203,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Catherby",
       description = "Enable patch",
       section = "herbConfig",
-      position = 303
-  )
+      position = 303)
   default boolean catherbyHerb() {
     return true;
   }
@@ -232,8 +213,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Ardougne",
       description = "Enable patch",
       section = "herbConfig",
-      position = 304
-  )
+      position = 304)
   default boolean ardougneHerb() {
     return true;
   }
@@ -243,8 +223,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Hosidius",
       description = "Enable patch",
       section = "herbConfig",
-      position = 305
-  )
+      position = 305)
   default boolean hosidiusHerb() {
     return true;
   }
@@ -254,8 +233,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Farming Guild",
       description = "Enable patch",
       section = "herbConfig",
-      position = 306
-  )
+      position = 306)
   default boolean guildHerb() {
     return false;
   }
@@ -265,8 +243,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Troll Stronghold",
       description = "Enable patch",
       section = "herbConfig",
-      position = 307
-  )
+      position = 307)
   default boolean trollStrongholdHerb() {
     return false;
   }
@@ -276,8 +253,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Weiss",
       description = "Enable patch",
       section = "herbConfig",
-      position = 308
-  )
+      position = 308)
   default boolean weissHerb() {
     return false;
   }
@@ -287,8 +263,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Harmony Island",
       description = "Enable patch",
       section = "herbConfig",
-      position = 309
-  )
+      position = 309)
   default boolean harmonyHerb() {
     return false;
   }
@@ -296,20 +271,21 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "herbOrder",
       name = "Order",
-      description = "Order in which to do the locations. Any enabled location not in this order list will simply be added to the end.",
+      description =
+          "Order in which to do the locations. Any enabled location not in this order list will "
+          + "simply be added to the end.",
       section = "herbConfig",
-      position = 310
-  )
+      position = 310)
   default String herbOrder() {
-    return "Farming Guild\nArdougne\nCatherby\nFalador\nPort Phasmatys\nHosidius\nHarmony Island\nTroll Stronghold\nWeiss";
+    return "Farming Guild\nArdougne\nCatherby\nFalador\nPort Phasmatys\nHosidius\nHarmony Island\n"
+           + "Troll Stronghold\nWeiss";
   }
 
   @ConfigItem(
       keyName = "farmingHotkey",
       name = "Hotkey",
       description = "Choose the hotkey to start a farm run",
-      position = Integer.MAX_VALUE - 1
-  )
+      position = Integer.MAX_VALUE - 1)
   default Keybind farmingHotkey() {
     return new Keybind(KeyEvent.VK_F6, InputEvent.CTRL_DOWN_MASK);
   }
@@ -318,8 +294,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
-      position = Integer.MAX_VALUE
-  )
+      position = Integer.MAX_VALUE)
   default Button startButton() {
     return new Button();
   }

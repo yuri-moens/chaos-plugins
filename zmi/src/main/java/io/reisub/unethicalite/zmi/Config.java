@@ -10,8 +10,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "useStamina",
       name = "Use stamina potion",
       description = "Use stamina potions",
-      position = 0
-  )
+      position = 0)
   default boolean useStamina() {
     return true;
   }
@@ -20,8 +19,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "usePrayer",
       name = "Use prayer",
       description = "Use prayer for faster healing",
-      position = 1
-  )
+      position = 1)
   default boolean usePrayer() {
     return true;
   }
@@ -30,8 +28,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
-      position = Integer.MAX_VALUE
-  )
+      position = Integer.MAX_VALUE)
   default Button startButton() {
     return new Button();
   }

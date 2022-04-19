@@ -10,11 +10,8 @@ import javax.inject.Inject;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 
-import static io.reisub.unethicalite.utils.enums.Activity.PROCESSING_SECONDARIES;
-
 public class ProcessSecondary extends Task {
-  @Inject
-  private Herblore plugin;
+  @Inject private Herblore plugin;
 
   @Override
   public String getStatus() {
@@ -31,7 +28,7 @@ public class ProcessSecondary extends Task {
 
   @Override
   public void execute() {
-    plugin.setActivity(PROCESSING_SECONDARIES);
+    plugin.setActivity(Activity.PROCESSING_SECONDARIES);
 
     List<Item> secondaries = Inventory.getAll(plugin.getBaseSecondaryIds());
     Item pestleAndMortar = Inventory.getFirst(ItemID.PESTLE_AND_MORTAR);

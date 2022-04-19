@@ -13,8 +13,7 @@ import net.runelite.api.ItemID;
 import net.runelite.api.NPC;
 
 public class WithdrawTools extends Task {
-  @Inject
-  private Farming plugin;
+  @Inject private Farming plugin;
 
   @Override
   public String getStatus() {

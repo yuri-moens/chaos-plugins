@@ -16,8 +16,7 @@ import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldArea;
 
 public class DodgeFire extends Task {
-  @Inject
-  private Tempoross plugin;
+  @Inject private Tempoross plugin;
 
   private int last;
 
@@ -28,11 +27,17 @@ public class DodgeFire extends Task {
 
   @Override
   public boolean validate() {
-    if (!plugin.isInTemporossArea() || Players.getLocal().isMoving() || Game.getClient().getTickCount() <= last + 3)
+    if (!plugin.isInTemporossArea()
+        || Players.getLocal().isMoving()
+        || Game.getClient().getTickCount() <= last + 3) {
       return false;
+    }
 
-    TileObject fire = TileObjects.getNearest((o) -> o.getId() == NullObjectID.NULL_41006
-        && (plugin.getIslandArea().contains(o) || plugin.getBoatArea().contains(o)));
+    TileObject fire =
+        TileObjects.getNearest(
+            (o) ->
+                o.getId() == NullObjectID.NULL_41006
+                    && (plugin.getIslandArea().contains(o) || plugin.getBoatArea().contains(o)));
 
     if (fire == null) {
       return false;

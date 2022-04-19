@@ -10,18 +10,12 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "spell",
       name = "Spell",
       description = "Select the enchanting spell",
-      position = 0
-  )
+      position = 0)
   default EnchantSpell spell() {
     return EnchantSpell.LEVEL_1;
   }
 
-  @ConfigItem(
-      keyName = "item",
-      name = "Item",
-      description = "Select the target item",
-      position = 1
-  )
+  @ConfigItem(keyName = "item", name = "Item", description = "Select the target item", position = 1)
   default EnchantItem item() {
     return EnchantItem.ALL;
   }
@@ -30,8 +24,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
-      position = Integer.MAX_VALUE
-  )
+      position = Integer.MAX_VALUE)
   default Button startButton() {
     return new Button();
   }

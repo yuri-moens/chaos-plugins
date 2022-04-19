@@ -11,8 +11,7 @@ import javax.inject.Inject;
 import net.runelite.api.ItemID;
 
 public class PickupSeed extends Task {
-  @Inject
-  private Glassblower plugin;
+  @Inject private Glassblower plugin;
 
   @Override
   public String getStatus() {
@@ -21,7 +20,8 @@ public class PickupSeed extends Task {
 
   @Override
   public boolean validate() {
-    return Players.getLocal().getWorldLocation().getRegionID() == Glassblower.FOSSIL_ISLAND_UNDERWATER_REGION
+    return Players.getLocal().getWorldLocation().getRegionID()
+            == Glassblower.FOSSIL_ISLAND_UNDERWATER_REGION
         && TileItems.getNearest(ItemID.SEAWEED_SPORE) != null;
   }
 
@@ -34,8 +34,10 @@ public class PickupSeed extends Task {
     TileItems.getNearest(ItemID.SEAWEED_SPORE).interact("Take");
 
     Time.sleepTicksUntil(
-        () -> Inventory.getCount(true, ItemID.SEAWEED_SPORE) > quantity
-            || Players.getLocal().getWorldLocation().getRegionID() == Glassblower.FOSSIL_ISLAND_SMALL_ISLAND_REGION
-        , 30);
+        () ->
+            Inventory.getCount(true, ItemID.SEAWEED_SPORE) > quantity
+                || Players.getLocal().getWorldLocation().getRegionID()
+                    == Glassblower.FOSSIL_ISLAND_SMALL_ISLAND_REGION,
+        30);
   }
 }

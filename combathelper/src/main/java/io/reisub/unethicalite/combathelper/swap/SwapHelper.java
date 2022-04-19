@@ -28,8 +28,7 @@ import net.runelite.client.events.ConfigChanged;
 
 @Singleton
 public class SwapHelper extends Helper {
-  @Inject
-  private PrayerHelper prayerHelper;
+  @Inject private PrayerHelper prayerHelper;
 
   private Set<Integer> meleeIds;
   private Set<String> meleeNames;
@@ -90,12 +89,15 @@ public class SwapHelper extends Helper {
 
     NPC target = null;
 
-    List<NPC> npcList = NPCs.getAll((n) -> n.getWorldLocation().equals(plugin.getLastTarget().getWorldLocation()));
+    List<NPC> npcList =
+        NPCs.getAll((n) -> n.getWorldLocation().equals(plugin.getLastTarget().getWorldLocation()));
     if (npcList != null && npcList.size() > 0) {
       target = npcList.get(0);
     }
 
-    if (target == null || target.getComposition().getOverheadIcon() == null) return;
+    if (target == null || target.getComposition().getOverheadIcon() == null) {
+      return;
+    }
 
     WeaponStyle currentStyle = Combat.getCurrentWeaponStyle();
 
@@ -133,6 +135,7 @@ public class SwapHelper extends Helper {
           swap(WeaponStyle.MAGIC);
         }
         break;
+      default:
     }
   }
 
@@ -159,15 +162,17 @@ public class SwapHelper extends Helper {
           names = null;
       }
 
-      List<Item> items = Inventory.getAll(i -> {
-        for (String name : names) {
-          if (i.getName().contains(name)) {
-            return true;
-          }
-        }
+      List<Item> items =
+          Inventory.getAll(
+              i -> {
+                for (String name : names) {
+                  if (i.getName().contains(name)) {
+                    return true;
+                  }
+                }
 
-        return ids.contains(i.getId());
-      });
+                return ids.contains(i.getId());
+              });
 
       if (!items.isEmpty()) {
         for (Item item : items) {
@@ -184,7 +189,9 @@ public class SwapHelper extends Helper {
         switch (style) {
           case MELEE:
             if (offensivePrayers) {
-              prayers.addAll(QuickPrayer.getBestMeleeBuff(level, Vars.getBit(Varbits.CAMELOT_TRAINING_ROOM_STATUS) == 8));
+              prayers.addAll(
+                  QuickPrayer.getBestMeleeBuff(
+                      level, Vars.getBit(Varbits.CAMELOT_TRAINING_ROOM_STATUS) == 8));
             }
 
             if (defensivePrayers) {
@@ -193,7 +200,8 @@ public class SwapHelper extends Helper {
             break;
           case RANGE:
             if (offensivePrayers) {
-              prayers.addAll(QuickPrayer.getBestRangedBuff(level, Vars.getBit(Varbits.RIGOUR_UNLOCKED) != 0));
+              prayers.addAll(
+                  QuickPrayer.getBestRangedBuff(level, Vars.getBit(Varbits.RIGOUR_UNLOCKED) != 0));
             }
 
             if (defensivePrayers) {
@@ -202,13 +210,15 @@ public class SwapHelper extends Helper {
             break;
           case MAGIC:
             if (offensivePrayers) {
-              prayers.addAll(QuickPrayer.getBestMagicBuff(level, Vars.getBit(Varbits.AUGURY_UNLOCKED) != 0));
+              prayers.addAll(
+                  QuickPrayer.getBestMagicBuff(level, Vars.getBit(Varbits.AUGURY_UNLOCKED) != 0));
             }
 
             if (defensivePrayers) {
               prayers.add(config.magicPrayer().getQuickPrayer());
             }
             break;
+          default:
         }
 
         prayerHelper.setPrayers(prayers, false);

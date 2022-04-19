@@ -21,21 +21,18 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Daeyalt Essence",
     description = "For people too lazy to click a rock every 30 seconds",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class DaeyaltEssence extends TickScript {
-  @Inject
-  private Config config;
+  public static final int ESSENCE_MINE_REGION = 14744;
+  @Inject private Config config;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  public static final int ESSENCE_MINE_REGION = 14744;
 
   @Override
   protected void onStart() {
@@ -72,6 +69,8 @@ public class DaeyaltEssence extends TickScript {
         break;
       case -1:
         setActivity(Activity.IDLE);
+        break;
+      default:
     }
   }
 }

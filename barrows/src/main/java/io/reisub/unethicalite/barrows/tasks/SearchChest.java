@@ -17,14 +17,11 @@ import net.runelite.api.TileObject;
 import net.runelite.api.widgets.WidgetID;
 
 public class SearchChest extends Task {
-  @Inject
-  private Barrows plugin;
+  @Inject private Barrows plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
-  @Inject
-  private CombatHelper combatHelper;
+  @Inject private CombatHelper combatHelper;
 
   private TileObject chest;
 
@@ -41,8 +38,10 @@ public class SearchChest extends Task {
         && (Players.getLocal().getInteracting() == null
             || Players.getLocal().getInteracting().isDead()
             || plugin.getPotentialWithLastBrother() > config.potential().getMaximum())
-        && (chest = TileObjects.getNearest(
-            o -> o.getId() == NullObjectID.NULL_20973 && o.hasAction("Search"))) != null;
+        && (chest =
+                TileObjects.getNearest(
+                    o -> o.getId() == NullObjectID.NULL_20973 && o.hasAction("Search")))
+            != null;
   }
 
   @Override

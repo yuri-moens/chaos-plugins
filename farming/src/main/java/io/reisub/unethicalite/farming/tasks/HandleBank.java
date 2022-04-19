@@ -8,7 +8,7 @@ import io.reisub.unethicalite.farming.Farming;
 import io.reisub.unethicalite.farming.Location;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.Utils;
-import io.reisub.unethicalite.utils.api.CBank;
+import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.util.Comparator;
@@ -21,11 +21,9 @@ import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 
 public class HandleBank extends BankTask {
-  @Inject
-  private Farming plugin;
+  @Inject private Farming plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public boolean validate() {
@@ -37,7 +35,7 @@ public class HandleBank extends BankTask {
   public void execute() {
     open(true);
 
-    CBank.depositAllExcept(
+    ChaosBank.depositAllExcept(
         false,
         ItemID.SEED_DIBBER,
         ItemID.SPADE,
@@ -45,10 +43,12 @@ public class HandleBank extends BankTask {
         ItemID.BOTTOMLESS_COMPOST_BUCKET,
         ItemID.BOTTOMLESS_COMPOST_BUCKET_22997,
         ItemID.HERB_SACK,
-        ItemID.OPEN_HERB_SACK
-    );
+        ItemID.OPEN_HERB_SACK);
 
-    Bank.withdraw(dev.unethicalite.api.commons.Predicates.ids(ItemID.OPEN_HERB_SACK, ItemID.HERB_SACK), 1, Bank.WithdrawMode.ITEM);
+    Bank.withdraw(
+        dev.unethicalite.api.commons.Predicates.ids(ItemID.OPEN_HERB_SACK, ItemID.HERB_SACK),
+        1,
+        Bank.WithdrawMode.ITEM);
 
     withdrawTeleportItems();
     withdrawSeeds();
@@ -98,8 +98,11 @@ public class HandleBank extends BankTask {
             Bank.withdraw(ItemID.XERICS_TALISMAN, 1, Bank.WithdrawMode.ITEM);
             break;
           }
+          // fall through
         case HARMONY_ISLAND:
+          // fall through
         case TROLL_STRONGHOLD:
+          // fall through
         case WEISS:
           runes.put(ItemID.AIR_RUNE, runes.get(ItemID.AIR_RUNE) + 1);
           runes.put(ItemID.EARTH_RUNE, runes.get(ItemID.EARTH_RUNE) + 1);
@@ -108,6 +111,7 @@ public class HandleBank extends BankTask {
         case PORT_PHASMATYS:
           Bank.withdraw(ItemID.ECTOPHIAL, 1, Bank.WithdrawMode.ITEM);
           break;
+        default:
       }
     }
 
@@ -122,12 +126,18 @@ public class HandleBank extends BankTask {
     }
 
     if (Bank.contains(ItemID.CRAFTING_CAPE, ItemID.CRAFTING_CAPET)) {
-      Bank.withdraw(dev.unethicalite.api.commons.Predicates.ids(ItemID.CRAFTING_CAPE, ItemID.CRAFTING_CAPET), 1, Bank.WithdrawMode.ITEM);
+      Bank.withdraw(
+          dev.unethicalite.api.commons.Predicates.ids(ItemID.CRAFTING_CAPE, ItemID.CRAFTING_CAPET),
+          1,
+          Bank.WithdrawMode.ITEM);
     }
   }
 
   private void withdrawSeeds() {
-    int quantityOfSeedsNeeded = plugin.getCurrentLocation() == null ? plugin.getLocationQueue().size() : plugin.getLocationQueue().size() + 1;
+    int quantityOfSeedsNeeded =
+        plugin.getCurrentLocation() == null
+            ? plugin.getLocationQueue().size()
+            : plugin.getLocationQueue().size() + 1;
     int withdrawn = 0;
     Set<String> seedsToKeep = Utils.parseStringList(config.seedsToKeep());
 
@@ -142,7 +152,10 @@ public class HandleBank extends BankTask {
         Set<String> manualSeeds = Utils.parseStringList(config.manualSeeds());
         seeds = Bank.getAll(Predicates.names(manualSeeds));
 
-        wantedPerSeed = config.manualSeedsSplit() ? (quantityOfSeedsNeeded + seeds.size() - 1) / seeds.size() : quantityOfSeedsNeeded;
+        wantedPerSeed =
+            config.manualSeedsSplit()
+                ? (quantityOfSeedsNeeded + seeds.size() - 1) / seeds.size()
+                : quantityOfSeedsNeeded;
       } else {
         seeds = Bank.getAll(Predicates.ids(Constants.HERB_SEED_IDS));
 
@@ -155,6 +168,7 @@ public class HandleBank extends BankTask {
           case HIGHEST_FIRST_PER_TWO:
             seeds.sort(Comparator.comparingInt(Item::getId).reversed());
             break;
+          default:
         }
 
         switch (config.seedsMode()) {
@@ -162,11 +176,15 @@ public class HandleBank extends BankTask {
           case HIGHEST_FIRST_PER_TWO:
             wantedPerSeed = 2;
             break;
+          default:
         }
       }
 
       for (Item seed : seeds) {
-        int quantity = seedsToKeep.contains(seed.getName()) ? seed.getQuantity() - config.amountToKeep() : seed.getQuantity();
+        int quantity =
+            seedsToKeep.contains(seed.getName())
+                ? seed.getQuantity() - config.amountToKeep()
+                : seed.getQuantity();
 
         if (quantity <= 0) {
           continue;

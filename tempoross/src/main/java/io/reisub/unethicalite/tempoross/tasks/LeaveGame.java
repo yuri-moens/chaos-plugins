@@ -16,8 +16,7 @@ import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
 
 public class LeaveGame extends Task {
-  @Inject
-  private Tempoross plugin;
+  @Inject private Tempoross plugin;
 
   @Override
   public String getStatus() {
@@ -44,13 +43,17 @@ public class LeaveGame extends Task {
     }
 
     TileObject buckets = TileObjects.getNearest(ObjectID.BUCKETS_40966);
-    if (buckets == null) return;
+    if (buckets == null) {
+      return;
+    }
 
     buckets.interact("Take-5");
     Time.sleepUntil(() -> Inventory.contains(ItemID.BUCKET), 100, 10000);
 
     NPC deri = NPCs.getNearest(NpcID.FIRST_MATE_DERI_10595);
-    if (deri == null) return;
+    if (deri == null) {
+      return;
+    }
 
     deri.interact("Leave");
     Time.sleepUntil(() -> plugin.isInDesert(), 20000);

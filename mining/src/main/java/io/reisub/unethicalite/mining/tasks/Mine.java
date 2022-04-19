@@ -27,24 +27,18 @@ import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.client.eventbus.Subscribe;
 
 public class Mine extends Task {
-  @Inject
-  private Mining plugin;
-
-  @Inject
-  private Config config;
-
-  private final Set<Integer> DROP_IDS = ImmutableSet.of(
-      ItemID.SANDSTONE_1KG,
-      ItemID.SANDSTONE_2KG,
-      ItemID.SANDSTONE_5KG,
-      ItemID.SANDSTONE_10KG,
-      ItemID.GRANITE_500G,
-      ItemID.GRANITE_2KG,
-      ItemID.GRANITE_5KG
-  );
-
+  private static final Set<Integer> DROP_IDS =
+      ImmutableSet.of(
+          ItemID.SANDSTONE_1KG,
+          ItemID.SANDSTONE_2KG,
+          ItemID.SANDSTONE_5KG,
+          ItemID.SANDSTONE_10KG,
+          ItemID.GRANITE_500G,
+          ItemID.GRANITE_2KG,
+          ItemID.GRANITE_5KG);
   private final AtomicInteger ticks = new AtomicInteger(0);
-
+  @Inject private Mining plugin;
+  @Inject private Config config;
   private LinkedList<RockPosition> rockPositions;
   private RockPosition currentRockPosition;
 
@@ -55,8 +49,7 @@ public class Mine extends Task {
 
   @Override
   public boolean validate() {
-    return !Inventory.isFull()
-        && isReady();
+    return !Inventory.isFull() && isReady();
   }
 
   @Override
@@ -83,7 +76,9 @@ public class Mine extends Task {
     }
 
     while (rock == null && config.location().isThreeTick()) {
-      rock = TileObjects.getFirstAt(currentRockPosition.getRock(), Predicates.ids(config.location().getRockIds()));
+      rock =
+          TileObjects.getFirstAt(
+              currentRockPosition.getRock(), Predicates.ids(config.location().getRockIds()));
     }
 
     if (rock == null || Inventory.isFull()) {
@@ -144,7 +139,8 @@ public class Mine extends Task {
       currentRockPosition = rockPositions.poll();
       rockPositions.add(currentRockPosition);
 
-      return TileObjects.getFirstAt(currentRockPosition.getRock(), Predicates.ids(config.location().getRockIds()));
+      return TileObjects.getFirstAt(
+          currentRockPosition.getRock(), Predicates.ids(config.location().getRockIds()));
     }
   }
 

@@ -10,8 +10,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "PIN",
       description = "Your bank PIN",
       secret = true,
-      position = 0
-  )
+      position = 0)
   default String bankPin() {
     return "1911";
   }

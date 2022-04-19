@@ -10,18 +10,12 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "location",
       name = "Location",
       description = "Choose what to mine and where",
-      position = 0
-  )
+      position = 0)
   default Location location() {
     return Location.QUARRY_SANDSTONE;
   }
 
-  @ConfigItem(
-      keyName = "drop",
-      name = "Drop",
-      description = "Enable to drop ores",
-      position = 1
-  )
+  @ConfigItem(keyName = "drop", name = "Drop", description = "Enable to drop ores", position = 1)
   default boolean drop() {
     return false;
   }
@@ -30,8 +24,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
-      position = Integer.MAX_VALUE
-  )
+      position = Integer.MAX_VALUE)
   default Button startButton() {
     return new Button();
   }

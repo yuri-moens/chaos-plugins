@@ -15,14 +15,12 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Enchanter",
     description = "Such an enchanting plugin",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Enchanter extends TickScript {
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {

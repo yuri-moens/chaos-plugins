@@ -19,17 +19,13 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos MTA",
     description = "Like Hogwarts, but in RuneScape",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Mta extends TickScript {
-  @Inject
-  private Config config;
-
   public static final int MTA_REGION = 13462;
-
+  @Inject private Config config;
   private TelekineticGrab telekineticGrab;
   private BonesTo bonesTo;
 

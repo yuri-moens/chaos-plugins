@@ -12,8 +12,7 @@ import javax.inject.Inject;
 import net.runelite.api.Item;
 
 public class MakePotion extends Task {
-  @Inject
-  private Herblore plugin;
+  @Inject private Herblore plugin;
 
   @Override
   public String getStatus() {
@@ -35,7 +34,9 @@ public class MakePotion extends Task {
     List<Item> secondaries = Inventory.getAll(plugin.getSecondaryIds());
     List<Item> bases = Inventory.getAll(plugin.getBaseIds());
 
-    if (secondaries.size() == 0 || bases.size() == 0) return;
+    if (secondaries.size() == 0 || bases.size() == 0) {
+      return;
+    }
 
     secondaries.get(0).useOn(bases.get(0));
     Time.sleepTicksUntil(Production::isOpen, 5);

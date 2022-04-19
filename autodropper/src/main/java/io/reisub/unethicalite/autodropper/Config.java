@@ -32,14 +32,12 @@ import net.runelite.client.config.ConfigItem;
 import net.runelite.client.config.Keybind;
 
 @ConfigGroup("chaosautodropper")
-
 public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "items",
       name = "Items",
       description = "List of items, can use IDs or names, separated by newline, comma or semicolon",
-      position = 0
-  )
+      position = 0)
   default String items() {
     return "Empty plant pot\nPotato seed\nOnion seed\nCabbage seed\nTomato seed\nSweetcorn seed\n"
         + "Marigold seed\nRosemary seed\nNasturtium seed\nWoad seed\nRedberry seed\n"
@@ -50,8 +48,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "dropMethod",
       name = "Auto drop method",
       description = "Choose the automatic drop method.",
-      position = 1
-  )
+      position = 1)
   default DropMethod dropMethod() {
     return DropMethod.NONE;
   }
@@ -60,8 +57,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "dropEnableHotkey",
       name = "Enable hotkey",
       description = "Enable dropping on hotkey.",
-      position = 2
-  )
+      position = 2)
   default boolean dropEnableHotkey() {
     return false;
   }
@@ -72,8 +68,7 @@ public interface Config extends net.runelite.client.config.Config {
       description = "Choose the hotkey.",
       hidden = true,
       unhide = "dropEnableHotkey",
-      position = 3
-  )
+      position = 3)
   default Keybind dropHotkey() {
     return new Keybind(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK);
   }

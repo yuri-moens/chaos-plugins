@@ -19,14 +19,12 @@ import javax.inject.Inject;
 @PluginDescriptor(
     name = "Chaos Fighter",
     description = "Don't talk about this one",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Fighter extends TickScript {
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
@@ -60,7 +58,8 @@ public class Fighter extends TickScript {
     }
 
     if (isRunning()) {
-      Static.getClient().createMenuEntry(-1)
+      Static.getClient()
+          .createMenuEntry(-1)
           .setOption("Stop Fighter")
           .setTarget(event.getTarget())
           .setIdentifier(0)
@@ -68,7 +67,8 @@ public class Fighter extends TickScript {
           .setParam1(0)
           .setType(MenuAction.RUNELITE);
     } else {
-      Static.getClient().createMenuEntry(-1)
+      Static.getClient()
+          .createMenuEntry(-1)
           .setOption("Start Fighter")
           .setTarget(event.getTarget())
           .setIdentifier(0)

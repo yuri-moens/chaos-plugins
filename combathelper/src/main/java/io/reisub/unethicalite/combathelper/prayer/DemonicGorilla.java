@@ -21,19 +21,9 @@ class DemonicGorilla {
   static final int PROJECTILE_MAGIC_DELAY = 12; // Requires an extra 12 tiles
   static final int PROJECTILE_RANGED_DELAY = 9; // Requires an extra 9 tiles
 
-  static final AttackStyle[] ALL_REGULAR_ATTACK_STYLES =
-      {
-          AttackStyle.MELEE,
-          AttackStyle.RANGED,
-          AttackStyle.MAGIC
-      };
-
-  enum AttackStyle {
-    MAGIC,
-    RANGED,
-    MELEE,
-    BOULDER
-  }
+  static final AttackStyle[] ALL_REGULAR_ATTACK_STYLES = {
+    AttackStyle.MELEE, AttackStyle.RANGED, AttackStyle.MAGIC
+  };
 
   @Getter(AccessLevel.PACKAGE)
   private NPC npc;
@@ -108,5 +98,12 @@ class DemonicGorilla {
       return composition.getOverheadIcon();
     }
     return null;
+  }
+
+  enum AttackStyle {
+    MAGIC,
+    RANGED,
+    MELEE,
+    BOULDER
   }
 }

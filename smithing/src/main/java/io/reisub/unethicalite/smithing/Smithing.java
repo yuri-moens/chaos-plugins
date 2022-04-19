@@ -25,14 +25,12 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Smithing",
     description = "I shall make weapons from your bones!",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Smithing extends TickScript {
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
@@ -56,7 +54,8 @@ public class Smithing extends TickScript {
       return;
     }
 
-    if (Inventory.getCount(config.metal().getBarId()) < config.product().getRequiredBars() && currentActivity == Activity.SMITHING) {
+    if (Inventory.getCount(config.metal().getBarId()) < config.product().getRequiredBars()
+        && currentActivity == Activity.SMITHING) {
       setActivity(Activity.IDLE);
     }
   }
@@ -72,6 +71,7 @@ public class Smithing extends TickScript {
       case AnimationID.SMITHING_IMCANDO_HAMMER:
         setActivity(Activity.SMITHING);
         break;
+      default:
     }
   }
 }

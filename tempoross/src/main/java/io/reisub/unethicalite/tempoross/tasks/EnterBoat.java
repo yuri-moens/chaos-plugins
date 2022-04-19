@@ -13,8 +13,7 @@ import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
 
 public class EnterBoat extends Task {
-  @Inject
-  private Tempoross plugin;
+  @Inject private Tempoross plugin;
 
   @Override
   public String getStatus() {
@@ -23,8 +22,7 @@ public class EnterBoat extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.isInDesert()
-        && (plugin.getPlayersReady() == 0 || Dialog.canContinueNPC());
+    return plugin.isInDesert() && (plugin.getPlayersReady() == 0 || Dialog.canContinueNPC());
   }
 
   @Override

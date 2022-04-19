@@ -24,12 +24,14 @@ public class EmptyPouch extends Task {
 
   @Override
   public void execute() {
-    Inventory.getAll(Predicates.ids(Constants.ESSENCE_POUCH_IDS)).forEach((i) -> i.interact("Empty"));
+    Inventory.getAll(Predicates.ids(Constants.ESSENCE_POUCH_IDS))
+        .forEach((i) -> i.interact("Empty"));
 
     if (Static.getClient().getTickCount() > Zmi.lastEmpty + 10) {
       Time.sleepTicksUntil(Inventory::isFull, 3);
     } else {
-      if (!Time.sleepTicksUntil(() -> Inventory.contains(Predicates.ids(Constants.ESSENCE_IDS)), 3)) {
+      if (!Time.sleepTicksUntil(
+          () -> Inventory.contains(Predicates.ids(Constants.ESSENCE_IDS)), 3)) {
         Zmi.pouchesAreEmpty = true;
       }
     }

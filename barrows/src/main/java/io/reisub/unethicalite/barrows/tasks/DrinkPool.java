@@ -25,15 +25,13 @@ public class DrinkPool extends Task {
     return Utils.isInRegion(Barrows.FEROX_ENCLAVE_REGIONS)
         && Skills.getBoostedLevel(Skill.PRAYER) < Skills.getLevel(Skill.PRAYER)
         && (pool = TileObjects.getNearest(Predicates.ids(Constants.REJUVENATION_POOL_IDS))) != null;
-
   }
 
   @Override
   public void execute() {
     GameThread.invoke(() -> pool.interact("Drink"));
     Time.sleepTicksUntil(
-        () -> Skills.getBoostedLevel(Skill.PRAYER) == Skills.getLevel(Skill.PRAYER), 20
-    );
+        () -> Skills.getBoostedLevel(Skill.PRAYER) == Skills.getLevel(Skill.PRAYER), 20);
     Time.sleepTicks(3);
   }
 }

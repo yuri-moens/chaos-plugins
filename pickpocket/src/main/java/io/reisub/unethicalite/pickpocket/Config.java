@@ -10,19 +10,17 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "target",
       name = "Target",
       description = "Select pickpocket target",
-      position = 0
-  )
+      position = 0)
   default Target target() {
     return Target.MASTER_FARMER;
   }
 
   @ConfigItem(
-      keyName = "eatHP",
+      keyName = "eatHp",
       name = "Eat HP",
       description = "HP to eat or bank at",
-      position = 1
-  )
-  default int eatHP() {
+      position = 1)
+  default int eatHp() {
     return 10;
   }
 
@@ -30,8 +28,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "food",
       name = "Food",
       description = "Choose what food to eat",
-      position = 2
-  )
+      position = 2)
   default String food() {
     return "Lobster";
   }
@@ -40,8 +37,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "foodQuantity",
       name = "Quantity",
       description = "Choose how much food to take from bank",
-      position = 3
-  )
+      position = 3)
   default int foodQuantity() {
     return 5;
   }
@@ -50,8 +46,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "healAtBank",
       name = "Heal at bank",
       description = "Heal at bank and don't take food with us when thieving",
-      position = 4
-  )
+      position = 4)
   default boolean healAtBank() {
     return false;
   }
@@ -60,8 +55,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "dodgyNecklacesQuantity",
       name = "Dodgy necklaces",
       description = "Choose how many Dodgy necklaces to take from bank, including the one equipped",
-      position = 5
-  )
+      position = 5)
   default int dodgyNecklacesQuantity() {
     return 0;
   }
@@ -70,8 +64,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "castShadowVeil",
       name = "Cast Shadow Veil",
       description = "Enable to keep the Shadow Veil buff up while thieving",
-      position = 6
-  )
+      position = 6)
   default boolean castShadowVeil() {
     return false;
   }
@@ -80,8 +73,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
-      position = Integer.MAX_VALUE
-  )
+      position = Integer.MAX_VALUE)
   default Button startButton() {
     return new Button();
   }

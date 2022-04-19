@@ -12,7 +12,7 @@ import dev.unethicalite.api.packets.DialogPackets;
 import dev.unethicalite.api.widgets.Widgets;
 import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.utils.Constants;
-import io.reisub.unethicalite.utils.api.CBank;
+import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.api.Predicates;
 import java.time.Duration;
 import java.time.Instant;
@@ -74,7 +74,9 @@ public abstract class BankTask extends Task {
     } else {
       bankNpc = getBankNpc();
 
-      if (bankNpc == null) return false;
+      if (bankNpc == null) {
+        return false;
+      }
 
       if (bankNpc.hasAction("Bank")) {
         GameThread.invoke(() -> bankNpc.interact("Bank"));
@@ -84,7 +86,8 @@ public abstract class BankTask extends Task {
     }
 
     if (movingCheck > 0) {
-      if (!Time.sleepTicksUntil(() -> Bank.isOpen() || Players.getLocal().isMoving(), movingCheck)) {
+      if (!Time.sleepTicksUntil(
+          () -> Bank.isOpen() || Players.getLocal().isMoving(), movingCheck)) {
         return false;
       }
     }
@@ -137,7 +140,12 @@ public abstract class BankTask extends Task {
     GameThread.invoke(() -> bankNpc.interact("Bank"));
 
     if (movingCheck > 0) {
-      if (!Time.sleepTicksUntil(() -> Bank.isOpen() || Players.getLocal().isMoving() || Widgets.isVisible(Widgets.get(WidgetID.BANK_PIN_GROUP_ID, 0)), movingCheck)) {
+      if (!Time.sleepTicksUntil(
+          () ->
+              Bank.isOpen()
+                  || Players.getLocal().isMoving()
+                  || Widgets.isVisible(Widgets.get(WidgetID.BANK_PIN_GROUP_ID, 0)),
+          movingCheck)) {
         return false;
       }
     }
@@ -178,7 +186,7 @@ public abstract class BankTask extends Task {
       return;
     }
 
-    CBank.bankInventoryInteract(potion, "Drink");
+    ChaosBank.bankInventoryInteract(potion, "Drink");
     Time.sleepTick();
 
     Bank.depositAll(Predicates.ids(Constants.STAMINA_POTION_IDS));

@@ -16,8 +16,7 @@ import javax.inject.Inject;
 import net.runelite.api.TileObject;
 
 public class OpenTomb extends Task {
-  @Inject
-  private Barrows plugin;
+  @Inject private Barrows plugin;
 
   @Override
   public String getStatus() {
@@ -28,9 +27,7 @@ public class OpenTomb extends Task {
   public boolean validate() {
     Brother brother = Brother.getBrotherByCrypt();
 
-    return brother != null
-        && !brother.isDead()
-        && Static.getClient().getHintArrowNpc() == null;
+    return brother != null && !brother.isDead() && Static.getClient().getHintArrowNpc() == null;
   }
 
   @Override
@@ -58,10 +55,7 @@ public class OpenTomb extends Task {
       }
 
       if (isLastBrother) {
-        Dialog.invokeDialog(
-            DialogOption.PLAIN_CONTINUE,
-            DialogOption.CHAT_OPTION_ONE
-        );
+        Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE, DialogOption.CHAT_OPTION_ONE);
 
         Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getPlane() != 3, 5);
       } else {

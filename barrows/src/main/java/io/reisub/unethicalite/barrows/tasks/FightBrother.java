@@ -19,11 +19,9 @@ import net.runelite.api.NPC;
 import net.runelite.api.coords.WorldPoint;
 
 public class FightBrother extends Task {
-  @Inject
-  private Barrows plugin;
+  @Inject private Barrows plugin;
 
-  @Inject
-  private CombatHelper combatHelper;
+  @Inject private CombatHelper combatHelper;
 
   @Override
   public String getStatus() {
@@ -55,9 +53,9 @@ public class FightBrother extends Task {
 
     GameThread.invoke(() -> Static.getClient().getHintArrowNpc().interact("Attack"));
     if (!Time.sleepTicksUntil(() -> Players.getLocal().getInteracting() != null, 3)) {
-      NPC brother = NPCs.getNearest(n ->
-          n.getInteracting() != null && n.getInteracting() == Players.getLocal()
-      );
+      NPC brother =
+          NPCs.getNearest(
+              n -> n.getInteracting() != null && n.getInteracting() == Players.getLocal());
 
       if (brother == null) {
         System.out.println("failed to attack and interacting with us is null");
@@ -78,7 +76,9 @@ public class FightBrother extends Task {
         && currentLocation.getPlane() == 3
         && !currentLocation.equals(currentBrother.getPointNextToStairs())
         && Reachable.isWalkable(currentBrother.getPointNextToStairs())
-        && !Static.getClient().getHintArrowNpc().getWorldLocation()
+        && !Static.getClient()
+            .getHintArrowNpc()
+            .getWorldLocation()
             .equals(currentBrother.getPointNextToStairs())) {
       Time.sleepTicks(2);
       Movement.walk(currentBrother.getPointNextToStairs());

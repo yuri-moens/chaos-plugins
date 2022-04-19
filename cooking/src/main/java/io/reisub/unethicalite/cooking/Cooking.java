@@ -26,27 +26,19 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Cooking",
     description = "It's fucking raw!",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Cooking extends TickScript {
-  @Inject
-  private Config config;
+  @Inject private Config config;
+  @Getter @Setter private int lastBank;
+  @Getter @Setter private int lastDrop;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  @Getter
-  @Setter
-  private int lastBank;
-
-  @Getter
-  @Setter
-  private int lastDrop;
 
   @Override
   protected void onStart() {
@@ -60,22 +52,27 @@ public class Cooking extends TickScript {
 
   @Subscribe
   private void onAnimationChanged(AnimationChanged event) {
-    if (!Utils.isLoggedIn() || event.getActor() != Players.getLocal()) return;
+    if (!Utils.isLoggedIn() || event.getActor() != Players.getLocal()) {
+      return;
+    }
 
     switch (Players.getLocal().getAnimation()) {
       case AnimationID.COOKING_FIRE:
       case AnimationID.COOKING_RANGE:
         setActivity(Activity.COOKING);
+        break;
+      default:
     }
   }
 
   @Subscribe
   private void onItemContainerChanged(ItemContainerChanged event) {
-    if (!Utils.isLoggedIn()) return;
+    if (!Utils.isLoggedIn()) {
+      return;
+    }
 
     if (currentActivity == Activity.COOKING && !Inventory.contains(config.foodId())) {
       setActivity(Activity.IDLE);
     }
   }
-
 }

@@ -12,8 +12,7 @@ import net.runelite.api.widgets.WidgetID;
 import net.runelite.client.eventbus.Subscribe;
 
 public class TeleportToFeroxEnclave extends Task {
-  @Inject
-  private Barrows plugin;
+  @Inject private Barrows plugin;
 
   private boolean finished = false;
 

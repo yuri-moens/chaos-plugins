@@ -1,7 +1,7 @@
 # Barrows
 
-Does what you expect it to do. Has a dependency on the CombatHelper plugin. This plugin does gear swapping,
-prayer flicking and swapping and eating. It current only supports Ferox Enclave and teleporting so you will need:
+Does what you expect it to do. Has a dependency on the CombatHelper plugin. This plugin does gear swapping, prayer
+flicking and swapping and eating. It current only supports Ferox Enclave and teleporting so you will need:
 
 * Dueling rings
 * Barrows teleport tablets OR runes and be on the Arceeus spellbook **OR**

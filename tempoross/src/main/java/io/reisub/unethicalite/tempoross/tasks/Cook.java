@@ -8,7 +8,7 @@ import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.game.Game;
 import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.tempoross.Tempoross;
-import io.reisub.unethicalite.utils.api.CMovement;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
@@ -20,8 +20,7 @@ import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
 
 public class Cook extends Task {
-  @Inject
-  private Tempoross plugin;
+  @Inject private Tempoross plugin;
 
   @Override
   public String getStatus() {
@@ -30,43 +29,61 @@ public class Cook extends Task {
 
   @Override
   public boolean validate() {
-    if (!plugin.isInTemporossArea()) return false;
+    if (!plugin.isInTemporossArea()) {
+      return false;
+    }
 
-    if (plugin.getRawFish() == 0) return false;
+    if (plugin.getRawFish() == 0) {
+      return false;
+    }
 
-    if (plugin.getCurrentActivity() == Activity.ATTACKING) return false;
+    if (plugin.getCurrentActivity() == Activity.ATTACKING) {
+      return false;
+    }
 
     if (plugin.getPhase() == 1
         && plugin.getEnergy() < 100
         && plugin.getRawFish() + plugin.getCookedFish() >= 19
         && plugin.getCurrentActivity() == Activity.FISHING
-        && (93 - plugin.getStormIntensity()) > plugin.getCookedFishRequired() - plugin.getCookedFish()
-    ) return false;
+        && (93 - plugin.getStormIntensity())
+            > plugin.getCookedFishRequired() - plugin.getCookedFish()) {
+      return false;
+    }
 
     if (plugin.getPhase() == 1
         && plugin.getEnergy() < 100
         && plugin.getRawFish() + plugin.getCookedFish() >= 19
-        && (plugin.getCurrentActivity() == Activity.FISHING || plugin.getCurrentActivity() == Activity.IDLE)
-    ) return true;
+        && (plugin.getCurrentActivity() == Activity.FISHING
+            || plugin.getCurrentActivity() == Activity.IDLE)) {
+      return true;
+    }
 
     if (plugin.getPhase() == 2
         && plugin.getCookedFishRequired() > 0
         && plugin.getCookedFishRequired() != 19
         && plugin.getRawFish() + plugin.getCookedFish() >= plugin.getCookedFishRequired()
-        && (plugin.getCurrentActivity() == Activity.FISHING || plugin.getCurrentActivity() == Activity.IDLE)
-    ) return true;
+        && (plugin.getCurrentActivity() == Activity.FISHING
+            || plugin.getCurrentActivity() == Activity.IDLE)) {
+      return true;
+    }
 
-    NPC doubleSpot = NPCs.getNearest((n) -> n.getId() == NpcID.FISHING_SPOT_10569 && plugin.getIslandArea().contains(n));
+    NPC doubleSpot =
+        NPCs.getNearest(
+            (n) -> n.getId() == NpcID.FISHING_SPOT_10569 && plugin.getIslandArea().contains(n));
 
     if (doubleSpot != null
         && !Inventory.isFull()
-        && !(plugin.getPhase() == 1 && plugin.getCookedFishRequired() == 19 && plugin.getRawFish() + plugin.getCookedFish() >= 19)
-    ) return false;
+        && !(plugin.getPhase() == 1
+            && plugin.getCookedFishRequired() == 19
+            && plugin.getRawFish() + plugin.getCookedFish() >= 19)) {
+      return false;
+    }
 
     if (plugin.getCurrentActivity() == Activity.FISHING
         && Inventory.getCount(ItemID.RAW_HARPOONFISH) >= 9
-        && doubleSpot == null
-    ) return true;
+        && doubleSpot == null) {
+      return true;
+    }
 
     return plugin.getCurrentActivity() == Activity.IDLE;
   }
@@ -76,28 +93,46 @@ public class Cook extends Task {
     WorldPoint target = plugin.getDudiPos().dx(7).dy(16);
 
     if (Players.getLocal().getWorldLocation().getY() < target.getY() - 5) {
-      CMovement.sendMovementPacket(target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
+      ChaosMovement.sendMovementPacket(target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
 
       if (!Time.sleepUntil(() -> Players.getLocal().isMoving(), 1500)) {
         return;
       }
 
-      Time.sleepUntil(() -> Players.getLocal().getWorldLocation().getY() >= target.getY() - Rand.nextInt(4, 6) || plugin.isWaveIncoming(), 10000);
+      Time.sleepUntil(
+          () ->
+              Players.getLocal().getWorldLocation().getY() >= target.getY() - Rand.nextInt(4, 6)
+                  || plugin.isWaveIncoming(),
+          10000);
     }
 
-    NPC doubleSpot = NPCs.getNearest((n) -> n.getId() == NpcID.FISHING_SPOT_10569 && plugin.getIslandArea().contains(n));
+    NPC doubleSpot =
+        NPCs.getNearest(
+            (n) -> n.getId() == NpcID.FISHING_SPOT_10569 && plugin.getIslandArea().contains(n));
 
     if (doubleSpot != null
         && !Inventory.isFull()
-        && !(plugin.getPhase() == 1 && plugin.getCookedFishRequired() == 19 && plugin.getRawFish() + plugin.getCookedFish() >= 19)
-    ) return;
+        && !(plugin.getPhase() == 1
+            && plugin.getCookedFishRequired() == 19
+            && plugin.getRawFish() + plugin.getCookedFish() >= 19)) {
+      return;
+    }
 
-    if (plugin.isWaveIncoming()) return;
+    if (plugin.isWaveIncoming()) {
+      return;
+    }
 
     TileObject shrine = TileObjects.getNearest(ObjectID.SHRINE_41236);
-    if (shrine == null) return;
+    if (shrine == null) {
+      return;
+    }
 
     shrine.interact(0);
-    Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.COOKING || plugin.isWaveIncoming() || plugin.getLastDoubleSpawn() + 3 >= Game.getClient().getTickCount(), 10000);
+    Time.sleepUntil(
+        () ->
+            plugin.getCurrentActivity() == Activity.COOKING
+                || plugin.isWaveIncoming()
+                || plugin.getLastDoubleSpawn() + 3 >= Game.getClient().getTickCount(),
+        10000);
   }
 }

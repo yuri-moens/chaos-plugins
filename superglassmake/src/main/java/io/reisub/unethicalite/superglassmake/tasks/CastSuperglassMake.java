@@ -15,8 +15,7 @@ import net.runelite.api.ItemID;
 import net.runelite.api.TileItem;
 
 public class CastSuperglassMake extends Task {
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public String getStatus() {
@@ -37,7 +36,8 @@ public class CastSuperglassMake extends Task {
     Time.sleepTicks(3);
 
     if (config.pickupGlass()) {
-      List<TileItem> glass = TileItems.getAt(Players.getLocal().getWorldLocation(), ItemID.MOLTEN_GLASS);
+      List<TileItem> glass =
+          TileItems.getAt(Players.getLocal().getWorldLocation(), ItemID.MOLTEN_GLASS);
       for (TileItem tileItem : glass.subList(0, Math.min(glass.size(), Inventory.getFreeSlots()))) {
         tileItem.interact("Take");
         Time.sleepTick();

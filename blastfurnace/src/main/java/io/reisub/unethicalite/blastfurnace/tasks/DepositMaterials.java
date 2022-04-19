@@ -18,13 +18,9 @@ import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
 
 public class DepositMaterials extends Task {
-  @Inject
-  private BlastFurnace plugin;
-
-  @Inject
-  private Config config;
-
   private static final String CONVEYER_BELT_ACTION = "Put-ore-on";
+  @Inject private BlastFurnace plugin;
+  @Inject private Config config;
 
   @Override
   public String getStatus() {

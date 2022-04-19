@@ -14,8 +14,7 @@ import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
 
 public class FillBuckets extends Task {
-  @Inject
-  private Tempoross plugin;
+  @Inject private Tempoross plugin;
 
   @Override
   public String getStatus() {
@@ -24,15 +23,25 @@ public class FillBuckets extends Task {
 
   @Override
   public boolean validate() {
-    if (!Inventory.contains(ItemID.BUCKET)) return false;
+    if (!Inventory.contains(ItemID.BUCKET)) {
+      return false;
+    }
 
-    if (plugin.getCurrentActivity() == Activity.FILLING_BUCKETS) return false;
+    if (plugin.getCurrentActivity() == Activity.FILLING_BUCKETS) {
+      return false;
+    }
 
-    if (plugin.isOnBoat()) return true;
+    if (plugin.isOnBoat()) {
+      return true;
+    }
 
     int filledBuckets = Inventory.getCount(ItemID.BUCKET_OF_WATER);
-    int fires = NPCs.getAll((n) -> n.getId() == NpcID.FIRE_8643
-        && (plugin.getIslandArea().contains(n) || plugin.getBoatArea().contains(n))).size();
+    int fires =
+        NPCs.getAll(
+                (n) ->
+                    n.getId() == NpcID.FIRE_8643
+                        && (plugin.getIslandArea().contains(n) || plugin.getBoatArea().contains(n)))
+            .size();
 
     return plugin.isInTemporossArea() && filledBuckets < fires;
   }
@@ -40,11 +49,16 @@ public class FillBuckets extends Task {
   @Override
   public void execute() {
     TileObject pump = TileObjects.getNearest(ObjectID.WATER_PUMP_41000, ObjectID.WATER_PUMP_41004);
-    if (pump == null) return;
+    if (pump == null) {
+      return;
+    }
 
     pump.interact(0);
 
-    if (!Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.FILLING_BUCKETS, 15000)) return;
+    if (!Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.FILLING_BUCKETS, 15000)) {
+      return;
+    }
+
     Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 5000);
   }
 }

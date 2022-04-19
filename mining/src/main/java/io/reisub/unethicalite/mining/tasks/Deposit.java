@@ -16,14 +16,14 @@ import net.runelite.api.events.ChatMessage;
 import net.runelite.client.eventbus.Subscribe;
 
 public class Deposit extends Task {
-  private final Set<Integer> SANDSTONE_IDS = ImmutableSet.of(
-      ItemID.SANDSTONE_1KG,
-      ItemID.SANDSTONE_2KG,
-      ItemID.SANDSTONE_5KG,
-      ItemID.SANDSTONE_10KG,
-      ItemID.SANDSTONE_20KG,
-      ItemID.SANDSTONE_32KG
-  );
+  private static final Set<Integer> SANDSTONE_IDS =
+      ImmutableSet.of(
+          ItemID.SANDSTONE_1KG,
+          ItemID.SANDSTONE_2KG,
+          ItemID.SANDSTONE_5KG,
+          ItemID.SANDSTONE_10KG,
+          ItemID.SANDSTONE_20KG,
+          ItemID.SANDSTONE_32KG);
 
   private boolean interrupted;
 
@@ -34,8 +34,7 @@ public class Deposit extends Task {
 
   @Override
   public boolean validate() {
-    return Inventory.isFull()
-        && Inventory.contains(Predicates.ids(SANDSTONE_IDS));
+    return Inventory.isFull() && Inventory.contains(Predicates.ids(SANDSTONE_IDS));
   }
 
   @Override

@@ -39,9 +39,12 @@ public class HarvestSeaweed extends Task {
       int count = TileObjects.getAll((o) -> o.hasAction("Pick")).size();
 
       GameThread.invoke(() -> seaweed.interact("Pick"));
-      Time.sleepTicksUntil(() -> TileObjects.getAll((o) -> o.hasAction("Pick")).size() < count
-          || (config.pickupSpores() && TileItems.getNearest(ItemID.SEAWEED_SPORE) != null)
-          || Inventory.isFull(), 120);
+      Time.sleepTicksUntil(
+          () ->
+              TileObjects.getAll((o) -> o.hasAction("Pick")).size() < count
+                  || (config.pickupSpores() && TileItems.getNearest(ItemID.SEAWEED_SPORE) != null)
+                  || Inventory.isFull(),
+          120);
     } else {
       int count = TileObjects.getAll("Dead seaweed").size();
 

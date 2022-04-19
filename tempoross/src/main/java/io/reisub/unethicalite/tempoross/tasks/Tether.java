@@ -11,8 +11,7 @@ import net.runelite.api.NullObjectID;
 import net.runelite.api.TileObject;
 
 public class Tether extends Task {
-  @Inject
-  private Tempoross plugin;
+  @Inject private Tempoross plugin;
 
   @Override
   public String getStatus() {
@@ -21,7 +20,9 @@ public class Tether extends Task {
 
   @Override
   public boolean validate() {
-    if (!plugin.isInTemporossArea()) return false;
+    if (!plugin.isInTemporossArea()) {
+      return false;
+    }
 
     return plugin.isWaveIncoming()
         && plugin.getCurrentActivity() != Activity.TETHERING_MAST
@@ -30,10 +31,18 @@ public class Tether extends Task {
 
   @Override
   public void execute() {
-    TileObject tetherObject = TileObjects.getNearest(NullObjectID.NULL_41352, NullObjectID.NULL_41353, NullObjectID.NULL_41354, NullObjectID.NULL_41355);
-    if (tetherObject == null) return;
+    TileObject tetherObject =
+        TileObjects.getNearest(
+            NullObjectID.NULL_41352,
+            NullObjectID.NULL_41353,
+            NullObjectID.NULL_41354,
+            NullObjectID.NULL_41355);
+    if (tetherObject == null) {
+      return;
+    }
 
-    if (plugin.getCurrentActivity() != Activity.IDLE && plugin.getPreviousActivity() != Activity.REPAIRING) {
+    if (plugin.getCurrentActivity() != Activity.IDLE
+        && plugin.getPreviousActivity() != Activity.REPAIRING) {
       int waitTicks = 10 - (Players.getLocal().distanceTo(tetherObject) / 2);
       Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, waitTicks);
     }

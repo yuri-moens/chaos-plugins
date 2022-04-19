@@ -16,13 +16,13 @@ import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 
 public class Enchant extends Task {
-  private final Set<Integer> ENCHANT_ITEM_IDS = ImmutableSet.of(
-      ItemID.PENTAMID,
-      ItemID.CUBE,
-      ItemID.CYLINDER,
-      ItemID.ICOSAHEDRON,
-      ItemID.DRAGONSTONE_6903
-  );
+  private static final Set<Integer> ENCHANT_ITEM_IDS =
+      ImmutableSet.of(
+          ItemID.PENTAMID,
+          ItemID.CUBE,
+          ItemID.CYLINDER,
+          ItemID.ICOSAHEDRON,
+          ItemID.DRAGONSTONE_6903);
 
   private int last;
 

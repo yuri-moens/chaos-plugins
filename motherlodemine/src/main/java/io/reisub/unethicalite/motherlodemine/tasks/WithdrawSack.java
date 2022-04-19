@@ -12,8 +12,7 @@ import net.runelite.api.ItemID;
 import net.runelite.api.TileObject;
 
 public class WithdrawSack extends Task {
-  @Inject
-  private MotherlodeMine plugin;
+  @Inject private MotherlodeMine plugin;
 
   @Override
   public String getStatus() {
@@ -26,22 +25,22 @@ public class WithdrawSack extends Task {
         && !plugin.isUpstairs()
         && plugin.isSackFull()
         && !Inventory.contains(
-        ItemID.RUNITE_ORE,
-        ItemID.ADAMANTITE_ORE,
-        ItemID.MITHRIL_ORE,
-        ItemID.GOLD_ORE,
-        ItemID.COAL,
-        ItemID.UNCUT_SAPPHIRE,
-        ItemID.UNCUT_EMERALD,
-        ItemID.UNCUT_RUBY,
-        ItemID.UNCUT_DIAMOND,
-        ItemID.UNCUT_DRAGONSTONE
-    );
+            ItemID.RUNITE_ORE,
+            ItemID.ADAMANTITE_ORE,
+            ItemID.MITHRIL_ORE,
+            ItemID.GOLD_ORE,
+            ItemID.COAL,
+            ItemID.UNCUT_SAPPHIRE,
+            ItemID.UNCUT_EMERALD,
+            ItemID.UNCUT_RUBY,
+            ItemID.UNCUT_DIAMOND,
+            ItemID.UNCUT_DRAGONSTONE);
   }
 
   @Override
   public void execute() {
-    TileObject sack = TileObjects.getNearest(o -> o.getName().equals("Sack") && o.hasAction("Search"));
+    TileObject sack =
+        TileObjects.getNearest(o -> o.getName().equals("Sack") && o.hasAction("Search"));
     if (sack == null) {
       return;
     }

@@ -5,7 +5,7 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.mahoganyhomes.Config;
 import io.reisub.unethicalite.mahoganyhomes.MahoganyHomes;
-import io.reisub.unethicalite.utils.api.CMovement;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.Item;
@@ -13,11 +13,9 @@ import net.runelite.api.ItemID;
 import net.runelite.api.coords.WorldPoint;
 
 public class GoToHome extends Task {
-  @Inject
-  private MahoganyHomes plugin;
+  @Inject private MahoganyHomes plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public String getStatus() {
@@ -52,6 +50,6 @@ public class GoToHome extends Task {
       Time.sleepTicksUntil(() -> !current.equals(Players.getLocal().getWorldLocation()), 10);
     }
 
-    CMovement.walkTo(plugin.getCurrentHome().getLocation());
+    ChaosMovement.walkTo(plugin.getCurrentHome().getLocation());
   }
 }

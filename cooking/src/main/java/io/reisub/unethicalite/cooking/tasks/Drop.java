@@ -31,7 +31,6 @@ public class Drop extends Task {
         && (plugin.getCurrentActivity() == Activity.IDLE || count == 1)
         && (count > 0 || plugin.getLastBank() + 1 >= Game.getClient().getTickCount())
         && Game.getClient().getTickCount() >= plugin.getLastDrop() + 3;
-
   }
 
   @Override
@@ -40,7 +39,8 @@ public class Drop extends Task {
         && !Players.getLocal().getWorldLocation().equals(HOSIDIUS_COOKING_SPOT)) {
       Movement.walk(HOSIDIUS_COOKING_SPOT);
 
-      if (!Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(HOSIDIUS_COOKING_SPOT), 10)) {
+      if (!Time.sleepTicksUntil(
+          () -> Players.getLocal().getWorldLocation().equals(HOSIDIUS_COOKING_SPOT), 10)) {
         return;
       }
     }

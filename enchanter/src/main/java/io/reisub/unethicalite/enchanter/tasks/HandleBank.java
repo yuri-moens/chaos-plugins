@@ -6,7 +6,7 @@ import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.enchanter.Config;
 import io.reisub.unethicalite.enchanter.EnchantItem;
 import io.reisub.unethicalite.enchanter.Enchanter;
-import io.reisub.unethicalite.utils.api.CBank;
+import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.time.Duration;
@@ -15,11 +15,9 @@ import javax.inject.Inject;
 import net.runelite.api.ItemID;
 
 public class HandleBank extends BankTask {
-  @Inject
-  private Enchanter plugin;
+  @Inject private Enchanter plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public boolean validate() {
@@ -38,7 +36,7 @@ public class HandleBank extends BankTask {
   public void execute() {
     open();
 
-    CBank.depositAllExcept(
+    ChaosBank.depositAllExcept(
         false,
         ItemID.RUNE_POUCH,
         ItemID.RUNE_POUCH_23650,
@@ -48,8 +46,7 @@ public class HandleBank extends BankTask {
         ItemID.FIRE_RUNE,
         ItemID.BLOOD_RUNE,
         ItemID.SOUL_RUNE,
-        ItemID.COSMIC_RUNE
-    );
+        ItemID.COSMIC_RUNE);
 
     Set<Integer> ids;
 

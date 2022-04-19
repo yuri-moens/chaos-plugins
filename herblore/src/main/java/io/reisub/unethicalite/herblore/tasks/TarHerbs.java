@@ -13,8 +13,7 @@ import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 
 public class TarHerbs extends Task {
-  @Inject
-  private Herblore plugin;
+  @Inject private Herblore plugin;
 
   @Override
   public String getStatus() {

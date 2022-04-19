@@ -9,7 +9,7 @@ import dev.unethicalite.api.game.Combat;
 import dev.unethicalite.api.items.Equipment;
 import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.tempoross.Tempoross;
-import io.reisub.unethicalite.utils.api.CMovement;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.ArrayList;
@@ -25,8 +25,7 @@ import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
 
 public class Fish extends Task {
-  @Inject
-  private Tempoross plugin;
+  @Inject private Tempoross plugin;
 
   private NPC spot;
 
@@ -37,9 +36,13 @@ public class Fish extends Task {
 
   @Override
   public boolean validate() {
-    if (!plugin.isInTemporossArea() || Inventory.isFull()) return false;
+    if (!plugin.isInTemporossArea() || Inventory.isFull()) {
+      return false;
+    }
 
-    if (plugin.getPhase() >= 4) return false;
+    if (plugin.getPhase() >= 4) {
+      return false;
+    }
 
     spot = getNearestSafeSpot(NpcID.FISHING_SPOT_10569);
 
@@ -78,13 +81,17 @@ public class Fish extends Task {
         Time.sleep(400, 600);
       }
 
-      CMovement.sendMovementPacket(target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
+      ChaosMovement.sendMovementPacket(target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
 
       if (!Time.sleepUntil(() -> Players.getLocal().isMoving(), 1500)) {
         return;
       }
 
-      Time.sleepUntil(() -> Players.getLocal().getWorldLocation().getY() >= target.getY() - Rand.nextInt(4, 6) || plugin.isWaveIncoming(), 15000);
+      Time.sleepUntil(
+          () ->
+              Players.getLocal().getWorldLocation().getY() >= target.getY() - Rand.nextInt(4, 6)
+                  || plugin.isWaveIncoming(),
+          15000);
     }
 
     if (plugin.getPhase() >= 2) {
@@ -92,7 +99,12 @@ public class Fish extends Task {
     }
 
     if (Combat.getSpecEnergy() == 100
-        && Equipment.contains(ItemID.DRAGON_HARPOON, ItemID.DRAGON_HARPOON_OR, ItemID.INFERNAL_HARPOON, ItemID.INFERNAL_HARPOON_OR, ItemID.CRYSTAL_HARPOON)) {
+        && Equipment.contains(
+            ItemID.DRAGON_HARPOON,
+            ItemID.DRAGON_HARPOON_OR,
+            ItemID.INFERNAL_HARPOON,
+            ItemID.INFERNAL_HARPOON_OR,
+            ItemID.CRYSTAL_HARPOON)) {
       Combat.toggleSpec();
     }
 
@@ -110,8 +122,11 @@ public class Fish extends Task {
   }
 
   private NPC getNearestSafeSpot(int id) {
-    List<TileObject> fires = TileObjects.getAll((o) -> (o.getId() == NullObjectID.NULL_41006 || o.getId() == 37582)
-        && (plugin.getIslandArea().contains(o) || plugin.getBoatArea().contains(o)));
+    List<TileObject> fires =
+        TileObjects.getAll(
+            (o) ->
+                (o.getId() == NullObjectID.NULL_41006 || o.getId() == 37582)
+                    && (plugin.getIslandArea().contains(o) || plugin.getBoatArea().contains(o)));
 
     if (fires.size() == 0) {
       return NPCs.getNearest(id);
@@ -138,12 +153,12 @@ public class Fish extends Task {
     WorldPoint p = spot.getWorldLocation();
 
     for (WorldArea unsafeArea : unsafeAreas) {
-      if (
-          unsafeArea.contains(p.dx(1))
-              || unsafeArea.contains(p.dx(-1))
-              || unsafeArea.contains(p.dy(1))
-              || unsafeArea.contains(p.dy(-1))
-      ) return false;
+      if (unsafeArea.contains(p.dx(1))
+          || unsafeArea.contains(p.dx(-1))
+          || unsafeArea.contains(p.dy(1))
+          || unsafeArea.contains(p.dy(-1))) {
+        return false;
+      }
     }
 
     return true;

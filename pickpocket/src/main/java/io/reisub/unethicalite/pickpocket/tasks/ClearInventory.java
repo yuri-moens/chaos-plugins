@@ -20,10 +20,13 @@ public class ClearInventory extends Task {
     }
 
     return (Inventory.isFull() || Players.getLocal().getModelHeight() == 1000)
-        && (
-        Inventory.contains("Coin pouch")
-            || Inventory.contains(ItemID.DEATH_RUNE, ItemID.BLOOD_RUNE, ItemID.BLOOD_PINT, ItemID.COOKED_MYSTERY_MEAT, ItemID.JUG)
-    );
+        && (Inventory.contains("Coin pouch")
+            || Inventory.contains(
+                ItemID.DEATH_RUNE,
+                ItemID.BLOOD_RUNE,
+                ItemID.BLOOD_PINT,
+                ItemID.COOKED_MYSTERY_MEAT,
+                ItemID.JUG));
   }
 
   @Override
@@ -48,10 +51,12 @@ public class ClearInventory extends Task {
       }
     }
 
-    Inventory.getAll(ItemID.COOKED_MYSTERY_MEAT).forEach(i -> {
-      i.interact(0);
-      Time.sleepTicks(3);
-    });
+    Inventory.getAll(ItemID.COOKED_MYSTERY_MEAT)
+        .forEach(
+            i -> {
+              i.interact(0);
+              Time.sleepTicks(3);
+            });
 
     Inventory.getAll(ItemID.BLOOD_PINT).forEach(Item::drop);
     Inventory.getAll(ItemID.JUG).forEach(Item::drop);

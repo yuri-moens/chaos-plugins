@@ -18,11 +18,10 @@ import net.runelite.api.widgets.WidgetInfo;
 
 @AllArgsConstructor
 public class Smith extends Task {
+  private static final int PRIFDDINAS_REGION = 13150;
+  private static final WorldPoint PRIFDDINAS_ANVIL_LOCATION = new WorldPoint(3287, 6055, 0);
   private final Smithing plugin;
   private final Config config;
-
-  private final static int PRIFDDINAS_REGION = 13150;
-  private final static WorldPoint PRIFDDINAS_ANVIL_LOCATION = new WorldPoint(3287, 6055, 0);
 
   @Override
   public String getStatus() {
@@ -32,14 +31,17 @@ public class Smith extends Task {
   @Override
   public boolean validate() {
     return plugin.getCurrentActivity() == Activity.IDLE
-        && (Inventory.getCount(config.metal().getBarId()) >= config.product().getRequiredBars() || plugin.getPreviousActivity() == Activity.BANKING);
+        && (Inventory.getCount(config.metal().getBarId()) >= config.product().getRequiredBars()
+            || plugin.getPreviousActivity() == Activity.BANKING);
   }
 
   @Override
   public void execute() {
     TileObject anvil;
     if (Players.getLocal().getWorldLocation().getRegionID() == PRIFDDINAS_REGION) {
-      anvil = TileObjects.getFirstAt(PRIFDDINAS_ANVIL_LOCATION, (o) -> Constants.ANVIL_IDS.contains(o.getId()));
+      anvil =
+          TileObjects.getFirstAt(
+              PRIFDDINAS_ANVIL_LOCATION, (o) -> Constants.ANVIL_IDS.contains(o.getId()));
     } else {
       anvil = TileObjects.getNearest((o) -> Constants.ANVIL_IDS.contains(o.getId()));
     }
@@ -49,7 +51,8 @@ public class Smith extends Task {
     }
 
     anvil.interact(0);
-    Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetInfo.SMITHING_INVENTORY_ITEMS_CONTAINER)), 15);
+    Time.sleepTicksUntil(
+        () -> Widgets.isVisible(Widgets.get(WidgetInfo.SMITHING_INVENTORY_ITEMS_CONTAINER)), 15);
 
     Widget productWidget = Widgets.get(312, config.product().getInterfaceId());
     if (productWidget == null) {

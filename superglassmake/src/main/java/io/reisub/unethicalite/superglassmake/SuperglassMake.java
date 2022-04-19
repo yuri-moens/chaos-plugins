@@ -16,14 +16,12 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Superglass Make",
     description = "A super Superglass Make caster",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class SuperglassMake extends TickScript {
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {

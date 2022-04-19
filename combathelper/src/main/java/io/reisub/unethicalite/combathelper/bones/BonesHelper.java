@@ -36,14 +36,18 @@ public class BonesHelper extends Helper {
 
   @Subscribe
   private void onItemContainerChanged(ItemContainerChanged event) {
-    if (config.bones().getId() == -1 && config.ashes().getId() == -1) return;
+    if (config.bones().getId() == -1 && config.ashes().getId() == -1) {
+      return;
+    }
 
-    plugin.schedule(() -> {
-      Item buryItem = Inventory.getFirst(itemIds);
-      if (buryItem != null) {
-        buryItem.interact(0);
-      }
-    }, Rand.nextInt(0, 100));
+    plugin.schedule(
+        () -> {
+          Item buryItem = Inventory.getFirst(itemIds);
+          if (buryItem != null) {
+            buryItem.interact(0);
+          }
+        },
+        Rand.nextInt(0, 100));
   }
 
   private int[] parseItemIds() {

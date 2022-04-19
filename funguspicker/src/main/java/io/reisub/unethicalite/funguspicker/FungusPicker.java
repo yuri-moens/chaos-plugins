@@ -21,26 +21,20 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Fungus Picker",
     description = "This is so fun, guy!",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class FungusPicker extends TickScript {
-  @Inject
-  private Config config;
+  public static final WorldPoint FUNGUS_LOCATION = new WorldPoint(3667, 3255, 0);
+  public static final int MONASTERY_REGION = 10290;
+  public static final Set<Integer> VER_SINHAZA_REGION_IDS = ImmutableSet.of(14386, 14642);
+  @Inject private Config config;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  public static final WorldPoint FUNGUS_LOCATION = new WorldPoint(3667, 3255, 0);
-  public static final int MONASTERY_REGION = 10290;
-  public static final Set<Integer> VER_SINHAZA_REGION_IDS = ImmutableSet.of(
-      14386,
-      14642
-  );
 
   @Override
   protected void onStart() {

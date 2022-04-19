@@ -42,6 +42,7 @@ subprojects {
 
     configure<CheckstyleExtension> {
         toolVersion = "10.1"
+        maxWarnings = 0
         isShowViolations = true
         isIgnoreFailures = false
     }
@@ -99,6 +100,12 @@ subprojects {
     tasks {
         withType<JavaCompile> {
             options.encoding = "UTF-8"
+        }
+
+        withType<Checkstyle> {
+            group = "verification"
+
+            exclude("**/Location.java")
         }
 
         withType<AbstractArchiveTask> {

@@ -5,10 +5,8 @@ import java.util.Set;
 import lombok.Getter;
 
 public class ConfigList {
-  @Getter
-  private final Set<Integer> integers;
-  @Getter
-  private final Set<String> strings;
+  @Getter private final Set<Integer> integers;
+  @Getter private final Set<String> strings;
 
   private ConfigList() {
     integers = new LinkedHashSet<>();

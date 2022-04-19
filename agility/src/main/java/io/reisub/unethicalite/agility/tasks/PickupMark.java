@@ -13,8 +13,7 @@ import net.runelite.api.events.StatChanged;
 import net.runelite.client.eventbus.Subscribe;
 
 public class PickupMark extends Task {
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   private boolean failed;
   private TileItem mark;
@@ -32,8 +31,7 @@ public class PickupMark extends Task {
 
     mark = TileItems.getNearest("Mark of grace");
 
-    return mark != null
-        && config.courseSelection().isReachable(mark);
+    return mark != null && config.courseSelection().isReachable(mark);
   }
 
   @Override

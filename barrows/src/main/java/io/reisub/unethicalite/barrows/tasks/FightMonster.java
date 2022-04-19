@@ -17,14 +17,11 @@ import javax.inject.Inject;
 import net.runelite.api.NPC;
 
 public class FightMonster extends Task {
-  @Inject
-  private Barrows plugin;
+  @Inject private Barrows plugin;
 
-  @Inject
-  private CombatHelper combatHelper;
+  @Inject private CombatHelper combatHelper;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   private NPC target;
 
@@ -56,9 +53,9 @@ public class FightMonster extends Task {
       return target != null;
     }
 
-    target = NPCs.getNearest(n ->
-        n.getInteracting() != null && n.getInteracting().equals(Players.getLocal())
-    );
+    target =
+        NPCs.getNearest(
+            n -> n.getInteracting() != null && n.getInteracting().equals(Players.getLocal()));
 
     if (target == null || !Reachable.isInteractable(target)) {
       return false;

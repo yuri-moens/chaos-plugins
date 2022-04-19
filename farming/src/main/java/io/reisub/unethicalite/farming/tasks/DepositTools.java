@@ -16,8 +16,7 @@ import net.runelite.api.ItemID;
 import net.runelite.api.NPC;
 
 public class DepositTools extends Task {
-  @Inject
-  private Farming plugin;
+  @Inject private Farming plugin;
 
   @Override
   public String getStatus() {
@@ -53,7 +52,8 @@ public class DepositTools extends Task {
       Constants.TOOLS_DEPOSIT_BUCKET_WIDGET.get().interact("Store-5");
     }
 
-    if (Inventory.contains(ItemID.BOTTOMLESS_COMPOST_BUCKET, ItemID.BOTTOMLESS_COMPOST_BUCKET_22997)) {
+    if (Inventory.contains(
+        ItemID.BOTTOMLESS_COMPOST_BUCKET, ItemID.BOTTOMLESS_COMPOST_BUCKET_22997)) {
       Constants.TOOLS_DEPOSIT_BOTTOMLESS_BUCKET_WIDGET.get().interact(0);
     }
 

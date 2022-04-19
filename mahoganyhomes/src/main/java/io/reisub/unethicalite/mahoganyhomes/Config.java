@@ -10,8 +10,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "plank",
       name = "Plank",
       description = "Select the plank type",
-      position = 0
-  )
+      position = 0)
   default Plank plank() {
     return Plank.TEAK;
   }
@@ -20,8 +19,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
-      position = Integer.MAX_VALUE
-  )
+      position = Integer.MAX_VALUE)
   default Button startButton() {
     return new Button();
   }

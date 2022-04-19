@@ -13,13 +13,9 @@ public class Run extends Task {
   private int last;
   private int threshold;
 
-  @Getter
-  @Setter
-  private int min;
+  @Getter @Setter private int min;
 
-  @Getter
-  @Setter
-  private int max;
+  @Getter @Setter private int max;
 
   @Inject
   public Run() {

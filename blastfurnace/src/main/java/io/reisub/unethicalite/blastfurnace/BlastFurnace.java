@@ -23,23 +23,18 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Blast Furnace",
     description = "So anyway, I started blasting",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class BlastFurnace extends TickScript {
-  @Inject
-  private Config config;
+  @Inject private Config config;
+  @Getter @Setter private boolean expectingBars;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  @Getter
-  @Setter
-  private boolean expectingBars;
 
   @Override
   protected void onStart() {

@@ -20,11 +20,9 @@ import net.runelite.api.events.ChatMessage;
 import net.runelite.client.eventbus.Subscribe;
 
 public class Hop extends Task {
-  @Inject
-  private Shopper plugin;
+  @Inject private Shopper plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   private Queue<World> worldQueue;
   private int last;
@@ -36,8 +34,7 @@ public class Hop extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.isHop()
-        && last + 5 <= Static.getClient().getTickCount();
+    return plugin.isHop() && last + 5 <= Static.getClient().getTickCount();
   }
 
   @Override
@@ -80,31 +77,34 @@ public class Hop extends Task {
 
     int currentId = Worlds.getCurrentId();
 
-    List<World> worlds = Worlds.getAll((w) -> {
-      if (config.f2pOnly() && w.isMembers()) {
-        return false;
-      }
+    List<World> worlds =
+        Worlds.getAll(
+            (w) -> {
+              if (config.f2pOnly() && w.isMembers()) {
+                return false;
+              }
 
-      if (config.p2pOnly() && !w.isMembers()) {
-        return false;
-      }
+              if (config.p2pOnly() && !w.isMembers()) {
+                return false;
+              }
 
-      if (w.isAllPkWorld() || w.isTournament() || w.isLeague()) {
-        return false;
-      }
+              if (w.isAllPkWorld() || w.isTournament() || w.isLeague()) {
+                return false;
+              }
 
-      if (w.isSkillTotal()) {
-        try {
-          int totalRequirement = Integer.parseInt(w.getActivity().substring(0, w.getActivity().indexOf(" ")));
+              if (w.isSkillTotal()) {
+                try {
+                  int totalRequirement =
+                      Integer.parseInt(w.getActivity().substring(0, w.getActivity().indexOf(" ")));
 
-          return Static.getClient().getTotalLevel() >= totalRequirement;
-        } catch (NumberFormatException e) {
-          return false;
-        }
-      }
+                  return Static.getClient().getTotalLevel() >= totalRequirement;
+                } catch (NumberFormatException e) {
+                  return false;
+                }
+              }
 
-      return true;
-    });
+              return true;
+            });
 
     worldQueue.addAll(worlds);
 

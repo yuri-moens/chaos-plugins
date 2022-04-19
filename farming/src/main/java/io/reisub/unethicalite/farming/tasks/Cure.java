@@ -22,8 +22,7 @@ import net.runelite.api.TileObject;
 import net.runelite.client.plugins.timetracking.farming.CropState;
 
 public class Cure extends Task {
-  @Inject
-  private Farming plugin;
+  @Inject private Farming plugin;
 
   @Override
   public String getStatus() {

@@ -17,40 +17,93 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "eatConfig",
       name = "Eating Configuration",
       description = "Configure when to eat",
-      position = 0
-  )
+      position = 0)
   String eatConfig = "eatConfig";
+
+  @ConfigSection(
+      keyName = "potsConfig",
+      name = "Potions Configuration",
+      description = "Configure when to pot",
+      closedByDefault = true,
+      position = 99)
+  String potsConfig = "potsConfig";
+
+  @ConfigSection(
+      keyName = "specialConfig",
+      name = "Weapon Special Configuration",
+      description = "Configure weapon specials",
+      closedByDefault = true,
+      position = 200)
+  String specialConfig = "specialConfig";
+
+  @ConfigSection(
+      keyName = "prayerConfig",
+      name = "Prayer Configuration",
+      description = "Configure prayer flicking and swapping",
+      closedByDefault = true,
+      position = 300)
+  String prayerConfig = "prayerConfig";
+
+  @ConfigSection(
+      keyName = "bonesConfig",
+      name = "Bones/ashes Configuration",
+      description = "Configure bones burying and ashes scattering",
+      closedByDefault = true,
+      position = 400)
+  String bonesConfig = "bonesConfig";
+
+  @ConfigSection(
+      keyName = "alchConfig",
+      name = "Alch Configuration",
+      description = "Configure automatic alching",
+      closedByDefault = true,
+      position = 500)
+  String alchConfig = "alchConfig";
+
+  @ConfigSection(
+      keyName = "swapConfig",
+      name = "Swap Configuration",
+      description = "Configure automatic swapping",
+      closedByDefault = true,
+      position = 600)
+  String swapConfig = "swapConfig";
+
+  @ConfigSection(
+      keyName = "miscConfig",
+      name = "Misc Configuration",
+      description = "Configure miscellaneous features",
+      section = "swapConfig",
+      closedByDefault = true,
+      position = 700)
+  String miscConfig = "miscConfig";
 
   @ConfigItem(
       keyName = "enableEating",
       name = "Enable eating",
       description = "Enable automatic eating based on the minimum and maximum values set below.",
       section = "eatConfig",
-      position = 1
-  )
+      position = 1)
   default boolean enableEating() {
     return true;
   }
 
   @ConfigItem(
-      keyName = "minEatHP",
+      keyName = "minEatHp",
       name = "Minimum Eat HP",
       description = "Minimum HP to eat at.",
       section = "eatConfig",
-      position = 2
-  )
-  default int minEatHP() {
+      position = 2)
+  default int minEatHp() {
     return 10;
   }
 
   @ConfigItem(
-      keyName = "maxEatHP",
+      keyName = "maxEatHp",
       name = "Maximum Eat HP",
       description = "Highest HP to potentially eat at.",
       section = "eatConfig",
-      position = 3
-  )
-  default int maxEatHP() {
+      position = 3)
+  default int maxEatHp() {
     return 20;
   }
 
@@ -59,8 +112,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Combo karambwan",
       description = "Combo karambwan with other food.",
       section = "eatConfig",
-      position = 4
-  )
+      position = 4)
   default boolean comboKarambwan() {
     return true;
   }
@@ -70,8 +122,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Combo brew",
       description = "Combo Saradomin brew with other food.",
       section = "eatConfig",
-      position = 5
-  )
+      position = 5)
   default boolean comboBrew() {
     return true;
   }
@@ -83,8 +134,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "eatConfig",
       hidden = true,
       unhide = "comboBrew",
-      position = 6
-  )
+      position = 6)
   default boolean restoreAfterBrew() {
     return true;
   }
@@ -96,28 +146,17 @@ public interface Config extends net.runelite.client.config.Config {
       section = "eatConfig",
       hidden = true,
       unhide = "enableEating",
-      position = 7
-  )
+      position = 7)
   default boolean eatWarnings() {
     return true;
   }
-
-  @ConfigSection(
-      keyName = "potsConfig",
-      name = "Potions Configuration",
-      description = "Configure when to pot",
-      closedByDefault = true,
-      position = 99
-  )
-  String potsConfig = "potsConfig";
 
   @ConfigItem(
       keyName = "drinkPotions",
       name = "Drink potions",
       description = "Enable automatic drinking of potions.",
       section = "potsConfig",
-      position = 100
-  )
+      position = 100)
   default boolean drinkPotions() {
     return true;
   }
@@ -127,8 +166,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Drink anti-poison",
       description = "Drink an anti-poison potion when poisoned.",
       section = "potsConfig",
-      position = 101
-  )
+      position = 101)
   default boolean drinkAntiPoison() {
     return true;
   }
@@ -136,10 +174,10 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "onlyCureVenom",
       name = "Only cure venom",
-      description = "Drink an anti-poison or anti-venom potion when envenomed but not when poisoned.",
+      description =
+          "Drink an anti-poison or anti-venom potion when envenomed but not when poisoned.",
       section = "potsConfig",
-      position = 102
-  )
+      position = 102)
   default boolean onlyCureVenom() {
     return false;
   }
@@ -151,8 +189,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkAntiPoison",
-      position = 103
-  )
+      position = 103)
   default boolean antiPoisonWarnings() {
     return true;
   }
@@ -160,10 +197,10 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "drinkAntiFire",
       name = "Drink anti-fire",
-      description = "Drink an anti-fire potion when not under its effect or its effect is running out.",
+      description =
+          "Drink an anti-fire potion when not under its effect or its effect is running out.",
       section = "potsConfig",
-      position = 104
-  )
+      position = 104)
   default boolean drinkAntiFire() {
     return false;
   }
@@ -175,8 +212,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkAntiFire",
-      position = 105
-  )
+      position = 105)
   default boolean antiFireWarnings() {
     return true;
   }
@@ -186,8 +222,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Drink prayer potions",
       description = "Drink a prayer potion when prayer points fall below a threshold.",
       section = "potsConfig",
-      position = 106
-  )
+      position = 106)
   default boolean drinkPrayer() {
     return false;
   }
@@ -199,8 +234,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkPrayer",
-      position = 107
-  )
+      position = 107)
   default int minPrayerPoints() {
     return 10;
   }
@@ -212,8 +246,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkPrayer",
-      position = 108
-  )
+      position = 108)
   default int maxPrayerPoints() {
     return 20;
   }
@@ -225,8 +258,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkPrayer",
-      position = 109
-  )
+      position = 109)
   default boolean prayerWarnings() {
     return true;
   }
@@ -236,8 +268,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Drink strength pots",
       description = "Enable to drink pots to boost strength.",
       section = "potsConfig",
-      position = 110
-  )
+      position = 110)
   default boolean drinkStrength() {
     return false;
   }
@@ -249,8 +280,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkStrength",
-      position = 111
-  )
+      position = 111)
   default int strengthLevel() {
     return 1;
   }
@@ -262,8 +292,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkStrength",
-      position = 112
-  )
+      position = 112)
   default boolean strengthWarnings() {
     return true;
   }
@@ -273,8 +302,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Drink attack pots",
       description = "Enable to drink pots to boost attack.",
       section = "potsConfig",
-      position = 113
-  )
+      position = 113)
   default boolean drinkAttack() {
     return false;
   }
@@ -286,8 +314,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkAttack",
-      position = 114
-  )
+      position = 114)
   default int attackLevel() {
     return 1;
   }
@@ -299,8 +326,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkAttack",
-      position = 115
-  )
+      position = 115)
   default boolean attackWarnings() {
     return true;
   }
@@ -310,8 +336,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Drink defence pots",
       description = "Enable to drink pots to boost defence.",
       section = "potsConfig",
-      position = 116
-  )
+      position = 116)
   default boolean drinkDefence() {
     return false;
   }
@@ -323,8 +348,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkDefence",
-      position = 117
-  )
+      position = 117)
   default int defenceLevel() {
     return 1;
   }
@@ -336,8 +360,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkDefence",
-      position = 118
-  )
+      position = 118)
   default boolean defenceWarnings() {
     return true;
   }
@@ -347,8 +370,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Drink ranged pots",
       description = "Enable to drink pots to boost ranged.",
       section = "potsConfig",
-      position = 119
-  )
+      position = 119)
   default boolean drinkRanged() {
     return false;
   }
@@ -360,8 +382,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkRanged",
-      position = 120
-  )
+      position = 120)
   default int rangedLevel() {
     return 1;
   }
@@ -373,8 +394,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkRanged",
-      position = 121
-  )
+      position = 121)
   default boolean rangedWarnings() {
     return true;
   }
@@ -384,8 +404,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Drink magic pots",
       description = "Enable to drink pots to boost magic.",
       section = "potsConfig",
-      position = 122
-  )
+      position = 122)
   default boolean drinkMagic() {
     return false;
   }
@@ -397,8 +416,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkMagic",
-      position = 123
-  )
+      position = 123)
   default int magicLevel() {
     return 1;
   }
@@ -410,8 +428,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkMagic",
-      position = 124
-  )
+      position = 124)
   default boolean magicWarnings() {
     return true;
   }
@@ -421,8 +438,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Drink energy pots",
       description = "Enable to drink pots to recover energy.",
       section = "potsConfig",
-      position = 125
-  )
+      position = 125)
   default boolean drinkEnergy() {
     return false;
   }
@@ -434,8 +450,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkEnergy",
-      position = 126
-  )
+      position = 126)
   default int energyLevel() {
     return 10;
   }
@@ -447,28 +462,17 @@ public interface Config extends net.runelite.client.config.Config {
       section = "potsConfig",
       hidden = true,
       unhide = "drinkEnergy",
-      position = 127
-  )
+      position = 127)
   default boolean energyWarnings() {
     return true;
   }
-
-  @ConfigSection(
-      keyName = "specialConfig",
-      name = "Weapon Special Configuration",
-      description = "Configure weapon specials",
-      closedByDefault = true,
-      position = 200
-  )
-  String specialConfig = "specialConfig";
 
   @ConfigItem(
       keyName = "useSpecial",
       name = "Use special",
       description = "Use weapon special",
       section = "specialConfig",
-      position = 201
-  )
+      position = 201)
   default boolean useSpecial() {
     return false;
   }
@@ -480,8 +484,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "specialConfig",
       hidden = true,
       unhide = "useSpecial",
-      position = 202
-  )
+      position = 202)
   default SpecialActivation activationMethod() {
     return SpecialActivation.AUTOMATIC;
   }
@@ -493,8 +496,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "specialConfig",
       hidden = true,
       unhide = "useSpecial",
-      position = 203
-  )
+      position = 203)
   default Keybind specialHotkey() {
     return new Keybind(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK);
   }
@@ -506,8 +508,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "specialConfig",
       hidden = true,
       unhide = "useSpecial",
-      position = 204
-  )
+      position = 204)
   default int specialCost() {
     return 100;
   }
@@ -515,12 +516,13 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "specialWeapon",
       name = "Weapon",
-      description = "What weapon to use the special of. Leaving this empty will use the currently equipped weapon.",
+      description =
+          "What weapon to use the special of. Leaving this empty will use the currently equipped "
+          + "weapon.",
       section = "specialConfig",
       hidden = true,
       unhide = "useSpecial",
-      position = 205
-  )
+      position = 205)
   default String specialWeapon() {
     return "";
   }
@@ -528,32 +530,22 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "swapFromWeapon",
       name = "Swap from weapon",
-      description = "Specify a weapon to swap from. Leaving this empty will allow swapping from any weapon.",
+      description =
+          "Specify a weapon to swap from. Leaving this empty will allow swapping from any weapon.",
       section = "specialConfig",
       hidden = true,
       unhide = "useSpecial",
-      position = 206
-  )
+      position = 206)
   default String swapFromWeapon() {
     return "";
   }
-
-  @ConfigSection(
-      keyName = "prayerConfig",
-      name = "Prayer Configuration",
-      description = "Configure prayer flicking and swapping",
-      closedByDefault = true,
-      position = 300
-  )
-  String prayerConfig = "prayerConfig";
 
   @ConfigItem(
       keyName = "prayerFlickHotkey",
       name = "Flick hotkey",
       description = "When you press this key prayer flicking will start",
       section = "prayerConfig",
-      position = 301
-  )
+      position = 301)
   default Keybind prayerFlickHotkey() {
     return new Keybind(KeyEvent.VK_BACK_QUOTE, 0);
   }
@@ -563,8 +555,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Deactivate prayers after stopping",
       description = "Deactivate prayers after stopping prayer flicking.",
       section = "prayerConfig",
-      position = 302
-  )
+      position = 302)
   default boolean deactivateAfterStopping() {
     return true;
   }
@@ -574,8 +565,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Melee hotkey",
       description = "When you press this key protect from melee will be set as quickprayer",
       section = "prayerConfig",
-      position = 303
-  )
+      position = 303)
   default Keybind hotkeyMelee() {
     return new Keybind(KeyEvent.VK_1, InputEvent.CTRL_DOWN_MASK);
   }
@@ -585,8 +575,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Missiles hotkey",
       description = "When you press this key protect from missiles will be set as quickprayer",
       section = "prayerConfig",
-      position = 304
-  )
+      position = 304)
   default Keybind hotkeyMissiles() {
     return new Keybind(KeyEvent.VK_2, InputEvent.CTRL_DOWN_MASK);
   }
@@ -596,8 +585,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Magic hotkey",
       description = "When you press this key protect from magic will be set as quickprayer",
       section = "prayerConfig",
-      position = 305
-  )
+      position = 305)
   default Keybind hotkeyMagic() {
     return new Keybind(KeyEvent.VK_3, InputEvent.CTRL_DOWN_MASK);
   }
@@ -607,8 +595,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Melee buff hotkey",
       description = "When you press this key melee buff(s) will be set as quickprayer",
       section = "prayerConfig",
-      position = 306
-  )
+      position = 306)
   default Keybind hotkeyMeleeBuff() {
     return new Keybind(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK);
   }
@@ -618,8 +605,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Ranged buff hotkey",
       description = "When you press this key ranged buff will be set as quickprayer",
       section = "prayerConfig",
-      position = 307
-  )
+      position = 307)
   default Keybind hotkeyRangedBuff() {
     return new Keybind(KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK);
   }
@@ -629,8 +615,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Magic buff hotkey",
       description = "When you press this key magic buff will be set as quickprayer",
       section = "prayerConfig",
-      position = 308
-  )
+      position = 308)
   default Keybind hotkeyMagicBuff() {
     return new Keybind(KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK);
   }
@@ -640,8 +625,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Open inventory",
       description = "Open inventory after swapping quickprayers",
       section = "prayerConfig",
-      position = 309
-  )
+      position = 309)
   default boolean openInventory() {
     return true;
   }
@@ -649,10 +633,10 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "allowToggleOff",
       name = "Allow toggling off",
-      description = "Will allow turning the protect prayer off when pressing the hotkey for the current one.",
+      description =
+          "Will allow turning the protect prayer off when pressing the hotkey for the current one.",
       section = "prayerConfig",
-      position = 310
-  )
+      position = 310)
   default boolean allowToggleOff() {
     return true;
   }
@@ -662,8 +646,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Jad Auto Prayer Flick",
       description = "Automatically swap prayers against Jad.",
       section = "prayerConfig",
-      position = 311
-  )
+      position = 311)
   default boolean jadPrayerFlick() {
     return true;
   }
@@ -673,8 +656,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Demonic Gorilla Auto Prayer Flick",
       description = "Automatically swap prayers against Demonic gorillas.",
       section = "prayerConfig",
-      position = 313
-  )
+      position = 313)
   default boolean demonicGorillaFlick() {
     return true;
   }
@@ -684,8 +666,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Zulrah Auto Prayer Flick",
       description = "Automatically swap prayers against Zulrah",
       section = "prayerConfig",
-      position = 314
-  )
+      position = 314)
   default boolean zulrahPrayerFlick() {
     return true;
   }
@@ -695,28 +676,17 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Cerberus Auto Prayer Flick",
       description = "Automatically swap prayers against Cerberus",
       section = "prayerConfig",
-      position = 315
-  )
+      position = 315)
   default boolean cerberusPrayerFlick() {
     return true;
   }
-
-  @ConfigSection(
-      keyName = "bonesConfig",
-      name = "Bones/ashes Configuration",
-      description = "Configure bones burying and ashes scattering",
-      closedByDefault = true,
-      position = 400
-  )
-  String bonesConfig = "bonesConfig";
 
   @ConfigItem(
       keyName = "bones",
       name = "Bones",
       description = "Choose which bones to auto-bury.",
       section = "bonesConfig",
-      position = 401
-  )
+      position = 401)
   default Bones bones() {
     return Bones.BIG_BONES;
   }
@@ -726,8 +696,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Ashes",
       description = "Choose which ashes to auto-scatter.",
       section = "bonesConfig",
-      position = 402
-  )
+      position = 402)
   default Ashes ashes() {
     return Ashes.VILE_ASHES;
   }
@@ -735,30 +704,21 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "allBelow",
       name = "Bury/scatter all below threshold",
-      description = "Bury/scatter all the bones/ashes of lower value including the chosen bones/ashes.",
+      description =
+          "Bury/scatter all the bones/ashes of lower value including the chosen bones/ashes.",
       section = "bonesConfig",
-      position = 403
-  )
+      position = 403)
   default boolean allBelow() {
     return true;
   }
 
-  @ConfigSection(
-      keyName = "alchConfig",
-      name = "Alch Configuration",
-      description = "Configure automatic alching",
-      closedByDefault = true,
-      position = 500
-  )
-  String alchConfig = "alchConfig";
-
   @ConfigItem(
       keyName = "alchItems",
       name = "Items",
-      description = "List of items to alch, separated by a semicolon. You can use a part of the name.",
+      description =
+          "List of items to alch, separated by a semicolon. You can use a part of the name.",
       section = "alchConfig",
-      position = 501
-  )
+      position = 501)
   default String alchItems() {
     return "Rune arrow";
   }
@@ -766,10 +726,11 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "alchItemsBlacklist",
       name = "Items blacklist",
-      description = "List of items to NOT alch, separated by a semicolon. You can use a part of the name. This is useful if you want to alch all rune items but not arrows for example.",
+      description =
+          "List of items to NOT alch, separated by a semicolon. You can use a part of the name. "
+          + "This is useful if you want to alch all rune items but not arrows for example.",
       section = "alchConfig",
-      position = 502
-  )
+      position = 502)
   default String alchItemsBlacklist() {
     return "ore; bar; arrow";
   }
@@ -779,8 +740,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Alch noted",
       description = "Enable alching of noted items.",
       section = "alchConfig",
-      position = 503
-  )
+      position = 503)
   default boolean alchNoted() {
     return false;
   }
@@ -790,8 +750,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Hotkey",
       description = "Press this key to toggle auto alching.",
       section = "alchConfig",
-      position = 503
-  )
+      position = 503)
   default Keybind autoalchHotkey() {
     return new Keybind(KeyEvent.VK_F9, InputEvent.CTRL_DOWN_MASK);
   }
@@ -801,28 +760,20 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Disable after task",
       description = "Disable alching after finishing Slayer task.",
       section = "alchConfig",
-      position = 504
-  )
+      position = 504)
   default boolean disableAfterTask() {
     return true;
   }
 
-  @ConfigSection(
-      keyName = "swapConfig",
-      name = "Swap Configuration",
-      description = "Configure automatic swapping",
-      closedByDefault = true,
-      position = 600
-  )
-  String swapConfig = "swapConfig";
-
   @ConfigItem(
       keyName = "meleeGear",
       name = "Melee gear",
-      description = "Names or IDs of your melee gear. Names match any item containing the name, meaning 'Dharok's platelegs' matches all degradation values. Separate by line, semicolon or comma.",
+      description =
+          "Names or IDs of your melee gear. Names match any item containing the name, meaning "
+          + "'Dharok's platelegs' matches all degradation values. Separate by line, semicolon or "
+          + "comma.",
       section = "swapConfig",
-      position = 601
-  )
+      position = 601)
   default String meleeGear() {
     return "";
   }
@@ -832,8 +783,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Melee hotkey",
       description = "Hotkey to manually swap gear",
       section = "swapConfig",
-      position = 602
-  )
+      position = 602)
   default Keybind meleeHotkey() {
     return new Keybind(KeyEvent.VK_F1, InputEvent.CTRL_DOWN_MASK);
   }
@@ -841,10 +791,12 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "rangedGear",
       name = "Ranged gear",
-      description = "Names or IDs of your ranged gear. Names match any item containing the name, meaning 'Dharok's platelegs' matches all degradation values. Separate by line, semicolon or comma.",
+      description =
+          "Names or IDs of your ranged gear. Names match any item containing the name, meaning "
+          + "'Dharok's platelegs' matches all degradation values. Separate by line, semicolon or "
+          + "comma.",
       section = "swapConfig",
-      position = 603
-  )
+      position = 603)
   default String rangedGear() {
     return "";
   }
@@ -854,8 +806,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Ranged hotkey",
       description = "Hotkey to manually swap gear",
       section = "swapConfig",
-      position = 604
-  )
+      position = 604)
   default Keybind rangedHotkey() {
     return new Keybind(KeyEvent.VK_F2, InputEvent.CTRL_DOWN_MASK);
   }
@@ -863,10 +814,12 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "magicGear",
       name = "Magic gear",
-      description = "Names or IDs of your magic gear. Names match any item containing the name, meaning 'Dharok's platelegs' matches all degradation values. Separate by line, semicolon or comma.",
+      description =
+          "Names or IDs of your magic gear. Names match any item containing the name, meaning "
+          + "'Dharok's platelegs' matches all degradation values. Separate by line, semicolon or "
+          + "comma.",
       section = "swapConfig",
-      position = 605
-  )
+      position = 605)
   default String magicGear() {
     return "";
   }
@@ -876,8 +829,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Magic hotkey",
       description = "Hotkey to manually swap gear",
       section = "swapConfig",
-      position = 606
-  )
+      position = 606)
   default Keybind magicHotkey() {
     return new Keybind(KeyEvent.VK_F3, InputEvent.CTRL_DOWN_MASK);
   }
@@ -887,8 +839,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Swap offensive prayers",
       description = "Enable to swap offensive prayers to match the gear",
       section = "swapConfig",
-      position = 607
-  )
+      position = 607)
   default boolean swapOffensivePrayers() {
     return true;
   }
@@ -896,10 +847,11 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "swapDefensivePrayers",
       name = "Swap defensive prayers",
-      description = "Enable to swap defensive prayers to match the gear and combat triangle (eg. will pray protect from ranged when equipping melee)",
+      description =
+          "Enable to swap defensive prayers to match the gear and combat triangle (eg. will pray "
+          + "protect from ranged when equipping melee)",
       section = "swapConfig",
-      position = 608
-  )
+      position = 608)
   default boolean swapDefensivePrayers() {
     return false;
   }
@@ -911,8 +863,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "swapConfig",
       hidden = true,
       unhide = "swapDefensivePrayers",
-      position = 609
-  )
+      position = 609)
   default ProtectionPrayer meleePrayer() {
     return ProtectionPrayer.PROTECT_FROM_MISSILES;
   }
@@ -924,8 +875,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "swapConfig",
       hidden = true,
       unhide = "swapDefensivePrayers",
-      position = 610
-  )
+      position = 610)
   default ProtectionPrayer rangedPrayer() {
     return ProtectionPrayer.PROTECT_FROM_MAGIC;
   }
@@ -937,8 +887,7 @@ public interface Config extends net.runelite.client.config.Config {
       section = "swapConfig",
       hidden = true,
       unhide = "swapDefensivePrayers",
-      position = 611
-  )
+      position = 611)
   default ProtectionPrayer magicPrayer() {
     return ProtectionPrayer.PROTECT_FROM_MELEE;
   }
@@ -948,8 +897,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Auto swap",
       description = "Automatically swap sets depending on prayer of target",
       section = "swapConfig",
-      position = 612
-  )
+      position = 612)
   default boolean autoSwap() {
     return true;
   }
@@ -959,29 +907,19 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Auto swap Zulrah",
       description = "Automatically swap sets against Zulrah",
       section = "swapConfig",
-      position = 613
-  )
+      position = 613)
   default boolean autoSwapZulrah() {
     return true;
   }
 
-  @ConfigSection(
-      keyName = "miscConfig",
-      name = "Misc Configuration",
-      description = "Configure miscellaneous features",
-      section = "swapConfig",
-      closedByDefault = true,
-      position = 700
-  )
-  String miscConfig = "miscConfig";
-
   @ConfigItem(
       keyName = "pkTeleport",
       name = "PK teleport hotkey",
-      description = "Pressing the hotkey will toggle watching for skulled players or players attacking you and try to teleport away. Requires an equipped charged amulet of glory.",
+      description =
+          "Pressing the hotkey will toggle watching for skulled players or players attacking you "
+          + "and try to teleport away. Requires an equipped charged amulet of glory.",
       section = "miscConfig",
-      position = 701
-  )
+      position = 701)
   default Keybind pkTeleport() {
     return new Keybind(KeyEvent.VK_F1, InputEvent.CTRL_DOWN_MASK);
   }
@@ -991,8 +929,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "TP on dangerous player",
       description = "Attempt to teleport when a skulled player within level range appears.",
       section = "miscConfig",
-      position = 702
-  )
+      position = 702)
   default boolean tpOnDangerousPlayer() {
     return true;
   }
@@ -1002,8 +939,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "TP on player attack",
       description = "Attempt to teleport when we're being attacked by a player.",
       section = "miscConfig",
-      position = 703
-  )
+      position = 703)
   default boolean tpOnPlayerAttack() {
     return true;
   }
@@ -1013,8 +949,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "TP hotkey",
       description = "Hotkey for emergency teleport",
       section = "miscConfig",
-      position = 704
-  )
+      position = 704)
   default Keybind tpHotkey() {
     return new Keybind(KeyEvent.VK_Z, InputEvent.CTRL_DOWN_MASK);
   }
@@ -1024,8 +959,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Vengeance hotkey",
       description = "Hotkey for casting Vengeance",
       section = "miscConfig",
-      position = 705
-  )
+      position = 705)
   default Keybind vengeanceHotkey() {
     return new Keybind(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK);
   }

@@ -6,7 +6,7 @@ import dev.unethicalite.api.items.Bank;
 import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.blastfurnace.BlastFurnace;
 import io.reisub.unethicalite.blastfurnace.Config;
-import io.reisub.unethicalite.utils.api.CBank;
+import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.enums.Metal;
 import io.reisub.unethicalite.utils.tasks.BankTask;
@@ -17,11 +17,9 @@ import net.runelite.api.ItemID;
 import net.runelite.api.Varbits;
 
 public class HandleBank extends BankTask {
-  @Inject
-  private BlastFurnace plugin;
+  @Inject private BlastFurnace plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public boolean validate() {
@@ -37,12 +35,11 @@ public class HandleBank extends BankTask {
 
     open(15, 10);
 
-    CBank.depositAllExcept(false,
-        ItemID.COAL_BAG_12019, ItemID.ICE_GLOVES, ItemID.GOLDSMITH_GAUNTLETS);
+    ChaosBank.depositAllExcept(
+        false, ItemID.COAL_BAG_12019, ItemID.ICE_GLOVES, ItemID.GOLDSMITH_GAUNTLETS);
     Time.sleepTick();
 
-    if (config.useStamina()
-        && isStaminaExpiring(Duration.ofSeconds(10))) {
+    if (config.useStamina() && isStaminaExpiring(Duration.ofSeconds(10))) {
       drinkStamina();
     }
 
@@ -56,7 +53,7 @@ public class HandleBank extends BankTask {
 
     switch (metal) {
       case STEEL:
-        CBank.bankInventoryInteract(coalBag, "Fill");
+        ChaosBank.bankInventoryInteract(coalBag, "Fill");
         Bank.withdrawAll(ItemID.IRON_ORE, Bank.WithdrawMode.ITEM);
 
         plugin.setExpectingBars(true);
@@ -67,7 +64,7 @@ public class HandleBank extends BankTask {
         plugin.setExpectingBars(true);
         break;
       case MITHRIL:
-        CBank.bankInventoryInteract(coalBag, "Fill");
+        ChaosBank.bankInventoryInteract(coalBag, "Fill");
 
         if (getCoalInPot() == 0) {
           Bank.withdrawAll(ItemID.COAL, Bank.WithdrawMode.ITEM);

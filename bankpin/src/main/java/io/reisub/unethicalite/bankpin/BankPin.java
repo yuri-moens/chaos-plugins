@@ -19,20 +19,17 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Bank PIN",
     description = "Automatically enters your bank PIN",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @Slf4j
 @Extension
 public class BankPin extends Plugin {
-  @Inject
-  private Config config;
+  @Inject private Config config;
+  private boolean pinScreenOpen;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  private boolean pinScreenOpen;
 
   @Subscribe
   private void onWidgetLoaded(WidgetLoaded event) {

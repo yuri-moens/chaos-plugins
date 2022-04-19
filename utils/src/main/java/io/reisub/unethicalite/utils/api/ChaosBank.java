@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import net.runelite.api.Item;
 
-public class CBank {
+public class ChaosBank {
   public static void depositAll(String... names) {
     depositAll(true, names);
   }
@@ -30,15 +30,19 @@ public class CBank {
   }
 
   public static void depositAll(boolean delay, Predicate<Item> filter) {
-    Set<Item> items = Bank.Inventory.getAll(filter).stream().filter(Predicates.distinctByProperty(Item::getId)).collect(Collectors.toSet());
+    Set<Item> items =
+        Bank.Inventory.getAll(filter).stream()
+            .filter(Predicates.distinctByProperty(Item::getId))
+            .collect(Collectors.toSet());
 
-    items.forEach((item) -> {
-      Bank.depositAll(item.getId());
+    items.forEach(
+        (item) -> {
+          Bank.depositAll(item.getId());
 
-      if (delay) {
-        Time.sleepTick();
-      }
-    });
+          if (delay) {
+            Time.sleepTick();
+          }
+        });
   }
 
   public static void depositAllExcept(String... names) {

@@ -16,11 +16,9 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 
 public class CastShadowVeil extends Task {
-  @Inject
-  private Pickpocket plugin;
+  @Inject private Pickpocket plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   private int last;
 
@@ -37,7 +35,6 @@ public class CastShadowVeil extends Task {
         && Players.getLocal().getModelHeight() != 1000
         && Players.getLocal().distanceTo(config.target().getNearest().getPickpocketLocation()) < 5
         && last + Skills.getLevel(Skill.MAGIC) - 1 < Static.getClient().getTickCount();
-
   }
 
   @Override

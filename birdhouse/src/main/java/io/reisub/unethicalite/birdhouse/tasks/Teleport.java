@@ -22,11 +22,9 @@ import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.widgets.Widget;
 
 public class Teleport extends Task {
-  @Inject
-  private BirdHouse plugin;
+  @Inject private BirdHouse plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public String getStatus() {
@@ -58,11 +56,7 @@ public class Teleport extends Task {
         Widget farmingGuild = Widgets.get(187, 3, 5);
         if (farmingGuild != null) {
           farmingGuild.interact(
-              0,
-              MenuAction.WIDGET_TYPE_6.getId(),
-              farmingGuild.getIndex(),
-              farmingGuild.getId()
-          );
+              0, MenuAction.WIDGET_TYPE_6.getId(), farmingGuild.getIndex(), farmingGuild.getId());
         }
         break;
       case EDGEVILLE:

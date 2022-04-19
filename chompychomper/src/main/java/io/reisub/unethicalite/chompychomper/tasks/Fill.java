@@ -19,15 +19,13 @@ import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
 
 public class Fill extends Task {
-  @Inject
-  private ChompyChomper plugin;
-
-  private final Set<Integer> SWAMP_BUBBLES_IDS = ImmutableSet.of(
-      ObjectID.SWAMP_BUBBLES,
-      ObjectID.SWAMP_BUBBLES_735,
-      ObjectID.SWAMP_BUBBLES_30667,
-      ObjectID.SWAMP_BUBBLES_33640
-  );
+  private static final Set<Integer> SWAMP_BUBBLES_IDS =
+      ImmutableSet.of(
+          ObjectID.SWAMP_BUBBLES,
+          ObjectID.SWAMP_BUBBLES_735,
+          ObjectID.SWAMP_BUBBLES_30667,
+          ObjectID.SWAMP_BUBBLES_33640);
+  @Inject private ChompyChomper plugin;
 
   @Override
   public String getStatus() {
@@ -54,9 +52,12 @@ public class Fill extends Task {
     Time.sleepTicksUntil(() -> Players.getLocal().isAnimating(), 20);
     Time.sleepTicks(1);
 
-    bellows.subList(1, bellows.size()).forEach((i) -> {
-      GameThread.invoke(() -> i.useOn(bubbles));
-      Time.sleepTicks(1);
-    });
+    bellows
+        .subList(1, bellows.size())
+        .forEach(
+            (i) -> {
+              GameThread.invoke(() -> i.useOn(bubbles));
+              Time.sleepTicks(1);
+            });
   }
 }

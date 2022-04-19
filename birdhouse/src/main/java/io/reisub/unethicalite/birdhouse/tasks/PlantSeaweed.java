@@ -26,8 +26,7 @@ public class PlantSeaweed extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.isUnderwater()
-        && (patch = TileObjects.getNearest("Seaweed patch")) != null;
+    return plugin.isUnderwater() && (patch = TileObjects.getNearest("Seaweed patch")) != null;
   }
 
   @Override

@@ -14,8 +14,7 @@ import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 
 public class Inflate extends Task {
-  @Inject
-  private ChompyChomper plugin;
+  @Inject private ChompyChomper plugin;
 
   @Override
   public String getStatus() {

@@ -22,7 +22,8 @@ public class Mine extends Task {
   @Override
   public boolean validate() {
     return plugin.getCurrentActivity() != Activity.MINING
-        && Players.getLocal().getWorldLocation().getRegionID() == DaeyaltEssence.ESSENCE_MINE_REGION;
+        && Players.getLocal().getWorldLocation().getRegionID()
+            == DaeyaltEssence.ESSENCE_MINE_REGION;
   }
 
   @Override

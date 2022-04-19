@@ -60,13 +60,14 @@ import net.runelite.client.eventbus.Subscribe;
 
 @Singleton
 public class PrayerHelper extends Helper {
-  @Inject
-  private InteractionConfig interactionConfig;
-
-  private static final Set<Integer> DEMONIC_PROJECTILES = ImmutableSet.of(ProjectileID.DEMONIC_GORILLA_RANGED, ProjectileID.DEMONIC_GORILLA_MAGIC, ProjectileID.DEMONIC_GORILLA_BOULDER);
+  private static final Set<Integer> DEMONIC_PROJECTILES =
+      ImmutableSet.of(
+          ProjectileID.DEMONIC_GORILLA_RANGED,
+          ProjectileID.DEMONIC_GORILLA_MAGIC,
+          ProjectileID.DEMONIC_GORILLA_BOULDER);
   private static final int JALTOK_JAD_MAGE_ATTACK = 7592;
   private static final int JALTOK_JAD_RANGE_ATTACK = 7593;
-
+  @Inject private InteractionConfig interactionConfig;
   private boolean toggleFlicking;
   private boolean firstFlick;
   private boolean toggledOff;
@@ -79,6 +80,15 @@ public class PrayerHelper extends Helper {
   private List<PendingGorillaAttack> pendingAttacks;
   private Map<Player, MemorizedPlayer> memorizedPlayers;
   private DemonicGorilla currentGorilla;
+
+  private static boolean isNpcGorilla(int npcId) {
+    return npcId == NpcID.DEMONIC_GORILLA
+        || npcId == NpcID.DEMONIC_GORILLA_7145
+        || npcId == NpcID.DEMONIC_GORILLA_7146
+        || npcId == NpcID.DEMONIC_GORILLA_7147
+        || npcId == NpcID.DEMONIC_GORILLA_7148
+        || npcId == NpcID.DEMONIC_GORILLA_7149;
+  }
 
   @Override
   public void startUp() {
@@ -143,6 +153,7 @@ public class PrayerHelper extends Helper {
               setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
             }
             break;
+          default:
         }
       }
     }
@@ -156,7 +167,8 @@ public class PrayerHelper extends Helper {
 
     if (swapPrayers != null && !swapPrayers.isEmpty()) {
       if (interactionConfig.interactMethod() == InteractMethod.PACKETS) {
-        WidgetPackets.queueWidgetAction2Packet(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId(), -1, -1);
+        WidgetPackets.queueWidgetAction2Packet(
+            WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId(), -1, -1);
 
         for (QuickPrayer quickPrayer : swapPrayers) {
           WidgetPackets.queueWidgetAction1Packet(5046276, -1, quickPrayer.getChildId());
@@ -195,7 +207,9 @@ public class PrayerHelper extends Helper {
   @Subscribe
   private void onAnimationChanged(AnimationChanged event) {
     Actor actor = event.getActor();
-    if (actor == null) return;
+    if (actor == null) {
+      return;
+    }
 
     if (config.jadPrayerFlick()) {
       switch (actor.getAnimation()) {
@@ -209,6 +223,7 @@ public class PrayerHelper extends Helper {
           setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
           MessageUtils.addMessage("Pray against missiles!");
           break;
+        default:
       }
     }
   }
@@ -229,7 +244,9 @@ public class PrayerHelper extends Helper {
       setPrayer(QuickPrayer.PROTECT_FROM_MAGIC);
       e.consume();
     } else if (config.hotkeyMeleeBuff().matches(e)) {
-      setPrayers(QuickPrayer.getBestMeleeBuff(level, Vars.getBit(Varbits.CAMELOT_TRAINING_ROOM_STATUS) == 8));
+      setPrayers(
+          QuickPrayer.getBestMeleeBuff(
+              level, Vars.getBit(Varbits.CAMELOT_TRAINING_ROOM_STATUS) == 8));
       e.consume();
     } else if (config.hotkeyRangedBuff().matches(e)) {
       setPrayers(QuickPrayer.getBestRangedBuff(level, Vars.getBit(Varbits.RIGOUR_UNLOCKED) != 0));
@@ -260,31 +277,39 @@ public class PrayerHelper extends Helper {
   }
 
   private void swapPrayers(Set<QuickPrayer> quickPrayers) {
-    plugin.schedule(() -> {
-      Widget quickPrayersWidget = Widgets.get(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB);
-      if (quickPrayersWidget == null) return;
+    plugin.schedule(
+        () -> {
+          Widget quickPrayersWidget = Widgets.get(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB);
+          if (quickPrayersWidget == null) {
+            return;
+          }
 
-      quickPrayersWidget.interact(1);
-      Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4)), 3);
+          quickPrayersWidget.interact(1);
+          Time.sleepTicksUntil(
+              () -> Widgets.isVisible(Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4)), 3);
 
-      for (QuickPrayer quickPrayer : quickPrayers) {
-        Widget prayer = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4, quickPrayer.getChildId());
-        if (prayer == null) {
-          return;
-        }
+          for (QuickPrayer quickPrayer : quickPrayers) {
+            Widget prayer =
+                Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4, quickPrayer.getChildId());
+            if (prayer == null) {
+              return;
+            }
 
-        prayer.interact(0);
-      }
+            prayer.interact(0);
+          }
 
-      Widget update = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 5);
-      if (update == null) return;
+          Widget update = Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 5);
+          if (update == null) {
+            return;
+          }
 
-      update.interact(0);
+          update.interact(0);
 
-      if (config.openInventory()) {
-        Tabs.openInterface(Tab.INVENTORY);
-      }
-    }, 0);
+          if (config.openInventory()) {
+            Tabs.openInterface(Tab.INVENTORY);
+          }
+        },
+        0);
   }
 
   public void toggleFlicking() {
@@ -336,6 +361,7 @@ public class PrayerHelper extends Helper {
       swapPrayers.addAll(quickPrayers);
     }
   }
+  // Gorilla code below, taken from DemonicGorilla plugin
 
   private DemonicGorilla getCurrentGorilla() {
     for (Map.Entry<NPC, DemonicGorilla> gorilla : gorillas.entrySet()) {
@@ -347,7 +373,6 @@ public class PrayerHelper extends Helper {
 
     return null;
   }
-  // Gorilla code below, taken from DemonicGorilla plugin
 
   private void clear() {
     recentBoulders.clear();
@@ -373,29 +398,21 @@ public class PrayerHelper extends Helper {
   }
 
   private void resetPlayers() {
-//        memorizedPlayers.clear();
-//        memorizedPlayers.put(client.getLocalPlayer(), new MemorizedPlayer(client.getLocalPlayer()));
+    //        memorizedPlayers.clear();
+    //        memorizedPlayers.put(client.getLocalPlayer(), new
+    // MemorizedPlayer(client.getLocalPlayer()));
     for (Player player : Players.getAll()) {
       memorizedPlayers.put(player, new MemorizedPlayer(player));
     }
   }
 
-  private static boolean isNpcGorilla(int npcId) {
-    return npcId == NpcID.DEMONIC_GORILLA ||
-        npcId == NpcID.DEMONIC_GORILLA_7145 ||
-        npcId == NpcID.DEMONIC_GORILLA_7146 ||
-        npcId == NpcID.DEMONIC_GORILLA_7147 ||
-        npcId == NpcID.DEMONIC_GORILLA_7148 ||
-        npcId == NpcID.DEMONIC_GORILLA_7149;
-  }
-
-  private void checkGorillaAttackStyleSwitch(DemonicGorilla gorilla, final DemonicGorilla.AttackStyle... protectedStyles) {
-    if (gorilla.getAttacksUntilSwitch() <= 0 ||
-        gorilla.getNextPosibleAttackStyles().isEmpty()) {
-      gorilla.setNextPosibleAttackStyles(Arrays
-          .stream(DemonicGorilla.ALL_REGULAR_ATTACK_STYLES)
-          .filter(x -> Arrays.stream(protectedStyles).noneMatch(y -> x == y))
-          .collect(Collectors.toList()));
+  private void checkGorillaAttackStyleSwitch(
+      DemonicGorilla gorilla, final DemonicGorilla.AttackStyle... protectedStyles) {
+    if (gorilla.getAttacksUntilSwitch() <= 0 || gorilla.getNextPosibleAttackStyles().isEmpty()) {
+      gorilla.setNextPosibleAttackStyles(
+          Arrays.stream(DemonicGorilla.ALL_REGULAR_ATTACK_STYLES)
+              .filter(x -> Arrays.stream(protectedStyles).noneMatch(y -> x == y))
+              .collect(Collectors.toList()));
       gorilla.setAttacksUntilSwitch(DemonicGorilla.ATTACKS_PER_SWITCH);
       gorilla.setChangedAttackStyleThisTick(true);
     }
@@ -418,7 +435,8 @@ public class PrayerHelper extends Helper {
     }
   }
 
-  private void onGorillaAttack(DemonicGorilla gorilla, final DemonicGorilla.AttackStyle attackStyle) {
+  private void onGorillaAttack(
+      DemonicGorilla gorilla, final DemonicGorilla.AttackStyle attackStyle) {
     gorilla.setInitiatedCombat(true);
 
     Player target = (Player) gorilla.getNpc().getInteracting();
@@ -428,17 +446,16 @@ public class PrayerHelper extends Helper {
       protectedStyle = getProtectedStyle(target);
     }
     boolean correctPrayer =
-        target == null || // If player is out of memory, assume prayer was correct
-            (attackStyle != null &&
-                attackStyle.equals(protectedStyle));
+        target == null
+            || // If player is out of memory, assume prayer was correct
+            (attackStyle != null && attackStyle.equals(protectedStyle));
 
     if (attackStyle == DemonicGorilla.AttackStyle.BOULDER) {
       // The gorilla can't throw boulders when it's meleeing
-      gorilla.setNextPosibleAttackStyles(gorilla
-          .getNextPosibleAttackStyles()
-          .stream()
-          .filter(x -> x != DemonicGorilla.AttackStyle.MELEE)
-          .collect(Collectors.toList()));
+      gorilla.setNextPosibleAttackStyles(
+          gorilla.getNextPosibleAttackStyles().stream()
+              .filter(x -> x != DemonicGorilla.AttackStyle.MELEE)
+              .collect(Collectors.toList()));
     } else {
       if (correctPrayer) {
         gorilla.setAttacksUntilSwitch(gorilla.getAttacksUntilSwitch() - 1);
@@ -454,38 +471,38 @@ public class PrayerHelper extends Helper {
           WorldArea lastPlayerArea = mp.getLastWorldArea();
           if (lastPlayerArea != null) {
             int dist = gorilla.getNpc().getWorldArea().distanceTo(lastPlayerArea);
-            damagesOnTick += (dist + DemonicGorilla.PROJECTILE_MAGIC_DELAY) /
-                DemonicGorilla.PROJECTILE_MAGIC_SPEED;
+            damagesOnTick +=
+                (dist + DemonicGorilla.PROJECTILE_MAGIC_DELAY)
+                    / DemonicGorilla.PROJECTILE_MAGIC_SPEED;
           }
         } else if (attackStyle == DemonicGorilla.AttackStyle.RANGED) {
           MemorizedPlayer mp = memorizedPlayers.get(target);
           WorldArea lastPlayerArea = mp.getLastWorldArea();
           if (lastPlayerArea != null) {
             int dist = gorilla.getNpc().getWorldArea().distanceTo(lastPlayerArea);
-            damagesOnTick += (dist + DemonicGorilla.PROJECTILE_RANGED_DELAY) /
-                DemonicGorilla.PROJECTILE_RANGED_SPEED;
+            damagesOnTick +=
+                (dist + DemonicGorilla.PROJECTILE_RANGED_DELAY)
+                    / DemonicGorilla.PROJECTILE_RANGED_SPEED;
           }
         }
         pendingAttacks.add(new PendingGorillaAttack(gorilla, attackStyle, target, damagesOnTick));
       }
 
-      gorilla.setNextPosibleAttackStyles(gorilla
-          .getNextPosibleAttackStyles()
-          .stream()
-          .filter(x -> x == attackStyle)
-          .collect(Collectors.toList()));
+      gorilla.setNextPosibleAttackStyles(
+          gorilla.getNextPosibleAttackStyles().stream()
+              .filter(x -> x == attackStyle)
+              .collect(Collectors.toList()));
 
       if (gorilla.getNextPosibleAttackStyles().isEmpty()) {
         // Sometimes the gorilla can switch attack style before it's supposed to
         // if someone was fighting it earlier and then left, so we just
         // reset the counter in that case.
 
-        gorilla.setNextPosibleAttackStyles(Arrays
-            .stream(DemonicGorilla.ALL_REGULAR_ATTACK_STYLES)
-            .filter(x -> x == attackStyle)
-            .collect(Collectors.toList()));
-        gorilla.setAttacksUntilSwitch(DemonicGorilla.ATTACKS_PER_SWITCH -
-            (correctPrayer ? 1 : 0));
+        gorilla.setNextPosibleAttackStyles(
+            Arrays.stream(DemonicGorilla.ALL_REGULAR_ATTACK_STYLES)
+                .filter(x -> x == attackStyle)
+                .collect(Collectors.toList()));
+        gorilla.setAttacksUntilSwitch(DemonicGorilla.ATTACKS_PER_SWITCH - (correctPrayer ? 1 : 0));
       }
     }
 
@@ -503,35 +520,35 @@ public class PrayerHelper extends Helper {
 
       if (gorilla.getLastTickInteracting() != null && interacting == null) {
         gorilla.setInitiatedCombat(false);
-      } else if (mp != null && mp.getLastWorldArea() != null &&
-          !gorilla.isInitiatedCombat() &&
-          tickCounter < gorilla.getNextAttackTick() &&
-          gorilla.getNpc().getWorldArea().isInMeleeDistance(mp.getLastWorldArea())) {
+      } else if (mp != null
+          && mp.getLastWorldArea() != null
+          && !gorilla.isInitiatedCombat()
+          && tickCounter < gorilla.getNextAttackTick()
+          && gorilla.getNpc().getWorldArea().isInMeleeDistance(mp.getLastWorldArea())) {
         gorilla.setInitiatedCombat(true);
         gorilla.setNextAttackTick(tickCounter + 1);
       }
 
       int animationId = gorilla.getNpc().getAnimation();
 
-      if (gorilla.isTakenDamageRecently() &&
-          tickCounter >= gorilla.getNextAttackTick() + 4) {
+      if (gorilla.isTakenDamageRecently() && tickCounter >= gorilla.getNextAttackTick() + 4) {
         // The gorilla was flinched, so its next attack gets delayed
         gorilla.setNextAttackTick(tickCounter + DemonicGorilla.ATTACK_RATE / 2);
         gorilla.setInitiatedCombat(true);
 
-        if (mp != null && mp.getLastWorldArea() != null &&
-            !gorilla.getNpc().getWorldArea().isInMeleeDistance(mp.getLastWorldArea()) &&
-            !gorilla.getNpc().getWorldArea().intersectsWith(mp.getLastWorldArea())) {
+        if (mp != null
+            && mp.getLastWorldArea() != null
+            && !gorilla.getNpc().getWorldArea().isInMeleeDistance(mp.getLastWorldArea())
+            && !gorilla.getNpc().getWorldArea().intersectsWith(mp.getLastWorldArea())) {
           // Gorillas stop meleeing when they get flinched
           // and the target isn't in melee distance
-          gorilla.setNextPosibleAttackStyles(gorilla
-              .getNextPosibleAttackStyles()
-              .stream()
-              .filter(x -> x != DemonicGorilla.AttackStyle.MELEE)
-              .collect(Collectors.toList()));
+          gorilla.setNextPosibleAttackStyles(
+              gorilla.getNextPosibleAttackStyles().stream()
+                  .filter(x -> x != DemonicGorilla.AttackStyle.MELEE)
+                  .collect(Collectors.toList()));
           if (interacting != null) {
-            checkGorillaAttackStyleSwitch(gorilla, DemonicGorilla.AttackStyle.MELEE,
-                getProtectedStyle(interacting));
+            checkGorillaAttackStyleSwitch(
+                gorilla, DemonicGorilla.AttackStyle.MELEE, getProtectedStyle(interacting));
           }
         }
       } else if (animationId != gorilla.getLastTickAnimation()) {
@@ -565,8 +582,8 @@ public class PrayerHelper extends Helper {
                 onGorillaAttack(gorilla, DemonicGorilla.AttackStyle.RANGED);
               } else if (mp != null) {
                 WorldArea lastPlayerArea = mp.getLastWorldArea();
-                if (lastPlayerArea != null && recentBoulders.stream()
-                    .anyMatch(x -> x.distanceTo(lastPlayerArea) == 0)) {
+                if (lastPlayerArea != null
+                    && recentBoulders.stream().anyMatch(x -> x.distanceTo(lastPlayerArea) == 0)) {
                   // A boulder started falling on the gorillas target,
                   // so we assume it was the gorilla who shot it
                   onGorillaAttack(gorilla, DemonicGorilla.AttackStyle.BOULDER);
@@ -589,11 +606,11 @@ public class PrayerHelper extends Helper {
 
       if (gorilla.getDisabledMeleeMovementForTicks() > 0) {
         gorilla.setDisabledMeleeMovementForTicks(gorilla.getDisabledMeleeMovementForTicks() - 1);
-      } else if (gorilla.isInitiatedCombat() &&
-          gorilla.getNpc().getInteracting() != null &&
-          !gorilla.isChangedAttackStyleThisTick() &&
-          gorilla.getNextPosibleAttackStyles().size() >= 2 &&
-          gorilla.getNextPosibleAttackStyles().stream()
+      } else if (gorilla.isInitiatedCombat()
+          && gorilla.getNpc().getInteracting() != null
+          && !gorilla.isChangedAttackStyleThisTick()
+          && gorilla.getNextPosibleAttackStyles().size() >= 2
+          && gorilla.getNextPosibleAttackStyles().stream()
               .anyMatch(x -> x == DemonicGorilla.AttackStyle.MELEE)) {
         // If melee is a possibility, we can check if the gorilla
         // is or isn't moving toward the player to determine if
@@ -603,59 +620,68 @@ public class PrayerHelper extends Helper {
         // distance before attacking its target.
 
         if (mp != null && mp.getLastWorldArea() != null && gorilla.getLastWorldArea() != null) {
-          WorldArea predictedNewArea = gorilla.getLastWorldArea().calculateNextTravellingPoint(
-              Game.getClient(), mp.getLastWorldArea(), true, x ->
-              {
-                // Gorillas can't normally walk through other gorillas
-                // or other players
-                final WorldArea area1 = new WorldArea(x, 1, 1);
-                return gorillas.values().stream().noneMatch(y ->
-                {
-                  if (y == gorilla) {
-                    return false;
-                  }
-                  final WorldArea area2 =
-                      y.getNpc().getIndex() < gorilla.getNpc().getIndex() ?
-                          y.getNpc().getWorldArea() : y.getLastWorldArea();
-                  return area2 != null && area1.intersectsWith(area2);
-                }) && memorizedPlayers.values().stream().noneMatch(y ->
-                {
-                  final WorldArea area2 = y.getLastWorldArea();
-                  return area2 != null && area1.intersectsWith(area2);
-                });
+          WorldArea predictedNewArea =
+              gorilla
+                  .getLastWorldArea()
+                  .calculateNextTravellingPoint(
+                      Game.getClient(),
+                      mp.getLastWorldArea(),
+                      true,
+                      x -> {
+                        // Gorillas can't normally walk through other gorillas
+                        // or other players
+                        final WorldArea area1 = new WorldArea(x, 1, 1);
+                        return gorillas.values().stream()
+                                .noneMatch(
+                                    y -> {
+                                      if (y == gorilla) {
+                                        return false;
+                                      }
+                                      final WorldArea area2 =
+                                          y.getNpc().getIndex() < gorilla.getNpc().getIndex()
+                                              ? y.getNpc().getWorldArea()
+                                              : y.getLastWorldArea();
+                                      return area2 != null && area1.intersectsWith(area2);
+                                    })
+                            && memorizedPlayers.values().stream()
+                                .noneMatch(
+                                    y -> {
+                                      final WorldArea area2 = y.getLastWorldArea();
+                                      return area2 != null && area1.intersectsWith(area2);
+                                    });
 
-                // There is a special case where if a player walked through
-                // a gorilla, or a player walked through another player,
-                // the tiles that were walked through becomes
-                // walkable, but I didn't feel like it's necessary to handle
-                // that special case as it should rarely happen.
-              });
+                        // There is a special case where if a player walked through
+                        // a gorilla, or a player walked through another player,
+                        // the tiles that were walked through becomes
+                        // walkable, but I didn't feel like it's necessary to handle
+                        // that special case as it should rarely happen.
+                      });
           if (predictedNewArea != null) {
             int distance = gorilla.getNpc().getWorldArea().distanceTo(mp.getLastWorldArea());
             WorldPoint predictedMovement = predictedNewArea.toWorldPoint();
-            if (distance <= DemonicGorilla.MAX_ATTACK_RANGE && mp.getLastWorldArea().hasLineOfSightTo(Game.getClient(), gorilla.getLastWorldArea())) {
+            if (distance <= DemonicGorilla.MAX_ATTACK_RANGE
+                && mp.getLastWorldArea()
+                    .hasLineOfSightTo(Game.getClient(), gorilla.getLastWorldArea())) {
               if (predictedMovement.distanceTo(gorilla.getLastWorldArea().toWorldPoint()) != 0) {
                 if (predictedMovement.distanceTo(gorilla.getNpc().getWorldLocation()) == 0) {
-                  gorilla.setNextPosibleAttackStyles(gorilla
-                      .getNextPosibleAttackStyles()
-                      .stream()
-                      .filter(x -> x == DemonicGorilla.AttackStyle.MELEE)
-                      .collect(Collectors.toList()));
+                  gorilla.setNextPosibleAttackStyles(
+                      gorilla.getNextPosibleAttackStyles().stream()
+                          .filter(x -> x == DemonicGorilla.AttackStyle.MELEE)
+                          .collect(Collectors.toList()));
                 } else {
-                  gorilla.setNextPosibleAttackStyles(gorilla
-                      .getNextPosibleAttackStyles()
-                      .stream()
-                      .filter(x -> x != DemonicGorilla.AttackStyle.MELEE)
-                      .collect(Collectors.toList()));
+                  gorilla.setNextPosibleAttackStyles(
+                      gorilla.getNextPosibleAttackStyles().stream()
+                          .filter(x -> x != DemonicGorilla.AttackStyle.MELEE)
+                          .collect(Collectors.toList()));
                 }
-              } else if (tickCounter >= gorilla.getNextAttackTick() &&
-                  gorilla.getRecentProjectileId() == -1 &&
-                  recentBoulders.stream().noneMatch(x -> x.distanceTo(mp.getLastWorldArea()) == 0)) {
-                gorilla.setNextPosibleAttackStyles(gorilla
-                    .getNextPosibleAttackStyles()
-                    .stream()
-                    .filter(x -> x == DemonicGorilla.AttackStyle.MELEE)
-                    .collect(Collectors.toList()));
+              } else if (tickCounter >= gorilla.getNextAttackTick()
+                  && gorilla.getRecentProjectileId() == -1
+                  && recentBoulders.stream()
+                      .noneMatch(x -> x.distanceTo(mp.getLastWorldArea()) == 0)) {
+                gorilla.setNextPosibleAttackStyles(
+                    gorilla.getNextPosibleAttackStyles().stream()
+                        .filter(x -> x == DemonicGorilla.AttackStyle.MELEE)
+                        .collect(Collectors.toList()));
               }
             }
           }
@@ -667,8 +693,7 @@ public class PrayerHelper extends Helper {
       }
 
       if (gorilla.getOverheadIcon() != gorilla.getLastTickOverheadIcon()) {
-        if (gorilla.isChangedAttackStyleLastTick() ||
-            gorilla.isChangedAttackStyleThisTick()) {
+        if (gorilla.isChangedAttackStyleLastTick() || gorilla.isChangedAttackStyleThisTick()) {
           // Apparently if it changes attack style and changes
           // prayer on the same tick or 1 tick apart, it won't
           // be able to move for the next 2 ticks if it attempts
@@ -701,7 +726,9 @@ public class PrayerHelper extends Helper {
       return;
     }
 
-    final WorldPoint loc = WorldPoint.fromLocal(Game.getClient(), projectile.getX1(), projectile.getY1(), Game.getClient().getPlane());
+    final WorldPoint loc =
+        WorldPoint.fromLocal(
+            Game.getClient(), projectile.getX1(), projectile.getY1(), Game.getClient().getPlane());
 
     if (projectileId == ProjectileID.DEMONIC_GORILLA_BOULDER) {
       recentBoulders.add(loc);
@@ -769,8 +796,9 @@ public class PrayerHelper extends Helper {
     } else if (event.getActor() instanceof NPC) {
       DemonicGorilla gorilla = gorillas.get(event.getActor());
       Hitsplat.HitsplatType hitsplatType = event.getHitsplat().getHitsplatType();
-      if (gorilla != null && (hitsplatType == Hitsplat.HitsplatType.BLOCK_ME ||
-          hitsplatType == Hitsplat.HitsplatType.DAMAGE_ME)) {
+      if (gorilla != null
+          && (hitsplatType == Hitsplat.HitsplatType.BLOCK_ME
+              || hitsplatType == Hitsplat.HitsplatType.DAMAGE_ME)) {
         gorilla.setTakenDamageRecently(true);
       }
     }
@@ -779,9 +807,7 @@ public class PrayerHelper extends Helper {
   @Subscribe
   private void onGameStateChanged(GameStateChanged event) {
     GameState gs = event.getGameState();
-    if (gs == GameState.LOGGING_IN ||
-        gs == GameState.CONNECTION_LOST ||
-        gs == GameState.HOPPING) {
+    if (gs == GameState.LOGGING_IN || gs == GameState.CONNECTION_LOST || gs == GameState.HOPPING) {
       reset();
     }
   }
@@ -794,9 +820,9 @@ public class PrayerHelper extends Helper {
 
     Player player = event.getPlayer();
 
-//        if (!player.equals(client.getLocalPlayer())) {
-//            return;
-//        }
+    //        if (!player.equals(client.getLocalPlayer())) {
+    //            return;
+    //        }
 
     memorizedPlayers.put(player, new MemorizedPlayer(player));
   }

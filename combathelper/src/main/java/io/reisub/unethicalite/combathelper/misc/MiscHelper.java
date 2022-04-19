@@ -27,8 +27,12 @@ public class MiscHelper extends Helper {
 
   @Subscribe(priority = 100)
   private void onPlayerSpawned(PlayerSpawned event) {
-    if (!config.tpOnDangerousPlayer() || !pkTeleport || Game.getClient().getVar(Varbits.IN_WILDERNESS) == 0 || event.getPlayer() == null)
+    if (!config.tpOnDangerousPlayer()
+        || !pkTeleport
+        || Game.getClient().getVar(Varbits.IN_WILDERNESS) == 0
+        || event.getPlayer() == null) {
       return;
+    }
 
     int wildyLevel = Game.getWildyLevel();
     int minLevel = Players.getLocal().getCombatLevel() - wildyLevel;
@@ -46,11 +50,21 @@ public class MiscHelper extends Helper {
 
   @Subscribe(priority = 100)
   private void onInteractingChanged(InteractingChanged event) {
-    if (!config.tpOnPlayerAttack() || !pkTeleport || Game.getClient().getVar(Varbits.IN_WILDERNESS) == 0) return;
+    if (!config.tpOnPlayerAttack()
+        || !pkTeleport
+        || Game.getClient().getVar(Varbits.IN_WILDERNESS) == 0) {
+      return;
+    }
 
-    if (event.getSource() == null || event.getTarget() == null || event.getTarget().getName() == null) return;
+    if (event.getSource() == null
+        || event.getTarget() == null
+        || event.getTarget().getName() == null) {
+      return;
+    }
 
-    if (event.getSource() instanceof Player && event.getTarget() == Players.getLocal() && Game.getWildyLevel() <= 30) {
+    if (event.getSource() instanceof Player
+        && event.getTarget() == Players.getLocal()
+        && Game.getWildyLevel() <= 30) {
       log.info("Player attacking us: " + event.getSource().getName());
       plugin.schedule(this::pkTeleport, 0);
     }
@@ -78,7 +92,9 @@ public class MiscHelper extends Helper {
     pkTeleport = false;
 
     Item amuletOfGlory = Equipment.getFirst((i) -> i.hasAction("Edgeville"));
-    if (amuletOfGlory == null) return;
+    if (amuletOfGlory == null) {
+      return;
+    }
 
     amuletOfGlory.interact("Edgeville");
     MessageUtils.addMessage("Tried to teleport, disabled PK teleport");

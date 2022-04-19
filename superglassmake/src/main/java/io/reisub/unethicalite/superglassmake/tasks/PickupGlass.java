@@ -11,8 +11,7 @@ import javax.inject.Inject;
 import net.runelite.api.ItemID;
 
 public class PickupGlass extends Task {
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   private int last;
 
@@ -31,10 +30,13 @@ public class PickupGlass extends Task {
 
   @Override
   public void execute() {
-    TileItems.getAt(Players.getLocal().getWorldLocation(), ItemID.MOLTEN_GLASS).subList(0, 27).forEach((i) -> {
-      i.interact("Take");
-      Time.sleepTick();
-    });
+    TileItems.getAt(Players.getLocal().getWorldLocation(), ItemID.MOLTEN_GLASS)
+        .subList(0, 27)
+        .forEach(
+            (i) -> {
+              i.interact("Take");
+              Time.sleepTick();
+            });
 
     last = Static.getClient().getTickCount();
   }

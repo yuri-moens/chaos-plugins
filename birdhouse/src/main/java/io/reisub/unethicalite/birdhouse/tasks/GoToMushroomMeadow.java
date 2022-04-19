@@ -45,8 +45,7 @@ public class GoToMushroomMeadow extends Task {
         0,
         MenuAction.WIDGET_TYPE_6.getId(),
         mushroomMeadowWidget.getIndex(),
-        mushroomMeadowWidget.getId()
-    );
+        mushroomMeadowWidget.getId());
 
     Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getRegionID() == 14652, 5);
     Time.sleepTicks(2);

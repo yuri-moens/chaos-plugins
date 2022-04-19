@@ -50,34 +50,25 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Bird House",
     description = "Mass bird slaughter",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class BirdHouse extends TickScript implements KeyListener {
-  @Inject
-  private Config config;
-
-  @Provides
-  public Config getConfig(ConfigManager configManager) {
-    return configManager.getConfig(Config.class);
-  }
-
-  private static final int UNDERWATER_REGION = 15008;
-
   public static final WorldArea HILL_HOUSE = new WorldArea(3755, 3861, 20, 16, 1);
   public static final WorldPoint ISLAND = new WorldPoint(3769, 3898, 0);
   public static final int TOOL_WIDGET_ID = 125;
   public static final Supplier<Widget> TOOLS = () -> Widgets.get(TOOL_WIDGET_ID, 0);
   public static final Supplier<Widget> CLOSE = () -> Widgets.get(TOOL_WIDGET_ID, 1, 11);
+  private static final int UNDERWATER_REGION = 15008;
+  @Getter private final List<Integer> emptied = new ArrayList<>();
+  @Inject private Config config;
+  @Getter @Setter private boolean manuallyStarted;
 
-  @Getter
-  private final List<Integer> emptied = new ArrayList<>();
-
-  @Getter
-  @Setter
-  private boolean manuallyStarted;
+  @Provides
+  public Config getConfig(ConfigManager configManager) {
+    return configManager.getConfig(Config.class);
+  }
 
   @Override
   protected void onStart() {
@@ -142,9 +133,7 @@ public class BirdHouse extends TickScript implements KeyListener {
   }
 
   @Override
-  public void keyTyped(KeyEvent e) {
-
-  }
+  public void keyTyped(KeyEvent e) {}
 
   @Override
   public void keyPressed(KeyEvent e) {
@@ -156,7 +145,5 @@ public class BirdHouse extends TickScript implements KeyListener {
   }
 
   @Override
-  public void keyReleased(KeyEvent e) {
-
-  }
+  public void keyReleased(KeyEvent e) {}
 }

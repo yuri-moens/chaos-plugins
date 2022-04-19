@@ -25,35 +25,22 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Shopper",
     description = "Hops worlds and buys stuff from NPCs",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Shopper extends TickScript {
-  @Inject
-  private Config config;
+  @Inject private Config config;
+  @Getter private List<BuyItem> buyItems;
+  @Getter private WorldPoint bankLocation;
+  @Getter private WorldPoint npcLocation;
+  @Getter @Setter private boolean hop;
+  @Getter private int coalInBag;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  @Getter
-  private List<BuyItem> buyItems;
-
-  @Getter
-  private WorldPoint bankLocation;
-
-  @Getter
-  private WorldPoint npcLocation;
-
-  @Getter
-  @Setter
-  private boolean hop;
-
-  @Getter
-  private int coalInBag;
 
   @Override
   protected void onStart() {
@@ -84,33 +71,56 @@ public class Shopper extends TickScript {
     buyItems = new ArrayList<>();
 
     if (config.itemOneEnabled()) {
-      buyItems.add(new BuyItem(config.itemOneId(), config.itemOneAmount(), config.itemOneMinInStore(), config.itemOneStackable()));
+      buyItems.add(
+          new BuyItem(
+              config.itemOneId(),
+              config.itemOneAmount(),
+              config.itemOneMinInStore(),
+              config.itemOneStackable()));
     }
 
     if (config.itemTwoEnabled()) {
-      buyItems.add(new BuyItem(config.itemTwoId(), config.itemTwoAmount(), config.itemTwoMinInStore(), config.itemTwoStackable()));
+      buyItems.add(
+          new BuyItem(
+              config.itemTwoId(),
+              config.itemTwoAmount(),
+              config.itemTwoMinInStore(),
+              config.itemTwoStackable()));
     }
 
     if (config.itemThreeEnabled()) {
-      buyItems.add(new BuyItem(config.itemThreeId(), config.itemThreeAmount(), config.itemThreeMinInStore(), config.itemThreeStackable()));
+      buyItems.add(
+          new BuyItem(
+              config.itemThreeId(),
+              config.itemThreeAmount(),
+              config.itemThreeMinInStore(),
+              config.itemThreeStackable()));
     }
 
     if (config.itemFourEnabled()) {
-      buyItems.add(new BuyItem(config.itemFourId(), config.itemFourAmount(), config.itemFourMinInStore(), config.itemFourStackable()));
+      buyItems.add(
+          new BuyItem(
+              config.itemFourId(),
+              config.itemFourAmount(),
+              config.itemFourMinInStore(),
+              config.itemFourStackable()));
     }
 
     if (config.itemFiveEnabled()) {
-      buyItems.add(new BuyItem(config.itemFiveId(), config.itemFiveAmount(), config.itemFiveMinInStore(), config.itemFiveStackable()));
+      buyItems.add(
+          new BuyItem(
+              config.itemFiveId(),
+              config.itemFiveAmount(),
+              config.itemFiveMinInStore(),
+              config.itemFiveStackable()));
     }
   }
 
   private void loadLocations() {
-    if (
-        config.bankLocation().equals("")
-            || config.bankLocation().equals("0,0,0")
-            || config.npcLocation().equals("")
-            || config.npcLocation().equals("0,0,0")
-    ) {
+    if (config.bankLocation().equals("")
+        || config.bankLocation().equals("0,0,0")
+        || config.npcLocation().equals("")
+        || config.npcLocation().equals("0,0,0")) {
       return;
     }
 
@@ -118,17 +128,17 @@ public class Shopper extends TickScript {
     String[] npcLocationSplit = config.npcLocation().split(",");
 
     try {
-      bankLocation = new WorldPoint(
-          Integer.parseInt(bankLocationSplit[0]),
-          Integer.parseInt(bankLocationSplit[1]),
-          Integer.parseInt(bankLocationSplit[2])
-      );
+      bankLocation =
+          new WorldPoint(
+              Integer.parseInt(bankLocationSplit[0]),
+              Integer.parseInt(bankLocationSplit[1]),
+              Integer.parseInt(bankLocationSplit[2]));
 
-      npcLocation = new WorldPoint(
-          Integer.parseInt(npcLocationSplit[0]),
-          Integer.parseInt(npcLocationSplit[1]),
-          Integer.parseInt(npcLocationSplit[2])
-      );
+      npcLocation =
+          new WorldPoint(
+              Integer.parseInt(npcLocationSplit[0]),
+              Integer.parseInt(npcLocationSplit[1]),
+              Integer.parseInt(npcLocationSplit[2]));
     } catch (Exception e) {
       log.error("Bank or NPC location format is invalid.");
     }

@@ -14,8 +14,7 @@ import net.runelite.api.widgets.WidgetID;
 import net.runelite.client.input.KeyListener;
 
 public class TelekineticGrab extends Task implements KeyListener {
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   private boolean cast;
 
@@ -42,9 +41,7 @@ public class TelekineticGrab extends Task implements KeyListener {
   }
 
   @Override
-  public void keyTyped(KeyEvent e) {
-
-  }
+  public void keyTyped(KeyEvent e) {}
 
   @Override
   public void keyPressed(KeyEvent e) {
@@ -56,7 +53,5 @@ public class TelekineticGrab extends Task implements KeyListener {
   }
 
   @Override
-  public void keyReleased(KeyEvent e) {
-
-  }
+  public void keyReleased(KeyEvent e) {}
 }

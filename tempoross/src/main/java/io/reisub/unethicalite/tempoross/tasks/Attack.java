@@ -10,8 +10,7 @@ import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 
 public class Attack extends Task {
-  @Inject
-  private Tempoross plugin;
+  @Inject private Tempoross plugin;
 
   private NPC pool;
 
@@ -22,15 +21,23 @@ public class Attack extends Task {
 
   @Override
   public boolean validate() {
-    if (!plugin.isInTemporossArea() || plugin.getCurrentActivity() != Activity.IDLE) return false;
+    if (!plugin.isInTemporossArea() || plugin.getCurrentActivity() != Activity.IDLE) {
+      return false;
+    }
 
     // don't attack when he's almost dead but we still have a phase to do
-    if (plugin.getPhase() == 3 && plugin.getEssence() <= 10) return false;
+    if (plugin.getPhase() == 3 && plugin.getEssence() <= 10) {
+      return false;
+    }
 
     // don't attack in phase 4 when we still have cooked fish
-    if (plugin.getPhase() >= 4 && plugin.getCookedFish() > 0) return false;
+    if (plugin.getPhase() >= 4 && plugin.getCookedFish() > 0) {
+      return false;
+    }
 
-    pool = NPCs.getNearest((n) -> n.getId() == NpcID.SPIRIT_POOL && plugin.getIslandArea().contains(n));
+    pool =
+        NPCs.getNearest(
+            (n) -> n.getId() == NpcID.SPIRIT_POOL && plugin.getIslandArea().contains(n));
 
     return pool != null;
   }

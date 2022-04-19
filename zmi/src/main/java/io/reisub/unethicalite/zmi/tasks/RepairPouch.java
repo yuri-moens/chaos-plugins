@@ -49,7 +49,6 @@ public class RepairPouch extends Task {
         DialogOption.NPC_CONTINUE,
         DialogOption.CHAT_OPTION_TWO,
         DialogOption.PLAYER_CONTINUE,
-        DialogOption.NPC_CONTINUE
-    );
+        DialogOption.NPC_CONTINUE);
   }
 }

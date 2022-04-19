@@ -14,10 +14,8 @@ import net.runelite.api.events.NpcSpawned;
 import net.runelite.client.eventbus.Subscribe;
 
 public class Shoot extends Task {
-  @Inject
-  private ChompyChomper plugin;
-
   private final LinkedList<NPC> chompies = new LinkedList<>();
+  @Inject private ChompyChomper plugin;
 
   @Override
   public String getStatus() {
@@ -26,8 +24,7 @@ public class Shoot extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE
-        && !chompies.isEmpty();
+    return plugin.getCurrentActivity() == Activity.IDLE && !chompies.isEmpty();
   }
 
   @Override

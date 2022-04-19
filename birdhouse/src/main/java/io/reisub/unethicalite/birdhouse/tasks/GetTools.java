@@ -16,14 +16,11 @@ import net.runelite.api.widgets.Widget;
 
 @AllArgsConstructor
 public class GetTools extends Task {
-  private static final Supplier<Widget> DIBBER =
-      () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 9);
-  private static final Supplier<Widget> SPADE =
-      () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 10);
+  private static final Supplier<Widget> DIBBER = () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 9);
+  private static final Supplier<Widget> SPADE = () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 10);
   private static final Supplier<Widget> BOTTOMLESS_BUCKET =
       () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 15);
-  private static final Supplier<Widget> COMPOST =
-      () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 17);
+  private static final Supplier<Widget> COMPOST = () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 17);
   private static final Supplier<Widget> SUPERCOMPOST =
       () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 18);
   private static final Supplier<Widget> ULTRACOMPOST =
@@ -38,8 +35,7 @@ public class GetTools extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.isUnderwater()
-        && !Inventory.contains(ItemID.SEED_DIBBER);
+    return plugin.isUnderwater() && !Inventory.contains(ItemID.SEED_DIBBER);
   }
 
   @Override

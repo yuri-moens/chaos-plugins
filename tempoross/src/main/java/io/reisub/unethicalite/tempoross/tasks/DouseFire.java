@@ -12,8 +12,7 @@ import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 
 public class DouseFire extends Task {
-  @Inject
-  private Tempoross plugin;
+  @Inject private Tempoross plugin;
 
   private NPC fire;
 
@@ -24,31 +23,40 @@ public class DouseFire extends Task {
 
   @Override
   public boolean validate() {
-    if (!plugin.isInTemporossArea()) return false;
+    if (!plugin.isInTemporossArea()) {
+      return false;
+    }
 
     // don't douse flames when we're still getting the first 17 fish cooked
     if (plugin.getPhase() == 1
         && plugin.getRawFish() + plugin.getCookedFish() >= 17
-        && plugin.getCookedFish() < 17 && plugin.getCookedFish() > 10) {
+        && plugin.getCookedFish() < 17
+        && plugin.getCookedFish() > 10) {
       return false;
     }
 
-    if (plugin.getCurrentActivity() == Activity.STOCKING_CANNON && plugin.getCookedFishRequired() <= 10) {
+    if (plugin.getCurrentActivity() == Activity.STOCKING_CANNON
+        && plugin.getCookedFishRequired() <= 10) {
       return false;
     }
 
-    fire = NPCs.getNearest((n) -> n.getId() == NpcID.FIRE_8643
-        && (plugin.getIslandArea().contains(n) || plugin.getBoatArea().contains(n)));
+    fire =
+        NPCs.getNearest(
+            (n) ->
+                n.getId() == NpcID.FIRE_8643
+                    && (plugin.getIslandArea().contains(n) || plugin.getBoatArea().contains(n)));
 
-    return Inventory.contains(ItemID.BUCKET_OF_WATER)
-        && fire != null;
+    return Inventory.contains(ItemID.BUCKET_OF_WATER) && fire != null;
   }
 
   @Override
   public void execute() {
     fire.interact(0);
 
-    if (!Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.DOUSING_FIRE, 2500)) return;
+    if (!Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.DOUSING_FIRE, 2500)) {
+      return;
+    }
+
     Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 15000);
   }
 }

@@ -19,14 +19,9 @@ import net.runelite.api.events.GameTick;
 import net.runelite.client.eventbus.Subscribe;
 
 public class Mine extends Task {
-  @Inject
-  private MotherlodeMine plugin;
-
-  private static final RectangularArea MINING_AREA = new RectangularArea(
-      new WorldPoint(3747, 5676, 0),
-      new WorldPoint(3754, 5684, 0)
-  );
-
+  private static final RectangularArea MINING_AREA =
+      new RectangularArea(new WorldPoint(3747, 5676, 0), new WorldPoint(3754, 5684, 0));
+  @Inject private MotherlodeMine plugin;
   private TileObject oreVein;
 
   @Override
@@ -54,7 +49,8 @@ public class Mine extends Task {
       if (oreVein == null) {
         plugin.setActivity(Activity.IDLE);
       } else {
-        TileObject oreVeinCheck = TileObjects.getFirstAt(oreVein.getWorldLocation(), o -> o.hasAction("Mine"));
+        TileObject oreVeinCheck =
+            TileObjects.getFirstAt(oreVein.getWorldLocation(), o -> o.hasAction("Mine"));
         if (oreVeinCheck == null) {
           oreVein = null;
           plugin.setActivity(Activity.IDLE);
@@ -64,12 +60,13 @@ public class Mine extends Task {
   }
 
   private TileObject getNearestVein() {
-    List<TileObject> oreVeins = TileObjects.getAll(
-        o -> o.getName().equals("Ore vein")
-            && o.hasAction("Mine")
-            && MINING_AREA.contains(o.getWorldLocation())
-            && !o.getWorldLocation().equals(new WorldPoint(3764, 5665, 0))
-    );
+    List<TileObject> oreVeins =
+        TileObjects.getAll(
+            o ->
+                o.getName().equals("Ore vein")
+                    && o.hasAction("Mine")
+                    && MINING_AREA.contains(o.getWorldLocation())
+                    && !o.getWorldLocation().equals(new WorldPoint(3764, 5665, 0)));
 
     TileObject oreVein = null;
     float nearest = Float.MAX_VALUE;
@@ -84,7 +81,11 @@ public class Mine extends Task {
             nearest = distance;
             oreVein = o;
           } else if (distance == nearest) {
-            oreVein = current.distanceToHypotenuse(oreVein.getWorldLocation()) > current.distanceToHypotenuse(o.getWorldLocation()) ? o : oreVein;
+            oreVein =
+                current.distanceToHypotenuse(oreVein.getWorldLocation())
+                        > current.distanceToHypotenuse(o.getWorldLocation())
+                    ? o
+                    : oreVein;
           }
         }
       }

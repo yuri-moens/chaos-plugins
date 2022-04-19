@@ -10,25 +10,29 @@ import javax.inject.Inject;
 import net.runelite.api.ItemID;
 
 public class HandleBank extends BankTask {
-  @Inject
-  private Tempoross plugin;
+  @Inject private Tempoross plugin;
 
   private int bucketCount;
 
   @Override
   public boolean validate() {
-    if (!plugin.isInDesert()) return false;
+    if (!plugin.isInDesert()) {
+      return false;
+    }
 
     bucketCount = Inventory.getCount(ItemID.BUCKET, ItemID.BUCKET_OF_WATER);
 
     return isLastBankDurationAgo(Duration.ofSeconds(5))
         && (bucketCount < 4
-        || (!Inventory.contains(ItemID.HAMMER, ItemID.IMCANDO_HAMMER) && !Equipment.contains(ItemID.IMCANDO_HAMMER)));
+            || (!Inventory.contains(ItemID.HAMMER, ItemID.IMCANDO_HAMMER)
+                && !Equipment.contains(ItemID.IMCANDO_HAMMER)));
   }
 
   @Override
   public void execute() {
-    if (!open()) return;
+    if (!open()) {
+      return;
+    }
 
     if (bucketCount < 4) {
       Bank.withdraw(ItemID.BUCKET, 4 - bucketCount, Bank.WithdrawMode.ITEM);

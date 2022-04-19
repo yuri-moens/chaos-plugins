@@ -3,7 +3,7 @@ package io.reisub.unethicalite.birdhouse.tasks;
 import dev.unethicalite.api.entities.Players;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
 import io.reisub.unethicalite.utils.Constants;
-import io.reisub.unethicalite.utils.api.CMovement;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import lombok.AllArgsConstructor;
 import net.runelite.api.coords.WorldPoint;
@@ -27,6 +27,6 @@ public class GoToBirdHouse extends Task {
 
   @Override
   public void execute() {
-    CMovement.walkTo(target, 2);
+    ChaosMovement.walkTo(target, 2);
   }
 }

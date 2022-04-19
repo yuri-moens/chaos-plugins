@@ -11,8 +11,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "foodId",
       name = "Food ID",
       description = "ID of the raw food to cook",
-      position = 0
-  )
+      position = 0)
   default int foodId() {
     return ItemID.RAW_SHARK;
   }
@@ -21,8 +20,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "sonicMode",
       name = "Sonic mode",
       description = "Gotta go fast",
-      position = 1
-  )
+      position = 1)
   default boolean sonicMode() {
     return false;
   }
@@ -31,8 +29,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
-      position = Integer.MAX_VALUE
-  )
+      position = Integer.MAX_VALUE)
   default Button startButton() {
     return new Button();
   }

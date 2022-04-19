@@ -40,71 +40,52 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Barrows",
     description = "Automated fratricide",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @PluginDependency(CombatHelper.class)
 @Slf4j
 @Extension
 public class Barrows extends TickScript {
-  @Inject
-  private Config config;
+  public static final int[] FEROX_ENCLAVE_REGIONS = new int[] {12344, 12600};
+  public static final int BARROWS_REGION = 14131;
+  public static final int CRYPT_REGION = 14231;
+  public static final Set<Integer> STAIRCASE_IDS =
+      ImmutableSet.of(
+          ObjectID.STAIRCASE_20667,
+          ObjectID.STAIRCASE_20668,
+          ObjectID.STAIRCASE_20669,
+          ObjectID.STAIRCASE_20670,
+          ObjectID.STAIRCASE_20671,
+          ObjectID.STAIRCASE_20672);
+  public static final Set<Integer> SARCOPHAGUS_IDS =
+      ImmutableSet.of(
+          ObjectID.SARCOPHAGUS_20720,
+          ObjectID.SARCOPHAGUS_20721,
+          ObjectID.SARCOPHAGUS_20722,
+          ObjectID.SARCOPHAGUS_20770,
+          ObjectID.SARCOPHAGUS_20771,
+          ObjectID.SARCOPHAGUS_20772);
+  public static final Set<Integer> BROTHER_IDS =
+      ImmutableSet.of(
+          NpcID.AHRIM_THE_BLIGHTED,
+          NpcID.DHAROK_THE_WRETCHED,
+          NpcID.GUTHAN_THE_INFESTED,
+          NpcID.KARIL_THE_TAINTED,
+          NpcID.TORAG_THE_CORRUPTED,
+          NpcID.VERAC_THE_DEFILED);
+  private final LinkedList<Brother> killOrder = new LinkedList<>();
+  @Inject private Config config;
+  @Setter private boolean isNewRun;
+
+  @Getter @Setter private Queue<Room> tunnelPath;
+  @Getter private Brother currentBrother;
+  @Getter @Setter private int skeletonsKilled;
+  @Getter @Setter private int bloodwormsKilled;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  public static final int[] FEROX_ENCLAVE_REGIONS = new int[]{12344, 12600};
-  public static final int BARROWS_REGION = 14131;
-  public static final int CRYPT_REGION = 14231;
-
-  public static final Set<Integer> STAIRCASE_IDS = ImmutableSet.of(
-      ObjectID.STAIRCASE_20667,
-      ObjectID.STAIRCASE_20668,
-      ObjectID.STAIRCASE_20669,
-      ObjectID.STAIRCASE_20670,
-      ObjectID.STAIRCASE_20671,
-      ObjectID.STAIRCASE_20672
-  );
-
-  public static final Set<Integer> SARCOPHAGUS_IDS = ImmutableSet.of(
-      ObjectID.SARCOPHAGUS_20720,
-      ObjectID.SARCOPHAGUS_20721,
-      ObjectID.SARCOPHAGUS_20722,
-      ObjectID.SARCOPHAGUS_20770,
-      ObjectID.SARCOPHAGUS_20771,
-      ObjectID.SARCOPHAGUS_20772
-  );
-
-  public static final Set<Integer> BROTHER_IDS = ImmutableSet.of(
-      NpcID.AHRIM_THE_BLIGHTED,
-      NpcID.DHAROK_THE_WRETCHED,
-      NpcID.GUTHAN_THE_INFESTED,
-      NpcID.KARIL_THE_TAINTED,
-      NpcID.TORAG_THE_CORRUPTED,
-      NpcID.VERAC_THE_DEFILED
-  );
-
-  @Setter
-  private boolean isNewRun;
-
-  @Getter
-  @Setter
-  private Queue<Room> tunnelPath;
-
-  private final LinkedList<Brother> killOrder = new LinkedList<>();
-
-  @Getter
-  private Brother currentBrother;
-
-  @Getter
-  @Setter
-  private int skeletonsKilled;
-
-  @Getter
-  @Setter
-  private int bloodwormsKilled;
 
   @Override
   protected void onStart() {

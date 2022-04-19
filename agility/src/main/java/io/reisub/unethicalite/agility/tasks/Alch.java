@@ -20,8 +20,7 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 
 public class Alch extends Task {
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   private ConfigList configList;
 
@@ -47,10 +46,8 @@ public class Alch extends Task {
 
     return canCast()
         && Regular.HIGH_LEVEL_ALCHEMY.canCast()
-        && (
-            Inventory.contains(Predicates.ids(configList.getIntegers()))
-                || Inventory.contains(Predicates.names(configList.getStrings()))
-          );
+        && (Inventory.contains(Predicates.ids(configList.getIntegers()))
+            || Inventory.contains(Predicates.names(configList.getStrings())));
   }
 
   @Override

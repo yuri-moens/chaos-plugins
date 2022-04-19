@@ -49,11 +49,8 @@ public class HandleBank extends BankTask {
 
     Time.sleepTick();
 
-    Inventory.getAll(
-        ItemID.FISHBOWL_HELMET,
-        ItemID.DIVING_APPARATUS,
-        ItemID.FLIPPERS
-        ).forEach((i) -> i.interact("Wear"));
+    Inventory.getAll(ItemID.FISHBOWL_HELMET, ItemID.DIVING_APPARATUS, ItemID.FLIPPERS)
+        .forEach((i) -> i.interact("Wear"));
 
     Item weapon = Equipment.fromSlot(EquipmentInventorySlot.WEAPON);
     Item offHand = Equipment.fromSlot(EquipmentInventorySlot.SHIELD);
@@ -73,13 +70,14 @@ public class HandleBank extends BankTask {
 
     rowBoat.interact("Dive");
     Time.sleepTicksUntil(
-        () -> Dialog.isViewingOptions()
-            || Players.getLocal().getWorldLocation().getRegionID() == 15008, 10);
+        () ->
+            Dialog.isViewingOptions()
+                || Players.getLocal().getWorldLocation().getRegionID() == 15008,
+        10);
 
     if (Dialog.isViewingOptions()) {
       Dialog.chooseOption(1);
-      Time.sleepTicksUntil(
-          () -> Players.getLocal().getWorldLocation().getRegionID() == 15008, 10);
+      Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getRegionID() == 15008, 10);
     }
   }
 }

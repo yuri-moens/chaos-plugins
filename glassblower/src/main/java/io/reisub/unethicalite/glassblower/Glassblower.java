@@ -20,22 +20,19 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Glassblower",
     description = "Huffs and puffs",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Glassblower extends TickScript {
-  @Inject
-  private Config config;
+  public static final int FOSSIL_ISLAND_SMALL_ISLAND_REGION = 14908;
+  public static final int FOSSIL_ISLAND_UNDERWATER_REGION = 15008;
+  @Inject private Config config;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  public static final int FOSSIL_ISLAND_SMALL_ISLAND_REGION = 14908;
-  public static final int FOSSIL_ISLAND_UNDERWATER_REGION = 15008;
 
   @Override
   protected void onStart() {

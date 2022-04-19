@@ -22,14 +22,9 @@ import net.runelite.api.events.StatChanged;
 import net.runelite.client.eventbus.Subscribe;
 
 public class HandleObstacle extends Task {
-  @Inject
-  private Config config;
-
-  private static final Set<WorldPoint> NO_EXPERIENCE_POINTS = ImmutableSet.of(
-      new WorldPoint(2269, 3393, 2),
-      new WorldPoint(2243, 3394, 2)
-  );
-
+  private static final Set<WorldPoint> NO_EXPERIENCE_POINTS =
+      ImmutableSet.of(new WorldPoint(2269, 3393, 2), new WorldPoint(2243, 3394, 2));
+  @Inject private Config config;
   private boolean ready;
   private int timeout;
   private int idleTicks;
@@ -61,13 +56,17 @@ public class HandleObstacle extends Task {
     }
 
     if (config.courseSelection() == Course.PRIFDDINAS) {
-      TileObject portal = TileObjects.getNearest((o) -> {
-        if (o instanceof GameObject && ((GameObject) o).getRenderable() instanceof DynamicObject) {
-          return ((DynamicObject) ((GameObject) o).getRenderable()).getAnimationID() == 8456;
-        }
+      TileObject portal =
+          TileObjects.getNearest(
+              (o) -> {
+                if (o instanceof GameObject
+                    && ((GameObject) o).getRenderable() instanceof DynamicObject) {
+                  return ((DynamicObject) ((GameObject) o).getRenderable()).getAnimationID()
+                      == 8456;
+                }
 
-        return false;
-      });
+                return false;
+              });
 
       if (portal != null
           && portal.getClickbox() != null

@@ -14,11 +14,9 @@ import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 
 public class StartRun extends BankTask {
-  @Inject
-  private BirdHouse plugin;
+  @Inject private BirdHouse plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public String getStatus() {
@@ -41,8 +39,7 @@ public class StartRun extends BankTask {
     Bank.withdraw(
         i -> i.getId() == ItemID.IMCANDO_HAMMER || i.getId() == ItemID.HAMMER,
         1,
-        Bank.WithdrawMode.ITEM
-    );
+        Bank.WithdrawMode.ITEM);
     Bank.withdraw(ItemID.CHISEL, 1, Bank.WithdrawMode.ITEM);
     Bank.withdraw(Predicates.ids(Constants.DIGSITE_PENDANT_IDS), 1, Bank.WithdrawMode.ITEM);
     Bank.withdraw(config.logs().getId(), 4, Bank.WithdrawMode.ITEM);
@@ -53,10 +50,7 @@ public class StartRun extends BankTask {
       case FARMING_GUILD:
       case FEROX_ENCLAVE_DUELING_RING:
         Bank.withdraw(
-            Predicates.ids(config.tpLocation().getTeleportItemIds()),
-            1,
-            Bank.WithdrawMode.ITEM
-        );
+            Predicates.ids(config.tpLocation().getTeleportItemIds()), 1, Bank.WithdrawMode.ITEM);
         break;
       default:
     }

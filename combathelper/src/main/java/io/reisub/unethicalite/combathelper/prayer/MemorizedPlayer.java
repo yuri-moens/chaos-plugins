@@ -14,11 +14,11 @@ class MemorizedPlayer {
   private final Player player;
 
   @Getter(AccessLevel.PACKAGE)
-  @Setter(AccessLevel.PACKAGE)
-  private WorldArea lastWorldArea;
+  private final List<Hitsplat> recentHitsplats;
 
   @Getter(AccessLevel.PACKAGE)
-  private final List<Hitsplat> recentHitsplats;
+  @Setter(AccessLevel.PACKAGE)
+  private WorldArea lastWorldArea;
 
   MemorizedPlayer(final Player player) {
     this.player = player;

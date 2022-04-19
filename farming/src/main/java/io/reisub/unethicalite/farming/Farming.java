@@ -49,29 +49,21 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Farming",
     description = "It's not much but it's honest work",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Farming extends TickScript implements KeyListener {
-  @Inject
-  private Config config;
+  private static final int FARMING_GUILD_REGION = 4922;
+  @Getter private final Queue<Location> locationQueue = new LinkedList<>();
+  @Inject private Config config;
+  @Getter private Location currentLocation;
+  private Set<String> compostProduceSet;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  private static final int FARMING_GUILD_REGION = 4922;
-
-  @Getter
-  private final Queue<Location> locationQueue = new LinkedList<>();
-
-  @Getter
-  private Location currentLocation;
-
-  private Set<String> compostProduceSet;
 
   @Override
   protected void onStart() {
@@ -133,15 +125,20 @@ public class Farming extends TickScript implements KeyListener {
     CropState compostBinState = getCompostBinState();
 
     if (OneClick.ONE_CLICK_GAME_OBJECTS_MAP.containsKey(event.getIdentifier())) {
-      if (TileObjects.getNearest(Predicates.ids(OneClick.ONE_CLICK_GAME_OBJECTS_MAP.get(event.getIdentifier()))) == null) {
+      if (TileObjects.getNearest(
+              Predicates.ids(OneClick.ONE_CLICK_GAME_OBJECTS_MAP.get(event.getIdentifier())))
+          == null) {
         return;
       }
     } else if (OneClick.ONE_CLICK_ITEMS_MAP.containsKey(event.getIdentifier())) {
-      if (!Inventory.contains(Predicates.ids(OneClick.ONE_CLICK_ITEMS_MAP.get(event.getIdentifier())))) {
+      if (!Inventory.contains(
+          Predicates.ids(OneClick.ONE_CLICK_ITEMS_MAP.get(event.getIdentifier())))) {
         return;
       }
     } else if (OneClick.ONE_CLICK_NPCS_MAP.containsKey(event.getIdentifier())) {
-      if (config.oneClickNote() && NPCs.getNearest(Predicates.ids(OneClick.ONE_CLICK_NPCS_MAP.get(event.getIdentifier()))) == null) {
+      if (config.oneClickNote()
+          && NPCs.getNearest(Predicates.ids(OneClick.ONE_CLICK_NPCS_MAP.get(event.getIdentifier())))
+              == null) {
         return;
       }
     } else if (event.getIdentifier() == ItemID.VOLCANIC_ASH) {
@@ -151,20 +148,23 @@ public class Farming extends TickScript implements KeyListener {
     } else {
       String name = Text.removeTags(event.getTarget());
 
-      if (!compostProduceSet.contains(name) || compostBinState == null || compostBinState == CropState.GROWING || compostBinState == CropState.HARVESTABLE) {
+      if (!compostProduceSet.contains(name)
+          || compostBinState == null
+          || compostBinState == CropState.GROWING
+          || compostBinState == CropState.HARVESTABLE) {
         return;
       }
     }
 
-    Static.getClient().insertMenuItem(
-        OneClick.ONE_CLICK_FARMING,
-        "",
-        MenuAction.UNKNOWN.getId(),
-        event.getIdentifier(),
-        event.getActionParam0(),
-        event.getActionParam1(),
-        true
-    );
+    Static.getClient()
+        .insertMenuItem(
+            OneClick.ONE_CLICK_FARMING,
+            "",
+            MenuAction.UNKNOWN.getId(),
+            event.getIdentifier(),
+            event.getActionParam0(),
+            event.getActionParam1(),
+            true);
   }
 
   @Subscribe
@@ -181,14 +181,17 @@ public class Farming extends TickScript implements KeyListener {
     CropState compostBinState = getCompostBinState();
 
     if (OneClick.ONE_CLICK_GAME_OBJECTS_MAP.containsKey(event.getId())) {
-      TileObject nearest = TileObjects.getNearest(Predicates.ids(OneClick.ONE_CLICK_GAME_OBJECTS_MAP.get(event.getId())));
+      TileObject nearest =
+          TileObjects.getNearest(
+              Predicates.ids(OneClick.ONE_CLICK_GAME_OBJECTS_MAP.get(event.getId())));
       if (nearest == null) {
         return;
       }
 
       GameThread.invoke(() -> item.useOn(nearest));
     } else if (OneClick.ONE_CLICK_ITEMS_MAP.containsKey(event.getId())) {
-      Item other = Inventory.getFirst(Predicates.ids(OneClick.ONE_CLICK_ITEMS_MAP.get(event.getId())));
+      Item other =
+          Inventory.getFirst(Predicates.ids(OneClick.ONE_CLICK_ITEMS_MAP.get(event.getId())));
       if (other == null) {
         return;
       }
@@ -201,7 +204,8 @@ public class Farming extends TickScript implements KeyListener {
       }
 
       GameThread.invoke(() -> item.useOn(bin));
-    } else if (compostProduceSet.contains(item.getName()) && (compostBinState == CropState.EMPTY || compostBinState == CropState.FILLING)) {
+    } else if (compostProduceSet.contains(item.getName())
+        && (compostBinState == CropState.EMPTY || compostBinState == CropState.FILLING)) {
       TileObject bin = TileObjects.getNearest(Predicates.ids(Constants.COMPOST_BIN_IDS));
       if (bin == null) {
         return;
@@ -230,9 +234,7 @@ public class Farming extends TickScript implements KeyListener {
   }
 
   @Override
-  public void keyTyped(KeyEvent e) {
-
-  }
+  public void keyTyped(KeyEvent e) {}
 
   @Override
   public void keyPressed(KeyEvent e) {
@@ -243,9 +245,7 @@ public class Farming extends TickScript implements KeyListener {
   }
 
   @Override
-  public void keyReleased(KeyEvent e) {
-
-  }
+  public void keyReleased(KeyEvent e) {}
 
   private CropState getCompostBinState() {
     PatchState patchState;

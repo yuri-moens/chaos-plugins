@@ -19,8 +19,7 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.timetracking.farming.CropState;
 
 public class Pick extends Task {
-  @Inject
-  private Farming plugin;
+  @Inject private Farming plugin;
 
   private boolean experienceReceived;
 
@@ -58,7 +57,8 @@ public class Pick extends Task {
     Time.sleepTick();
     GameThread.invoke(() -> patch.interact("Pick"));
 
-    Time.sleepTicksUntil(() -> Inventory.isFull() || Vars.getBit(plugin.getCurrentLocation().getVarbit()) <= 3, 100);
+    Time.sleepTicksUntil(
+        () -> Inventory.isFull() || Vars.getBit(plugin.getCurrentLocation().getVarbit()) <= 3, 100);
   }
 
   @Subscribe

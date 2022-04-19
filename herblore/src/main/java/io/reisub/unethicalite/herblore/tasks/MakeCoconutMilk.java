@@ -11,8 +11,7 @@ import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 
 public class MakeCoconutMilk extends Task {
-  @Inject
-  private Herblore plugin;
+  @Inject private Herblore plugin;
 
   @Override
   public String getStatus() {

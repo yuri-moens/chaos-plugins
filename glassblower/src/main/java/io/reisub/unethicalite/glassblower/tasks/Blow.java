@@ -18,11 +18,9 @@ import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
 
 public class Blow extends Task {
-  @Inject
-  private Glassblower plugin;
+  @Inject private Glassblower plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public String getStatus() {
@@ -38,18 +36,29 @@ public class Blow extends Task {
 
   @Override
   public void execute() {
-    if (config.pickUpSeaweedSpores() && Players.getLocal().getWorldLocation().getRegionID() == Glassblower.FOSSIL_ISLAND_SMALL_ISLAND_REGION) {
+    if (config.pickUpSeaweedSpores()
+        && Players.getLocal().getWorldLocation().getRegionID()
+            == Glassblower.FOSSIL_ISLAND_SMALL_ISLAND_REGION) {
       TileObject rowBoat = TileObjects.getNearest(ObjectID.ROWBOAT_30919);
       if (rowBoat == null) {
         return;
       }
 
       rowBoat.interact("Dive");
-      Time.sleepTicksUntil(() -> Dialog.isViewingOptions() || Players.getLocal().getWorldLocation().getRegionID() == Glassblower.FOSSIL_ISLAND_UNDERWATER_REGION, 10);
+      Time.sleepTicksUntil(
+          () ->
+              Dialog.isViewingOptions()
+                  || Players.getLocal().getWorldLocation().getRegionID()
+                      == Glassblower.FOSSIL_ISLAND_UNDERWATER_REGION,
+          10);
 
       if (Dialog.isViewingOptions()) {
         Dialog.chooseOption(1);
-        Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getRegionID() == Glassblower.FOSSIL_ISLAND_UNDERWATER_REGION, 10);
+        Time.sleepTicksUntil(
+            () ->
+                Players.getLocal().getWorldLocation().getRegionID()
+                    == Glassblower.FOSSIL_ISLAND_UNDERWATER_REGION,
+            10);
       }
 
       Time.sleepTick();
@@ -61,9 +70,11 @@ public class Blow extends Task {
 
     Inventory.getFirst(ItemID.GLASSBLOWING_PIPE).useOn(Inventory.getFirst(ItemID.MOLTEN_GLASS));
 
-
     if (Time.sleepTicksUntil(Production::isOpen, 10)) {
-      Product product = config.targetProduct() == Product.HIGHEST_POSSIBLE ? Product.getHighest() : config.targetProduct();
+      Product product =
+          config.targetProduct() == Product.HIGHEST_POSSIBLE
+              ? Product.getHighest()
+              : config.targetProduct();
 
       if (product == null) {
         return;

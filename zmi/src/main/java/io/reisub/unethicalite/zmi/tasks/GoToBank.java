@@ -11,10 +11,8 @@ import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
 
 public class GoToBank extends Task {
-  @Inject
-  private Config config;
-
   private static final int OVERWORLD_REGION_ID = 9778;
+  @Inject private Config config;
 
   @Override
   public String getStatus() {
@@ -46,6 +44,7 @@ public class GoToBank extends Task {
     }
 
     ladder.interact("Climb");
-    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getRegionID() != OVERWORLD_REGION_ID, 20);
+    Time.sleepTicksUntil(
+        () -> Players.getLocal().getWorldLocation().getRegionID() != OVERWORLD_REGION_ID, 20);
   }
 }

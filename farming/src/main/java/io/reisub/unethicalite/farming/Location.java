@@ -29,23 +29,18 @@ public enum Location {
       new WorldPoint(2670, 3376, 0),
       Varbits.FARMING_4774,
       () -> {
-        return Interact.interactWithInventoryOrEquipment(Constants.ARDOUGNE_CLOAK_IDS, "Farm Teleport", "Ardougne Farm", 0);
-      }
-  ),
-  CATHERBY(
-      "Catherby",
-      new WorldPoint(2813, 3465, 0),
-      Varbits.FARMING_4774,
-      () -> false
-  ),
+        return Interact.interactWithInventoryOrEquipment(
+            Constants.ARDOUGNE_CLOAK_IDS, "Farm Teleport", "Ardougne Farm", 0);
+      }),
+  CATHERBY("Catherby", new WorldPoint(2813, 3465, 0), Varbits.FARMING_4774, () -> false),
   FALADOR(
       "Falador",
       new WorldPoint(3058, 3310, 0),
       Varbits.FARMING_4774,
       () -> {
-        return Interact.interactWithInventoryOrEquipment(Constants.EXPLORERS_RING_IDS, "Teleport", null, 0);
-      }
-  ),
+        return Interact.interactWithInventoryOrEquipment(
+            Constants.EXPLORERS_RING_IDS, "Teleport", null, 0);
+      }),
   FARMING_GUILD(
       "Farming Guild",
       new WorldPoint(1239, 3728, 0),
@@ -61,20 +56,19 @@ public enum Location {
 
           Widget farmingGuild = Widgets.get(187, 3, 5);
           if (farmingGuild != null) {
-            farmingGuild.interact(0, MenuAction.WIDGET_TYPE_6.getId(), farmingGuild.getIndex(), farmingGuild.getId());
+            farmingGuild.interact(
+                0, MenuAction.WIDGET_TYPE_6.getId(), farmingGuild.getIndex(), farmingGuild.getId());
             return true;
           }
         }
 
         return false;
-      }
-  ),
+      }),
   HARMONY_ISLAND(
       "Harmony Island",
       new WorldPoint(3790, 2839, 0),
       Varbits.FARMING_4772,
-      () -> Location.tpThroughHouse(37589)
-  ),
+      () -> Location.tpThroughHouse(37589)),
   HOSIDIUS(
       "Hosidius",
       new WorldPoint(1740, 3550, 0),
@@ -93,8 +87,7 @@ public enum Location {
         }
 
         return false;
-      }
-  ),
+      }),
   PORT_PHASMATYS(
       "Port Phasmatys",
       new WorldPoint(3606, 3531, 0),
@@ -109,28 +102,45 @@ public enum Location {
 
         Time.sleepTicksUntil(() -> Inventory.contains(ItemID.ECTOPHIAL_4252), 10);
         return Time.sleepTicksUntil(() -> Inventory.contains(ItemID.ECTOPHIAL), 10);
-      }
-  ),
+      }),
   TROLL_STRONGHOLD(
       "Troll Stronghold",
       new WorldPoint(2828, 3694, 0),
       Varbits.FARMING_4771,
-      () -> Location.tpThroughHouse(33179)
-  ),
+      () -> Location.tpThroughHouse(33179)),
   WEISS(
       "Weiss",
       new WorldPoint(2847, 3935, 0),
       Varbits.FARMING_4771,
-      () -> Location.tpThroughHouse(37581)
-  );
+      () -> Location.tpThroughHouse(37581));
 
   private final String name;
   private final WorldPoint patchPoint;
   private final int varbit;
   private final Teleportable teleportable;
 
-  @Setter
-  private boolean done;
+  @Setter private boolean done;
+
+  public static boolean tpThroughHouse(int portalId) {
+    Magic.cast(Regular.TELEPORT_TO_HOUSE);
+
+    Time.sleepTicksUntil(() -> TileObjects.getNearest(portalId) != null, 10);
+    Time.sleepTicks(2);
+
+    TileObject portal = TileObjects.getNearest(portalId);
+    if (portal == null) {
+      return false;
+    }
+
+    int regionId = Players.getLocal().getWorldLocation().getRegionID();
+
+    portal.interact("Enter");
+    return Time.sleepTicksUntil(
+        () ->
+            Players.getLocal().getWorldLocation() != null
+                && Players.getLocal().getWorldLocation().getRegionID() != regionId,
+        30);
+  }
 
   public boolean isEnabled(Config config) {
     switch (this) {
@@ -152,6 +162,7 @@ public enum Location {
         return config.trollStrongholdHerb();
       case WEISS:
         return config.weissHerb();
+      default:
     }
 
     return false;
@@ -159,22 +170,5 @@ public enum Location {
 
   public interface Teleportable {
     boolean teleport();
-  }
-
-  public static boolean tpThroughHouse(int portalId) {
-    Magic.cast(Regular.TELEPORT_TO_HOUSE);
-
-    Time.sleepTicksUntil(() -> TileObjects.getNearest(portalId) != null, 10);
-    Time.sleepTicks(2);
-
-    TileObject portal = TileObjects.getNearest(portalId);
-    if (portal == null) {
-      return false;
-    }
-
-    int regionId = Players.getLocal().getWorldLocation().getRegionID();
-
-    portal.interact("Enter");
-    return Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation() != null && Players.getLocal().getWorldLocation().getRegionID() != regionId, 30);
   }
 }

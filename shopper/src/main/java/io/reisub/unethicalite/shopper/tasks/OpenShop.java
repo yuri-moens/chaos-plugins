@@ -9,17 +9,15 @@ import dev.unethicalite.api.items.Shop;
 import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.shopper.Config;
 import io.reisub.unethicalite.shopper.Shopper;
-import io.reisub.unethicalite.utils.api.CMovement;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.NPC;
 
 public class OpenShop extends Task {
-  @Inject
-  private Shopper plugin;
+  @Inject private Shopper plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public String getStatus() {
@@ -28,8 +26,7 @@ public class OpenShop extends Task {
 
   @Override
   public boolean validate() {
-    return !Inventory.isFull()
-        && !Shop.isOpen();
+    return !Inventory.isFull() && !Shop.isOpen();
   }
 
   @Override
@@ -39,7 +36,7 @@ public class OpenShop extends Task {
     }
 
     if (plugin.getNpcLocation() != null) {
-      CMovement.walkTo(plugin.getNpcLocation(), 1);
+      ChaosMovement.walkTo(plugin.getNpcLocation(), 1);
     }
 
     NPC npc = NPCs.getNearest(config.npcName());

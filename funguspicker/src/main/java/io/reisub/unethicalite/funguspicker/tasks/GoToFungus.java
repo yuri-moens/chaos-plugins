@@ -7,7 +7,7 @@ import dev.unethicalite.api.widgets.Tab;
 import dev.unethicalite.api.widgets.Tabs;
 import io.reisub.unethicalite.funguspicker.FungusPicker;
 import io.reisub.unethicalite.utils.Constants;
-import io.reisub.unethicalite.utils.api.CMovement;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.api.Interact;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -15,8 +15,7 @@ import javax.inject.Inject;
 import net.runelite.api.ItemID;
 
 public class GoToFungus extends Task {
-  @Inject
-  private FungusPicker plugin;
+  @Inject private FungusPicker plugin;
 
   @Override
   public String getStatus() {
@@ -34,25 +33,35 @@ public class GoToFungus extends Task {
     int regionId = Players.getLocal().getWorldLocation().getRegionID();
 
     if (!FungusPicker.VER_SINHAZA_REGION_IDS.contains(regionId)) {
-      boolean interacted = Interact.interactWithInventoryOrEquipment(ItemID.DRAKANS_MEDALLION, "Ver Sinhaza", null, 0);
+      boolean interacted =
+          Interact.interactWithInventoryOrEquipment(
+              ItemID.DRAKANS_MEDALLION, "Ver Sinhaza", null, 0);
 
       if (!interacted) {
         plugin.stop("Couldn't find Drakan's medallion. Stopping plugin.");
         return;
       }
 
-      Time.sleepTicksUntil(() -> FungusPicker.VER_SINHAZA_REGION_IDS.contains(Players.getLocal().getWorldLocation().getRegionID()), 10);
+      Time.sleepTicksUntil(
+          () ->
+              FungusPicker.VER_SINHAZA_REGION_IDS.contains(
+                  Players.getLocal().getWorldLocation().getRegionID()),
+          10);
     }
 
-    CMovement.walkTo(FungusPicker.FUNGUS_LOCATION, () -> {
-      if (Tabs.isOpen(Tab.EQUIPMENT)) {
-        Tabs.openInterface(Tab.INVENTORY);
-      }
+    ChaosMovement.walkTo(
+        FungusPicker.FUNGUS_LOCATION,
+        () -> {
+          if (Tabs.isOpen(Tab.EQUIPMENT)) {
+            Tabs.openInterface(Tab.INVENTORY);
+          }
 
-      Inventory.getAll(Predicates.ids(Constants.DUELING_RING_IDS)).forEach((i) -> {
-        i.interact("Wear");
-        Tabs.openInterface(Tab.EQUIPMENT);
-      });
-    });
+          Inventory.getAll(Predicates.ids(Constants.DUELING_RING_IDS))
+              .forEach(
+                  (i) -> {
+                    i.interact("Wear");
+                    Tabs.openInterface(Tab.EQUIPMENT);
+                  });
+        });
   }
 }

@@ -7,22 +7,12 @@ import net.runelite.client.config.ConfigItem;
 
 @ConfigGroup("chaossmithing")
 public interface Config extends net.runelite.client.config.Config {
-  @ConfigItem(
-      keyName = "metal",
-      name = "Type",
-      description = "Choose metal type",
-      position = 0
-  )
+  @ConfigItem(keyName = "metal", name = "Type", description = "Choose metal type", position = 0)
   default Metal metal() {
     return Metal.MITHRIL;
   }
 
-  @ConfigItem(
-      keyName = "product",
-      name = "Product",
-      description = "Choose product",
-      position = 1
-  )
+  @ConfigItem(keyName = "product", name = "Product", description = "Choose product", position = 1)
   default Product product() {
     return Product.PLATE_BODY;
   }
@@ -31,8 +21,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
-      position = Integer.MAX_VALUE
-  )
+      position = Integer.MAX_VALUE)
   default Button startButton() {
     return new Button();
   }

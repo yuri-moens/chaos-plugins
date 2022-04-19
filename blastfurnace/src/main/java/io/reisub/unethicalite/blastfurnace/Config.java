@@ -7,12 +7,7 @@ import net.runelite.client.config.ConfigItem;
 
 @ConfigGroup("chaosblastfurnace")
 public interface Config extends net.runelite.client.config.Config {
-  @ConfigItem(
-      keyName = "metal",
-      name = "Metal",
-      description = "Choose metal type",
-      position = 0
-  )
+  @ConfigItem(keyName = "metal", name = "Metal", description = "Choose metal type", position = 0)
   default Metal metal() {
     return Metal.MITHRIL;
   }
@@ -21,8 +16,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "useStamina",
       name = "Use stamina pots",
       description = "Enable to use stamina pots",
-      position = 1
-  )
+      position = 1)
   default boolean useStamina() {
     return false;
   }
@@ -31,8 +25,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
-      position = Integer.MAX_VALUE
-  )
+      position = Integer.MAX_VALUE)
   default Button startButton() {
     return new Button();
   }

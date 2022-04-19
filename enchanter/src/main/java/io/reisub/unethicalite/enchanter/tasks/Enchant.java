@@ -12,8 +12,7 @@ import javax.inject.Inject;
 import net.runelite.api.Item;
 
 public class Enchant extends Task {
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public String getStatus() {
@@ -43,13 +42,14 @@ public class Enchant extends Task {
       items = Inventory.getAll(config.item().getId());
     }
 
-    items.forEach((i) -> {
-      if (!config.spell().getSpell().canCast()) {
-        return;
-      }
+    items.forEach(
+        (i) -> {
+          if (!config.spell().getSpell().canCast()) {
+            return;
+          }
 
-      Magic.cast(config.spell().getSpell(), i);
-      Time.sleepTicks(3);
-    });
+          Magic.cast(config.spell().getSpell(), i);
+          Time.sleepTicks(3);
+        });
   }
 }

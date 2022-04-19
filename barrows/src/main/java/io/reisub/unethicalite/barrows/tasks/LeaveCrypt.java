@@ -13,8 +13,7 @@ import javax.inject.Inject;
 import net.runelite.api.TileObject;
 
 public class LeaveCrypt extends Task {
-  @Inject
-  private CombatHelper combatHelper;
+  @Inject private CombatHelper combatHelper;
 
   @Override
   public String getStatus() {

@@ -12,11 +12,9 @@ import javax.inject.Inject;
 import net.runelite.api.widgets.Widget;
 
 public class GetTask extends Task {
-  @Inject
-  private MahoganyHomes plugin;
+  @Inject private MahoganyHomes plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   @Override
   public String getStatus() {
@@ -61,10 +59,9 @@ public class GetTask extends Task {
       case MAHOGANY:
         chooseOption = DialogOption.CHAT_OPTION_FOUR;
         break;
+      default:
     }
 
-    Dialog.invokeDialog(
-        chooseOption
-    );
+    Dialog.invokeDialog(chooseOption);
   }
 }

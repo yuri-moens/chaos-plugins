@@ -14,8 +14,7 @@ import net.runelite.api.ObjectID;
 import net.runelite.api.Skill;
 
 public class CastBloom extends Task {
-  @Inject
-  private FungusPicker plugin;
+  @Inject private FungusPicker plugin;
 
   @Override
   public String getStatus() {
@@ -34,10 +33,12 @@ public class CastBloom extends Task {
     if (!Players.getLocal().getWorldLocation().equals(FungusPicker.FUNGUS_LOCATION)) {
       Movement.walk(FungusPicker.FUNGUS_LOCATION);
 
-      Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(FungusPicker.FUNGUS_LOCATION), 10);
+      Time.sleepTicksUntil(
+          () -> Players.getLocal().getWorldLocation().equals(FungusPicker.FUNGUS_LOCATION), 10);
     }
 
-    boolean interacted = Interact.interactWithInventoryOrEquipment((i) -> i.hasAction("Bloom"), "Bloom", null, 0);
+    boolean interacted =
+        Interact.interactWithInventoryOrEquipment((i) -> i.hasAction("Bloom"), "Bloom", null, 0);
     if (!interacted) {
       plugin.stop("Couldn't find an item to cast Bloom with. Stopping plugin.");
       return;

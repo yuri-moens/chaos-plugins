@@ -7,7 +7,7 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.tempoross.Tempoross;
-import io.reisub.unethicalite.utils.api.CMovement;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
@@ -16,8 +16,7 @@ import net.runelite.api.NpcID;
 import net.runelite.api.NullObjectID;
 
 public class Stock extends Task {
-  @Inject
-  private Tempoross plugin;
+  @Inject private Tempoross plugin;
 
   @Override
   public String getStatus() {
@@ -26,12 +25,20 @@ public class Stock extends Task {
 
   @Override
   public boolean validate() {
-    if (!plugin.isInTemporossArea()) return false;
-
-    if (plugin.getCurrentActivity() == Activity.REPAIRING || plugin.getCurrentActivity() == Activity.TETHERING_MAST)
+    if (!plugin.isInTemporossArea()) {
       return false;
+    }
 
-    if (TileObjects.getNearest((o) -> o.getId() == NullObjectID.NULL_41006 && (plugin.getIslandArea().contains(o) || plugin.getBoatArea().contains(o))) != null) {
+    if (plugin.getCurrentActivity() == Activity.REPAIRING
+        || plugin.getCurrentActivity() == Activity.TETHERING_MAST) {
+      return false;
+    }
+
+    if (TileObjects.getNearest(
+            (o) ->
+                o.getId() == NullObjectID.NULL_41006
+                    && (plugin.getIslandArea().contains(o) || plugin.getBoatArea().contains(o)))
+        != null) {
       return false;
     }
 
@@ -40,18 +47,20 @@ public class Stock extends Task {
     if (plugin.getPhase() == 1
         && plugin.getCookedFish() >= plugin.getCookedFishRequired()
         && plugin.getEnergy() == 100
-        && plugin.getCurrentActivity() != Activity.STOCKING_CANNON
-    ) return true;
+        && plugin.getCurrentActivity() != Activity.STOCKING_CANNON) {
+      return true;
+    }
 
     // stock cannon for the second time
     // trigger first phase change
     // bring energy to 4% or as close as possible
     if (plugin.getPhase() == 1
         && plugin.getEnergy() < 100
-        && (plugin.getStormIntensity() >= 94 || plugin.getCookedFish() >= plugin.getCookedFishRequired())
-        && plugin.getCurrentActivity() != Activity.STOCKING_CANNON
-    )
+        && (plugin.getStormIntensity() >= 94
+            || plugin.getCookedFish() >= plugin.getCookedFishRequired())
+        && plugin.getCurrentActivity() != Activity.STOCKING_CANNON) {
       return true;
+    }
 
     // stock cannon at phase 2
     // bring energy to 4%
@@ -60,16 +69,18 @@ public class Stock extends Task {
         && plugin.getCookedFishRequired() > 0
         && plugin.getCookedFishRequired() != 19
         && plugin.getCookedFish() >= plugin.getCookedFishRequired()
-        && plugin.getCurrentActivity() != Activity.STOCKING_CANNON
-    ) return true;
+        && plugin.getCurrentActivity() != Activity.STOCKING_CANNON) {
+      return true;
+    }
 
     // stock cannon at phase 2
     // trigger second phase change
     // bring energy to 4%
     if (plugin.getPhase() == 2
         && plugin.getCookedFish() >= plugin.getCookedFishRequired()
-        && plugin.getCurrentActivity() != Activity.STOCKING_CANNON
-    ) return true;
+        && plugin.getCurrentActivity() != Activity.STOCKING_CANNON) {
+      return true;
+    }
 
     // stock cannon at phase 3
     // trigger third phase change and potentially fourth phase change
@@ -77,8 +88,9 @@ public class Stock extends Task {
         && plugin.getCookedFish() > 0
         && plugin.getRawFish() == 0
         && Inventory.isFull()
-        && plugin.getCurrentActivity() != Activity.STOCKING_CANNON
-    ) return true;
+        && plugin.getCurrentActivity() != Activity.STOCKING_CANNON) {
+      return true;
+    }
 
     NPC northCrate = NPCs.getNearest(NpcID.AMMUNITION_CRATE);
     NPC southCrate = NPCs.getNearest(NpcID.AMMUNITION_CRATE_10577);
@@ -87,9 +99,12 @@ public class Stock extends Task {
       // swap ammunition box at phase 3
       if (plugin.getPhase() >= 4
           && plugin.getCurrentActivity() == Activity.STOCKING_CANNON
-          && plugin.getCookedFish() > 0 && plugin.getCookedFish() < 15
-          && Players.getLocal().distanceTo(northCrate) < Players.getLocal().distanceTo(southCrate)
-      ) return true;
+          && plugin.getCookedFish() > 0
+          && plugin.getCookedFish() < 15
+          && Players.getLocal().distanceTo(northCrate)
+              < Players.getLocal().distanceTo(southCrate)) {
+        return true;
+      }
     }
 
     return false;
@@ -98,14 +113,20 @@ public class Stock extends Task {
   @Override
   public void execute() {
     if (Players.getLocal().distanceTo(plugin.getDudiPos()) > 8) {
-      CMovement.sendMovementPacket(plugin.getDudiPos().dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
+      ChaosMovement.sendMovementPacket(
+          plugin.getDudiPos().dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
 
       Time.sleepUntil(() -> Players.getLocal().distanceTo(plugin.getDudiPos()) <= 8, 15000);
     }
 
-    NPC fire = NPCs.getNearest((n) -> n.getId() == NpcID.FIRE_8643
-        && (plugin.getIslandArea().contains(n) || plugin.getBoatArea().contains(n)));
-    if (fire != null) return;
+    NPC fire =
+        NPCs.getNearest(
+            (n) ->
+                n.getId() == NpcID.FIRE_8643
+                    && (plugin.getIslandArea().contains(n) || plugin.getBoatArea().contains(n)));
+    if (fire != null) {
+      return;
+    }
 
     NPC crate;
 
@@ -120,7 +141,9 @@ public class Stock extends Task {
       }
     }
 
-    if (crate == null) return;
+    if (crate == null) {
+      return;
+    }
 
     crate.interact(0);
 

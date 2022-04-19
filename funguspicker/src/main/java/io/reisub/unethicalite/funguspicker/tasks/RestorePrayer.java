@@ -16,8 +16,7 @@ import net.runelite.api.Skill;
 import net.runelite.api.coords.WorldPoint;
 
 public class RestorePrayer extends Task {
-  @Inject
-  private FungusPicker plugin;
+  @Inject private FungusPicker plugin;
 
   @Override
   public String getStatus() {
@@ -34,10 +33,17 @@ public class RestorePrayer extends Task {
   public void execute() {
     WorldPoint current = Players.getLocal().getWorldLocation();
 
-    boolean interacted = Interact.interactWithInventoryOrEquipment(Predicates.ids(Constants.ARDOUGNE_CLOAK_IDS), "Monastery Teleport", "Kandarin Monastery", 0);
+    boolean interacted =
+        Interact.interactWithInventoryOrEquipment(
+            Predicates.ids(Constants.ARDOUGNE_CLOAK_IDS),
+            "Monastery Teleport",
+            "Kandarin Monastery",
+            0);
 
     if (!interacted) {
-      interacted = Interact.interactWithInventoryOrEquipment(Predicates.ids(Constants.DUELING_RING_IDS), "Rub", "Ferox Enclave", 3);
+      interacted =
+          Interact.interactWithInventoryOrEquipment(
+              Predicates.ids(Constants.DUELING_RING_IDS), "Rub", "Ferox Enclave", 3);
 
       if (!interacted) {
         plugin.stop("No dueling ring or Ardougne cloak found. Stopping script.");
@@ -54,7 +60,8 @@ public class RestorePrayer extends Task {
       TileObjects.getNearest(ObjectID.POOL_OF_REFRESHMENT).interact(0);
     }
 
-    Time.sleepTicksUntil(() -> Skills.getBoostedLevel(Skill.PRAYER) == Skills.getLevel(Skill.PRAYER), 30);
+    Time.sleepTicksUntil(
+        () -> Skills.getBoostedLevel(Skill.PRAYER) == Skills.getLevel(Skill.PRAYER), 30);
     Time.sleepTicks(3);
   }
 }

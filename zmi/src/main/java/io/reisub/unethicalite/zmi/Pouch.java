@@ -23,6 +23,24 @@ public enum Pouch {
     this.degradedBaseHoldAmount = degradedHoldAmount;
   }
 
+  public static Pouch forItem(int itemId) {
+    switch (itemId) {
+      case ItemID.SMALL_POUCH:
+        return SMALL;
+      case ItemID.MEDIUM_POUCH:
+      case ItemID.MEDIUM_POUCH_5511:
+        return MEDIUM;
+      case ItemID.LARGE_POUCH:
+      case ItemID.LARGE_POUCH_5513:
+        return LARGE;
+      case ItemID.GIANT_POUCH:
+      case ItemID.GIANT_POUCH_5515:
+        return GIANT;
+      default:
+        return null;
+    }
+  }
+
   public int getHoldAmount() {
     return degraded ? degradedBaseHoldAmount : baseHoldAmount;
   }
@@ -50,24 +68,6 @@ public enum Pouch {
       degraded = state;
       int holdAmount = degraded ? degradedBaseHoldAmount : baseHoldAmount;
       holding = Math.min(holding, holdAmount);
-    }
-  }
-
-  public static Pouch forItem(int itemId) {
-    switch (itemId) {
-      case ItemID.SMALL_POUCH:
-        return SMALL;
-      case ItemID.MEDIUM_POUCH:
-      case ItemID.MEDIUM_POUCH_5511:
-        return MEDIUM;
-      case ItemID.LARGE_POUCH:
-      case ItemID.LARGE_POUCH_5513:
-        return LARGE;
-      case ItemID.GIANT_POUCH:
-      case ItemID.GIANT_POUCH_5515:
-        return GIANT;
-      default:
-        return null;
     }
   }
 }

@@ -12,8 +12,7 @@ public class BuyItem {
   private final int minInShop;
   private final boolean stackable;
 
-  @Setter
-  private int amountBought;
+  @Setter private int amountBought;
 
   public void bought(int amount) {
     amountBought += amount;

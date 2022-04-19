@@ -9,8 +9,7 @@ import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 
 public class OpenPacks extends Task {
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   private int last;
 
@@ -32,7 +31,8 @@ public class OpenPacks extends Task {
       DialogPackets.closeInterface();
     }
 
-    Inventory.getAll((i) -> i.hasAction("Open") && i.getName().contains("pack")).forEach((i) -> i.interact("Open"));
+    Inventory.getAll((i) -> i.hasAction("Open") && i.getName().contains("pack"))
+        .forEach((i) -> i.interact("Open"));
     last = Static.getClient().getTickCount();
   }
 }

@@ -10,8 +10,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "targetProduct",
       name = "Blow",
       description = "Choose what to blow",
-      position = 0
-  )
+      position = 0)
   default Product targetProduct() {
     return Product.HIGHEST_POSSIBLE;
   }
@@ -20,8 +19,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "pickUpSeaweedSpores",
       name = "Pick up seaweed spores",
       description = "Go underwater at Fossil Island to pick up seaweed spores.",
-      position = 1
-  )
+      position = 1)
   default boolean pickUpSeaweedSpores() {
     return false;
   }
@@ -30,8 +28,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
-      position = Integer.MAX_VALUE
-  )
+      position = Integer.MAX_VALUE)
   default Button startButton() {
     return new Button();
   }

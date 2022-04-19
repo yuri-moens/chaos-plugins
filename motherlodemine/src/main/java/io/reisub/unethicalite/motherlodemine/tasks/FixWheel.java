@@ -11,8 +11,7 @@ import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
 
 public class FixWheel extends Task {
-  @Inject
-  private MotherlodeMine plugin;
+  @Inject private MotherlodeMine plugin;
 
   @Override
   public String getStatus() {

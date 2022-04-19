@@ -33,17 +33,23 @@ public enum Bones {
   private final int id;
 
   static Bones[] allBelow(Bones bones) {
-    if (bones == NONE) return new Bones[0];
+    if (bones == NONE) {
+      return new Bones[0];
+    }
 
     Bones[] allBelow = new Bones[bones.ordinal()];
     int i = 0;
 
     for (Bones b : Bones.values()) {
-      if (b == NONE) continue;
+      if (b == NONE) {
+        continue;
+      }
 
       allBelow[i++] = b;
 
-      if (b == bones) break;
+      if (b == bones) {
+        break;
+      }
     }
 
     return allBelow;

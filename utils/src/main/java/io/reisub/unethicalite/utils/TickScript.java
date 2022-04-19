@@ -40,35 +40,23 @@ import net.runelite.client.plugins.Plugin;
 
 @Slf4j
 public abstract class TickScript extends Plugin {
-  @Inject
-  private Config utilsConfig;
-
-  @Getter
-  private volatile boolean running;
-
-  @Getter
-  protected Activity currentActivity;
-
-  @Getter
-  protected Activity previousActivity;
-
-  @Getter
-  @Setter
-  private Instant lastHop;
-
-  private ScheduledFuture<?> current;
-  private ScheduledFuture<?> next;
-  protected ScheduledExecutorService executor;
-
   protected final List<Task> tasks = new ArrayList<>();
+  protected final Map<Skill, Activity> idleCheckSkills = new HashMap<>();
+  @Getter protected Activity currentActivity;
 
+  @Getter protected Activity previousActivity;
+  protected ScheduledExecutorService executor;
   protected Instant lastLogin = Instant.EPOCH;
   protected Instant lastActionTime = Instant.EPOCH;
   protected Duration lastActionTimeout = Duration.ofSeconds(3);
   protected Instant lastExperience = Instant.EPOCH;
   protected Instant lastInventoryChange = Instant.EPOCH;
-  protected final Map<Skill, Activity> idleCheckSkills = new HashMap<>();
   protected boolean idleCheckInventoryChange = false;
+  @Inject private Config utilsConfig;
+  @Getter private volatile boolean running;
+  @Getter @Setter private Instant lastHop;
+  private ScheduledFuture<?> current;
+  private ScheduledFuture<?> next;
 
   @Subscribe
   private void onConfigButtonPressed(ConfigButtonClicked event) {
@@ -94,18 +82,23 @@ public abstract class TickScript extends Plugin {
 
     try {
       if (current == null) {
-        current = executor.schedule(this::tick, Rand.nextInt(minDelay, maxDelay), TimeUnit.MILLISECONDS);
+        current =
+            executor.schedule(this::tick, Rand.nextInt(minDelay, maxDelay), TimeUnit.MILLISECONDS);
       } else {
         if (current.isDone()) {
           if (next == null) {
-            current = executor.schedule(this::tick, Rand.nextInt(minDelay, maxDelay), TimeUnit.MILLISECONDS);
+            current =
+                executor.schedule(
+                    this::tick, Rand.nextInt(minDelay, maxDelay), TimeUnit.MILLISECONDS);
           } else {
             current = next;
             next = null;
           }
         } else {
           if (next == null) {
-            next = executor.schedule(this::tick, Rand.nextInt(minDelay, maxDelay), TimeUnit.MILLISECONDS);
+            next =
+                executor.schedule(
+                    this::tick, Rand.nextInt(minDelay, maxDelay), TimeUnit.MILLISECONDS);
           }
         }
       }
@@ -119,7 +112,9 @@ public abstract class TickScript extends Plugin {
 
   @Subscribe
   private void onChatMessage(ChatMessage event) {
-    if (!isRunning() || !Utils.isLoggedIn()) return;
+    if (!isRunning() || !Utils.isLoggedIn()) {
+      return;
+    }
 
     if (event.getType() == ChatMessageType.GAMEMESSAGE) {
       if (event.getMessage().startsWith("Congratulations, you've just advanced your")) {
@@ -130,7 +125,9 @@ public abstract class TickScript extends Plugin {
 
   @Subscribe
   private void onStatChanged(StatChanged event) {
-    if (!isRunning() || !Utils.isLoggedIn()) return;
+    if (!isRunning() || !Utils.isLoggedIn()) {
+      return;
+    }
 
     for (Skill skill : idleCheckSkills.keySet()) {
       if (event.getSkill() == skill) {
@@ -142,9 +139,13 @@ public abstract class TickScript extends Plugin {
 
   @Subscribe
   private void onItemContainerChanged(ItemContainerChanged event) {
-    if (!isRunning() || !Utils.isLoggedIn()) return;
+    if (!isRunning() || !Utils.isLoggedIn()) {
+      return;
+    }
 
-    if (event.getItemContainer() != Game.getClient().getItemContainer(InventoryID.INVENTORY)) return;
+    if (event.getItemContainer() != Game.getClient().getItemContainer(InventoryID.INVENTORY)) {
+      return;
+    }
 
     if (idleCheckInventoryChange) {
       lastInventoryChange = Instant.now();
@@ -248,11 +249,17 @@ public abstract class TickScript extends Plugin {
   }
 
   protected void checkActionTimeout() {
-    if (currentActivity == Activity.IDLE) return;
+    if (currentActivity == Activity.IDLE) {
+      return;
+    }
 
-    if (Duration.between(lastExperience, Instant.now()).compareTo(lastActionTimeout) < 0) return;
+    if (Duration.between(lastExperience, Instant.now()).compareTo(lastActionTimeout) < 0) {
+      return;
+    }
 
-    if (Duration.between(lastInventoryChange, Instant.now()).compareTo(lastActionTimeout) < 0) return;
+    if (Duration.between(lastInventoryChange, Instant.now()).compareTo(lastActionTimeout) < 0) {
+      return;
+    }
 
     if (!Players.getLocal().isIdle() || lastActionTime == null) {
       lastActionTime = Instant.now();

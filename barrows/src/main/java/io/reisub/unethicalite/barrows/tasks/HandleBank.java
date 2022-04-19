@@ -9,7 +9,7 @@ import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.barrows.Config;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.Utils;
-import io.reisub.unethicalite.utils.api.CBank;
+import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.time.Duration;
@@ -20,11 +20,9 @@ import net.runelite.api.events.ChatMessage;
 import net.runelite.client.eventbus.Subscribe;
 
 public class HandleBank extends BankTask {
-  @Inject
-  private Barrows plugin;
+  @Inject private Barrows plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   private boolean shouldRechargeStaff;
   private boolean ibanStaffAlmostEmpty;
@@ -34,16 +32,14 @@ public class HandleBank extends BankTask {
     return Utils.isInRegion(Barrows.FEROX_ENCLAVE_REGIONS)
         && isLastBankDurationAgo(Duration.ofSeconds(2))
         && isBankObjectAvailable()
-        && (
-        !Inventory.contains((i) -> Constants.PRAYER_RESTORE_POTION_IDS.contains(i.getId()))
+        && (!Inventory.contains((i) -> Constants.PRAYER_RESTORE_POTION_IDS.contains(i.getId()))
             || (!Inventory.contains(Predicates.ids(Constants.DUELING_RING_IDS))
                 && !Equipment.contains(Predicates.ids(Constants.DUELING_RING_IDS)))
             || Inventory.getCount(config.food()) < config.foodQuantity()
             || shouldRechargeStaff
             || ibanStaffAlmostEmpty
             || Inventory.contains(i -> i.getName().contains("Clue scroll"))
-            || Inventory.contains(Predicates.ids(Constants.BARROWS_UNDEGRADED_IDS))
-      );
+            || Inventory.contains(Predicates.ids(Constants.BARROWS_UNDEGRADED_IDS)));
   }
 
   @Override
@@ -115,9 +111,8 @@ public class HandleBank extends BankTask {
     if (event.getMessage().contains("has 100 charges left")) {
       if (Equipment.contains(ItemID.TRIDENT_OF_THE_SEAS_E, ItemID.TRIDENT_OF_THE_SEAS)) {
         shouldRechargeStaff = true;
-      } else if (Equipment.contains(ItemID.IBANS_STAFF,
-          ItemID.IBANS_STAFF_U,
-          ItemID.IBANS_STAFF_1410)) {
+      } else if (Equipment.contains(
+          ItemID.IBANS_STAFF, ItemID.IBANS_STAFF_U, ItemID.IBANS_STAFF_1410)) {
         ibanStaffAlmostEmpty = true;
       }
     }
@@ -157,7 +152,7 @@ public class HandleBank extends BankTask {
 
     open();
 
-    CBank.depositAll(ItemID.DEATH_RUNE, ItemID.CHAOS_RUNE, ItemID.FIRE_RUNE);
+    ChaosBank.depositAll(ItemID.DEATH_RUNE, ItemID.CHAOS_RUNE, ItemID.FIRE_RUNE);
     Bank.depositAll("Coins");
   }
 }

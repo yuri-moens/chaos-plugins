@@ -17,8 +17,7 @@ import net.runelite.api.Prayer;
 import net.runelite.api.TileObject;
 
 public class RuneCraft extends Task {
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   private int last;
 
@@ -31,7 +30,9 @@ public class RuneCraft extends Task {
   public boolean validate() {
     return Inventory.contains(Predicates.ids(Constants.ESSENCE_IDS))
         && Static.getClient().getTickCount() >= last + 3
-        && (!Players.getLocal().isMoving() || (Players.getLocal().getWorldLocation().equals(Zmi.NEAR_ALTAR)) && Static.getClient().getTickCount() < Zmi.lastEmpty + 10);
+        && (!Players.getLocal().isMoving()
+            || (Players.getLocal().getWorldLocation().equals(Zmi.NEAR_ALTAR))
+                && Static.getClient().getTickCount() < Zmi.lastEmpty + 10);
   }
 
   @Override

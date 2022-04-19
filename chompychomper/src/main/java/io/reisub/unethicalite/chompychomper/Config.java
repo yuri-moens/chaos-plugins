@@ -10,8 +10,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "pluck",
       name = "Pluck",
       description = "Pluck chompies, only useful when pet hunting",
-      position = 0
-  )
+      position = 0)
   default boolean pluck() {
     return false;
   }
@@ -20,8 +19,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
-      position = Integer.MAX_VALUE
-  )
+      position = Integer.MAX_VALUE)
   default Button startButton() {
     return new Button();
   }

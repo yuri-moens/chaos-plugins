@@ -9,7 +9,7 @@ import dev.unethicalite.api.widgets.Dialog;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
 import io.reisub.unethicalite.birdhouse.Config;
 import io.reisub.unethicalite.utils.Constants;
-import io.reisub.unethicalite.utils.api.CMovement;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import lombok.AllArgsConstructor;
 import net.runelite.api.ObjectID;
@@ -42,9 +42,10 @@ public class GoToIsland extends Task {
 
   @Override
   public void execute() {
-    CMovement.walkTo(target, 2,
-        () -> Inventory.getAll((i) -> i.hasAction("Search"))
-            .forEach((i) -> i.interact("Search")));
+    ChaosMovement.walkTo(
+        target,
+        2,
+        () -> Inventory.getAll((i) -> i.hasAction("Search")).forEach((i) -> i.interact("Search")));
 
     TileObject rowBoat = TileObjects.getNearest(ObjectID.ROWBOAT_30915);
     if (rowBoat == null) {

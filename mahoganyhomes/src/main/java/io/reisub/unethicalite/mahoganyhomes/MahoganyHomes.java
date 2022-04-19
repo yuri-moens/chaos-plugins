@@ -15,23 +15,18 @@ import org.pf4j.Extension;
 @PluginDescriptor(
     name = "Chaos Mahogany Homes",
     description = "Can we build it? Yes, we can!",
-    enabledByDefault = false
-)
+    enabledByDefault = false)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class MahoganyHomes extends TickScript {
-  @Inject
-  private Config config;
+  @Inject private Config config;
+  @Getter @Setter private Home currentHome;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
   }
-
-  @Getter
-  @Setter
-  private Home currentHome;
 
   @Override
   protected void onStart() {

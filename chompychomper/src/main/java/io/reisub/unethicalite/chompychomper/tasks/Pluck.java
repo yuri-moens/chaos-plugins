@@ -14,11 +14,9 @@ import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 
 public class Pluck extends Task {
-  @Inject
-  private ChompyChomper plugin;
+  @Inject private ChompyChomper plugin;
 
-  @Inject
-  private Config config;
+  @Inject private Config config;
 
   private NPC deadChompy;
 

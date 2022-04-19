@@ -65,8 +65,7 @@ public enum EnchantItem {
             OPAL_RING.id,
             OPAL_BRACELET.id,
             OPAL_NECKLACE.id,
-            OPAL_AMULET.id
-        );
+            OPAL_AMULET.id);
       case LEVEL_2:
         return ImmutableSet.of(
             EMERALD_RING.id,
@@ -77,8 +76,7 @@ public enum EnchantItem {
             JADE_RING.id,
             JADE_NECKLACE.id,
             JADE_BRACELET.id,
-            JADE_AMULET.id
-        );
+            JADE_AMULET.id);
       case LEVEL_3:
         return ImmutableSet.of(
             RUBY_RING.id,
@@ -88,36 +86,22 @@ public enum EnchantItem {
             TOPAZ_RING.id,
             TOPAZ_BRACELET.id,
             TOPAZ_NECKLACE.id,
-            TOPAZ_AMULET.id
-        );
+            TOPAZ_AMULET.id);
       case LEVEL_4:
         return ImmutableSet.of(
-            DIAMOND_RING.id,
-            DIAMOND_NECKLACE.id,
-            DIAMOND_BRACELET.id,
-            DIAMOND_AMULET.id
-        );
+            DIAMOND_RING.id, DIAMOND_NECKLACE.id, DIAMOND_BRACELET.id, DIAMOND_AMULET.id);
       case LEVEL_5:
         return ImmutableSet.of(
             DRAGONSTONE_RING.id,
             DRAGONSTONE_NECKLACE.id,
             DRAGONSTONE_BRACELET.id,
-            DRAGONSTONE_AMULET.id
-        );
+            DRAGONSTONE_AMULET.id);
       case LEVEL_6:
-        return ImmutableSet.of(
-            ONYX_RING.id,
-            ONYX_NECKLACE.id,
-            ONYX_BRACELET.id,
-            ONYX_AMULET.id
-        );
+        return ImmutableSet.of(ONYX_RING.id, ONYX_NECKLACE.id, ONYX_BRACELET.id, ONYX_AMULET.id);
       case LEVEL_7:
         return ImmutableSet.of(
-            ZENYTE_RING.id,
-            ZENYTE_NECKLACE.id,
-            ZENYTE_BRACELET.id,
-            ZENYTE_AMULET.id
-        );
+            ZENYTE_RING.id, ZENYTE_NECKLACE.id, ZENYTE_BRACELET.id, ZENYTE_AMULET.id);
+      default:
     }
 
     return null;

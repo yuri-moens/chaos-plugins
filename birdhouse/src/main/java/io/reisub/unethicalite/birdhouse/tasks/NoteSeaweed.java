@@ -22,8 +22,7 @@ public class NoteSeaweed extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.isUnderwater()
-        && Inventory.contains(ItemID.GIANT_SEAWEED);
+    return plugin.isUnderwater() && Inventory.contains(ItemID.GIANT_SEAWEED);
   }
 
   @Override
