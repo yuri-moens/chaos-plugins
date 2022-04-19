@@ -38,7 +38,8 @@ public class TakeBars extends Task {
   @Override
   public boolean validate() {
     if (plugin.getCurrentActivity() != Activity.IDLE
-        || (plugin.getPreviousActivity() != Activity.DEPOSITING && plugin.getPreviousActivity() != Activity.WITHDRAWING)) {
+        || (plugin.getPreviousActivity() != Activity.DEPOSITING
+            && plugin.getPreviousActivity() != Activity.WITHDRAWING)) {
       return false;
     }
 
@@ -46,7 +47,9 @@ public class TakeBars extends Task {
       return false;
     }
 
-    TileObject barDispenser = TileObjects.getFirstAt(new WorldPoint(1940, 4963, 0), "Bar dispenser");
+    TileObject barDispenser = TileObjects.getFirstAt(
+        new WorldPoint(1940, 4963, 0), "Bar dispenser"
+    );
 
     return barDispenser.hasAction("Take")
         && isAllOreProcessed()
@@ -59,7 +62,9 @@ public class TakeBars extends Task {
   public void execute() {
     plugin.setActivity(Activity.WITHDRAWING);
 
-    TileObject barDispenser = TileObjects.getFirstAt(new WorldPoint(1940, 4963, 0), "Bar dispenser");
+    TileObject barDispenser = TileObjects.getFirstAt(
+        new WorldPoint(1940, 4963, 0), "Bar dispenser"
+    );
 
     if (config.metal() == Metal.GOLD) {
       if (!Equipment.contains(ItemID.ICE_GLOVES)) {

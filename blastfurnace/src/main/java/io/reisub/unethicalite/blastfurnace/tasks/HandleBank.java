@@ -26,10 +26,8 @@ public class HandleBank extends BankTask {
   @Override
   public boolean validate() {
     return plugin.getCurrentActivity() == Activity.IDLE
-        && (
-        Inventory.contains(config.metal().getBarId())
-            || (!plugin.isExpectingBars() && !Inventory.contains(ItemID.COAL))
-    );
+        && (Inventory.contains(config.metal().getBarId())
+            || (!plugin.isExpectingBars() && !Inventory.contains(ItemID.COAL)));
   }
 
   @Override
@@ -39,7 +37,8 @@ public class HandleBank extends BankTask {
 
     open(15, 10);
 
-    CBank.depositAllExcept(false, ItemID.COAL_BAG_12019, ItemID.ICE_GLOVES, ItemID.GOLDSMITH_GAUNTLETS);
+    CBank.depositAllExcept(false,
+        ItemID.COAL_BAG_12019, ItemID.ICE_GLOVES, ItemID.GOLDSMITH_GAUNTLETS);
     Time.sleepTick();
 
     if (config.useStamina()
@@ -77,6 +76,7 @@ public class HandleBank extends BankTask {
           plugin.setExpectingBars(true);
         }
         break;
+      default:
     }
   }
 

@@ -85,6 +85,7 @@ public class DepositMaterials extends Task {
         conveyorBelt.interact(CONVEYER_BELT_ACTION);
         Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 25);
         break;
+      default:
     }
 
     if (!Movement.isRunEnabled()) {
