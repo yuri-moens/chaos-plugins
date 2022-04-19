@@ -4,6 +4,8 @@ import com.google.inject.Provides;
 import dev.unethicalite.api.game.Game;
 import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.utils.Utils;
+import io.reisub.unethicalite.utils.api.ConfigList;
+import io.reisub.unethicalite.utils.api.Predicates;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Locale;
@@ -49,12 +51,13 @@ public class AutoDropper extends Plugin implements KeyListener {
   private String[] itemNames;
   private int[] itemIds;
 
+  private ConfigList configList;
+
   @Override
   protected void startUp() {
     log.info("Starting Chaos Auto Dropper");
 
-    itemNames = parseNames();
-    itemIds = parseIds();
+    configList = ConfigList.parseList(config.items());
 
     keyManager.registerKeyListener(this);
     executor = Executors.newSingleThreadScheduledExecutor();
@@ -70,8 +73,11 @@ public class AutoDropper extends Plugin implements KeyListener {
 
   @Subscribe
   private void onItemContainerChanged(ItemContainerChanged event) {
-    if (Game.getState() != GameState.LOGGED_IN || config.dropMethod() == DropMethod.NONE || event.getContainerId() != InventoryID.INVENTORY.getId())
+    if (Game.getState() != GameState.LOGGED_IN
+        || config.dropMethod() == DropMethod.NONE
+        || event.getContainerId() != InventoryID.INVENTORY.getId()) {
       return;
+    }
 
     if (config.dropMethod() == DropMethod.ON_ADD) {
       drop();
@@ -84,41 +90,9 @@ public class AutoDropper extends Plugin implements KeyListener {
   private void onConfigChanged(ConfigChanged event) {
     String name = this.getName().replaceAll(" ", "").toLowerCase(Locale.ROOT);
 
-    if (event.getGroup().equals(name) && event.getKey().startsWith("item")) {
-      itemNames = parseNames();
-      itemIds = parseIds();
+    if (event.getGroup().equals(name) && event.getKey().startsWith("items")) {
+      configList = ConfigList.parseList(config.items());
     }
-  }
-
-  private String[] parseNames() {
-    String[] itemNames = config.itemNames().split(";");
-    String[] seedNames = config.seedNames().split(";");
-    String[] names = new String[itemNames.length + seedNames.length];
-
-    int i = 0;
-
-    for (String name : itemNames) {
-      names[i++] = name.trim();
-    }
-
-    for (String name : seedNames) {
-      names[i++] = name.trim();
-    }
-
-    return names;
-  }
-
-  private int[] parseIds() {
-    if (config.itemIds().equals("")) return new int[]{};
-
-    String[] idsStr = config.itemIds().split(";");
-    int[] ids = new int[idsStr.length];
-
-    for (int i = 0; i < idsStr.length; i++) {
-      ids[i] = Integer.parseInt(idsStr[i].trim());
-    }
-
-    return ids;
   }
 
   @Override
@@ -137,8 +111,8 @@ public class AutoDropper extends Plugin implements KeyListener {
   }
 
   private void drop() {
-    List<Item> items = Inventory.getAll(itemNames);
-    items.addAll(Inventory.getAll(itemIds));
+    List<Item> items = Inventory.getAll(Predicates.ids(configList.getIntegers()));
+    items.addAll(Inventory.getAll(Predicates.names(configList.getStrings())));
 
     for (Item item : items) {
       item.interact("Drop");

@@ -22,43 +22,35 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package io.reisub.unethicalite.autodropper;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
-import net.runelite.client.config.ConfigSection;
 import net.runelite.client.config.Keybind;
 
 @ConfigGroup("chaosautodropper")
 
 public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
-      keyName = "itemNames",
-      name = "Item names",
-      description = "List of item names, separated with a semicolon.",
+      keyName = "items",
+      name = "Items",
+      description = "List of items, can use IDs or names, separated by newline, comma or semicolon",
       position = 0
   )
-  default String itemNames() {
-    return "Empty plant pot";
-  }
-
-  @ConfigItem(
-      keyName = "itemIds",
-      name = "Item IDs",
-      description = "List of item IDs, separated with a semicolon. Useful if you want to differentiate between 2 items with the same name.",
-      position = 1
-  )
-  default String itemIds() {
-    return "";
+  default String items() {
+    return "Empty plant pot\nPotato seed\nOnion seed\nCabbage seed\nTomato seed\nSweetcorn seed\n"
+        + "Marigold seed\nRosemary seed\nNasturtium seed\nWoad seed\nRedberry seed\n"
+        + "Cadavaberry seed\nDwellberry seed\nAcorn\nApple tree seed\nBanana tree seed";
   }
 
   @ConfigItem(
       keyName = "dropMethod",
       name = "Auto drop method",
       description = "Choose the automatic drop method.",
-      position = 3
+      position = 1
   )
   default DropMethod dropMethod() {
     return DropMethod.NONE;
@@ -68,7 +60,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "dropEnableHotkey",
       name = "Enable hotkey",
       description = "Enable dropping on hotkey.",
-      position = 4
+      position = 2
   )
   default boolean dropEnableHotkey() {
     return false;
@@ -80,29 +72,9 @@ public interface Config extends net.runelite.client.config.Config {
       description = "Choose the hotkey.",
       hidden = true,
       unhide = "dropEnableHotkey",
-      position = 5
+      position = 3
   )
   default Keybind dropHotkey() {
     return new Keybind(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK);
-  }
-
-  @ConfigSection(
-      keyName = "seedsConfig",
-      name = "Seeds configuration",
-      description = "Seeds configuration",
-      hidden = true,
-      position = 70
-  )
-  String seedsConfig = "seedsConfig";
-
-  @ConfigItem(
-      keyName = "seedNames",
-      name = "Seed names",
-      description = "List of seeds to drop. This works the same as regular items but is an extra field to not clog the regular one.",
-      section = "seedsConfig",
-      position = 71
-  )
-  default String seedNames() {
-    return "Potato seed; Onion seed; Cabbage seed; Tomato seed; Sweetcorn seed; Marigold seed; Rosemary seed; Nasturtium seed; Woad seed; Redberry seed; Cadavaberry seed; Dwellberry seed; Acorn; Apple tree seed; Banana tree seed";
   }
 }
