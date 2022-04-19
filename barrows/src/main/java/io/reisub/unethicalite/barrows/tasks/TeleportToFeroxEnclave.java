@@ -29,7 +29,8 @@ public class TeleportToFeroxEnclave extends Task {
 
   @Override
   public void execute() {
-    Interact.interactWithInventoryOrEquipment(Constants.DUELING_RING_IDS, "Rub", "Ferox Enclave", 3);
+    Interact.interactWithInventoryOrEquipment(
+        Constants.DUELING_RING_IDS, "Rub", "Ferox Enclave", 3);
 
     if (Time.sleepTicksUntil(() -> Utils.isInRegion(Barrows.FEROX_ENCLAVE_REGIONS), 10)) {
       finished = false;

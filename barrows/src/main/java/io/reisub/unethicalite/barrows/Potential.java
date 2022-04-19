@@ -11,7 +11,8 @@ public enum Potential {
   MAX_DEATH_RUNES(631, 755, true),
   BLOOD_RUNES(756, 880, false),
   MAX_BLOOD_RUNES(756, 880, true),
-  MAX(881, 1012, true);
+  MAX(881, 1012, true)
+  ;
 
   private final int minimum;
   private final int maximum;

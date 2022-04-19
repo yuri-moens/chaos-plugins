@@ -36,13 +36,14 @@ public class HandleBank extends BankTask {
         && isBankObjectAvailable()
         && (
         !Inventory.contains((i) -> Constants.PRAYER_RESTORE_POTION_IDS.contains(i.getId()))
-            || (!Inventory.contains(Predicates.ids(Constants.DUELING_RING_IDS)) && !Equipment.contains(Predicates.ids(Constants.DUELING_RING_IDS)))
+            || (!Inventory.contains(Predicates.ids(Constants.DUELING_RING_IDS))
+                && !Equipment.contains(Predicates.ids(Constants.DUELING_RING_IDS)))
             || Inventory.getCount(config.food()) < config.foodQuantity()
             || shouldRechargeStaff
             || ibanStaffAlmostEmpty
             || Inventory.contains(i -> i.getName().contains("Clue scroll"))
             || Inventory.contains(Predicates.ids(Constants.BARROWS_UNDEGRADED_IDS))
-    );
+      );
   }
 
   @Override
@@ -61,9 +62,11 @@ public class HandleBank extends BankTask {
       rechargeStaff();
     }
 
-    Inventory.getAll(Predicates.ids(Constants.BARROWS_UNDEGRADED_IDS)).forEach(i -> Bank.depositAll(i.getId()));
+    Inventory.getAll(Predicates.ids(Constants.BARROWS_UNDEGRADED_IDS))
+        .forEach(i -> Bank.depositAll(i.getId()));
 
-    Inventory.getAll(i -> i.getName().contains("Clue scroll")).forEach(i -> Bank.depositAll(i.getId()));
+    Inventory.getAll(i -> i.getName().contains("Clue scroll"))
+        .forEach(i -> Bank.depositAll(i.getId()));
 
     if (!Inventory.contains((i) -> Constants.PRAYER_RESTORE_POTION_IDS.contains(i.getId()))) {
       if (Bank.contains(ItemID.PRAYER_POTION4)) {
@@ -90,7 +93,8 @@ public class HandleBank extends BankTask {
       Time.sleepTicksUntil(() -> Inventory.getCount(config.food()) >= config.foodQuantity(), 3);
     }
 
-    if (!Inventory.contains(Predicates.ids(Constants.DUELING_RING_IDS)) && !Equipment.contains(Predicates.ids(Constants.DUELING_RING_IDS))) {
+    if (!Inventory.contains(Predicates.ids(Constants.DUELING_RING_IDS))
+        && !Equipment.contains(Predicates.ids(Constants.DUELING_RING_IDS))) {
       if (!Bank.contains(Predicates.ids(Constants.DUELING_RING_IDS))) {
         plugin.stop("Out of rings of dueling. Stopping plugin.");
       }
@@ -98,7 +102,8 @@ public class HandleBank extends BankTask {
       Bank.withdraw(Predicates.ids(Constants.DUELING_RING_IDS), 1, Bank.WithdrawMode.ITEM);
 
       if (Equipment.fromSlot(EquipmentInventorySlot.RING) == null) {
-        if (Time.sleepTicksUntil(() -> Inventory.contains(Predicates.ids(Constants.DUELING_RING_IDS)), 3)) {
+        if (Time.sleepTicksUntil(
+            () -> Inventory.contains(Predicates.ids(Constants.DUELING_RING_IDS)), 3)) {
           Inventory.getFirst(Predicates.ids(Constants.DUELING_RING_IDS)).interact("Wear");
         }
       }
@@ -110,7 +115,9 @@ public class HandleBank extends BankTask {
     if (event.getMessage().contains("has 100 charges left")) {
       if (Equipment.contains(ItemID.TRIDENT_OF_THE_SEAS_E, ItemID.TRIDENT_OF_THE_SEAS)) {
         shouldRechargeStaff = true;
-      } else if (Equipment.contains(ItemID.IBANS_STAFF, ItemID.IBANS_STAFF_U, ItemID.IBANS_STAFF_1410)) {
+      } else if (Equipment.contains(ItemID.IBANS_STAFF,
+          ItemID.IBANS_STAFF_U,
+          ItemID.IBANS_STAFF_1410)) {
         ibanStaffAlmostEmpty = true;
       }
     }
@@ -139,7 +146,8 @@ public class HandleBank extends BankTask {
     Equipment.fromSlot(EquipmentInventorySlot.WEAPON).interact("Remove");
     Time.sleepTicksUntil(() -> Inventory.contains(Predicates.ids(Constants.TRIDENT_IDS)), 5);
 
-    Inventory.getFirst(ItemID.DEATH_RUNE).useOn(Inventory.getFirst(Predicates.ids(Constants.TRIDENT_IDS)));
+    Inventory.getFirst(ItemID.DEATH_RUNE)
+        .useOn(Inventory.getFirst(Predicates.ids(Constants.TRIDENT_IDS)));
     Time.sleepTicksUntil(Dialog::isEnterInputOpen, 3);
 
     Dialog.enterInput(99999);

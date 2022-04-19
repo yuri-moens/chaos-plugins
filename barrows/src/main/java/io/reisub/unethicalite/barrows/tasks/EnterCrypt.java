@@ -60,27 +60,28 @@ public class EnterCrypt extends Task {
     }
 
     switch (plugin.getCurrentBrother()) {
-      case DHAROK:
-      case TORAG:
-      case VERAC:
-      case GUTHAN:
-        if (Combat.getCurrentWeaponStyle() != WeaponStyle.MAGIC) {
-          combatHelper.getSwapHelper().swap(true, true, WeaponStyle.MAGIC);
-        }
-        break;
       case AHRIM:
         if (Combat.getCurrentWeaponStyle() != WeaponStyle.RANGE) {
-          combatHelper.getSwapHelper().swap(true, true, WeaponStyle.RANGE);
+          combatHelper.getSwapHelper()
+              .swap(true, true, WeaponStyle.RANGE);
         }
         break;
       case KARIL:
         if (Combat.getCurrentWeaponStyle() != WeaponStyle.MELEE) {
-          combatHelper.getSwapHelper().swap(true, true, WeaponStyle.MELEE);
+          combatHelper.getSwapHelper()
+              .swap(true, true, WeaponStyle.MELEE);
+        }
+        break;
+      default:
+        if (Combat.getCurrentWeaponStyle() != WeaponStyle.MAGIC) {
+          combatHelper.getSwapHelper()
+              .swap(true, true, WeaponStyle.MAGIC);
         }
         break;
     }
 
-    if (!Time.sleepTicksUntil(() -> digArea.contains(Players.getLocal()) || !Players.getLocal().isMoving(), 30)) {
+    if (!Time.sleepTicksUntil(
+        () -> digArea.contains(Players.getLocal()) || !Players.getLocal().isMoving(), 30)) {
       return;
     }
 

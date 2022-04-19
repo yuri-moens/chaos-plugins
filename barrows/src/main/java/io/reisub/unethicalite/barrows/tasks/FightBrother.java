@@ -46,9 +46,7 @@ public class FightBrother extends Task {
         case KARIL:
           combatHelper.getPrayerHelper().toggleFlicking();
           break;
-        case TORAG:
-        case VERAC:
-        case GUTHAN:
+        default:
           if (Prayers.getPoints() > 0) {
             combatHelper.getPrayerHelper().toggleFlicking();
           }
@@ -57,7 +55,10 @@ public class FightBrother extends Task {
 
     GameThread.invoke(() -> Static.getClient().getHintArrowNpc().interact("Attack"));
     if (!Time.sleepTicksUntil(() -> Players.getLocal().getInteracting() != null, 3)) {
-      NPC brother = NPCs.getNearest(n -> n.getInteracting() != null && n.getInteracting() == Players.getLocal());
+      NPC brother = NPCs.getNearest(n ->
+          n.getInteracting() != null && n.getInteracting() == Players.getLocal()
+      );
+
       if (brother == null) {
         System.out.println("failed to attack and interacting with us is null");
         return;
@@ -77,14 +78,15 @@ public class FightBrother extends Task {
         && currentLocation.getPlane() == 3
         && !currentLocation.equals(currentBrother.getPointNextToStairs())
         && Reachable.isWalkable(currentBrother.getPointNextToStairs())
-        && !Static.getClient().getHintArrowNpc().getWorldLocation().equals(currentBrother.getPointNextToStairs())) {
+        && !Static.getClient().getHintArrowNpc().getWorldLocation()
+            .equals(currentBrother.getPointNextToStairs())) {
       Time.sleepTicks(2);
       Movement.walk(currentBrother.getPointNextToStairs());
       Time.sleepTicks(1);
     }
 
     if (currentLocation.getPlane() == 0) {
-      if (currentBrother == Brother.DHAROK || currentBrother == Brother.TORAG || currentBrother == Brother.VERAC || currentBrother == Brother.GUTHAN) {
+      if (currentBrother.isMelee()) {
         Room currentRoom = Room.getCurrentRoom();
         if (currentRoom == null) {
           return;
@@ -95,9 +97,11 @@ public class FightBrother extends Task {
         if (ladderTile != null && currentLocation.distanceTo(ladderTile) > 1) {
           WorldPoint target;
           if (Math.abs(currentLocation.getY() - ladderTile.getY()) <= 3) {
-            target = currentLocation.getX() > ladderTile.getX() ? ladderTile.dx(-1) : ladderTile.dx(1);
+            target =
+                currentLocation.getX() > ladderTile.getX() ? ladderTile.dx(-1) : ladderTile.dx(1);
           } else {
-            target = currentLocation.getY() > ladderTile.getY() ? ladderTile.dy(-1) : ladderTile.dy(1);
+            target =
+                currentLocation.getY() > ladderTile.getY() ? ladderTile.dy(-1) : ladderTile.dy(1);
           }
 
           Movement.walk(target);

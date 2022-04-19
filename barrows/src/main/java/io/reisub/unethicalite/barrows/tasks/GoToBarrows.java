@@ -30,7 +30,8 @@ public class GoToBarrows extends Task {
   @Override
   public boolean validate() {
     return Skills.getBoostedLevel(Skill.PRAYER) >= Skills.getLevel(Skill.PRAYER)
-        && (Utils.isInRegion(Barrows.FEROX_ENCLAVE_REGIONS) || Static.getClient().isInInstancedRegion());
+        && (Utils.isInRegion(Barrows.FEROX_ENCLAVE_REGIONS)
+            || Static.getClient().isInInstancedRegion());
   }
 
   @Override

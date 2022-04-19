@@ -18,15 +18,42 @@ import net.runelite.api.coords.WorldPoint;
 
 @RequiredArgsConstructor
 public enum Room {
-  SW(new RectangularArea(new WorldPoint(3529, 9672, 0), 11, 11), new WorldPoint(3534, 9678, 0)),
-  W(new RectangularArea(new WorldPoint(3529, 9689, 0), 11, 11), null),
-  NW(new RectangularArea(new WorldPoint(3529, 9706, 0), 11, 11), new WorldPoint(3534, 9712, 0)),
-  N(new RectangularArea(new WorldPoint(3546, 9706, 0), 11, 11), null),
-  NE(new RectangularArea(new WorldPoint(3563, 9706, 0), 11, 11), new WorldPoint(3568, 9712, 0)),
-  E(new RectangularArea(new WorldPoint(3563, 9689, 0), 11, 11), null),
-  SE(new RectangularArea(new WorldPoint(3563, 9672, 0), 11, 11), new WorldPoint(3568, 9678, 0)),
-  S(new RectangularArea(new WorldPoint(3546, 9672, 0), 11, 11), null),
-  C(new RectangularArea(new WorldPoint(3546, 9689, 0), 11, 11), null);
+  SW(
+      new RectangularArea(new WorldPoint(3529, 9672, 0), 11, 11),
+      new WorldPoint(3534, 9678, 0)
+  ),
+  W(
+      new RectangularArea(new WorldPoint(3529, 9689, 0), 11, 11),
+      null
+  ),
+  NW(
+      new RectangularArea(new WorldPoint(3529, 9706, 0), 11, 11),
+      new WorldPoint(3534, 9712, 0)
+  ),
+  N(
+      new RectangularArea(new WorldPoint(3546, 9706, 0), 11, 11),
+      null
+  ),
+  NE(
+      new RectangularArea(new WorldPoint(3563, 9706, 0), 11, 11),
+      new WorldPoint(3568, 9712, 0)
+  ),
+  E(
+      new RectangularArea(new WorldPoint(3563, 9689, 0), 11, 11),
+      null
+  ),
+  SE(
+      new RectangularArea(new WorldPoint(3563, 9672, 0), 11, 11),
+      new WorldPoint(3568, 9678, 0)
+  ),
+  S(
+      new RectangularArea(new WorldPoint(3546, 9672, 0), 11, 11),
+      null
+  ),
+  C(
+      new RectangularArea(new WorldPoint(3546, 9689, 0), 11, 11),
+      null
+  );
 
   static {
     for (Room room : Room.values()) {
@@ -85,20 +112,28 @@ public enum Room {
           room.setSouth(Room.S);
           room.setWest(Room.W);
           break;
+        default:
       }
     }
   }
 
   private static final Set<Integer> BARROWS_WALLS = ImmutableSet.of(
-      ObjectID.DOOR_20678, NullObjectID.NULL_20681, NullObjectID.NULL_20682, NullObjectID.NULL_20683, NullObjectID.NULL_20684, NullObjectID.NULL_20685, NullObjectID.NULL_20686, NullObjectID.NULL_20687,
-      NullObjectID.NULL_20688, NullObjectID.NULL_20689, NullObjectID.NULL_20690, NullObjectID.NULL_20691, NullObjectID.NULL_20692, NullObjectID.NULL_20693, NullObjectID.NULL_20694, NullObjectID.NULL_20695,
-      NullObjectID.NULL_20696, ObjectID.DOOR_20697, NullObjectID.NULL_20700, NullObjectID.NULL_20701, NullObjectID.NULL_20702, NullObjectID.NULL_20703, NullObjectID.NULL_20704, NullObjectID.NULL_20705,
-      NullObjectID.NULL_20706, NullObjectID.NULL_20707, NullObjectID.NULL_20708, NullObjectID.NULL_20709, NullObjectID.NULL_20710, NullObjectID.NULL_20711, NullObjectID.NULL_20712, NullObjectID.NULL_20713,
-      NullObjectID.NULL_20714, NullObjectID.NULL_20715, NullObjectID.NULL_20728, NullObjectID.NULL_20730
+      ObjectID.DOOR_20678, NullObjectID.NULL_20681, NullObjectID.NULL_20682,
+      NullObjectID.NULL_20683, NullObjectID.NULL_20684, NullObjectID.NULL_20685,
+      NullObjectID.NULL_20686, NullObjectID.NULL_20687, NullObjectID.NULL_20688,
+      NullObjectID.NULL_20689, NullObjectID.NULL_20690, NullObjectID.NULL_20691,
+      NullObjectID.NULL_20692, NullObjectID.NULL_20693, NullObjectID.NULL_20694,
+      NullObjectID.NULL_20695, NullObjectID.NULL_20696, ObjectID.DOOR_20697,
+      NullObjectID.NULL_20700, NullObjectID.NULL_20701, NullObjectID.NULL_20702,
+      NullObjectID.NULL_20703, NullObjectID.NULL_20704, NullObjectID.NULL_20705,
+      NullObjectID.NULL_20706, NullObjectID.NULL_20707, NullObjectID.NULL_20708,
+      NullObjectID.NULL_20709, NullObjectID.NULL_20710, NullObjectID.NULL_20711,
+      NullObjectID.NULL_20712, NullObjectID.NULL_20713, NullObjectID.NULL_20714,
+      NullObjectID.NULL_20715, NullObjectID.NULL_20728, NullObjectID.NULL_20730
   );
 
-  public static final Predicate<TileObject> DOOR_PREDICATE = object -> BARROWS_WALLS.contains(object.getId())
-      && object.hasAction("Open");
+  public static final Predicate<TileObject> DOOR_PREDICATE =
+      object -> BARROWS_WALLS.contains(object.getId()) && object.hasAction("Open");
 
   @Getter
   private final RectangularArea area;
@@ -262,35 +297,54 @@ public enum Room {
   }
 
   private TileObject getNearestDoor(WorldPoint location1, WorldPoint location2) {
-    WorldPoint nearest = Players.getLocal().getWorldLocation().distanceToHypotenuse(location1) < Players.getLocal().getWorldLocation().distanceToHypotenuse(location2) ? location1 : location2;
+    float door1Distance = Players.getLocal().getWorldLocation().distanceToHypotenuse(location1);
+    float door2Distance = Players.getLocal().getWorldLocation().distanceToHypotenuse(location2);
+
+    WorldPoint nearest = door1Distance < door2Distance ? location1 : location2;
 
     return TileObjects.getFirstAt(nearest, DOOR_PREDICATE);
   }
 
   public TileObject getNorthDoor() {
-    WorldPoint location1 = new WorldPoint(area.getMinX() + 5, area.getMinY() + 12, area.getPlane());
-    WorldPoint location2 = new WorldPoint(area.getMinX() + 6, area.getMinY() + 12, area.getPlane());
+    WorldPoint location1 = new WorldPoint(
+        area.getMinX() + 5, area.getMinY() + 12, area.getPlane()
+    );
+    WorldPoint location2 = new WorldPoint(
+        area.getMinX() + 6, area.getMinY() + 12, area.getPlane()
+    );
 
     return getNearestDoor(location1, location2);
   }
 
   public TileObject getEastDoor() {
-    WorldPoint location1 = new WorldPoint(area.getMinX() + 12, area.getMinY() + 5, area.getPlane());
-    WorldPoint location2 = new WorldPoint(area.getMinX() + 12, area.getMinY() + 6, area.getPlane());
+    WorldPoint location1 = new WorldPoint(
+        area.getMinX() + 12, area.getMinY() + 5, area.getPlane()
+    );
+    WorldPoint location2 = new WorldPoint(
+        area.getMinX() + 12, area.getMinY() + 6, area.getPlane()
+    );
 
     return getNearestDoor(location1, location2);
   }
 
   public TileObject getSouthDoor() {
-    WorldPoint location1 = new WorldPoint(area.getMinX() + 5, area.getMinY() - 1, area.getPlane());
-    WorldPoint location2 = new WorldPoint(area.getMinX() + 6, area.getMinY() - 1, area.getPlane());
+    WorldPoint location1 = new WorldPoint(
+        area.getMinX() + 5, area.getMinY() - 1, area.getPlane()
+    );
+    WorldPoint location2 = new WorldPoint(
+        area.getMinX() + 6, area.getMinY() - 1, area.getPlane()
+    );
 
     return getNearestDoor(location1, location2);
   }
 
   public TileObject getWestDoor() {
-    WorldPoint location1 = new WorldPoint(area.getMinX() - 1, area.getMinY() + 5, area.getPlane());
-    WorldPoint location2 = new WorldPoint(area.getMinX() - 1, area.getMinY() + 6, area.getPlane());
+    WorldPoint location1 = new WorldPoint(
+        area.getMinX() - 1, area.getMinY() + 5, area.getPlane()
+    );
+    WorldPoint location2 = new WorldPoint(
+        area.getMinX() - 1, area.getMinY() + 6, area.getPlane()
+    );
 
     return getNearestDoor(location1, location2);
   }

@@ -36,9 +36,13 @@ public class SearchChest extends Task {
   @Override
   public boolean validate() {
     return Room.getCurrentRoom() == Room.C
-        && (Static.getClient().getHintArrowNpc() == null || Static.getClient().getHintArrowNpc().isDead())
-        && (Players.getLocal().getInteracting() == null || Players.getLocal().getInteracting().isDead() || plugin.getPotentialWithLastBrother() > config.potential().getMaximum())
-        && (chest = TileObjects.getNearest(o -> o.getId() == NullObjectID.NULL_20973 && o.hasAction("Search"))) != null;
+        && (Static.getClient().getHintArrowNpc() == null
+            || Static.getClient().getHintArrowNpc().isDead())
+        && (Players.getLocal().getInteracting() == null
+            || Players.getLocal().getInteracting().isDead()
+            || plugin.getPotentialWithLastBrother() > config.potential().getMaximum())
+        && (chest = TileObjects.getNearest(
+            o -> o.getId() == NullObjectID.NULL_20973 && o.hasAction("Search"))) != null;
   }
 
   @Override
@@ -48,6 +52,7 @@ public class SearchChest extends Task {
     }
 
     GameThread.invoke(() -> chest.interact("Search"));
-    Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetID.BARROWS_REWARD_GROUP_ID, 0)), 10);
+    Time.sleepTicksUntil(
+        () -> Widgets.isVisible(Widgets.get(WidgetID.BARROWS_REWARD_GROUP_ID, 0)), 10);
   }
 }

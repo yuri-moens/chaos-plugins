@@ -620,6 +620,12 @@ public class Constants {
       ItemID.CRAFTING_CAPET
   );
 
+  public static final Set<Integer> REJUVENATION_POOL_IDS = ImmutableSet.of(
+      ObjectID.POOL_OF_REFRESHMENT,
+      ObjectID.ORNATE_POOL_OF_REJUVENATION,
+      ObjectID.FROZEN_ORNATE_POOL_OF_REJUVENATION
+  );
+
   public static final Set<Integer> BARROWS_UNDEGRADED_IDS = ImmutableSet.of(
       ItemID.AHRIMS_HOOD,
       ItemID.AHRIMS_STAFF,

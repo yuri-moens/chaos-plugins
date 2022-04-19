@@ -40,7 +40,8 @@ public class NavigateTunnel extends Task {
 
   @Override
   public boolean validate() {
-    if (!Utils.isInRegion(Barrows.CRYPT_REGION) || Players.getLocal().getWorldLocation().getPlane() != 0) {
+    if (!Utils.isInRegion(Barrows.CRYPT_REGION)
+        || Players.getLocal().getWorldLocation().getPlane() != 0) {
       return false;
     }
 
@@ -67,8 +68,11 @@ public class NavigateTunnel extends Task {
       navigatingTo = plugin.getTunnelPath().peek();
     }
 
-    return (Static.getClient().getHintArrowNpc() == null || Static.getClient().getHintArrowNpc().isDead())
-        && (Players.getLocal().getInteracting() == null || Players.getLocal().getInteracting().isDead() || plugin.getPotentialWithLastBrother() > config.potential().getMaximum())
+    return (Static.getClient().getHintArrowNpc() == null
+            || Static.getClient().getHintArrowNpc().isDead())
+        && (Players.getLocal().getInteracting() == null
+            || Players.getLocal().getInteracting().isDead()
+            || plugin.getPotentialWithLastBrother() > config.potential().getMaximum())
         && navigatingTo != null;
   }
 
@@ -97,10 +101,13 @@ public class NavigateTunnel extends Task {
     }
 
     if (Room.isInCorridor()) {
-      Time.sleepTicksUntil(() -> Room.getCurrentRoom() == navigatingTo || !Players.getLocal().isMoving(), 30);
+      Time.sleepTicksUntil(
+          () -> Room.getCurrentRoom() == navigatingTo || !Players.getLocal().isMoving(), 30);
     } else {
       if (navigatingTo == Room.C) {
-        Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetInfo.BARROWS_FIRST_PUZZLE)) || !Players.getLocal().isMoving(), 30);
+        Time.sleepTicksUntil(
+            () -> Widgets.isVisible(Widgets.get(WidgetInfo.BARROWS_FIRST_PUZZLE))
+                || !Players.getLocal().isMoving(), 30);
       } else {
         Time.sleepTicksUntil(() -> Room.isInCorridor() || !Players.getLocal().isMoving(), 30);
       }

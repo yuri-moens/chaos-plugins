@@ -43,7 +43,8 @@ public class FightMonster extends Task {
       return false;
     }
 
-    if (!Utils.isInRegion(Barrows.CRYPT_REGION) && Players.getLocal().getWorldLocation().getPlane() != 0) {
+    if (!Utils.isInRegion(Barrows.CRYPT_REGION)
+        && Players.getLocal().getWorldLocation().getPlane() != 0) {
       return false;
     }
 
@@ -55,7 +56,9 @@ public class FightMonster extends Task {
       return target != null;
     }
 
-    target = NPCs.getNearest(n -> n.getInteracting() != null && n.getInteracting().equals(Players.getLocal()));
+    target = NPCs.getNearest(n ->
+        n.getInteracting() != null && n.getInteracting().equals(Players.getLocal())
+    );
 
     if (target == null || !Reachable.isInteractable(target)) {
       return false;
