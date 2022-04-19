@@ -37,8 +37,14 @@ subprojects {
     project.extra["PluginLicense"] = "3-Clause BSD License"
 
     apply<JavaPlugin>()
-    apply(plugin = "java-library")
-//    apply(plugin = "checkstyle")
+    apply<JavaLibraryPlugin>()
+    apply<CheckstylePlugin>()
+
+    configure<CheckstyleExtension> {
+        toolVersion = "10.1"
+        isShowViolations = true
+        isIgnoreFailures = false
+    }
 
     repositories {
         jcenter {
