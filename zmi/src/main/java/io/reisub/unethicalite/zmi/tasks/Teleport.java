@@ -11,22 +11,22 @@ import io.reisub.unethicalite.utils.tasks.Task;
 import io.reisub.unethicalite.zmi.Zmi;
 
 public class Teleport extends Task {
-    @Override
-    public String getStatus() {
-        return "Teleporting";
-    }
+  @Override
+  public String getStatus() {
+    return "Teleporting";
+  }
 
-    @Override
-    public boolean validate() {
-        return !Inventory.contains(Predicates.ids(Constants.ESSENCE_IDS))
-                && Players.getLocal().distanceTo(Zmi.NEAR_ALTAR) < 5
-                && Zmi.pouchesAreEmpty;
-    }
+  @Override
+  public boolean validate() {
+    return !Inventory.contains(Predicates.ids(Constants.ESSENCE_IDS))
+        && Players.getLocal().distanceTo(Zmi.NEAR_ALTAR) < 5
+        && Zmi.pouchesAreEmpty;
+  }
 
-    @Override
-    public void execute() {
-        Magic.cast(Lunar.OURANIA_TELEPORT);
-        Time.sleepTicksUntil(() -> Players.getLocal().distanceTo(Zmi.NEAR_ALTAR) > 5, 10);
-        Time.sleepTick();
-    }
+  @Override
+  public void execute() {
+    Magic.cast(Lunar.OURANIA_TELEPORT);
+    Time.sleepTicksUntil(() -> Players.getLocal().distanceTo(Zmi.NEAR_ALTAR) > 5, 10);
+    Time.sleepTick();
+  }
 }

@@ -24,6 +24,11 @@ import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Run;
+import java.time.Instant;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -54,328 +59,321 @@ import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import org.pf4j.Extension;
 
-import javax.inject.Inject;
-import java.time.Instant;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 @PluginDescriptor(
-		name = "Chaos Tempoross",
-		description = "Plays the Tempoross minigame",
-		enabledByDefault = false
+    name = "Chaos Tempoross",
+    description = "Plays the Tempoross minigame",
+    enabledByDefault = false
 )
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Tempoross extends TickScript {
-	@Inject
-	private Config config;
+  @Inject
+  private Config config;
 
-	@Inject
-	private Client client;
+  @Inject
+  private Client client;
 
-	@Provides
-	public Config getConfig(ConfigManager configManager)
-	{
-		return configManager.getConfig(Config.class);
-	}
+  @Provides
+  public Config getConfig(ConfigManager configManager) {
+    return configManager.getConfig(Config.class);
+  }
 
-	private static final String WAVE_INCOMING_MESSAGE = "a colossal wave closes in...";
-	private static final String WAVE_FAILED_MESSAGE = "the wave slams into you";
-	private static final String TETHER_MESSAGE = "you securely tether yourself";
-	private static final String UNTETHER_MESSAGE = "you untether yourself";
-	private static final String TEMPOROSS_VULNERABLE_MESSAGE = "tempoross is vulnerable";
-	private static final String FINISHED_GAME = "the spirit anglers will ferry you back";
+  private static final String WAVE_INCOMING_MESSAGE = "a colossal wave closes in...";
+  private static final String WAVE_FAILED_MESSAGE = "the wave slams into you";
+  private static final String TETHER_MESSAGE = "you securely tether yourself";
+  private static final String UNTETHER_MESSAGE = "you untether yourself";
+  private static final String TEMPOROSS_VULNERABLE_MESSAGE = "tempoross is vulnerable";
+  private static final String FINISHED_GAME = "the spirit anglers will ferry you back";
 
-	private static final int VARB_IS_TETHERED = 11895;
-	private static final int TEMPOROSS_REGION = 12078;
-	private static final int UNKAH_REWARD_POOL_REGION = 12588;
-	private static final int UNKAH_BOAT_REGION = 12332;
+  private static final int VARB_IS_TETHERED = 11895;
+  private static final int TEMPOROSS_REGION = 12078;
+  private static final int UNKAH_REWARD_POOL_REGION = 12588;
+  private static final int UNKAH_BOAT_REGION = 12332;
 
-	@Getter
-	private volatile boolean waveIncoming;
+  @Getter
+  private volatile boolean waveIncoming;
 
-	@Getter
-	private volatile int phase = 1;
+  @Getter
+  private volatile int phase = 1;
 
-	@Getter
-	private volatile int playersReady;
+  @Getter
+  private volatile int playersReady;
 
-	@Getter
-	private volatile int energy;
+  @Getter
+  private volatile int energy;
 
-	@Getter
-	private volatile int essence;
+  @Getter
+  private volatile int essence;
 
-	@Getter
-	private volatile int stormIntensity;
+  @Getter
+  private volatile int stormIntensity;
 
-	@Getter
-	private volatile int rawFish;
+  @Getter
+  private volatile int rawFish;
 
-	@Getter
-	private volatile int cookedFish;
+  @Getter
+  private volatile int cookedFish;
 
-	@Getter
-	private volatile WorldPoint dudiPos = null;
+  @Getter
+  private volatile WorldPoint dudiPos = null;
 
-	@Getter
-	private volatile boolean finished;
+  @Getter
+  private volatile boolean finished;
 
-	@Getter
-	@Setter
-	private volatile int cookedFishRequired;
+  @Getter
+  @Setter
+  private volatile int cookedFishRequired;
 
-	@Getter
-	private volatile int lastDoubleSpawn;
+  @Getter
+  private volatile int lastDoubleSpawn;
 
-	@Override
-	protected void onStart() {
-		super.onStart();
+  @Override
+  protected void onStart() {
+    super.onStart();
 
-		reset();
+    reset();
 
-		tasks.add(new Run());
+    tasks.add(new Run());
 
-		addTask(HandleBank.class);
-		addTask(DodgeFire.class);
-		addTask(LeaveGame.class);
-		addTask(EnterBoat.class);
-		addTask(FillBuckets.class);
-		addTask(LeaveBoat.class);
-		addTask(Repair.class);
-		addTask(Tether.class);
-		addTask(DouseFire.class);
-		addTask(Attack.class);
-		addTask(Stock.class);
-		addTask(Cook.class);
-		addTask(Fish.class);
-	}
+    addTask(HandleBank.class);
+    addTask(DodgeFire.class);
+    addTask(LeaveGame.class);
+    addTask(EnterBoat.class);
+    addTask(FillBuckets.class);
+    addTask(LeaveBoat.class);
+    addTask(Repair.class);
+    addTask(Tether.class);
+    addTask(DouseFire.class);
+    addTask(Attack.class);
+    addTask(Stock.class);
+    addTask(Cook.class);
+    addTask(Fish.class);
+  }
 
-	@Subscribe(priority = 1)
-	private void onGameTick(GameTick event) {
-		if (isInDesert() || isOnBoat()) {
-			if (dudiPos != null) {
-				reset();
-			}
+  @Subscribe(priority = 1)
+  private void onGameTick(GameTick event) {
+    if (isInDesert() || isOnBoat()) {
+      if (dudiPos != null) {
+        reset();
+      }
 
-			playersReady = parseWidget(687, 3);
-		} else if (isInTemporossArea()) {
-			energy = parseWidget(437, 35);
-			essence = parseWidget(437, 45);
-			stormIntensity = parseWidget(437, 55);
-		}
-	}
+      playersReady = parseWidget(687, 3);
+    } else if (isInTemporossArea()) {
+      energy = parseWidget(437, 35);
+      essence = parseWidget(437, 45);
+      stormIntensity = parseWidget(437, 55);
+    }
+  }
 
-	@Subscribe
-	private void onChatMessage(ChatMessage chatMessage) {
-		if (chatMessage.getType() != ChatMessageType.GAMEMESSAGE
-				&& chatMessage.getType() != ChatMessageType.SPAM) return;
+  @Subscribe
+  private void onChatMessage(ChatMessage chatMessage) {
+    if (chatMessage.getType() != ChatMessageType.GAMEMESSAGE
+        && chatMessage.getType() != ChatMessageType.SPAM) return;
 
-		String message = Text.standardize(chatMessage.getMessage());
-		if (message.contains(WAVE_INCOMING_MESSAGE)) {
-			waveIncoming = true;
-		} else if (message.contains(TETHER_MESSAGE)) {
-			setActivity(Activity.TETHERING_MAST);
-		} else if (message.contains(UNTETHER_MESSAGE) || message.contains(WAVE_FAILED_MESSAGE)) {
-			waveIncoming = false;
-			setActivity(Activity.IDLE);
-		} else if (message.contains(TEMPOROSS_VULNERABLE_MESSAGE)) {
-			phase++;
-		} else if (message.contains(FINISHED_GAME)) {
-			finished = true;
-		}
-	}
+    String message = Text.standardize(chatMessage.getMessage());
+    if (message.contains(WAVE_INCOMING_MESSAGE)) {
+      waveIncoming = true;
+    } else if (message.contains(TETHER_MESSAGE)) {
+      setActivity(Activity.TETHERING_MAST);
+    } else if (message.contains(UNTETHER_MESSAGE) || message.contains(WAVE_FAILED_MESSAGE)) {
+      waveIncoming = false;
+      setActivity(Activity.IDLE);
+    } else if (message.contains(TEMPOROSS_VULNERABLE_MESSAGE)) {
+      phase++;
+    } else if (message.contains(FINISHED_GAME)) {
+      finished = true;
+    }
+  }
 
-	@Subscribe
-	private void onAnimationChanged(AnimationChanged event) {
-		if (!Utils.isLoggedIn()) return;
+  @Subscribe
+  private void onAnimationChanged(AnimationChanged event) {
+    if (!Utils.isLoggedIn()) return;
 
-		if (client.getLocalPlayer() == null || event.getActor() != client.getLocalPlayer()) return;
+    if (client.getLocalPlayer() == null || event.getActor() != client.getLocalPlayer()) return;
 
-		switch (client.getLocalPlayer().getAnimation()) {
-			case AnimationID.COOKING_RANGE:
-				TileObject shrine = TileObjects.getNearest(ObjectID.SHRINE_41236);
-				if (shrine != null && shrine.distanceTo(client.getLocalPlayer()) <= 3) {
-					setActivity(Activity.COOKING);
-				}
-				break;
-			case AnimationID.CONSTRUCTION:
-			case AnimationID.CONSTRUCTION_IMCANDO:
-				setActivity(Activity.REPAIRING);
-				break;
-			case AnimationID.LOOKING_INTO:
-				if (previousActivity != Activity.TETHERING_MAST) {
-					setActivity(Activity.FILLING_BUCKETS);
-				}
-				break;
-		}
-	}
+    switch (client.getLocalPlayer().getAnimation()) {
+      case AnimationID.COOKING_RANGE:
+        TileObject shrine = TileObjects.getNearest(ObjectID.SHRINE_41236);
+        if (shrine != null && shrine.distanceTo(client.getLocalPlayer()) <= 3) {
+          setActivity(Activity.COOKING);
+        }
+        break;
+      case AnimationID.CONSTRUCTION:
+      case AnimationID.CONSTRUCTION_IMCANDO:
+        setActivity(Activity.REPAIRING);
+        break;
+      case AnimationID.LOOKING_INTO:
+        if (previousActivity != Activity.TETHERING_MAST) {
+          setActivity(Activity.FILLING_BUCKETS);
+        }
+        break;
+    }
+  }
 
-	@Subscribe
-	private void onInteractingChanged(InteractingChanged event) {
-		if (event.getSource() == client.getLocalPlayer()) {
-			if (event.getTarget() == null) {
-				if (currentActivity == Activity.FISHING
-						|| currentActivity == Activity.DOUSING_FIRE
-						|| currentActivity == Activity.ATTACKING
-						|| currentActivity == Activity.STOCKING_CANNON) {
-					setActivity(Activity.IDLE);
-				}
-			} else {
-				String name = event.getTarget().getName();
+  @Subscribe
+  private void onInteractingChanged(InteractingChanged event) {
+    if (event.getSource() == client.getLocalPlayer()) {
+      if (event.getTarget() == null) {
+        if (currentActivity == Activity.FISHING
+            || currentActivity == Activity.DOUSING_FIRE
+            || currentActivity == Activity.ATTACKING
+            || currentActivity == Activity.STOCKING_CANNON) {
+          setActivity(Activity.IDLE);
+        }
+      } else {
+        String name = event.getTarget().getName();
 
-				if (name != null) {
-					if (name.equals("Fishing spot")) {
-						setActivity(Activity.FISHING);
-					} else if (name.contains("Fire")) {
-						setActivity(Activity.DOUSING_FIRE);
-					} else if (name.contains("Spirit pool")) {
-						setActivity(Activity.ATTACKING);
-					} else if (name.contains("Ammunition crate")) {
-						setActivity(Activity.STOCKING_CANNON);
-					}
-				}
-			}
-		}
-	}
+        if (name != null) {
+          if (name.equals("Fishing spot")) {
+            setActivity(Activity.FISHING);
+          } else if (name.contains("Fire")) {
+            setActivity(Activity.DOUSING_FIRE);
+          } else if (name.contains("Spirit pool")) {
+            setActivity(Activity.ATTACKING);
+          } else if (name.contains("Ammunition crate")) {
+            setActivity(Activity.STOCKING_CANNON);
+          }
+        }
+      }
+    }
+  }
 
-	@Subscribe
-	private void onItemContainerChanged(ItemContainerChanged event) {
-		final ItemContainer container = event.getItemContainer();
+  @Subscribe
+  private void onItemContainerChanged(ItemContainerChanged event) {
+    final ItemContainer container = event.getItemContainer();
 
-		if (container.count(ItemID.HARPOONFISH) < cookedFish) {
-			cookedFishRequired--;
-		}
+    if (container.count(ItemID.HARPOONFISH) < cookedFish) {
+      cookedFishRequired--;
+    }
 
-		rawFish = container.count(ItemID.RAW_HARPOONFISH);
-		cookedFish = container.count(ItemID.HARPOONFISH);
-		int emptyBuckets = container.count(ItemID.BUCKET);
+    rawFish = container.count(ItemID.RAW_HARPOONFISH);
+    cookedFish = container.count(ItemID.HARPOONFISH);
+    int emptyBuckets = container.count(ItemID.BUCKET);
 
-		if (rawFish == 0 && currentActivity == Activity.COOKING) {
-			setActivity(Activity.IDLE);
-		} else if (Inventory.isFull() && currentActivity == Activity.FISHING) {
-			setActivity(Activity.IDLE);
-		} else if ((cookedFish == 0 || cookedFishRequired == 0) && currentActivity == Activity.STOCKING_CANNON) {
-			if (cookedFishRequired == 0) {
-				if (phase == 1) {
-					cookedFishRequired = 19;
-				} else if (phase == 2) {
-					cookedFishRequired = 19;
-				} else if (phase >= 3) {
-					cookedFishRequired = 28;
-				}
-			}
+    if (rawFish == 0 && currentActivity == Activity.COOKING) {
+      setActivity(Activity.IDLE);
+    } else if (Inventory.isFull() && currentActivity == Activity.FISHING) {
+      setActivity(Activity.IDLE);
+    } else if ((cookedFish == 0 || cookedFishRequired == 0) && currentActivity == Activity.STOCKING_CANNON) {
+      if (cookedFishRequired == 0) {
+        if (phase == 1) {
+          cookedFishRequired = 19;
+        } else if (phase == 2) {
+          cookedFishRequired = 19;
+        } else if (phase >= 3) {
+          cookedFishRequired = 28;
+        }
+      }
 
-			setActivity(Activity.IDLE);
-		} else if (emptyBuckets == 0 && currentActivity == Activity.FILLING_BUCKETS) {
-			setActivity(Activity.IDLE);
-		}
-	}
+      setActivity(Activity.IDLE);
+    } else if (emptyBuckets == 0 && currentActivity == Activity.FILLING_BUCKETS) {
+      setActivity(Activity.IDLE);
+    }
+  }
 
-	@Subscribe
-	private void onGameObjectDespawned(GameObjectDespawned gameObjectDespawned) {
-		if (!isInTemporossArea()) return;
+  @Subscribe
+  private void onGameObjectDespawned(GameObjectDespawned gameObjectDespawned) {
+    if (!isInTemporossArea()) return;
 
-		int id = gameObjectDespawned.getGameObject().getId();
+    int id = gameObjectDespawned.getGameObject().getId();
 
-		Set<Integer> brokenMastsTotems = ImmutableSet.of(
-				ObjectID.DAMAGED_MAST_40996,
-				ObjectID.DAMAGED_MAST_40997,
-				ObjectID.DAMAGED_TOTEM_POLE,
-				ObjectID.DAMAGED_TOTEM_POLE_41011
-		);
+    Set<Integer> brokenMastsTotems = ImmutableSet.of(
+        ObjectID.DAMAGED_MAST_40996,
+        ObjectID.DAMAGED_MAST_40997,
+        ObjectID.DAMAGED_TOTEM_POLE,
+        ObjectID.DAMAGED_TOTEM_POLE_41011
+    );
 
-		if (brokenMastsTotems.contains(id)) {
-			if (currentActivity == Activity.REPAIRING) {
-				setActivity(Activity.IDLE);
-			}
-		}
-	}
+    if (brokenMastsTotems.contains(id)) {
+      if (currentActivity == Activity.REPAIRING) {
+        setActivity(Activity.IDLE);
+      }
+    }
+  }
 
-	@Subscribe
-	private void onNpcSpawned(NpcSpawned npcSpawned) {
-		int id = npcSpawned.getNpc().getId();
+  @Subscribe
+  private void onNpcSpawned(NpcSpawned npcSpawned) {
+    int id = npcSpawned.getNpc().getId();
 
-		if (id == NpcID.CAPTAIN_DUDI_10587 && dudiPos == null) {
-			dudiPos = npcSpawned.getNpc().getWorldLocation();
-		} else if (id == NpcID.FISHING_SPOT_10569) {
-			lastDoubleSpawn = Game.getClient().getTickCount();
-		}
-	}
+    if (id == NpcID.CAPTAIN_DUDI_10587 && dudiPos == null) {
+      dudiPos = npcSpawned.getNpc().getWorldLocation();
+    } else if (id == NpcID.FISHING_SPOT_10569) {
+      lastDoubleSpawn = Game.getClient().getTickCount();
+    }
+  }
 
-	@Subscribe
-	private void onHitsplatApplied(HitsplatApplied event) {
-		if (event.getActor().getName().contains("Spirit pool") && event.getHitsplat().getHitsplatType() == Hitsplat.HitsplatType.DAMAGE_ME) {
-			if (currentActivity == Activity.ATTACKING && phase <= 3 && essence <= 10) {
-				setActivity(Activity.IDLE);
-			}
-		}
-	}
+  @Subscribe
+  private void onHitsplatApplied(HitsplatApplied event) {
+    if (event.getActor().getName().contains("Spirit pool") && event.getHitsplat().getHitsplatType() == Hitsplat.HitsplatType.DAMAGE_ME) {
+      if (currentActivity == Activity.ATTACKING && phase <= 3 && essence <= 10) {
+        setActivity(Activity.IDLE);
+      }
+    }
+  }
 
-	public boolean isOnBoat() {
-		return Utils.isInRegion(UNKAH_BOAT_REGION);
-	}
+  public boolean isOnBoat() {
+    return Utils.isInRegion(UNKAH_BOAT_REGION);
+  }
 
-	public boolean isInDesert() {
-		return Utils.isInRegion(UNKAH_REWARD_POOL_REGION);
-	}
+  public boolean isInDesert() {
+    return Utils.isInRegion(UNKAH_REWARD_POOL_REGION);
+  }
 
-	public boolean isInTemporossArea() {
-		return Utils.isInMapRegion(TEMPOROSS_REGION) || Utils.isInRegion(TEMPOROSS_REGION);
-	}
+  public boolean isInTemporossArea() {
+    return Utils.isInMapRegion(TEMPOROSS_REGION) || Utils.isInRegion(TEMPOROSS_REGION);
+  }
 
-	public WorldArea getBoatArea() {
-		return new WorldArea(
-				dudiPos.dx(-3).dy(-13),
-				7,
-				23
-		);
-	}
+  public WorldArea getBoatArea() {
+    return new WorldArea(
+        dudiPos.dx(-3).dy(-13),
+        7,
+        23
+    );
+  }
 
-	public WorldArea getIslandArea() {
-		return new WorldArea(
-				dudiPos.dx(-3),
-				20,
-				30
-		);
-	}
+  public WorldArea getIslandArea() {
+    return new WorldArea(
+        dudiPos.dx(-3),
+        20,
+        30
+    );
+  }
 
-	@Override
-	protected void checkActionTimeout() {
-		if (Vars.getBit(VARB_IS_TETHERED) > 0) {
-			lastActionTime = Instant.now();
-			return;
-		}
+  @Override
+  protected void checkActionTimeout() {
+    if (Vars.getBit(VARB_IS_TETHERED) > 0) {
+      lastActionTime = Instant.now();
+      return;
+    }
 
-		super.checkActionTimeout();
-	}
+    super.checkActionTimeout();
+  }
 
-	private void reset() {
-		waveIncoming = false;
-		phase = 1;
-		rawFish = 0;
-		cookedFish = 0;
-		cookedFishRequired = 17;
-		dudiPos = null;
-		finished = false;
-	}
+  private void reset() {
+    waveIncoming = false;
+    phase = 1;
+    rawFish = 0;
+    cookedFish = 0;
+    cookedFishRequired = 17;
+    dudiPos = null;
+    finished = false;
+  }
 
-	private int parseWidget(int group, int id) {
-		Widget widget = Widgets.get(group, id);
-		if (widget == null || widget.getText().equals("")) return 0;
+  private int parseWidget(int group, int id) {
+    Widget widget = Widgets.get(group, id);
+    if (widget == null || widget.getText().equals("")) return 0;
 
-		Pattern regex = Pattern.compile("\\d+|None");
-		Matcher matcher = regex.matcher(widget.getText());
+    Pattern regex = Pattern.compile("\\d+|None");
+    Matcher matcher = regex.matcher(widget.getText());
 
-		if (matcher.find()) {
-			String match = matcher.group(0);
-			if (match.equals("None")) return 0;
+    if (matcher.find()) {
+      String match = matcher.group(0);
+      if (match.equals("None")) return 0;
 
-			return Integer.parseInt(match);
-		}
+      return Integer.parseInt(match);
+    }
 
-		return 0;
-	}
+    return 0;
+  }
 }

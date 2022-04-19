@@ -9,59 +9,57 @@ import io.reisub.unethicalite.mta.tasks.HighAlch;
 import io.reisub.unethicalite.mta.tasks.TelekineticGrab;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
+import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import org.pf4j.Extension;
 
-import javax.inject.Inject;
-
 @PluginDescriptor(
-		name = "Chaos MTA",
-		description = "Like Hogwarts, but in RuneScape",
-		enabledByDefault = false
+    name = "Chaos MTA",
+    description = "Like Hogwarts, but in RuneScape",
+    enabledByDefault = false
 )
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Mta extends TickScript {
-	@Inject
-	private Config config;
+  @Inject
+  private Config config;
 
-	public static final int MTA_REGION = 13462;
+  public static final int MTA_REGION = 13462;
 
-	private TelekineticGrab telekineticGrab;
-	private BonesTo bonesTo;
+  private TelekineticGrab telekineticGrab;
+  private BonesTo bonesTo;
 
-	@Provides
-	public Config getConfig(ConfigManager configManager)
-	{
-		return configManager.getConfig(Config.class);
-	}
+  @Provides
+  public Config getConfig(ConfigManager configManager) {
+    return configManager.getConfig(Config.class);
+  }
 
-	@Override
-	protected void onStart() {
-		super.onStart();
+  @Override
+  protected void onStart() {
+    super.onStart();
 
-		telekineticGrab = injector.getInstance(TelekineticGrab.class);
-		bonesTo = injector.getInstance(BonesTo.class);
+    telekineticGrab = injector.getInstance(TelekineticGrab.class);
+    bonesTo = injector.getInstance(BonesTo.class);
 
-		Static.getKeyManager().registerKeyListener(telekineticGrab);
-		Static.getKeyManager().registerKeyListener(bonesTo);
+    Static.getKeyManager().registerKeyListener(telekineticGrab);
+    Static.getKeyManager().registerKeyListener(bonesTo);
 
-		addTask(telekineticGrab);
-		addTask(Enchant.class);
-		addTask(HighAlch.class);
-		addTask(EatPeach.class);
-		addTask(bonesTo);
-	}
+    addTask(telekineticGrab);
+    addTask(Enchant.class);
+    addTask(HighAlch.class);
+    addTask(EatPeach.class);
+    addTask(bonesTo);
+  }
 
-	@Override
-	protected void onStop() {
-		super.onStop();
+  @Override
+  protected void onStop() {
+    super.onStop();
 
-		Static.getKeyManager().unregisterKeyListener(telekineticGrab);
-		Static.getKeyManager().unregisterKeyListener(bonesTo);
-	}
+    Static.getKeyManager().unregisterKeyListener(telekineticGrab);
+    Static.getKeyManager().unregisterKeyListener(bonesTo);
+  }
 }

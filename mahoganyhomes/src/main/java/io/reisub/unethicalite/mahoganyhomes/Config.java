@@ -6,23 +6,23 @@ import net.runelite.client.config.ConfigItem;
 
 @ConfigGroup("chaosmahoganyhomes")
 public interface Config extends net.runelite.client.config.Config {
-	@ConfigItem(
-			keyName = "plank",
-			name = "Plank",
-			description = "Select the plank type",
-			position = 0
-	)
-	default Plank plank() {
-		return Plank.TEAK;
-	}
+  @ConfigItem(
+      keyName = "plank",
+      name = "Plank",
+      description = "Select the plank type",
+      position = 0
+  )
+  default Plank plank() {
+    return Plank.TEAK;
+  }
 
-	@ConfigItem(
-			keyName = "startButton",
-			name = "Start/Stop",
-			description = "Start the script",
-			position = Integer.MAX_VALUE
-	)
-	default Button startButton() {
-		return new Button();
-	}
+  @ConfigItem(
+      keyName = "startButton",
+      name = "Start/Stop",
+      description = "Start the script",
+      position = Integer.MAX_VALUE
+  )
+  default Button startButton() {
+    return new Button();
+  }
 }

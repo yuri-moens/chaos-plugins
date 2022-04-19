@@ -5,6 +5,6 @@ import net.runelite.api.coords.WorldPoint;
 
 @Value
 public class RockPosition {
-    WorldPoint rock;
-    WorldPoint interactFrom;
+  WorldPoint rock;
+  WorldPoint interactFrom;
 }

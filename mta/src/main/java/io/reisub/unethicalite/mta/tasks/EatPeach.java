@@ -8,28 +8,28 @@ import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 
 public class EatPeach extends Task {
-    private int last;
+  private int last;
 
-    @Override
-    public String getStatus() {
-        return "Eating a peach";
+  @Override
+  public String getStatus() {
+    return "Eating a peach";
+  }
+
+  @Override
+  public boolean validate() {
+    return Inventory.contains(ItemID.PEACH)
+        && Combat.getMissingHealth() >= 8
+        && Static.getClient().getTickCount() > last + 3;
+  }
+
+  @Override
+  public void execute() {
+    Item peach = Inventory.getFirst(ItemID.PEACH);
+    if (peach == null) {
+      return;
     }
 
-    @Override
-    public boolean validate() {
-        return Inventory.contains(ItemID.PEACH)
-                && Combat.getMissingHealth() >= 8
-                && Static.getClient().getTickCount() > last + 3;
-    }
-
-    @Override
-    public void execute() {
-        Item peach = Inventory.getFirst(ItemID.PEACH);
-        if (peach == null) {
-            return;
-        }
-
-        peach.interact(0);
-        last = Static.getClient().getTickCount();
-    }
+    peach.interact(0);
+    last = Static.getClient().getTickCount();
+  }
 }

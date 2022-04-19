@@ -12,6 +12,6 @@ This plugin does herb runs for you. It's currently tailored to my needs so there
 
 * Lowest first: withdraw the lowest quality herb seeds first
 * Highest first: withdraw the highest quality herb seeds first
-* ... per two: these options take a maximum of 2 seeds per type, this is useful if you have a herb sack so we can store 
-everything in it without having to note herbs
+* ... per two: these options take a maximum of 2 seeds per type, this is useful if you have a herb sack so we can store
+  everything in it without having to note herbs
 * Manual: choose which seeds to take

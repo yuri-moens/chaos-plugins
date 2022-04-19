@@ -9,16 +9,16 @@ This plugin aids players in combat with various useful features. Currently offer
 * Automatic teleporting out of wildy when a PKer shows up or attacks you
 * Teleport to house hotkey
 * Prayer flicking and swapping
-  * Hotkeys
-  * Cerberus
-  * Demonic Gorillas
-  * Jad
-  * Zulrah
+    * Hotkeys
+    * Cerberus
+    * Demonic Gorillas
+    * Jad
+    * Zulrah
 * Gear swapping
-  * Can swap gear along with prayers
-  * Automatically when target changed prayer
-  * Hotkeys
-  * Zulrah
+    * Can swap gear along with prayers
+    * Automatically when target changed prayer
+    * Hotkeys
+    * Zulrah
 
 ## Dependencies
 

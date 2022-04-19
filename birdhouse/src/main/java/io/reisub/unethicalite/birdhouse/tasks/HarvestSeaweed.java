@@ -14,38 +14,38 @@ import net.runelite.api.TileObject;
 
 @RequiredArgsConstructor
 public class HarvestSeaweed extends Task {
-    private final BirdHouse plugin;
-    private final Config config;
+  private final BirdHouse plugin;
+  private final Config config;
 
-    private TileObject seaweed;
+  private TileObject seaweed;
 
-    @Override
-    public String getStatus() {
-        return "Harvesting seaweed";
+  @Override
+  public String getStatus() {
+    return "Harvesting seaweed";
+  }
+
+  @Override
+  public boolean validate() {
+    return plugin.isUnderwater()
+        && Inventory.contains(ItemID.SEED_DIBBER)
+        && !Inventory.isFull()
+        && ((seaweed = TileObjects.getNearest("Dead seaweed")) != null || (seaweed = TileObjects.getNearest((o) -> o.hasAction("Pick"))) != null);
+  }
+
+  @Override
+  public void execute() {
+    if (seaweed.hasAction("Pick")) {
+      int count = TileObjects.getAll((o) -> o.hasAction("Pick")).size();
+
+      GameThread.invoke(() -> seaweed.interact("Pick"));
+      Time.sleepTicksUntil(() -> TileObjects.getAll((o) -> o.hasAction("Pick")).size() < count
+          || (config.pickupSpores() && TileItems.getNearest(ItemID.SEAWEED_SPORE) != null)
+          || Inventory.isFull(), 120);
+    } else {
+      int count = TileObjects.getAll("Dead seaweed").size();
+
+      GameThread.invoke(() -> seaweed.interact("Clear"));
+      Time.sleepTicksUntil(() -> TileObjects.getAll("Dead seaweed").size() < count, 30);
     }
-
-    @Override
-    public boolean validate() {
-        return plugin.isUnderwater()
-                && Inventory.contains(ItemID.SEED_DIBBER)
-                && !Inventory.isFull()
-                && ((seaweed = TileObjects.getNearest("Dead seaweed")) != null || (seaweed = TileObjects.getNearest((o) -> o.hasAction("Pick"))) != null);
-    }
-
-    @Override
-    public void execute() {
-        if (seaweed.hasAction("Pick")) {
-            int count = TileObjects.getAll((o) -> o.hasAction("Pick")).size();
-
-            GameThread.invoke(() -> seaweed.interact("Pick"));
-            Time.sleepTicksUntil(() -> TileObjects.getAll((o) -> o.hasAction("Pick")).size() < count
-                            || (config.pickupSpores() && TileItems.getNearest(ItemID.SEAWEED_SPORE) != null)
-                            || Inventory.isFull(), 120);
-        } else {
-            int count = TileObjects.getAll("Dead seaweed").size();
-
-            GameThread.invoke(() -> seaweed.interact("Clear"));
-            Time.sleepTicksUntil(() -> TileObjects.getAll("Dead seaweed").size() < count, 30);
-        }
-    }
+  }
 }

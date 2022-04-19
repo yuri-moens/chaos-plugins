@@ -15,7 +15,8 @@ import java.security.MessageDigest
 open class UpdateVersionsTask : DefaultTask() {
 
     private fun hash(file: ByteArray): String {
-        return MessageDigest.getInstance("SHA-512").digest(file).fold("", { str, it -> str + "%02x".format(it) }).toUpperCase()
+        return MessageDigest.getInstance("SHA-512").digest(file).fold("", { str, it -> str + "%02x".format(it) })
+            .toUpperCase()
     }
 
     private fun getBootstrap(): JSONArray? {
@@ -29,14 +30,14 @@ open class UpdateVersionsTask : DefaultTask() {
             .url(url)
             .build()
 
-        client.newCall(request).execute().use { response -> return JSONObject("{\"plugins\":${response.body!!.string()}}").getJSONArray("plugins") }
+        client.newCall(request).execute()
+            .use { response -> return JSONObject("{\"plugins\":${response.body!!.string()}}").getJSONArray("plugins") }
     }
 
-    private fun readFile(fileName: Path): List<String>
-            = fileName.toFile().useLines { it.toList() }
+    private fun readFile(fileName: Path): List<String> = fileName.toFile().useLines { it.toList() }
 
-    private fun writeFile(fileName: Path, content: List<String>)
-            = fileName.toFile().writeText(content.joinToString(separator = System.lineSeparator()))
+    private fun writeFile(fileName: Path, content: List<String>) =
+        fileName.toFile().writeText(content.joinToString(separator = System.lineSeparator()))
 
     private fun bumpVersion(path: Path) {
         val content = mutableListOf<String>()
@@ -46,9 +47,7 @@ open class UpdateVersionsTask : DefaultTask() {
                 val version = SemVer.parse(it.replace("\"", "").replace("version = ", ""))
                 version.patch += 1
                 content.add("version = \"$version\"")
-            }
-            else
-            {
+            } else {
                 content.add(it)
             }
         }

@@ -6,23 +6,23 @@ import net.runelite.client.config.ConfigItem;
 
 @ConfigGroup("chaosdaeyaltessence")
 public interface Config extends net.runelite.client.config.Config {
-	@ConfigItem(
-			keyName = "bankGems",
-			name = "Bank gems",
-			description = "Bank gems when inventory is full",
-			position = 0
-	)
-	default boolean bankGems() {
-		return true;
-	}
+  @ConfigItem(
+      keyName = "bankGems",
+      name = "Bank gems",
+      description = "Bank gems when inventory is full",
+      position = 0
+  )
+  default boolean bankGems() {
+    return true;
+  }
 
-	@ConfigItem(
-			keyName = "startButton",
-			name = "Start/Stop",
-			description = "Start the script",
-			position = Integer.MAX_VALUE
-	)
-	default Button startButton() {
-		return new Button();
-	}
+  @ConfigItem(
+      keyName = "startButton",
+      name = "Start/Stop",
+      description = "Start the script",
+      position = Integer.MAX_VALUE
+  )
+  default Button startButton() {
+    return new Button();
+  }
 }

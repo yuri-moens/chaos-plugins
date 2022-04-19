@@ -16,57 +16,57 @@ import net.runelite.api.TileObject;
 
 @RequiredArgsConstructor
 public class Cook extends Task {
-    private final Cooking plugin;
-    private final Config config;
+  private final Cooking plugin;
+  private final Config config;
 
-    private int last;
+  private int last;
 
-    @Override
-    public String getStatus() {
-        return "Cooking";
+  @Override
+  public String getStatus() {
+    return "Cooking";
+  }
+
+  @Override
+  public boolean validate() {
+    int count = Inventory.getCount(config.foodId());
+
+    return !config.sonicMode()
+        && (plugin.getCurrentActivity() == Activity.IDLE || count == 1)
+        && (count > 0 || plugin.getLastBank() + 1 >= Game.getClient().getTickCount())
+        && Game.getClient().getTickCount() >= last + 3;
+  }
+
+  @Override
+  public void execute() {
+    TileObject oven = TileObjects.getNearest(ObjectID.CLAY_OVEN_21302, ObjectID.RANGE_31631);
+    TileObject fire = TileObjects.getNearest("Fire");
+    if (oven == null && fire == null) {
+      return;
     }
 
-    @Override
-    public boolean validate() {
-        int count = Inventory.getCount(config.foodId());
+    int count = Inventory.getCount(config.foodId());
 
-        return !config.sonicMode()
-                && (plugin.getCurrentActivity() == Activity.IDLE || count == 1)
-                && (count > 0 || plugin.getLastBank() + 1 >= Game.getClient().getTickCount())
-                && Game.getClient().getTickCount() >= last + 3;
+    if (oven != null) {
+      oven.interact(0);
+    } else {
+      Item rawFood = Inventory.getFirst(config.foodId());
+      if (rawFood == null) {
+        return;
+      }
+
+      rawFood.useOn(fire);
     }
 
-    @Override
-    public void execute() {
-        TileObject oven = TileObjects.getNearest(ObjectID.CLAY_OVEN_21302, ObjectID.RANGE_31631);
-        TileObject fire = TileObjects.getNearest("Fire");
-        if (oven == null && fire == null) {
-            return;
-        }
-
-        int count = Inventory.getCount(config.foodId());
-
-        if (oven != null) {
-            oven.interact(0);
-        } else {
-            Item rawFood = Inventory.getFirst(config.foodId());
-            if (rawFood == null) {
-                return;
-            }
-
-            rawFood.useOn(fire);
-        }
-
-        if (count > 1 || (count == 0 && plugin.getLastBank() + 1 >= Game.getClient().getTickCount())) {
-            Time.sleepTicksUntil(Production::isOpen, 20);
-        }
-
-        if (Production.isOpen()) {
-            Production.chooseOption(1);
-
-            Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.COOKING, 5);
-        }
-
-        last = Game.getClient().getTickCount();
+    if (count > 1 || (count == 0 && plugin.getLastBank() + 1 >= Game.getClient().getTickCount())) {
+      Time.sleepTicksUntil(Production::isOpen, 20);
     }
+
+    if (Production.isOpen()) {
+      Production.chooseOption(1);
+
+      Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.COOKING, 5);
+    }
+
+    last = Game.getClient().getTickCount();
+  }
 }

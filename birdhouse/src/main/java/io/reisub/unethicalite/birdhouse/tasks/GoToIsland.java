@@ -18,45 +18,45 @@ import net.runelite.api.coords.WorldPoint;
 
 @AllArgsConstructor
 public class GoToIsland extends Task {
-    private final BirdHouse plugin;
-    private final Config config;
-    private final WorldPoint target = new WorldPoint(3731, 3892, 0);
+  private final BirdHouse plugin;
+  private final Config config;
+  private final WorldPoint target = new WorldPoint(3731, 3892, 0);
 
-    @Override
-    public String getStatus() {
-        return "Going to island";
+  @Override
+  public String getStatus() {
+    return "Going to island";
+  }
+
+  @Override
+  public boolean validate() {
+    for (int space : Constants.BIRD_HOUSE_SPACES) {
+      if (!plugin.isEmptied(space)) {
+        return false;
+      }
     }
 
-    @Override
-    public boolean validate() {
-        for (int space : Constants.BIRD_HOUSE_SPACES) {
-            if (!plugin.isEmptied(space)) {
-                return false;
-            }
-        }
+    return config.farmSeaweed()
+        && !plugin.isUnderwater()
+        && Players.getLocal().distanceTo(BirdHouse.ISLAND) > 10;
+  }
 
-        return config.farmSeaweed()
-                && !plugin.isUnderwater()
-                && Players.getLocal().distanceTo(BirdHouse.ISLAND) > 10;
+  @Override
+  public void execute() {
+    CMovement.walkTo(target, 2, () -> Inventory.getAll((i) -> i.hasAction("Search")).forEach((i) -> i.interact("Search")));
+
+    TileObject rowBoat = TileObjects.getNearest(ObjectID.ROWBOAT_30915);
+    if (rowBoat == null) {
+      return;
     }
 
-    @Override
-    public void execute() {
-        CMovement.walkTo(target, 2, () -> Inventory.getAll((i) -> i.hasAction("Search")).forEach((i) -> i.interact("Search")));
+    while (Players.getLocal().distanceTo(BirdHouse.ISLAND) > 10) {
+      GameThread.invoke(() -> rowBoat.interact("Travel"));
+      Time.sleepTicksUntil(Dialog::isViewingOptions, 15);
 
-        TileObject rowBoat = TileObjects.getNearest(ObjectID.ROWBOAT_30915);
-        if (rowBoat == null) {
-            return;
-        }
-
-        while (Players.getLocal().distanceTo(BirdHouse.ISLAND) > 10) {
-            GameThread.invoke(() -> rowBoat.interact("Travel"));
-            Time.sleepTicksUntil(Dialog::isViewingOptions, 15);
-
-            Dialog.chooseOption(3);
-            Time.sleepTicksUntil(() -> Players.getLocal().distanceTo(BirdHouse.ISLAND) < 10, 5);
-        }
-
-        Time.sleepTick();
+      Dialog.chooseOption(3);
+      Time.sleepTicksUntil(() -> Players.getLocal().distanceTo(BirdHouse.ISLAND) < 10, 5);
     }
+
+    Time.sleepTick();
+  }
 }

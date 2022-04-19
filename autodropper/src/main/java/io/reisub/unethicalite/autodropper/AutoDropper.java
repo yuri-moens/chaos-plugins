@@ -4,6 +4,12 @@ import com.google.inject.Provides;
 import dev.unethicalite.api.game.Game;
 import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.utils.Utils;
+import java.awt.event.KeyEvent;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.GameState;
 import net.runelite.api.InventoryID;
@@ -19,127 +25,123 @@ import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import org.pf4j.Extension;
 
-import javax.inject.Inject;
-import java.awt.event.KeyEvent;
-import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-
 @Extension
 @PluginDependency(Utils.class)
 @PluginDescriptor(
-	name = "Chaos Auto Dropper",
-	description = "Serial litterer",
-	enabledByDefault = false
+    name = "Chaos Auto Dropper",
+    description = "Serial litterer",
+    enabledByDefault = false
 )
 @Slf4j
 public class AutoDropper extends Plugin implements KeyListener {
-	@Inject
-	private Config config;
+  @Inject
+  private Config config;
 
-	@Inject
-	private KeyManager keyManager;
+  @Inject
+  private KeyManager keyManager;
 
-	@Provides
-    Config provideConfig(ConfigManager configManager) {
-		return configManager.getConfig(Config.class);
-	}
+  @Provides
+  Config provideConfig(ConfigManager configManager) {
+    return configManager.getConfig(Config.class);
+  }
 
-	private ScheduledExecutorService executor;
-	private String[] itemNames;
-	private int[] itemIds;
+  private ScheduledExecutorService executor;
+  private String[] itemNames;
+  private int[] itemIds;
 
-	@Override
-	protected void startUp() {
-		log.info("Starting Chaos Auto Dropper");
+  @Override
+  protected void startUp() {
+    log.info("Starting Chaos Auto Dropper");
 
-		itemNames = parseNames();
-		itemIds = parseIds();
+    itemNames = parseNames();
+    itemIds = parseIds();
 
-		keyManager.registerKeyListener(this);
-		executor = Executors.newSingleThreadScheduledExecutor();
-	}
+    keyManager.registerKeyListener(this);
+    executor = Executors.newSingleThreadScheduledExecutor();
+  }
 
-	@Override
-	protected void shutDown() {
-		log.info("Stopping Chaos Auto Dropper");
+  @Override
+  protected void shutDown() {
+    log.info("Stopping Chaos Auto Dropper");
 
-		keyManager.unregisterKeyListener(this);
-		executor.shutdownNow();
-	}
+    keyManager.unregisterKeyListener(this);
+    executor.shutdownNow();
+  }
 
-	@Subscribe
-	private void onItemContainerChanged(ItemContainerChanged event) {
-		if (Game.getState() != GameState.LOGGED_IN || config.dropMethod() == DropMethod.NONE || event.getContainerId() != InventoryID.INVENTORY.getId()) return;
+  @Subscribe
+  private void onItemContainerChanged(ItemContainerChanged event) {
+    if (Game.getState() != GameState.LOGGED_IN || config.dropMethod() == DropMethod.NONE || event.getContainerId() != InventoryID.INVENTORY.getId())
+      return;
 
-		if (config.dropMethod() == DropMethod.ON_ADD) {
-			drop();
-		} else if (config.dropMethod() == DropMethod.ON_FULL_INVENTORY && Inventory.isFull()) {
-			drop();
-		}
-	}
+    if (config.dropMethod() == DropMethod.ON_ADD) {
+      drop();
+    } else if (config.dropMethod() == DropMethod.ON_FULL_INVENTORY && Inventory.isFull()) {
+      drop();
+    }
+  }
 
-	@Subscribe
-	private void onConfigChanged(ConfigChanged event) {
-		String name = this.getName().replaceAll(" ", "").toLowerCase(Locale.ROOT);
+  @Subscribe
+  private void onConfigChanged(ConfigChanged event) {
+    String name = this.getName().replaceAll(" ", "").toLowerCase(Locale.ROOT);
 
-		if (event.getGroup().equals(name) && event.getKey().startsWith("item")) {
-			itemNames = parseNames();
-			itemIds = parseIds();
-		}
-	}
+    if (event.getGroup().equals(name) && event.getKey().startsWith("item")) {
+      itemNames = parseNames();
+      itemIds = parseIds();
+    }
+  }
 
-	private String[] parseNames() {
-		String[] itemNames = config.itemNames().split(";");
-		String[] seedNames = config.seedNames().split(";");
-		String[] names = new String[itemNames.length + seedNames.length];
+  private String[] parseNames() {
+    String[] itemNames = config.itemNames().split(";");
+    String[] seedNames = config.seedNames().split(";");
+    String[] names = new String[itemNames.length + seedNames.length];
 
-		int i = 0;
+    int i = 0;
 
-		for (String name : itemNames) {
-			names[i++] = name.trim();
-		}
+    for (String name : itemNames) {
+      names[i++] = name.trim();
+    }
 
-		for (String name : seedNames) {
-			names[i++] = name.trim();
-		}
+    for (String name : seedNames) {
+      names[i++] = name.trim();
+    }
 
-		return names;
-	}
+    return names;
+  }
 
-	private int[] parseIds() {
-		if (config.itemIds().equals("")) return new int[]{};
+  private int[] parseIds() {
+    if (config.itemIds().equals("")) return new int[]{};
 
-		String[] idsStr = config.itemIds().split(";");
-		int[] ids = new int[idsStr.length];
+    String[] idsStr = config.itemIds().split(";");
+    int[] ids = new int[idsStr.length];
 
-		for (int i = 0; i < idsStr.length; i++) {
-			ids[i] = Integer.parseInt(idsStr[i].trim());
-		}
+    for (int i = 0; i < idsStr.length; i++) {
+      ids[i] = Integer.parseInt(idsStr[i].trim());
+    }
 
-		return ids;
-	}
+    return ids;
+  }
 
-	@Override
-	public void keyTyped(KeyEvent e) {}
+  @Override
+  public void keyTyped(KeyEvent e) {
+  }
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if (config.dropEnableHotkey() && config.dropHotkey().matches(e)) {
-			drop();
-		}
-	}
+  @Override
+  public void keyPressed(KeyEvent e) {
+    if (config.dropEnableHotkey() && config.dropHotkey().matches(e)) {
+      drop();
+    }
+  }
 
-	@Override
-	public void keyReleased(KeyEvent e) {}
+  @Override
+  public void keyReleased(KeyEvent e) {
+  }
 
-	private void drop() {
-		List<Item> items = Inventory.getAll(itemNames);
-		items.addAll(Inventory.getAll(itemIds));
+  private void drop() {
+    List<Item> items = Inventory.getAll(itemNames);
+    items.addAll(Inventory.getAll(itemIds));
 
-		for (Item item : items) {
-			item.interact("Drop");
-		}
-	}
+    for (Item item : items) {
+      item.interact("Drop");
+    }
+  }
 }

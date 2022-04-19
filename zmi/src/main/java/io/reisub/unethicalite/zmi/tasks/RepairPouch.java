@@ -15,41 +15,41 @@ import net.runelite.api.ItemID;
 import net.runelite.api.widgets.Widget;
 
 public class RepairPouch extends Task {
-    @Override
-    public String getStatus() {
-        return "Repairing pouch";
+  @Override
+  public String getStatus() {
+    return "Repairing pouch";
+  }
+
+  @Override
+  public boolean validate() {
+    return Inventory.contains(Predicates.ids(Constants.DEGRADED_ESSENCE_POUCH_IDS))
+        && Inventory.contains(ItemID.COSMIC_RUNE)
+        && Players.getLocal().isIdle();
+  }
+
+  @Override
+  public void execute() {
+    Widget npcContact = Widgets.get(Lunar.NPC_CONTACT.getWidget());
+    if (npcContact == null) {
+      return;
     }
 
-    @Override
-    public boolean validate() {
-        return Inventory.contains(Predicates.ids(Constants.DEGRADED_ESSENCE_POUCH_IDS))
-                && Inventory.contains(ItemID.COSMIC_RUNE)
-                && Players.getLocal().isIdle();
+    if (npcContact.hasAction("Dark Mage")) {
+      npcContact.interact("Dark Mage");
+    } else {
+      Magic.cast(Lunar.NPC_CONTACT);
+      Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(75, 12)), 5);
+
+      Widgets.get(75, 12).interact("Dark Mage");
     }
 
-    @Override
-    public void execute() {
-        Widget npcContact = Widgets.get(Lunar.NPC_CONTACT.getWidget());
-        if (npcContact == null) {
-            return;
-        }
+    Time.sleepTicksUntil(Dialog::canContinue, 20);
 
-        if (npcContact.hasAction("Dark Mage")) {
-            npcContact.interact("Dark Mage");
-        } else {
-            Magic.cast(Lunar.NPC_CONTACT);
-            Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(75, 12)), 5);
-
-            Widgets.get(75, 12).interact("Dark Mage");
-        }
-
-        Time.sleepTicksUntil(Dialog::canContinue, 20);
-
-        Dialog.invokeDialog(
-                DialogOption.NPC_CONTINUE,
-                DialogOption.CHAT_OPTION_TWO,
-                DialogOption.PLAYER_CONTINUE,
-                DialogOption.NPC_CONTINUE
-        );
-    }
+    Dialog.invokeDialog(
+        DialogOption.NPC_CONTINUE,
+        DialogOption.CHAT_OPTION_TWO,
+        DialogOption.PLAYER_CONTINUE,
+        DialogOption.NPC_CONTINUE
+    );
+  }
 }

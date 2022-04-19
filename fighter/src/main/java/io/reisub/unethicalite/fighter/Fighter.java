@@ -17,65 +17,64 @@ import org.pf4j.Extension;
 import javax.inject.Inject;
 
 @PluginDescriptor(
-		name = "Chaos Fighter",
-		description = "Don't talk about this one",
-		enabledByDefault = false
+    name = "Chaos Fighter",
+    description = "Don't talk about this one",
+    enabledByDefault = false
 )
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Fighter extends TickScript {
-	@Inject
-	private Config config;
+  @Inject
+  private Config config;
 
-	@Provides
-	public Config getConfig(ConfigManager configManager)
-	{
-		return configManager.getConfig(Config.class);
-	}
+  @Provides
+  public Config getConfig(ConfigManager configManager) {
+    return configManager.getConfig(Config.class);
+  }
 
-	@Override
-	protected void onStart() {
-		super.onStart();
+  @Override
+  protected void onStart() {
+    super.onStart();
 
-		// addTask();
-	}
+    // addTask();
+  }
 
-	@Subscribe
-	private void onMenuOptionClicked(MenuOptionClicked event) {
-		if (!config.insertMenu()) {
-			return;
-		}
+  @Subscribe
+  private void onMenuOptionClicked(MenuOptionClicked event) {
+    if (!config.insertMenu()) {
+      return;
+    }
 
-		if (event.getMenuOption().equals("Start Fighter")) {
+    if (event.getMenuOption().equals("Start Fighter")) {
 
-		} else if (event.getMenuOption().equals("Stop Fighter")) {
+    } else if (event.getMenuOption().equals("Stop Fighter")) {
 
-		}
-	}
+    }
+  }
 
-	@Subscribe
-	private void onMenuEntryAdded(MenuEntryAdded event) {
-		if (!config.insertMenu() || !event.getOption().equals("Attack")) {
-			return;
-		}
+  @Subscribe
+  private void onMenuEntryAdded(MenuEntryAdded event) {
+    if (!config.insertMenu() || !event.getOption().equals("Attack")) {
+      return;
+    }
 
-		if (isRunning()) {
-			Static.getClient().createMenuEntry(-1)
-					.setOption("Stop Fighter")
-					.setTarget(event.getTarget())
-					.setIdentifier(0)
-					.setParam0(0)
-					.setParam1(0)
-					.setType(MenuAction.RUNELITE);
-		} else {
-			Static.getClient().createMenuEntry(-1)
-					.setOption("Start Fighter")
-					.setTarget(event.getTarget())
-					.setIdentifier(0)
-					.setParam0(0)
-					.setParam1(0)
-					.setType(MenuAction.RUNELITE);
-		}
-	}
+    if (isRunning()) {
+      Static.getClient().createMenuEntry(-1)
+          .setOption("Stop Fighter")
+          .setTarget(event.getTarget())
+          .setIdentifier(0)
+          .setParam0(0)
+          .setParam1(0)
+          .setType(MenuAction.RUNELITE);
+    } else {
+      Static.getClient().createMenuEntry(-1)
+          .setOption("Start Fighter")
+          .setTarget(event.getTarget())
+          .setIdentifier(0)
+          .setParam0(0)
+          .setParam1(0)
+          .setType(MenuAction.RUNELITE);
+    }
+  }
 }

@@ -12,81 +12,80 @@ import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.CMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
+import javax.inject.Inject;
 import net.runelite.api.ItemID;
 import net.runelite.api.coords.WorldPoint;
 
-import javax.inject.Inject;
-
 public class EnterCrypt extends Task {
-    @Inject
-    private Barrows plugin;
+  @Inject
+  private Barrows plugin;
 
-    @Inject
-    private CombatHelper combatHelper;
+  @Inject
+  private CombatHelper combatHelper;
 
-    @Override
-    public String getStatus() {
-        return "Going to " + plugin.getCurrentBrother().getName();
+  @Override
+  public String getStatus() {
+    return "Going to " + plugin.getCurrentBrother().getName();
+  }
+
+  @Override
+  public boolean validate() {
+    return plugin.getCurrentBrother() != null
+        && Utils.isInRegion(Barrows.BARROWS_REGION);
+  }
+
+  @Override
+  public void execute() {
+    WorldPoint digAreaPoint = plugin.getCurrentBrother().getLocation()
+        .dx(-1)
+        .dy(-1);
+
+    RectangularArea digArea = new RectangularArea(digAreaPoint, 2, 2);
+
+    if (digArea.contains(Players.getLocal())) {
+      Inventory.getFirst(ItemID.SPADE).interact(0);
+
+      Time.sleepTicksUntil(() -> Utils.isInRegion(Barrows.CRYPT_REGION), 10);
+      return;
     }
 
-    @Override
-    public boolean validate() {
-        return plugin.getCurrentBrother() != null
-                && Utils.isInRegion(Barrows.BARROWS_REGION);
+    CMovement.walkTo(plugin.getCurrentBrother().getLocation(), 1);
+
+    if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 3)) {
+      if (Players.getLocal().distanceTo(plugin.getCurrentBrother().getLocation()) < 8) {
+        Movement.walk(plugin.getCurrentBrother().getLocation());
+      }
+
+      return;
     }
 
-    @Override
-    public void execute() {
-        WorldPoint digAreaPoint = plugin.getCurrentBrother().getLocation()
-                .dx(-1)
-                .dy(-1);
-
-        RectangularArea digArea = new RectangularArea(digAreaPoint, 2, 2);
-
-        if (digArea.contains(Players.getLocal())) {
-            Inventory.getFirst(ItemID.SPADE).interact(0);
-
-            Time.sleepTicksUntil(() -> Utils.isInRegion(Barrows.CRYPT_REGION), 10);
-            return;
+    switch (plugin.getCurrentBrother()) {
+      case DHAROK:
+      case TORAG:
+      case VERAC:
+      case GUTHAN:
+        if (Combat.getCurrentWeaponStyle() != WeaponStyle.MAGIC) {
+          combatHelper.getSwapHelper().swap(true, true, WeaponStyle.MAGIC);
         }
-
-        CMovement.walkTo(plugin.getCurrentBrother().getLocation(), 1);
-
-        if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 3)) {
-            if (Players.getLocal().distanceTo(plugin.getCurrentBrother().getLocation()) < 8) {
-                Movement.walk(plugin.getCurrentBrother().getLocation());
-            }
-
-            return;
+        break;
+      case AHRIM:
+        if (Combat.getCurrentWeaponStyle() != WeaponStyle.RANGE) {
+          combatHelper.getSwapHelper().swap(true, true, WeaponStyle.RANGE);
         }
-
-        switch (plugin.getCurrentBrother()) {
-            case DHAROK:
-            case TORAG:
-            case VERAC:
-            case GUTHAN:
-                if (Combat.getCurrentWeaponStyle() != WeaponStyle.MAGIC) {
-                    combatHelper.getSwapHelper().swap(true, true, WeaponStyle.MAGIC);
-                }
-                break;
-            case AHRIM:
-                if (Combat.getCurrentWeaponStyle() != WeaponStyle.RANGE) {
-                    combatHelper.getSwapHelper().swap(true, true, WeaponStyle.RANGE);
-                }
-                break;
-            case KARIL:
-                if (Combat.getCurrentWeaponStyle() != WeaponStyle.MELEE) {
-                    combatHelper.getSwapHelper().swap(true, true, WeaponStyle.MELEE);
-                }
-                break;
+        break;
+      case KARIL:
+        if (Combat.getCurrentWeaponStyle() != WeaponStyle.MELEE) {
+          combatHelper.getSwapHelper().swap(true, true, WeaponStyle.MELEE);
         }
-
-        if (!Time.sleepTicksUntil(() -> digArea.contains(Players.getLocal()) || !Players.getLocal().isMoving(), 30)) {
-            return;
-        }
-
-        Inventory.getFirst(ItemID.SPADE).interact(0);
-
-        Time.sleepTicksUntil(() -> Utils.isInRegion(Barrows.CRYPT_REGION), 10);
+        break;
     }
+
+    if (!Time.sleepTicksUntil(() -> digArea.contains(Players.getLocal()) || !Players.getLocal().isMoving(), 30)) {
+      return;
+    }
+
+    Inventory.getFirst(ItemID.SPADE).interact(0);
+
+    Time.sleepTicksUntil(() -> Utils.isInRegion(Barrows.CRYPT_REGION), 10);
+  }
 }

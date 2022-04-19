@@ -11,6 +11,7 @@ import io.reisub.unethicalite.pickpocket.tasks.TakeWine;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.enums.Activity;
+import javax.inject.Inject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Actor;
@@ -24,65 +25,62 @@ import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.itemstats.ItemStatPlugin;
 import org.pf4j.Extension;
 
-import javax.inject.Inject;
-
 @PluginDescriptor(
-		name = "Chaos Pickpocket",
-		description = "Cor blimey mate, what are ye doing in me pockets?",
-		enabledByDefault = false
+    name = "Chaos Pickpocket",
+    description = "Cor blimey mate, what are ye doing in me pockets?",
+    enabledByDefault = false
 )
 @PluginDependency(Utils.class)
 @PluginDependency(ItemStatPlugin.class)
 @Slf4j
 @Extension
 public class Pickpocket extends TickScript {
-	@Inject
-	private Config config;
+  @Inject
+  private Config config;
 
-	@Provides
-	public Config getConfig(ConfigManager configManager)
-	{
-		return configManager.getConfig(Config.class);
-	}
+  @Provides
+  public Config getConfig(ConfigManager configManager) {
+    return configManager.getConfig(Config.class);
+  }
 
-	@Getter
-	private Target.Location nearestLocation;
+  @Getter
+  private Target.Location nearestLocation;
 
-	@Override
-	protected void onStart() {
-		super.onStart();
+  @Override
+  protected void onStart() {
+    super.onStart();
 
-		nearestLocation = config.target().getNearest();
+    nearestLocation = config.target().getNearest();
 
-		addTask(ClearInventory.class);
-		addTask(TakeWine.class);
-		addTask(Eat.class);
-		addTask(CastShadowVeil.class);
-		addTask(EquipDodgyNecklace.class);
-		addTask(HandleBank.class);
-		addTask(io.reisub.unethicalite.pickpocket.tasks.Pickpocket.class);
-	}
+    addTask(ClearInventory.class);
+    addTask(TakeWine.class);
+    addTask(Eat.class);
+    addTask(CastShadowVeil.class);
+    addTask(EquipDodgyNecklace.class);
+    addTask(HandleBank.class);
+    addTask(io.reisub.unethicalite.pickpocket.tasks.Pickpocket.class);
+  }
 
-	@Subscribe
-	private void onAnimationChanged(AnimationChanged event) {
-		if (!isRunning()) {
-			return;
-		}
+  @Subscribe
+  private void onAnimationChanged(AnimationChanged event) {
+    if (!isRunning()) {
+      return;
+    }
 
-		Actor actor = event.getActor();
-		if (actor == null || !actor.equals(Players.getLocal())) return;
+    Actor actor = event.getActor();
+    if (actor == null || !actor.equals(Players.getLocal())) return;
 
-		switch (Players.getLocal().getAnimation()) {
-			case 388:
-				setActivity(Activity.IDLE);
-				break;
-		}
-	}
+    switch (Players.getLocal().getAnimation()) {
+      case 388:
+        setActivity(Activity.IDLE);
+        break;
+    }
+  }
 
-	@Subscribe
-	private void onStatChanged(StatChanged event) {
-		if (event.getSkill() == Skill.THIEVING) {
-			setActivity(Activity.IDLE);
-		}
-	}
+  @Subscribe
+  private void onStatChanged(StatChanged event) {
+    if (event.getSkill() == Skill.THIEVING) {
+      setActivity(Activity.IDLE);
+    }
+  }
 }

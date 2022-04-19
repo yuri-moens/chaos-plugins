@@ -11,25 +11,25 @@ import net.runelite.api.Item;
 import net.runelite.api.NPC;
 
 public class Note extends Task {
-    @Override
-    public String getStatus() {
-        return "Noting herbs";
+  @Override
+  public String getStatus() {
+    return "Noting herbs";
+  }
+
+  @Override
+  public boolean validate() {
+    return Inventory.contains(Predicates.ids(Constants.GRIMY_HERB_IDS));
+  }
+
+  @Override
+  public void execute() {
+    Item herb = Inventory.getFirst(Predicates.ids(Constants.GRIMY_HERB_IDS));
+    NPC leprechaun = NPCs.getNearest("Tool Leprechaun");
+    if (herb == null || leprechaun == null) {
+      return;
     }
 
-    @Override
-    public boolean validate() {
-        return Inventory.contains(Predicates.ids(Constants.GRIMY_HERB_IDS));
-    }
-
-    @Override
-    public void execute() {
-        Item herb = Inventory.getFirst(Predicates.ids(Constants.GRIMY_HERB_IDS));
-        NPC leprechaun = NPCs.getNearest("Tool Leprechaun");
-        if (herb == null || leprechaun == null) {
-            return;
-        }
-
-        GameThread.invoke(() -> herb.useOn(leprechaun));
-        Time.sleepTicksUntil(() -> !Inventory.contains(herb.getId()), 30);
-    }
+    GameThread.invoke(() -> herb.useOn(leprechaun));
+    Time.sleepTicksUntil(() -> !Inventory.contains(herb.getId()), 30);
+  }
 }

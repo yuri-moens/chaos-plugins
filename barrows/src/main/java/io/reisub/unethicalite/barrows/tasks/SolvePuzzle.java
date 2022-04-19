@@ -7,57 +7,56 @@ import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.barrows.Room;
 import io.reisub.unethicalite.utils.tasks.Task;
+import java.util.Map;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.Subscribe;
 
-import java.util.Map;
-
 public class SolvePuzzle extends Task {
-    private static final Map<WidgetInfo, WidgetInfo> POSSIBLE_SOLUTIONS = ImmutableMap.of(
-            WidgetInfo.BARROWS_PUZZLE_ANSWER1, WidgetInfo.BARROWS_PUZZLE_ANSWER1_CONTAINER,
-            WidgetInfo.BARROWS_PUZZLE_ANSWER2, WidgetInfo.BARROWS_PUZZLE_ANSWER2_CONTAINER,
-            WidgetInfo.BARROWS_PUZZLE_ANSWER3, WidgetInfo.BARROWS_PUZZLE_ANSWER3_CONTAINER
-    );
+  private static final Map<WidgetInfo, WidgetInfo> POSSIBLE_SOLUTIONS = ImmutableMap.of(
+      WidgetInfo.BARROWS_PUZZLE_ANSWER1, WidgetInfo.BARROWS_PUZZLE_ANSWER1_CONTAINER,
+      WidgetInfo.BARROWS_PUZZLE_ANSWER2, WidgetInfo.BARROWS_PUZZLE_ANSWER2_CONTAINER,
+      WidgetInfo.BARROWS_PUZZLE_ANSWER3, WidgetInfo.BARROWS_PUZZLE_ANSWER3_CONTAINER
+  );
 
-    private Widget puzzleAnswer = null;
+  private Widget puzzleAnswer = null;
 
-    @Override
-    public String getStatus() {
-        return "Solving puzzle";
-    }
+  @Override
+  public String getStatus() {
+    return "Solving puzzle";
+  }
 
-    @Override
-    public boolean validate() {
-        return puzzleAnswer != null;
-    }
+  @Override
+  public boolean validate() {
+    return puzzleAnswer != null;
+  }
 
-    @Override
-    public void execute() {
-        GameThread.invoke(() -> puzzleAnswer.interact("Select"));
-        Time.sleepTick();
+  @Override
+  public void execute() {
+    GameThread.invoke(() -> puzzleAnswer.interact("Select"));
+    Time.sleepTick();
 
-        GameThread.invoke(() -> TileObjects.getNearest(Room.DOOR_PREDICATE).interact(0));
-        Time.sleepTicksUntil(Room::isInCorridor, 5);
+    GameThread.invoke(() -> TileObjects.getNearest(Room.DOOR_PREDICATE).interact(0));
+    Time.sleepTicksUntil(Room::isInCorridor, 5);
 
-        puzzleAnswer = null;
-    }
+    puzzleAnswer = null;
+  }
 
-    @Subscribe
-    private void onWidgetLoaded(WidgetLoaded event) {
-        if (event.getGroupId() == WidgetID.BARROWS_PUZZLE_GROUP_ID) {
-            int answer = Widgets.get(WidgetInfo.BARROWS_FIRST_PUZZLE).getModelId() - 3;
+  @Subscribe
+  private void onWidgetLoaded(WidgetLoaded event) {
+    if (event.getGroupId() == WidgetID.BARROWS_PUZZLE_GROUP_ID) {
+      int answer = Widgets.get(WidgetInfo.BARROWS_FIRST_PUZZLE).getModelId() - 3;
 
-            for (Map.Entry<WidgetInfo, WidgetInfo> entry : POSSIBLE_SOLUTIONS.entrySet()) {
-                Widget widgetToCheck = Widgets.get(entry.getKey());
+      for (Map.Entry<WidgetInfo, WidgetInfo> entry : POSSIBLE_SOLUTIONS.entrySet()) {
+        Widget widgetToCheck = Widgets.get(entry.getKey());
 
-                if (widgetToCheck != null && widgetToCheck.getModelId() == answer) {
-                    puzzleAnswer = Widgets.get(entry.getValue());
-                    break;
-                }
-            }
+        if (widgetToCheck != null && widgetToCheck.getModelId() == answer) {
+          puzzleAnswer = Widgets.get(entry.getValue());
+          break;
         }
+      }
     }
+  }
 }

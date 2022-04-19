@@ -14,32 +14,32 @@ import net.runelite.api.TileItem;
 
 @RequiredArgsConstructor
 public class PickupSpore extends Task {
-    private final BirdHouse plugin;
-    private final Config config;
+  private final BirdHouse plugin;
+  private final Config config;
 
-    private TileItem spore;
+  private TileItem spore;
 
-    @Override
-    public String getStatus() {
-        return "Picking up seaweed spore";
-    }
+  @Override
+  public String getStatus() {
+    return "Picking up seaweed spore";
+  }
 
-    @Override
-    public boolean validate() {
-        return config.pickupSpores()
-                && plugin.isUnderwater()
-                && (spore = TileItems.getNearest(ItemID.SEAWEED_SPORE)) != null;
-    }
+  @Override
+  public boolean validate() {
+    return config.pickupSpores()
+        && plugin.isUnderwater()
+        && (spore = TileItems.getNearest(ItemID.SEAWEED_SPORE)) != null;
+  }
 
-    @Override
-    public void execute() {
-        int quantity = Inventory.getCount(true, ItemID.SEAWEED_SPORE);
+  @Override
+  public void execute() {
+    int quantity = Inventory.getCount(true, ItemID.SEAWEED_SPORE);
 
-        do {
-            GameThread.invoke(() -> spore.interact("Take"));
-            Time.sleep(250, 400);
-        } while (!Players.getLocal().isMoving());
+    do {
+      GameThread.invoke(() -> spore.interact("Take"));
+      Time.sleep(250, 400);
+    } while (!Players.getLocal().isMoving());
 
-        Time.sleepTicksUntil(() -> Inventory.getCount(true, ItemID.SEAWEED_SPORE) > quantity, 30);
-    }
+    Time.sleepTicksUntil(() -> Inventory.getCount(true, ItemID.SEAWEED_SPORE) > quantity, 30);
+  }
 }

@@ -11,61 +11,60 @@ import io.reisub.unethicalite.farming.PatchState;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
+import javax.inject.Inject;
 import net.runelite.api.Skill;
 import net.runelite.api.TileObject;
 import net.runelite.api.events.StatChanged;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.timetracking.farming.CropState;
 
-import javax.inject.Inject;
-
 public class Pick extends Task {
-    @Inject
-    private Farming plugin;
+  @Inject
+  private Farming plugin;
 
-    private boolean experienceReceived;
+  private boolean experienceReceived;
 
-    @Override
-    public String getStatus() {
-        return "Picking herbs";
+  @Override
+  public String getStatus() {
+    return "Picking herbs";
+  }
+
+  @Override
+  public boolean validate() {
+    TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
+
+    if (patch == null) {
+      return false;
     }
 
-    @Override
-    public boolean validate() {
-        TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
+    int varbit = Vars.getBit(plugin.getCurrentLocation().getVarbit());
+    PatchState patchState = PatchImplementation.HERB.forVarbitValue(varbit);
 
-        if (patch == null) {
-            return false;
-        }
+    return patchState != null && patchState.getCropState() == CropState.HARVESTABLE;
+  }
 
-        int varbit = Vars.getBit(plugin.getCurrentLocation().getVarbit());
-        PatchState patchState = PatchImplementation.HERB.forVarbitValue(varbit);
-
-        return patchState != null && patchState.getCropState() == CropState.HARVESTABLE;
+  @Override
+  public void execute() {
+    TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
+    if (patch == null) {
+      return;
     }
 
-    @Override
-    public void execute() {
-        TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
-        if (patch == null) {
-            return;
-        }
+    experienceReceived = false;
+    GameThread.invoke(() -> patch.interact("Pick"));
+    Time.sleepTicksUntil(() -> experienceReceived, 20);
 
-        experienceReceived = false;
-        GameThread.invoke(() -> patch.interact("Pick"));
-        Time.sleepTicksUntil(() -> experienceReceived, 20);
+    GameThread.invoke(() -> patch.interact("Pick"));
+    Time.sleepTick();
+    GameThread.invoke(() -> patch.interact("Pick"));
 
-        GameThread.invoke(() -> patch.interact("Pick"));
-        Time.sleepTick();
-        GameThread.invoke(() -> patch.interact("Pick"));
+    Time.sleepTicksUntil(() -> Inventory.isFull() || Vars.getBit(plugin.getCurrentLocation().getVarbit()) <= 3, 100);
+  }
 
-        Time.sleepTicksUntil(() -> Inventory.isFull() || Vars.getBit(plugin.getCurrentLocation().getVarbit()) <= 3, 100);
+  @Subscribe
+  private void onStatChanged(StatChanged event) {
+    if (plugin.isRunning() && event.getSkill() == Skill.FARMING) {
+      experienceReceived = true;
     }
-
-    @Subscribe
-    private void onStatChanged(StatChanged event) {
-        if (plugin.isRunning() && event.getSkill() == Skill.FARMING) {
-            experienceReceived = true;
-        }
-    }
+  }
 }

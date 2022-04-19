@@ -5,64 +5,63 @@ import dev.unethicalite.api.game.GameThread;
 import io.reisub.unethicalite.chompychomper.ChompyChomper;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
+import java.util.LinkedList;
+import javax.inject.Inject;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 import net.runelite.api.events.NpcDespawned;
 import net.runelite.api.events.NpcSpawned;
 import net.runelite.client.eventbus.Subscribe;
 
-import javax.inject.Inject;
-import java.util.LinkedList;
-
 public class Shoot extends Task {
-    @Inject
-    private ChompyChomper plugin;
+  @Inject
+  private ChompyChomper plugin;
 
-    private final LinkedList<NPC> chompies = new LinkedList<>();
+  private final LinkedList<NPC> chompies = new LinkedList<>();
 
-    @Override
-    public String getStatus() {
-        return "Shooting chompy";
+  @Override
+  public String getStatus() {
+    return "Shooting chompy";
+  }
+
+  @Override
+  public boolean validate() {
+    return plugin.getCurrentActivity() == Activity.IDLE
+        && !chompies.isEmpty();
+  }
+
+  @Override
+  public void execute() {
+    NPC chompy = chompies.poll();
+    if (chompy == null || chompy.isDead()) {
+      return;
     }
 
-    @Override
-    public boolean validate() {
-        return plugin.getCurrentActivity() == Activity.IDLE
-                && !chompies.isEmpty();
+    GameThread.invoke(() -> chompy.interact("Attack"));
+    if (!Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.ATTACKING, 3)) {
+      chompies.addFirst(chompy);
+    }
+  }
+
+  @Subscribe
+  private void onNpcSpawned(NpcSpawned event) {
+    if (!plugin.isRunning()) {
+      return;
     }
 
-    @Override
-    public void execute() {
-        NPC chompy = chompies.poll();
-        if (chompy == null || chompy.isDead()) {
-            return;
-        }
+    if (event.getNpc().getId() == NpcID.CHOMPY_BIRD) {
+      chompies.add(event.getNpc());
+    }
+  }
 
-        GameThread.invoke(() -> chompy.interact("Attack"));
-        if (!Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.ATTACKING, 3)) {
-            chompies.addFirst(chompy);
-        }
+  @Subscribe
+  private void onNpcDespawned(NpcDespawned event) {
+    if (!plugin.isRunning()) {
+      return;
     }
 
-    @Subscribe
-    private void onNpcSpawned(NpcSpawned event) {
-        if (!plugin.isRunning()) {
-            return;
-        }
-
-        if (event.getNpc().getId() == NpcID.CHOMPY_BIRD) {
-            chompies.add(event.getNpc());
-        }
+    if (event.getNpc().getId() == NpcID.CHOMPY_BIRD) {
+      chompies.remove(event.getNpc());
     }
-
-    @Subscribe
-    private void onNpcDespawned(NpcDespawned event) {
-        if (!plugin.isRunning()) {
-            return;
-        }
-
-        if (event.getNpc().getId() == NpcID.CHOMPY_BIRD) {
-            chompies.remove(event.getNpc());
-        }
-    }
+  }
 }

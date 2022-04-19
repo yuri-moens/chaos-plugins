@@ -20,6 +20,11 @@ import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.Predicates;
+import java.awt.event.KeyEvent;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+import javax.inject.Inject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Item;
@@ -41,246 +46,239 @@ import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.timetracking.farming.CropState;
 import org.pf4j.Extension;
 
-import javax.inject.Inject;
-import java.awt.event.KeyEvent;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
-
 @PluginDescriptor(
-		name = "Chaos Farming",
-		description = "It's not much but it's honest work",
-		enabledByDefault = false
+    name = "Chaos Farming",
+    description = "It's not much but it's honest work",
+    enabledByDefault = false
 )
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Farming extends TickScript implements KeyListener {
-	@Inject
-	private Config config;
+  @Inject
+  private Config config;
 
-	@Provides
-	public Config getConfig(ConfigManager configManager)
-	{
-		return configManager.getConfig(Config.class);
-	}
+  @Provides
+  public Config getConfig(ConfigManager configManager) {
+    return configManager.getConfig(Config.class);
+  }
 
-	private static final int FARMING_GUILD_REGION = 4922;
+  private static final int FARMING_GUILD_REGION = 4922;
 
-	@Getter
-	private final Queue<Location> locationQueue = new LinkedList<>();
+  @Getter
+  private final Queue<Location> locationQueue = new LinkedList<>();
 
-	@Getter
-	private Location currentLocation;
+  @Getter
+  private Location currentLocation;
 
-	private Set<String> compostProduceSet;
+  private Set<String> compostProduceSet;
 
-	@Override
-	protected void onStart() {
-		super.onStart();
+  @Override
+  protected void onStart() {
+    super.onStart();
 
-		buildLocationQueue();
+    buildLocationQueue();
 
-		addTask(HandleBank.class);
-		addTask(GoToPatch.class);
-		addTask(WithdrawTools.class);
-		addTask(Note.class);
-		addTask(Cure.class);
-		addTask(Clear.class);
-		addTask(Pick.class);
-		addTask(Plant.class);
-		addTask(DepositTools.class);
-	}
+    addTask(HandleBank.class);
+    addTask(GoToPatch.class);
+    addTask(WithdrawTools.class);
+    addTask(Note.class);
+    addTask(Cure.class);
+    addTask(Clear.class);
+    addTask(Pick.class);
+    addTask(Plant.class);
+    addTask(DepositTools.class);
+  }
 
-	@Override
-	protected void onStop() {
-		super.onStop();
+  @Override
+  protected void onStop() {
+    super.onStop();
 
-		for (Location location : Location.values()) {
-			location.setDone(false);
-		}
+    for (Location location : Location.values()) {
+      location.setDone(false);
+    }
 
-		locationQueue.clear();
-		currentLocation = null;
-	}
+    locationQueue.clear();
+    currentLocation = null;
+  }
 
-	@Subscribe
-	private void onGameTick(GameTick event) {
-		if (compostProduceSet == null) {
-			compostProduceSet = Utils.parseStringList(config.oneClickCompostProduce());
-		}
+  @Subscribe
+  private void onGameTick(GameTick event) {
+    if (compostProduceSet == null) {
+      compostProduceSet = Utils.parseStringList(config.oneClickCompostProduce());
+    }
 
-		if (locationQueue.isEmpty() || !isRunning()) {
-			return;
-		}
+    if (locationQueue.isEmpty() || !isRunning()) {
+      return;
+    }
 
-		if (currentLocation == null || currentLocation.isDone()) {
-			while (!locationQueue.isEmpty()) {
-				Location location = locationQueue.poll();
+    if (currentLocation == null || currentLocation.isDone()) {
+      while (!locationQueue.isEmpty()) {
+        Location location = locationQueue.poll();
 
-				if (location != null) {
-					currentLocation = location;
-					break;
-				}
-			}
-		}
-	}
+        if (location != null) {
+          currentLocation = location;
+          break;
+        }
+      }
+    }
+  }
 
-	@Subscribe
-	private void onMenuEntryAdded(MenuEntryAdded event) {
-		if (!config.oneClickMode() || event.getType() != MenuAction.EXAMINE_ITEM.getId()) {
-			return;
-		}
+  @Subscribe
+  private void onMenuEntryAdded(MenuEntryAdded event) {
+    if (!config.oneClickMode() || event.getType() != MenuAction.EXAMINE_ITEM.getId()) {
+      return;
+    }
 
-		CropState compostBinState = getCompostBinState();
+    CropState compostBinState = getCompostBinState();
 
-		if (OneClick.ONE_CLICK_GAME_OBJECTS_MAP.containsKey(event.getIdentifier())) {
-			if (TileObjects.getNearest(Predicates.ids(OneClick.ONE_CLICK_GAME_OBJECTS_MAP.get(event.getIdentifier()))) == null) {
-				return;
-			}
-		} else if (OneClick.ONE_CLICK_ITEMS_MAP.containsKey(event.getIdentifier())) {
-			if (!Inventory.contains(Predicates.ids(OneClick.ONE_CLICK_ITEMS_MAP.get(event.getIdentifier())))) {
-				return;
-			}
-		} else if (OneClick.ONE_CLICK_NPCS_MAP.containsKey(event.getIdentifier())) {
-			if (config.oneClickNote() && NPCs.getNearest(Predicates.ids(OneClick.ONE_CLICK_NPCS_MAP.get(event.getIdentifier()))) == null) {
-				return;
-			}
-		} else if (event.getIdentifier() == ItemID.VOLCANIC_ASH) {
-			if (compostBinState != CropState.HARVESTABLE) {
-				return;
-			}
-		} else {
-			String name = Text.removeTags(event.getTarget());
+    if (OneClick.ONE_CLICK_GAME_OBJECTS_MAP.containsKey(event.getIdentifier())) {
+      if (TileObjects.getNearest(Predicates.ids(OneClick.ONE_CLICK_GAME_OBJECTS_MAP.get(event.getIdentifier()))) == null) {
+        return;
+      }
+    } else if (OneClick.ONE_CLICK_ITEMS_MAP.containsKey(event.getIdentifier())) {
+      if (!Inventory.contains(Predicates.ids(OneClick.ONE_CLICK_ITEMS_MAP.get(event.getIdentifier())))) {
+        return;
+      }
+    } else if (OneClick.ONE_CLICK_NPCS_MAP.containsKey(event.getIdentifier())) {
+      if (config.oneClickNote() && NPCs.getNearest(Predicates.ids(OneClick.ONE_CLICK_NPCS_MAP.get(event.getIdentifier()))) == null) {
+        return;
+      }
+    } else if (event.getIdentifier() == ItemID.VOLCANIC_ASH) {
+      if (compostBinState != CropState.HARVESTABLE) {
+        return;
+      }
+    } else {
+      String name = Text.removeTags(event.getTarget());
 
-			if (!compostProduceSet.contains(name) || compostBinState == null || compostBinState == CropState.GROWING || compostBinState == CropState.HARVESTABLE) {
-				return;
-			}
-		}
+      if (!compostProduceSet.contains(name) || compostBinState == null || compostBinState == CropState.GROWING || compostBinState == CropState.HARVESTABLE) {
+        return;
+      }
+    }
 
-		Static.getClient().insertMenuItem(
-				OneClick.ONE_CLICK_FARMING,
-				"",
-				MenuAction.UNKNOWN.getId(),
-				event.getIdentifier(),
-				event.getActionParam0(),
-				event.getActionParam1(),
-				true
-		);
-	}
+    Static.getClient().insertMenuItem(
+        OneClick.ONE_CLICK_FARMING,
+        "",
+        MenuAction.UNKNOWN.getId(),
+        event.getIdentifier(),
+        event.getActionParam0(),
+        event.getActionParam1(),
+        true
+    );
+  }
 
-	@Subscribe
-	private void onMenuOptionClicked(MenuOptionClicked event) {
-		if (!event.getMenuOption().equals(OneClick.ONE_CLICK_FARMING)) {
-			return;
-		}
+  @Subscribe
+  private void onMenuOptionClicked(MenuOptionClicked event) {
+    if (!event.getMenuOption().equals(OneClick.ONE_CLICK_FARMING)) {
+      return;
+    }
 
-		Item item = Inventory.getFirst(event.getId());
-		if (item == null) {
-			return;
-		}
+    Item item = Inventory.getFirst(event.getId());
+    if (item == null) {
+      return;
+    }
 
-		CropState compostBinState = getCompostBinState();
+    CropState compostBinState = getCompostBinState();
 
-		if (OneClick.ONE_CLICK_GAME_OBJECTS_MAP.containsKey(event.getId())) {
-			TileObject nearest = TileObjects.getNearest(Predicates.ids(OneClick.ONE_CLICK_GAME_OBJECTS_MAP.get(event.getId())));
-			if (nearest == null) {
-				return;
-			}
+    if (OneClick.ONE_CLICK_GAME_OBJECTS_MAP.containsKey(event.getId())) {
+      TileObject nearest = TileObjects.getNearest(Predicates.ids(OneClick.ONE_CLICK_GAME_OBJECTS_MAP.get(event.getId())));
+      if (nearest == null) {
+        return;
+      }
 
-			GameThread.invoke(() -> item.useOn(nearest));
-		} else if (OneClick.ONE_CLICK_ITEMS_MAP.containsKey(event.getId())) {
-			Item other = Inventory.getFirst(Predicates.ids(OneClick.ONE_CLICK_ITEMS_MAP.get(event.getId())));
-			if (other == null) {
-				return;
-			}
+      GameThread.invoke(() -> item.useOn(nearest));
+    } else if (OneClick.ONE_CLICK_ITEMS_MAP.containsKey(event.getId())) {
+      Item other = Inventory.getFirst(Predicates.ids(OneClick.ONE_CLICK_ITEMS_MAP.get(event.getId())));
+      if (other == null) {
+        return;
+      }
 
-			GameThread.invoke(() -> item.useOn(other));
-		} else if (event.getId() == ItemID.VOLCANIC_ASH && compostBinState == CropState.HARVESTABLE) {
-			TileObject bin = TileObjects.getNearest(Predicates.ids(Constants.COMPOST_BIN_IDS));
-			if (bin == null) {
-				return;
-			}
+      GameThread.invoke(() -> item.useOn(other));
+    } else if (event.getId() == ItemID.VOLCANIC_ASH && compostBinState == CropState.HARVESTABLE) {
+      TileObject bin = TileObjects.getNearest(Predicates.ids(Constants.COMPOST_BIN_IDS));
+      if (bin == null) {
+        return;
+      }
 
-			GameThread.invoke(() -> item.useOn(bin));
-		} else if (compostProduceSet.contains(item.getName()) && (compostBinState == CropState.EMPTY || compostBinState == CropState.FILLING)) {
-			TileObject bin = TileObjects.getNearest(Predicates.ids(Constants.COMPOST_BIN_IDS));
-			if (bin == null) {
-				return;
-			}
+      GameThread.invoke(() -> item.useOn(bin));
+    } else if (compostProduceSet.contains(item.getName()) && (compostBinState == CropState.EMPTY || compostBinState == CropState.FILLING)) {
+      TileObject bin = TileObjects.getNearest(Predicates.ids(Constants.COMPOST_BIN_IDS));
+      if (bin == null) {
+        return;
+      }
 
-			GameThread.invoke(() -> item.useOn(bin));
-		} else if (config.oneClickNote() && OneClick.ONE_CLICK_NPCS_MAP.containsKey(event.getId())) {
-			NPC nearest = NPCs.getNearest(Predicates.ids(OneClick.ONE_CLICK_NPCS_MAP.get(event.getId())));
-			if (nearest == null) {
-				return;
-			}
+      GameThread.invoke(() -> item.useOn(bin));
+    } else if (config.oneClickNote() && OneClick.ONE_CLICK_NPCS_MAP.containsKey(event.getId())) {
+      NPC nearest = NPCs.getNearest(Predicates.ids(OneClick.ONE_CLICK_NPCS_MAP.get(event.getId())));
+      if (nearest == null) {
+        return;
+      }
 
-			GameThread.invoke(() -> item.useOn(nearest));
-		}
-	}
+      GameThread.invoke(() -> item.useOn(nearest));
+    }
+  }
 
-	@Subscribe
-	private void onConfigChanged(ConfigChanged event) {
-		if (!event.getGroup().equals("chaosfarming")) {
-			return;
-		}
+  @Subscribe
+  private void onConfigChanged(ConfigChanged event) {
+    if (!event.getGroup().equals("chaosfarming")) {
+      return;
+    }
 
-		if (event.getKey().equals("oneClickCompostProduce")) {
-			compostProduceSet = Utils.parseStringList(config.oneClickCompostProduce());
-		}
-	}
+    if (event.getKey().equals("oneClickCompostProduce")) {
+      compostProduceSet = Utils.parseStringList(config.oneClickCompostProduce());
+    }
+  }
 
-	@Override
-	public void keyTyped(KeyEvent e) {
+  @Override
+  public void keyTyped(KeyEvent e) {
 
-	}
+  }
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if (config.farmingHotkey().matches(e)) {
-			e.consume();
-			start();
-		}
-	}
+  @Override
+  public void keyPressed(KeyEvent e) {
+    if (config.farmingHotkey().matches(e)) {
+      e.consume();
+      start();
+    }
+  }
 
-	@Override
-	public void keyReleased(KeyEvent e) {
+  @Override
+  public void keyReleased(KeyEvent e) {
 
-	}
+  }
 
-	private CropState getCompostBinState() {
-		PatchState patchState;
+  private CropState getCompostBinState() {
+    PatchState patchState;
 
-		if (Utils.isInRegion(FARMING_GUILD_REGION)) {
-			int varbit = Vars.getBit(Varbits.FARMING_7912);
-			patchState = PatchImplementation.GIANT_COMPOST.forVarbitValue(varbit);
-		} else {
-			int varbit = Vars.getBit(Varbits.FARMING_4775);
-			patchState = PatchImplementation.COMPOST.forVarbitValue(varbit);
-		}
+    if (Utils.isInRegion(FARMING_GUILD_REGION)) {
+      int varbit = Vars.getBit(Varbits.FARMING_7912);
+      patchState = PatchImplementation.GIANT_COMPOST.forVarbitValue(varbit);
+    } else {
+      int varbit = Vars.getBit(Varbits.FARMING_4775);
+      patchState = PatchImplementation.COMPOST.forVarbitValue(varbit);
+    }
 
-		if (patchState == null) {
-			return null;
-		} else {
-			return patchState.getCropState();
-		}
-	}
+    if (patchState == null) {
+      return null;
+    } else {
+      return patchState.getCropState();
+    }
+  }
 
-	private void buildLocationQueue() {
-		for (String name : Utils.parseStringList(config.herbOrder())) {
-			for (Location location : Location.values()) {
-				if (location.isEnabled(config) && name.equalsIgnoreCase(location.getName())) {
-					locationQueue.add(location);
-					break;
-				}
-			}
-		}
+  private void buildLocationQueue() {
+    for (String name : Utils.parseStringList(config.herbOrder())) {
+      for (Location location : Location.values()) {
+        if (location.isEnabled(config) && name.equalsIgnoreCase(location.getName())) {
+          locationQueue.add(location);
+          break;
+        }
+      }
+    }
 
-		for (Location location : Location.values()) {
-			if (location.isEnabled(config) && !locationQueue.contains(location)) {
-				locationQueue.add(location);
-			}
-		}
-	}
+    for (Location location : Location.values()) {
+      if (location.isEnabled(config) && !locationQueue.contains(location)) {
+        locationQueue.add(location);
+      }
+    }
+  }
 }

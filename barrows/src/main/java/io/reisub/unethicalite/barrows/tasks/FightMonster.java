@@ -13,69 +13,68 @@ import io.reisub.unethicalite.barrows.Room;
 import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.tasks.Task;
+import javax.inject.Inject;
 import net.runelite.api.NPC;
 
-import javax.inject.Inject;
-
 public class FightMonster extends Task {
-    @Inject
-    private Barrows plugin;
+  @Inject
+  private Barrows plugin;
 
-    @Inject
-    private CombatHelper combatHelper;
+  @Inject
+  private CombatHelper combatHelper;
 
-    @Inject
-    private Config config;
+  @Inject
+  private Config config;
 
-    private NPC target;
+  private NPC target;
 
-    @Override
-    public String getStatus() {
-        return "Fighting monster";
+  @Override
+  public String getStatus() {
+    return "Fighting monster";
+  }
+
+  @Override
+  public boolean validate() {
+    if (config.potential() == Potential.WHATEVER) {
+      return false;
     }
 
-    @Override
-    public boolean validate() {
-        if (config.potential() == Potential.WHATEVER) {
-            return false;
-        }
-
-        if (Players.getLocal().getInteracting() != null) {
-            return false;
-        }
-
-        if (!Utils.isInRegion(Barrows.CRYPT_REGION) && Players.getLocal().getWorldLocation().getPlane() != 0) {
-            return false;
-        }
-
-        int potential = plugin.getPotentialWithLastBrother();
-
-        if (Room.getCurrentRoom() == Room.C && potential < config.potential().getMinimum()) {
-            target = NPCs.getNearest(n -> n.hasAction("Attack") && Reachable.isInteractable(n));
-
-            return target != null;
-        }
-
-        target = NPCs.getNearest(n -> n.getInteracting() != null && n.getInteracting().equals(Players.getLocal()));
-
-        if (target == null || !Reachable.isInteractable(target)) {
-            return false;
-        }
-
-        if (potential + target.getCombatLevel() > config.potential().getMaximum()) {
-            return false;
-        }
-
-        return potential < config.potential().getMinimum() || config.potential().isTryMaximum();
+    if (Players.getLocal().getInteracting() != null) {
+      return false;
     }
 
-    @Override
-    public void execute() {
-        if (!combatHelper.getPrayerHelper().isFlicking() && Prayers.getPoints() > 0) {
-            combatHelper.getPrayerHelper().toggleFlicking();
-        }
-
-        GameThread.invoke(() -> target.interact("Attack"));
-        Time.sleepTicksUntil(() -> Players.getLocal().getInteracting() != null, 3);
+    if (!Utils.isInRegion(Barrows.CRYPT_REGION) && Players.getLocal().getWorldLocation().getPlane() != 0) {
+      return false;
     }
+
+    int potential = plugin.getPotentialWithLastBrother();
+
+    if (Room.getCurrentRoom() == Room.C && potential < config.potential().getMinimum()) {
+      target = NPCs.getNearest(n -> n.hasAction("Attack") && Reachable.isInteractable(n));
+
+      return target != null;
+    }
+
+    target = NPCs.getNearest(n -> n.getInteracting() != null && n.getInteracting().equals(Players.getLocal()));
+
+    if (target == null || !Reachable.isInteractable(target)) {
+      return false;
+    }
+
+    if (potential + target.getCombatLevel() > config.potential().getMaximum()) {
+      return false;
+    }
+
+    return potential < config.potential().getMinimum() || config.potential().isTryMaximum();
+  }
+
+  @Override
+  public void execute() {
+    if (!combatHelper.getPrayerHelper().isFlicking() && Prayers.getPoints() > 0) {
+      combatHelper.getPrayerHelper().toggleFlicking();
+    }
+
+    GameThread.invoke(() -> target.interact("Attack"));
+    Time.sleepTicksUntil(() -> Players.getLocal().getInteracting() != null, 3);
+  }
 }

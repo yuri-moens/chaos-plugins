@@ -13,34 +13,34 @@ import net.runelite.api.TileObject;
 
 @RequiredArgsConstructor
 public class EmptyBirdHouse extends Task {
-    private final BirdHouse plugin;
+  private final BirdHouse plugin;
 
-    private TileObject birdHouse;
+  private TileObject birdHouse;
 
-    @Override
-    public String getStatus() {
-        return "Emptying bird house";
+  @Override
+  public String getStatus() {
+    return "Emptying bird house";
+  }
+
+  @Override
+  public boolean validate() {
+    birdHouse = TileObjects.getNearest(
+        (o) -> Constants.BIRD_HOUSE_SPACES.contains(o.getId())
+            && !plugin.isEmptied(o.getId())
+            && o.getTransformedComposition().getImpostor() != null
+            && Constants.BIRD_HOUSE_IDS.contains(o.getTransformedComposition().getImpostor().getId())
+    );
+
+    return birdHouse != null;
+  }
+
+  @Override
+  public void execute() {
+    GameThread.invoke(() -> birdHouse.interact(2));
+    if (!Time.sleepTicksUntil(() -> Inventory.contains(ItemID.CLOCKWORK), 15)) {
+      return;
     }
 
-    @Override
-    public boolean validate() {
-        birdHouse = TileObjects.getNearest(
-                (o) -> Constants.BIRD_HOUSE_SPACES.contains(o.getId())
-                        && !plugin.isEmptied(o.getId())
-                        && o.getTransformedComposition().getImpostor() != null
-                        && Constants.BIRD_HOUSE_IDS.contains(o.getTransformedComposition().getImpostor().getId())
-        );
-
-        return birdHouse != null;
-    }
-
-    @Override
-    public void execute() {
-        GameThread.invoke(() -> birdHouse.interact(2));
-        if (!Time.sleepTicksUntil(() -> Inventory.contains(ItemID.CLOCKWORK), 15)) {
-            return;
-        }
-
-        plugin.emptied(birdHouse.getId());
-    }
+    plugin.emptied(birdHouse.getId());
+  }
 }

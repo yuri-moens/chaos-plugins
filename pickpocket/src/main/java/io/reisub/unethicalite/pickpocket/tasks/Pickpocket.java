@@ -17,6 +17,7 @@ import io.reisub.unethicalite.utils.api.CMovement;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
+import javax.inject.Inject;
 import net.runelite.api.NPC;
 import net.runelite.api.ObjectID;
 import net.runelite.api.Skill;
@@ -25,97 +26,95 @@ import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.client.eventbus.Subscribe;
 
-import javax.inject.Inject;
-
 public class Pickpocket extends Task {
-    @Inject
-    private io.reisub.unethicalite.pickpocket.Pickpocket plugin;
+  @Inject
+  private io.reisub.unethicalite.pickpocket.Pickpocket plugin;
 
-    @Inject
-    private Config config;
+  @Inject
+  private Config config;
 
-    private int lastStun;
+  private int lastStun;
 
-    @Override
-    public String getStatus() {
-        return "Pickpocketing";
+  @Override
+  public String getStatus() {
+    return "Pickpocketing";
+  }
+
+  @Override
+  public boolean validate() {
+    return plugin.getCurrentActivity() == Activity.IDLE
+        && lastStun + 3 < Static.getClient().getTickCount()
+        && !Inventory.isFull()
+        && Players.getLocal().getModelHeight() != 1000
+        && (!config.healAtBank() || !Inventory.contains(config.food()))
+        && (Inventory.contains(config.food()) || Skills.getBoostedLevel(Skill.HITPOINTS) > config.eatHP());
+  }
+
+  @Override
+  public void execute() {
+    NPC target = NPCs.getNearest(Predicates.ids(config.target().getIds()));
+    if (target == null) {
+      if (config.target() == Target.VALLESSIA_VON_PITT) {
+        goToVallessia();
+      } else {
+        CMovement.walkTo(plugin.getNearestLocation().getPickpocketLocation(), 2);
+      }
+
+      return;
     }
 
-    @Override
-    public boolean validate() {
-        return plugin.getCurrentActivity() == Activity.IDLE
-                && lastStun + 3 < Static.getClient().getTickCount()
-                && !Inventory.isFull()
-                && Players.getLocal().getModelHeight() != 1000
-                && (!config.healAtBank() || !Inventory.contains(config.food()))
-                && (Inventory.contains(config.food()) || Skills.getBoostedLevel(Skill.HITPOINTS) > config.eatHP());
+    if (!Reachable.isInteractable(target)) {
+      CMovement.walkTo(target.getWorldLocation());
+
+      if (!Time.sleepTicksUntil(() -> Reachable.isInteractable(target), 20)) {
+        return;
+      }
     }
 
-    @Override
-    public void execute() {
-        NPC target = NPCs.getNearest(Predicates.ids(config.target().getIds()));
-        if (target == null) {
-            if (config.target() == Target.VALLESSIA_VON_PITT) {
-                goToVallessia();
-            } else {
-                CMovement.walkTo(plugin.getNearestLocation().getPickpocketLocation(), 2);
-            }
+    GameThread.invoke(() -> target.interact("Pickpocket"));
+  }
 
-            return;
-        }
-
-        if (!Reachable.isInteractable(target)) {
-            CMovement.walkTo(target.getWorldLocation());
-
-            if (!Time.sleepTicksUntil(() -> Reachable.isInteractable(target), 20)) {
-                return;
-            }
-        }
-
-        GameThread.invoke(() -> target.interact("Pickpocket"));
+  @Subscribe
+  private void onChatMessage(ChatMessage event) {
+    if (!plugin.isRunning()) {
+      return;
     }
 
-    @Subscribe
-    private void onChatMessage(ChatMessage event) {
-        if (!plugin.isRunning()) {
-            return;
-        }
+    if (event.getMessage().contains("You attempt to pick")) {
+      plugin.setActivity(Activity.THIEVING);
+    } else if (event.getMessage().contains("Your dodgy necklace") || event.getMessage().contains("Your attempt to steal goes unnoticed")) {
+      plugin.setActivity(Activity.IDLE);
+    } else if (event.getMessage().contains("You've been stunned")) {
+      plugin.setActivity(Activity.IDLE);
+      lastStun = Static.getClient().getTickCount();
+    }
+  }
 
-        if (event.getMessage().contains("You attempt to pick")) {
-            plugin.setActivity(Activity.THIEVING);
-        } else if (event.getMessage().contains("Your dodgy necklace") || event.getMessage().contains("Your attempt to steal goes unnoticed")) {
-            plugin.setActivity(Activity.IDLE);
-        } else if (event.getMessage().contains("You've been stunned")) {
-            plugin.setActivity(Activity.IDLE);
-            lastStun = Static.getClient().getTickCount();
-        }
+  private void goToVallessia() {
+    TileObject stairs = TileObjects.getNearest(ObjectID.STAIRS_38601);
+    if (stairs != null) {
+      stairs.interact("Climb-up");
+      Time.sleepTicksUntil(() -> Utils.isInRegion(14644), 20);
+      Time.sleepTicks(3);
     }
 
-    private void goToVallessia() {
-        TileObject stairs = TileObjects.getNearest(ObjectID.STAIRS_38601);
-        if (stairs != null) {
-            stairs.interact("Climb-up");
-            Time.sleepTicksUntil(() -> Utils.isInRegion(14644), 20);
-            Time.sleepTicks(3);
-        }
+    WorldPoint doorLocation = new WorldPoint(3662, 3378, 0);
 
-        WorldPoint doorLocation = new WorldPoint(3662, 3378, 0);
-
-        TileObject door = TileObjects.getFirstAt(doorLocation, ObjectID.DOOR_39406);
-        if (door != null) {
-            door.interact("Open");
-            Time.sleepTicksUntil(() -> TileObjects.getFirstAt(doorLocation.dy(-1), ObjectID.DOOR_39408) != null, 20);
-        }
-
-        Movement.walk(doorLocation);
-        Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(doorLocation), 10);
-        Time.sleepTick();
-
-        door = TileObjects.getFirstAt(doorLocation.dy(-1), ObjectID.DOOR_39408);
-        if (door != null) {
-            door.interact("Close");
-        }
-
-        Inventory.getAll(i -> i.getName().startsWith("Rogue")).forEach(i -> i.interact("Wear"));
+    TileObject door = TileObjects.getFirstAt(doorLocation, ObjectID.DOOR_39406);
+    if (door != null) {
+      door.interact("Open");
+      Time.sleepTicksUntil(() -> TileObjects.getFirstAt(doorLocation.dy(-1), ObjectID.DOOR_39408) != null, 20);
     }
+
+    Movement.walk(doorLocation);
+    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(doorLocation), 10);
+    Time.sleepTick();
+
+    door = TileObjects.getFirstAt(doorLocation.dy(-1), ObjectID.DOOR_39408);
+    if (door != null) {
+      door.interact("Close");
+    }
+
+    Inventory.getAll(i -> i.getName().startsWith("Rogue")).forEach(i -> i.interact("Wear"));
+  }
 }

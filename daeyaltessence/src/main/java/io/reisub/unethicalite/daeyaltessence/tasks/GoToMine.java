@@ -12,32 +12,32 @@ import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
 
 public class GoToMine extends Task {
-    private static final WorldPoint ESSENCE_MINE_LADDER = new WorldPoint(3635, 3340, 0);
+  private static final WorldPoint ESSENCE_MINE_LADDER = new WorldPoint(3635, 3340, 0);
 
-    @Override
-    public String getStatus() {
-        return "Going to essence mine";
+  @Override
+  public String getStatus() {
+    return "Going to essence mine";
+  }
+
+  @Override
+  public boolean validate() {
+    return Players.getLocal().getWorldLocation().getRegionID() != DaeyaltEssence.ESSENCE_MINE_REGION;
+  }
+
+  @Override
+  public void execute() {
+    CMovement.walkTo(ESSENCE_MINE_LADDER, 1);
+
+    TileObject ladder = TileObjects.getNearest(ObjectID.STAIRCASE_39092);
+    if (ladder == null) {
+      return;
     }
 
-    @Override
-    public boolean validate() {
-        return Players.getLocal().getWorldLocation().getRegionID() != DaeyaltEssence.ESSENCE_MINE_REGION;
-    }
+    ladder.interact(0);
+    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getRegionID() == DaeyaltEssence.ESSENCE_MINE_REGION, 20);
 
-    @Override
-    public void execute() {
-        CMovement.walkTo(ESSENCE_MINE_LADDER, 1);
+    Time.sleepTicks(2);
 
-        TileObject ladder = TileObjects.getNearest(ObjectID.STAIRCASE_39092);
-        if (ladder == null) {
-            return;
-        }
-
-        ladder.interact(0);
-        Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getRegionID() == DaeyaltEssence.ESSENCE_MINE_REGION, 20);
-
-        Time.sleepTicks(2);
-
-        Inventory.getAll((i) -> i.getName().contains("Graceful")).forEach((i) -> i.interact("Wear"));
-    }
+    Inventory.getAll((i) -> i.getName().contains("Graceful")).forEach((i) -> i.interact("Wear"));
+  }
 }

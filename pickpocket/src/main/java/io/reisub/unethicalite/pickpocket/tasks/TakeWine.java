@@ -10,26 +10,26 @@ import net.runelite.api.TileItem;
 import net.runelite.api.coords.WorldPoint;
 
 public class TakeWine extends Task {
-    private TileItem wine;
+  private TileItem wine;
 
-    @Override
-    public String getStatus() {
-        return "Taking jug of wine";
-    }
+  @Override
+  public String getStatus() {
+    return "Taking jug of wine";
+  }
 
-    @Override
-    public boolean validate() {
-        return Inventory.getFreeSlots() >= 4
-                && Players.getLocal().getModelHeight() != 1000
-                && (wine = TileItems.getFirstAt(new WorldPoint(3663, 3380, 0), ItemID.JUG_OF_WINE)) != null;
-    }
+  @Override
+  public boolean validate() {
+    return Inventory.getFreeSlots() >= 4
+        && Players.getLocal().getModelHeight() != 1000
+        && (wine = TileItems.getFirstAt(new WorldPoint(3663, 3380, 0), ItemID.JUG_OF_WINE)) != null;
+  }
 
-    @Override
-    public void execute() {
-        int count = Inventory.getCount(ItemID.JUG_OF_WINE);
+  @Override
+  public void execute() {
+    int count = Inventory.getCount(ItemID.JUG_OF_WINE);
 
-        Time.sleepTick();
-        wine.interact("Take");
-        Time.sleepTicksUntil(() -> Inventory.getCount(ItemID.JUG_OF_WINE) > count, 10);
-    }
+    Time.sleepTick();
+    wine.interact("Take");
+    Time.sleepTicksUntil(() -> Inventory.getCount(ItemID.JUG_OF_WINE) > count, 10);
+  }
 }

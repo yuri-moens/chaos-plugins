@@ -22,51 +22,51 @@ import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
 
 public class GoToBarrows extends Task {
-    @Override
-    public String getStatus() {
-        return "Going to barrows";
+  @Override
+  public String getStatus() {
+    return "Going to barrows";
+  }
+
+  @Override
+  public boolean validate() {
+    return Skills.getBoostedLevel(Skill.PRAYER) >= Skills.getLevel(Skill.PRAYER)
+        && (Utils.isInRegion(Barrows.FEROX_ENCLAVE_REGIONS) || Static.getClient().isInInstancedRegion());
+  }
+
+  @Override
+  public void execute() {
+    if (!Movement.isRunEnabled()) {
+      Movement.toggleRun();
     }
 
-    @Override
-    public boolean validate() {
-        return Skills.getBoostedLevel(Skill.PRAYER) >= Skills.getLevel(Skill.PRAYER)
-                && (Utils.isInRegion(Barrows.FEROX_ENCLAVE_REGIONS) || Static.getClient().isInInstancedRegion());
+    if (!Static.getClient().isInInstancedRegion()) {
+      WorldPoint current = Players.getLocal().getWorldLocation();
+
+      Item barrowsTeleport = Inventory.getFirst(ItemID.BARROWS_TELEPORT);
+      Item houseTeleport = Inventory.getFirst(ItemID.TELEPORT_TO_HOUSE);
+
+      if (barrowsTeleport != null) {
+        barrowsTeleport.interact(0);
+      } else if (Necromancy.BARROWS_TELEPORT.canCast()) {
+        Magic.cast(Necromancy.BARROWS_TELEPORT);
+      } else if (houseTeleport != null) {
+        houseTeleport.interact(0);
+      } else {
+        Magic.cast(Regular.TELEPORT_TO_HOUSE);
+      }
+
+      Time.sleepTicksUntil(() -> !Players.getLocal().getWorldLocation().equals(current), 10);
+      Time.sleepTicks(2);
     }
 
-    @Override
-    public void execute() {
-        if (!Movement.isRunEnabled()) {
-            Movement.toggleRun();
-        }
+    if (Static.getClient().isInInstancedRegion()) {
+      TileObject portal = TileObjects.getNearest(Predicates.ids(Constants.PORTAL_NEXUS_IDS));
+      if (portal == null) {
+        return;
+      }
 
-        if (!Static.getClient().isInInstancedRegion()) {
-            WorldPoint current = Players.getLocal().getWorldLocation();
-
-            Item barrowsTeleport = Inventory.getFirst(ItemID.BARROWS_TELEPORT);
-            Item houseTeleport = Inventory.getFirst(ItemID.TELEPORT_TO_HOUSE);
-
-            if (barrowsTeleport != null) {
-                barrowsTeleport.interact(0);
-            } else if (Necromancy.BARROWS_TELEPORT.canCast()) {
-                Magic.cast(Necromancy.BARROWS_TELEPORT);
-            } else if (houseTeleport != null) {
-                houseTeleport.interact(0);
-            } else {
-                Magic.cast(Regular.TELEPORT_TO_HOUSE);
-            }
-
-            Time.sleepTicksUntil(() -> !Players.getLocal().getWorldLocation().equals(current), 10);
-            Time.sleepTicks(2);
-        }
-
-        if (Static.getClient().isInInstancedRegion()) {
-            TileObject portal = TileObjects.getNearest(Predicates.ids(Constants.PORTAL_NEXUS_IDS));
-            if (portal == null) {
-                return;
-            }
-
-            portal.interact("Barrows");
-            Time.sleepTicksUntil(() -> Utils.isInRegion(Barrows.BARROWS_REGION), 20);
-        }
+      portal.interact("Barrows");
+      Time.sleepTicksUntil(() -> Utils.isInRegion(Barrows.BARROWS_REGION), 20);
     }
+  }
 }

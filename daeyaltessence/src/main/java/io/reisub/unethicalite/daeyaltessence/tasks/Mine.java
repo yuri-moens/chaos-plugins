@@ -12,27 +12,27 @@ import net.runelite.api.TileObject;
 
 @RequiredArgsConstructor
 public class Mine extends Task {
-    private final DaeyaltEssence plugin;
+  private final DaeyaltEssence plugin;
 
-    @Override
-    public String getStatus() {
-        return "Mining";
+  @Override
+  public String getStatus() {
+    return "Mining";
+  }
+
+  @Override
+  public boolean validate() {
+    return plugin.getCurrentActivity() != Activity.MINING
+        && Players.getLocal().getWorldLocation().getRegionID() == DaeyaltEssence.ESSENCE_MINE_REGION;
+  }
+
+  @Override
+  public void execute() {
+    TileObject rock = TileObjects.getNearest(ObjectID.DAEYALT_ESSENCE_39095);
+    if (rock == null) {
+      return;
     }
 
-    @Override
-    public boolean validate() {
-        return plugin.getCurrentActivity() != Activity.MINING
-                && Players.getLocal().getWorldLocation().getRegionID() == DaeyaltEssence.ESSENCE_MINE_REGION;
-    }
-
-    @Override
-    public void execute() {
-        TileObject rock = TileObjects.getNearest(ObjectID.DAEYALT_ESSENCE_39095);
-        if (rock == null) {
-            return;
-        }
-
-        rock.interact("Mine");
-        Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.MINING, 20);
-    }
+    rock.interact("Mine");
+    Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.MINING, 20);
+  }
 }

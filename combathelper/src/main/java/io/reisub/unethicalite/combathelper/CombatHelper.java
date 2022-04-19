@@ -11,6 +11,13 @@ import io.reisub.unethicalite.combathelper.consume.ConsumeHelper;
 import io.reisub.unethicalite.combathelper.misc.MiscHelper;
 import io.reisub.unethicalite.combathelper.prayer.PrayerHelper;
 import io.reisub.unethicalite.combathelper.swap.SwapHelper;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Actor;
@@ -28,19 +35,11 @@ import net.runelite.client.plugins.itemstats.ItemStatPlugin;
 import net.runelite.client.plugins.zulrah.ZulrahPlugin;
 import org.pf4j.Extension;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 @Singleton
 @PluginDescriptor(
-		name = "Chaos Combat Helper",
-		description = "Various utilities to make combat easier",
-		enabledByDefault = true
+    name = "Chaos Combat Helper",
+    description = "Various utilities to make combat easier",
+    enabledByDefault = true
 )
 @PluginDependency(ItemStatPlugin.class)
 @PluginDependency(InteractionPlugin.class)
@@ -49,89 +48,89 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Extension
 public class CombatHelper extends Plugin {
-	@Inject
-	private Config config;
+  @Inject
+  private Config config;
 
-	@Provides
-	Config provideConfig(ConfigManager configManager) {
-		return configManager.getConfig(Config.class);
-	}
+  @Provides
+  Config provideConfig(ConfigManager configManager) {
+    return configManager.getConfig(Config.class);
+  }
 
-	@Getter
-	private Actor lastTarget;
+  @Getter
+  private Actor lastTarget;
 
-	private ScheduledExecutorService executor;
-	private List<Helper> helpers;
+  private ScheduledExecutorService executor;
+  private List<Helper> helpers;
 
-	@Inject
-	@Getter
-	private PrayerHelper prayerHelper;
+  @Inject
+  @Getter
+  private PrayerHelper prayerHelper;
 
-	@Inject
-	@Getter
-	private SwapHelper swapHelper;
+  @Inject
+  @Getter
+  private SwapHelper swapHelper;
 
-	@Override
-	protected void startUp() {
-		log.info("Starting Chaos Combat Helper");
+  @Override
+  protected void startUp() {
+    log.info("Starting Chaos Combat Helper");
 
-		executor = Executors.newSingleThreadScheduledExecutor();
-		helpers = new ArrayList<>();
+    executor = Executors.newSingleThreadScheduledExecutor();
+    helpers = new ArrayList<>();
 
-		helpers.add(prayerHelper);
-		helpers.add(injector.getInstance(ConsumeHelper.class));
-		helpers.add(injector.getInstance(BonesHelper.class));
-		helpers.add(injector.getInstance(AlchHelper.class));
-		helpers.add(swapHelper);
-		helpers.add(injector.getInstance(MiscHelper.class));
-		helpers.add(injector.getInstance(BossHelper.class));
+    helpers.add(prayerHelper);
+    helpers.add(injector.getInstance(ConsumeHelper.class));
+    helpers.add(injector.getInstance(BonesHelper.class));
+    helpers.add(injector.getInstance(AlchHelper.class));
+    helpers.add(swapHelper);
+    helpers.add(injector.getInstance(MiscHelper.class));
+    helpers.add(injector.getInstance(BossHelper.class));
 
-		for (Helper helper : helpers) {
-			helper.startUp();
+    for (Helper helper : helpers) {
+      helper.startUp();
 
-			Static.getKeyManager().registerKeyListener(helper);
-			Static.getEventBus().register(helper);
-		}
-	}
+      Static.getKeyManager().registerKeyListener(helper);
+      Static.getEventBus().register(helper);
+    }
+  }
 
-	@Override
-	protected void shutDown() {
-		log.info("Stopping Chaos Combat Helper");
+  @Override
+  protected void shutDown() {
+    log.info("Stopping Chaos Combat Helper");
 
-		for (Helper helper : helpers) {
-			Static.getKeyManager().unregisterKeyListener(helper);
-			Static.getEventBus().unregister(helper);
+    for (Helper helper : helpers) {
+      Static.getKeyManager().unregisterKeyListener(helper);
+      Static.getEventBus().unregister(helper);
 
-			helper.shutDown();
-		}
+      helper.shutDown();
+    }
 
-		helpers.clear();
-		executor.shutdownNow();
-	}
+    helpers.clear();
+    executor.shutdownNow();
+  }
 
-	public void schedule(Runnable runnable, int delay) {
-		executor.schedule(runnable, delay, TimeUnit.MILLISECONDS);
-	}
+  public void schedule(Runnable runnable, int delay) {
+    executor.schedule(runnable, delay, TimeUnit.MILLISECONDS);
+  }
 
-	@Subscribe
-	private void onInteractingChanged(InteractingChanged event) {
-		if (!isLoggedIn()) return;
+  @Subscribe
+  private void onInteractingChanged(InteractingChanged event) {
+    if (!isLoggedIn()) return;
 
-		if (event.getSource() == Players.getLocal() && event.getTarget() != null) {
-			lastTarget = Players.getLocal().getInteracting();
-		}
-	}
+    if (event.getSource() == Players.getLocal() && event.getTarget() != null) {
+      lastTarget = Players.getLocal().getInteracting();
+    }
+  }
 
-	@Subscribe
-	private void onActorDeath(ActorDeath event) {
-		if (!isLoggedIn()) return;
+  @Subscribe
+  private void onActorDeath(ActorDeath event) {
+    if (!isLoggedIn()) return;
 
-		if (lastTarget == null || lastTarget.isDead()) {
-			lastTarget = null;
-		}
-	}
+    if (lastTarget == null || lastTarget.isDead()) {
+      lastTarget = null;
+    }
+  }
 
-	public final boolean isLoggedIn() {
-		return Game.getState() == GameState.LOGGED_IN;
-	}
+  public final boolean isLoggedIn() {
+    return Game.getState() == GameState.LOGGED_IN;
+  }
 }

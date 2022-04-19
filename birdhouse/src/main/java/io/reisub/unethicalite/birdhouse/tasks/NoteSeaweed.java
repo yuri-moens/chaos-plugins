@@ -13,28 +13,28 @@ import net.runelite.api.NPC;
 
 @AllArgsConstructor
 public class NoteSeaweed extends Task {
-    private final BirdHouse plugin;
+  private final BirdHouse plugin;
 
-    @Override
-    public String getStatus() {
-        return "Noting seaweed";
+  @Override
+  public String getStatus() {
+    return "Noting seaweed";
+  }
+
+  @Override
+  public boolean validate() {
+    return plugin.isUnderwater()
+        && Inventory.contains(ItemID.GIANT_SEAWEED);
+  }
+
+  @Override
+  public void execute() {
+    Item seaweed = Inventory.getFirst(ItemID.GIANT_SEAWEED);
+    NPC leprechaun = NPCs.getNearest("Tool Leprechaun");
+    if (seaweed == null || leprechaun == null) {
+      return;
     }
 
-    @Override
-    public boolean validate() {
-        return plugin.isUnderwater()
-                && Inventory.contains(ItemID.GIANT_SEAWEED);
-    }
-
-    @Override
-    public void execute() {
-        Item seaweed = Inventory.getFirst(ItemID.GIANT_SEAWEED);
-        NPC leprechaun = NPCs.getNearest("Tool Leprechaun");
-        if (seaweed == null || leprechaun == null) {
-            return;
-        }
-
-        GameThread.invoke(() -> seaweed.useOn(leprechaun));
-        Time.sleepTicksUntil(() -> !Inventory.contains(ItemID.GIANT_SEAWEED), 30);
-    }
+    GameThread.invoke(() -> seaweed.useOn(leprechaun));
+    Time.sleepTicksUntil(() -> !Inventory.contains(ItemID.GIANT_SEAWEED), 30);
+  }
 }

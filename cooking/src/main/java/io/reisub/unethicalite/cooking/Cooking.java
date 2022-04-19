@@ -10,6 +10,7 @@ import io.reisub.unethicalite.cooking.tasks.SonicCook;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.enums.Activity;
+import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -22,62 +23,59 @@ import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import org.pf4j.Extension;
 
-import javax.inject.Inject;
-
 @PluginDescriptor(
-		name = "Chaos Cooking",
-		description = "It's fucking raw!",
-		enabledByDefault = false
+    name = "Chaos Cooking",
+    description = "It's fucking raw!",
+    enabledByDefault = false
 )
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
 public class Cooking extends TickScript {
-	@Inject
-	private Config config;
+  @Inject
+  private Config config;
 
-	@Provides
-	public Config getConfig(ConfigManager configManager)
-	{
-		return configManager.getConfig(Config.class);
-	}
+  @Provides
+  public Config getConfig(ConfigManager configManager) {
+    return configManager.getConfig(Config.class);
+  }
 
-	@Getter
-	@Setter
-	private int lastBank;
+  @Getter
+  @Setter
+  private int lastBank;
 
-	@Getter
-	@Setter
-	private int lastDrop;
+  @Getter
+  @Setter
+  private int lastDrop;
 
-	@Override
-	protected void onStart() {
-		super.onStart();
+  @Override
+  protected void onStart() {
+    super.onStart();
 
-		tasks.add(new HandleBank(this, config));
-		tasks.add(new Drop(this, config));
-		tasks.add(new SonicCook(this, config));
-		tasks.add(new Cook(this, config));
-	}
+    tasks.add(new HandleBank(this, config));
+    tasks.add(new Drop(this, config));
+    tasks.add(new SonicCook(this, config));
+    tasks.add(new Cook(this, config));
+  }
 
-	@Subscribe
-	private void onAnimationChanged(AnimationChanged event) {
-		if (!Utils.isLoggedIn() || event.getActor() != Players.getLocal()) return;
+  @Subscribe
+  private void onAnimationChanged(AnimationChanged event) {
+    if (!Utils.isLoggedIn() || event.getActor() != Players.getLocal()) return;
 
-		switch (Players.getLocal().getAnimation()) {
-			case AnimationID.COOKING_FIRE:
-			case AnimationID.COOKING_RANGE:
-				setActivity(Activity.COOKING);
-		}
-	}
+    switch (Players.getLocal().getAnimation()) {
+      case AnimationID.COOKING_FIRE:
+      case AnimationID.COOKING_RANGE:
+        setActivity(Activity.COOKING);
+    }
+  }
 
-	@Subscribe
-	private void onItemContainerChanged(ItemContainerChanged event) {
-		if (!Utils.isLoggedIn()) return;
+  @Subscribe
+  private void onItemContainerChanged(ItemContainerChanged event) {
+    if (!Utils.isLoggedIn()) return;
 
-		if (currentActivity == Activity.COOKING && !Inventory.contains(config.foodId())) {
-			setActivity(Activity.IDLE);
-		}
-	}
+    if (currentActivity == Activity.COOKING && !Inventory.contains(config.foodId())) {
+      setActivity(Activity.IDLE);
+    }
+  }
 
 }

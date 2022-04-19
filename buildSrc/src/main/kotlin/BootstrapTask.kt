@@ -42,7 +42,10 @@ open class BootstrapTask : DefaultTask() {
             val plugins = ArrayList<JSONObject>()
 
             project.subprojects.forEach {
-                if (it.project.properties.containsKey("PluginName") && it.project.properties.containsKey("PluginDescription") && (it.project.extra.get("PluginName") as String) != "Chaos Test") {
+                if (it.project.properties.containsKey("PluginName") && it.project.properties.containsKey("PluginDescription") && (it.project.extra.get(
+                        "PluginName"
+                    ) as String) != "Chaos Test"
+                ) {
                     val plugin = it.project.tasks["jar"].outputs.files.singleFile
 
                     val releases = ArrayList<JsonBuilder>()
@@ -73,7 +76,8 @@ open class BootstrapTask : DefaultTask() {
                     plugins.add(pluginObject)
 
                     plugin.copyTo(
-                        Paths.get(bootstrapReleaseDir.toString(), "${it.project.name}-${it.project.version}.jar").toFile(),
+                        Paths.get(bootstrapReleaseDir.toString(), "${it.project.name}-${it.project.version}.jar")
+                            .toFile(),
                         overwrite = true
                     )
                 }

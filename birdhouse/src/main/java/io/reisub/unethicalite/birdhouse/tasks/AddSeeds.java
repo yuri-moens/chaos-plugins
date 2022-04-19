@@ -9,34 +9,34 @@ import net.runelite.api.Item;
 import net.runelite.api.TileObject;
 
 public class AddSeeds extends Task {
-    private TileObject emptyBirdhouse;
+  private TileObject emptyBirdhouse;
 
-    @Override
-    public String getStatus() {
-        return "Adding seeds";
+  @Override
+  public String getStatus() {
+    return "Adding seeds";
+  }
+
+  @Override
+  public boolean validate() {
+    emptyBirdhouse = TileObjects.getNearest(
+        (o) -> Constants.BIRD_HOUSE_SPACES.contains(o.getId())
+            && o.getTransformedComposition().getImpostor() != null
+            && Constants.BIRD_HOUSE_EMPTY_IDS.contains(o.getTransformedComposition().getImpostor().getId())
+    );
+
+    return emptyBirdhouse != null;
+  }
+
+  @Override
+  public void execute() {
+    Item seeds = Inventory.getFirst((i) -> Constants.BIRD_HOUSE_SEED_IDS.contains(i.getId()));
+    if (seeds == null) {
+      return;
     }
 
-    @Override
-    public boolean validate() {
-        emptyBirdhouse = TileObjects.getNearest(
-                (o) -> Constants.BIRD_HOUSE_SPACES.contains(o.getId())
-                        && o.getTransformedComposition().getImpostor() != null
-                        && Constants.BIRD_HOUSE_EMPTY_IDS.contains(o.getTransformedComposition().getImpostor().getId())
-        );
+    int quantity = seeds.getQuantity();
+    seeds.useOn(emptyBirdhouse);
 
-        return emptyBirdhouse != null;
-    }
-
-    @Override
-    public void execute() {
-        Item seeds = Inventory.getFirst((i) -> Constants.BIRD_HOUSE_SEED_IDS.contains(i.getId()));
-        if (seeds == null) {
-            return;
-        }
-
-        int quantity = seeds.getQuantity();
-        seeds.useOn(emptyBirdhouse);
-
-        Time.sleepTicksUntil(() -> Inventory.getCount(true, (i) -> Constants.BIRD_HOUSE_SEED_IDS.contains(i.getId())) < quantity, 5);
-    }
+    Time.sleepTicksUntil(() -> Inventory.getCount(true, (i) -> Constants.BIRD_HOUSE_SEED_IDS.contains(i.getId())) < quantity, 5);
+  }
 }

@@ -12,45 +12,45 @@ import net.runelite.api.TileObject;
 
 @RequiredArgsConstructor
 public class PlantSeaweed extends Task {
-    private final BirdHouse plugin;
+  private final BirdHouse plugin;
 
-    private TileObject patch;
+  private TileObject patch;
 
-    @Override
-    public String getStatus() {
-        return "Planting seaweed";
+  @Override
+  public String getStatus() {
+    return "Planting seaweed";
+  }
+
+  @Override
+  public boolean validate() {
+    return plugin.isUnderwater()
+        && (patch = TileObjects.getNearest("Seaweed patch")) != null;
+  }
+
+  @Override
+  public void execute() {
+    Item spore = Inventory.getFirst(ItemID.SEAWEED_SPORE);
+    if (spore == null) {
+      return;
     }
 
-    @Override
-    public boolean validate() {
-        return plugin.isUnderwater()
-                && (patch = TileObjects.getNearest("Seaweed patch")) != null;
+    int quantity = spore.getQuantity();
+
+    spore.useOn(patch);
+    Time.sleepTicksUntil(() -> Inventory.getCount(true, ItemID.SEAWEED_SPORE) < quantity, 10);
+    Time.sleepTicks(3);
+
+    Item compost = Inventory.getFirst(ItemID.BOTTOMLESS_COMPOST_BUCKET, ItemID.BOTTOMLESS_COMPOST_BUCKET_22997, ItemID.ULTRACOMPOST, ItemID.SUPERCOMPOST, ItemID.COMPOST);
+    if (compost == null) {
+      return;
     }
 
-    @Override
-    public void execute() {
-        Item spore = Inventory.getFirst(ItemID.SEAWEED_SPORE);
-        if (spore == null) {
-            return;
-        }
-
-        int quantity = spore.getQuantity();
-
-        spore.useOn(patch);
-        Time.sleepTicksUntil(() -> Inventory.getCount(true, ItemID.SEAWEED_SPORE) < quantity, 10);
-        Time.sleepTicks(3);
-
-        Item compost = Inventory.getFirst(ItemID.BOTTOMLESS_COMPOST_BUCKET, ItemID.BOTTOMLESS_COMPOST_BUCKET_22997, ItemID.ULTRACOMPOST, ItemID.SUPERCOMPOST, ItemID.COMPOST);
-        if (compost == null) {
-            return;
-        }
-
-        patch = TileObjects.getNearest("Seaweed");
-        if (patch == null) {
-            return;
-        }
-
-        compost.useOn(patch);
-        Time.sleepTicks(3);
+    patch = TileObjects.getNearest("Seaweed");
+    if (patch == null) {
+      return;
     }
+
+    compost.useOn(patch);
+    Time.sleepTicks(3);
+  }
 }
