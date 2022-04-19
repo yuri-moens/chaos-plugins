@@ -120,7 +120,9 @@ public class BirdHouse extends TickScript implements KeyListener {
       return;
     }
 
-    if (!isRunning() && HILL_HOUSE.contains(Players.getLocal()) && Inventory.getCount((i) -> Constants.LOG_IDS.contains(i.getId())) == 4) {
+    if (!isRunning()
+        && HILL_HOUSE.contains(Players.getLocal())
+        && Inventory.getCount((i) -> Constants.LOG_IDS.contains(i.getId())) == 4) {
       start();
     } else if (isRunning() && !manuallyStarted && Inventory.isEmpty() && !Bank.isOpen()) {
       stop();

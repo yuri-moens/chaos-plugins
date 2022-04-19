@@ -21,7 +21,8 @@ public class AddSeeds extends Task {
     emptyBirdhouse = TileObjects.getNearest(
         (o) -> Constants.BIRD_HOUSE_SPACES.contains(o.getId())
             && o.getTransformedComposition().getImpostor() != null
-            && Constants.BIRD_HOUSE_EMPTY_IDS.contains(o.getTransformedComposition().getImpostor().getId())
+            && Constants.BIRD_HOUSE_EMPTY_IDS.contains(
+                o.getTransformedComposition().getImpostor().getId())
     );
 
     return emptyBirdhouse != null;
@@ -37,6 +38,8 @@ public class AddSeeds extends Task {
     int quantity = seeds.getQuantity();
     seeds.useOn(emptyBirdhouse);
 
-    Time.sleepTicksUntil(() -> Inventory.getCount(true, (i) -> Constants.BIRD_HOUSE_SEED_IDS.contains(i.getId())) < quantity, 5);
+    Time.sleepTicksUntil(
+        () -> Inventory.getCount(
+            true, (i) -> Constants.BIRD_HOUSE_SEED_IDS.contains(i.getId())) < quantity, 5);
   }
 }

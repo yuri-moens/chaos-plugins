@@ -28,7 +28,8 @@ public class EmptyBirdHouse extends Task {
         (o) -> Constants.BIRD_HOUSE_SPACES.contains(o.getId())
             && !plugin.isEmptied(o.getId())
             && o.getTransformedComposition().getImpostor() != null
-            && Constants.BIRD_HOUSE_IDS.contains(o.getTransformedComposition().getImpostor().getId())
+            && Constants.BIRD_HOUSE_IDS
+                .contains(o.getTransformedComposition().getImpostor().getId())
     );
 
     return birdHouse != null;

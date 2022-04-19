@@ -12,7 +12,7 @@ import dev.unethicalite.api.widgets.Dialog;
 import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
 import io.reisub.unethicalite.birdhouse.Config;
-import io.reisub.unethicalite.birdhouse.TPLocation;
+import io.reisub.unethicalite.birdhouse.TeleportLocation;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
@@ -35,7 +35,7 @@ public class Teleport extends Task {
 
   @Override
   public boolean validate() {
-    return config.tpLocation() != TPLocation.NOWHERE
+    return config.tpLocation() != TeleportLocation.NOWHERE
         && !config.farmSeaweed()
         && plugin.getEmptied().size() == 4;
   }
@@ -57,7 +57,12 @@ public class Teleport extends Task {
 
         Widget farmingGuild = Widgets.get(187, 3, 5);
         if (farmingGuild != null) {
-          farmingGuild.interact(0, MenuAction.WIDGET_TYPE_6.getId(), farmingGuild.getIndex(), farmingGuild.getId());
+          farmingGuild.interact(
+              0,
+              MenuAction.WIDGET_TYPE_6.getId(),
+              farmingGuild.getIndex(),
+              farmingGuild.getId()
+          );
         }
         break;
       case EDGEVILLE:
@@ -87,11 +92,13 @@ public class Teleport extends Task {
           case NECROMANCY:
             Magic.cast(Necromancy.ARCEUUS_HOME_TELEPORT);
             break;
+          default:
         }
         break;
       case FEROX_ENCLAVE_MINIGAME_TP:
         // TODO
         break;
+      default:
     }
 
     Time.sleepTicksUntil(() -> !Players.getLocal().getWorldLocation().equals(current), 35);

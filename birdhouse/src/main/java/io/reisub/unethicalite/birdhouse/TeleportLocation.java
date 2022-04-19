@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum TPLocation {
+public enum TeleportLocation {
   NOWHERE(null, 0),
   FARMING_GUILD(Constants.SKILL_NECKLACE_IDS, 6),
   EDGEVILLE(Constants.AMULET_OF_GLORY_IDS, 1),

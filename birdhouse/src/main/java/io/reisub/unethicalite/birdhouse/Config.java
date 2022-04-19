@@ -33,7 +33,7 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "birdhouseHotkey",
       name = "Start hotkey",
-      description = "Start a birdhouse rn from a bank.",
+      description = "Start a birdhouse run from a bank.",
       position = 2
   )
   default Keybind birdhouseHotkey() {
@@ -53,17 +53,19 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "tpAfterRun",
       name = "TP after run",
-      description = "Select teleport location after finishing a run. This option only works when not farming seaweed.",
+      description = "Select teleport location after finishing a run. This option only works when "
+          + "not farming seaweed.",
       position = 4
   )
-  default TPLocation tpLocation() {
-    return TPLocation.NOWHERE;
+  default TeleportLocation tpLocation() {
+    return TeleportLocation.NOWHERE;
   }
 
   @ConfigItem(
       keyName = "startButton",
       name = "Force Start/Stop",
-      description = "The script should automatically start and stop. Use this button for manual overrides.",
+      description = "The script should automatically start and stop. Use this button for manual "
+          + "overrides.",
       position = Integer.MAX_VALUE
   )
   default Button startButton() {

@@ -42,7 +42,9 @@ public class GoToIsland extends Task {
 
   @Override
   public void execute() {
-    CMovement.walkTo(target, 2, () -> Inventory.getAll((i) -> i.hasAction("Search")).forEach((i) -> i.interact("Search")));
+    CMovement.walkTo(target, 2,
+        () -> Inventory.getAll((i) -> i.hasAction("Search"))
+            .forEach((i) -> i.interact("Search")));
 
     TileObject rowBoat = TileObjects.getNearest(ObjectID.ROWBOAT_30915);
     if (rowBoat == null) {

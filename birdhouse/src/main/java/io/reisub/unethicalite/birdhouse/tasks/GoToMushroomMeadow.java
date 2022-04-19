@@ -27,22 +27,28 @@ public class GoToMushroomMeadow extends Task {
 
   @Override
   public void execute() {
-    TileObject tree = TileObjects.getNearest((i) -> Constants.MAGIC_MUSHTREE_IDS.contains(i.getId()));
+    TileObject tree = TileObjects.getNearest(i -> Constants.MAGIC_MUSHTREE_IDS.contains(i.getId()));
     if (tree == null) {
       return;
     }
 
     GameThread.invoke(() -> tree.interact(0));
-    Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetInfo.FOSSIL_MUSHROOM_TELEPORT)), 15);
+    Time.sleepTicksUntil(
+        () -> Widgets.isVisible(Widgets.get(WidgetInfo.FOSSIL_MUSHROOM_TELEPORT)), 15);
 
     Widget mushroomMeadowWidget = Widgets.get(WidgetInfo.FOSSIL_MUSHROOM_MEADOW);
     if (!Widgets.isVisible(mushroomMeadowWidget)) {
       return;
     }
 
-    mushroomMeadowWidget.interact(0, MenuAction.WIDGET_TYPE_6.getId(), mushroomMeadowWidget.getIndex(), mushroomMeadowWidget.getId());
-    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getRegionID() == 14652, 5);
+    mushroomMeadowWidget.interact(
+        0,
+        MenuAction.WIDGET_TYPE_6.getId(),
+        mushroomMeadowWidget.getIndex(),
+        mushroomMeadowWidget.getId()
+    );
 
+    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getRegionID() == 14652, 5);
     Time.sleepTicks(2);
   }
 }

@@ -16,12 +16,18 @@ import net.runelite.api.widgets.Widget;
 
 @AllArgsConstructor
 public class GetTools extends Task {
-  private static final Supplier<Widget> DIBBER = () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 9);
-  private static final Supplier<Widget> SPADE = () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 10);
-  private static final Supplier<Widget> BOTTOMLESS_BUCKET = () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 15);
-  private static final Supplier<Widget> COMPOST = () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 17);
-  private static final Supplier<Widget> SUPERCOMPOST = () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 18);
-  private static final Supplier<Widget> ULTRACOMPOST = () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 19);
+  private static final Supplier<Widget> DIBBER =
+      () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 9);
+  private static final Supplier<Widget> SPADE =
+      () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 10);
+  private static final Supplier<Widget> BOTTOMLESS_BUCKET =
+      () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 15);
+  private static final Supplier<Widget> COMPOST =
+      () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 17);
+  private static final Supplier<Widget> SUPERCOMPOST =
+      () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 18);
+  private static final Supplier<Widget> ULTRACOMPOST =
+      () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID, 19);
 
   private final BirdHouse plugin;
 
@@ -44,13 +50,13 @@ public class GetTools extends Task {
       return;
     }
 
-    boolean needSpade = TileObjects.getNearest("Dead seaweed") != null;
-
     GameThread.invoke(() -> leprechaun.interact("Exchange"));
     Time.sleepTicksUntil(() -> Widgets.isVisible(BirdHouse.TOOLS.get()), 30);
     Time.sleepTick();
 
     DIBBER.get().interact("Remove-1");
+
+    final boolean needSpade = TileObjects.getNearest("Dead seaweed") != null;
 
     if (needSpade) {
       SPADE.get().interact("Remove-1");

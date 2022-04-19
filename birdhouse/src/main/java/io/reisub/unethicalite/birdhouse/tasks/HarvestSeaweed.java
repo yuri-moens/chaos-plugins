@@ -29,7 +29,8 @@ public class HarvestSeaweed extends Task {
     return plugin.isUnderwater()
         && Inventory.contains(ItemID.SEED_DIBBER)
         && !Inventory.isFull()
-        && ((seaweed = TileObjects.getNearest("Dead seaweed")) != null || (seaweed = TileObjects.getNearest((o) -> o.hasAction("Pick"))) != null);
+        && ((seaweed = TileObjects.getNearest("Dead seaweed")) != null
+            || (seaweed = TileObjects.getNearest((o) -> o.hasAction("Pick"))) != null);
   }
 
   @Override

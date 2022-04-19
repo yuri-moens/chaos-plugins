@@ -21,7 +21,8 @@ import net.runelite.api.widgets.Widget;
 public class Deposit extends BankTask {
   private static final Supplier<Widget> DIBBER = () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID + 1, 2);
   private static final Supplier<Widget> SPADE = () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID + 1, 3);
-  private static final Supplier<Widget> BOTTOMLESS_BUCKET = () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID + 1, 8);
+  private static final Supplier<Widget> BOTTOMLESS_BUCKET =
+      () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID + 1, 8);
   private static final Supplier<Widget> BUCKET = () -> Widgets.get(BirdHouse.TOOL_WIDGET_ID + 1, 9);
 
   private final BirdHouse plugin;
@@ -57,7 +58,8 @@ public class Deposit extends BankTask {
       BUCKET.get().interact("Store-5");
     }
 
-    if (Inventory.contains(ItemID.BOTTOMLESS_COMPOST_BUCKET, ItemID.BOTTOMLESS_COMPOST_BUCKET_22997)) {
+    if (Inventory.contains(ItemID.BOTTOMLESS_COMPOST_BUCKET,
+        ItemID.BOTTOMLESS_COMPOST_BUCKET_22997)) {
       BOTTOMLESS_BUCKET.get().interact("Store");
     }
 

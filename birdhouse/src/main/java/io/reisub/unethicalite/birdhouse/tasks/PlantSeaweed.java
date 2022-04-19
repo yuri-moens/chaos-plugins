@@ -2,8 +2,11 @@ package io.reisub.unethicalite.birdhouse.tasks;
 
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
+import io.reisub.unethicalite.utils.Constants;
+import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import lombok.RequiredArgsConstructor;
 import net.runelite.api.Item;
@@ -40,7 +43,8 @@ public class PlantSeaweed extends Task {
     Time.sleepTicksUntil(() -> Inventory.getCount(true, ItemID.SEAWEED_SPORE) < quantity, 10);
     Time.sleepTicks(3);
 
-    Item compost = Inventory.getFirst(ItemID.BOTTOMLESS_COMPOST_BUCKET, ItemID.BOTTOMLESS_COMPOST_BUCKET_22997, ItemID.ULTRACOMPOST, ItemID.SUPERCOMPOST, ItemID.COMPOST);
+    Item compost = Inventory.getFirst(Predicates.ids(Constants.COMPOST_IDS));
+
     if (compost == null) {
       return;
     }
@@ -50,7 +54,7 @@ public class PlantSeaweed extends Task {
       return;
     }
 
-    compost.useOn(patch);
+    GameThread.invoke(() -> compost.useOn(patch));
     Time.sleepTicks(3);
   }
 }

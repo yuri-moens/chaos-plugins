@@ -28,22 +28,28 @@ public class GoToVerdantValley extends Task {
 
   @Override
   public void execute() {
-    TileObject tree = TileObjects.getNearest((i) -> Constants.MAGIC_MUSHTREE_IDS.contains(i.getId()));
+    TileObject tree = TileObjects.getNearest(i -> Constants.MAGIC_MUSHTREE_IDS.contains(i.getId()));
     if (tree == null) {
       return;
     }
 
     GameThread.invoke(() -> tree.interact(0));
-    Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(WidgetInfo.FOSSIL_MUSHROOM_TELEPORT)), 15);
+    Time.sleepTicksUntil(
+        () -> Widgets.isVisible(Widgets.get(WidgetInfo.FOSSIL_MUSHROOM_TELEPORT)), 15);
 
     Widget mushroomValleyWidget = Widgets.get(WidgetInfo.FOSSIL_MUSHROOM_VALLEY);
     if (!Widgets.isVisible(mushroomValleyWidget)) {
       return;
     }
 
-    mushroomValleyWidget.interact(0, MenuAction.WIDGET_TYPE_6.getId(), mushroomValleyWidget.getIndex(), mushroomValleyWidget.getId());
-    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getRegionID() == 14906, 5);
+    mushroomValleyWidget.interact(
+        0,
+        MenuAction.WIDGET_TYPE_6.getId(),
+        mushroomValleyWidget.getIndex(),
+        mushroomValleyWidget.getId()
+    );
 
+    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getRegionID() == 14906, 5);
     Time.sleepTicks(2);
   }
 }
