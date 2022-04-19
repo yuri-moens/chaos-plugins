@@ -9,6 +9,7 @@ import dev.unethicalite.api.items.Bank;
 import dev.unethicalite.api.items.Equipment;
 import dev.unethicalite.api.movement.Movement;
 import dev.unethicalite.api.packets.DialogPackets;
+import dev.unethicalite.api.widgets.Widgets;
 import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.CBank;
@@ -17,6 +18,7 @@ import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 import net.runelite.api.NPC;
 import net.runelite.api.TileObject;
+import net.runelite.api.widgets.WidgetID;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -136,7 +138,7 @@ public abstract class BankTask extends Task {
         GameThread.invoke(() -> bankNpc.interact("Bank"));
 
         if (movingCheck > 0) {
-            if (!Time.sleepTicksUntil(() -> Bank.isOpen() || Players.getLocal().isMoving(), movingCheck)) {
+            if (!Time.sleepTicksUntil(() -> Bank.isOpen() || Players.getLocal().isMoving() || Widgets.isVisible(Widgets.get(WidgetID.BANK_PIN_GROUP_ID, 0)), movingCheck)) {
                 return false;
             }
         }
@@ -145,7 +147,7 @@ public abstract class BankTask extends Task {
 
         last = Instant.now();
 
-        if (Bank.isOpen() && openMainTab) {
+        if (Bank.isOpen() && openMainTab && !Bank.isMainTabOpen()) {
             Bank.openMainTab();
         }
 
@@ -203,6 +205,10 @@ public abstract class BankTask extends Task {
         timeLeft = Duration.ofSeconds(seconds).minus(timeLeft);
 
         return Duration.between(lastStamina, Instant.now()).compareTo(timeLeft) >= 0;
+    }
+
+    protected boolean isBankObjectAvailable() {
+        return getBankObject() != null || getBankNpc() != null;
     }
 
     protected TileObject getBankObject() {
