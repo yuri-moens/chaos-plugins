@@ -19,6 +19,13 @@ public class ConfigList {
     ConfigList configList = new ConfigList();
 
     for (String string : list.split("[\\n;,]")) {
+      if (string.equals("")) {
+        continue;
+      }
+
+      // get rid of any comments and trim what's left
+      string = string.split("//")[0].trim();
+
       try {
         configList.integers.add(Integer.parseInt(string));
       } catch (NumberFormatException e) {
