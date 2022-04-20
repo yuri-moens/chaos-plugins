@@ -5,8 +5,6 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.game.Game;
 import dev.unethicalite.managers.Static;
 import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.GameState;
@@ -59,36 +57,6 @@ public class Utils extends Plugin {
 
   public static boolean isInMapRegion(Collection<Integer> regionIds) {
     return isInMapRegion(regionIds.stream().mapToInt(i -> i).toArray());
-  }
-
-  public static Set<String> parseStringList(String list) {
-    Set<String> strings = new LinkedHashSet<>();
-
-    for (String string : list.split("[\\n;,]")) {
-      string = string.split("//")[0].trim();
-      strings.add(string);
-    }
-
-    return strings;
-  }
-
-  public static Set<Integer> parseIntegerList(String list) {
-    Set<Integer> integers = new LinkedHashSet<>();
-
-    parseStringList(list).forEach(s -> integers.add(Integer.parseInt(s)));
-
-    return integers;
-  }
-
-  public static void parseStringOrIntegerList(
-      String list, Set<Integer> integers, Set<String> strings) {
-    for (String s : parseStringList(list)) {
-      try {
-        integers.add(Integer.parseInt(s));
-      } catch (NumberFormatException e) {
-        strings.add(s);
-      }
-    }
   }
 
   @Provides

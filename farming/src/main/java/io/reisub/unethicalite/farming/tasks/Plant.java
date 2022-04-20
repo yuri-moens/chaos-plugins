@@ -13,7 +13,7 @@ import io.reisub.unethicalite.farming.Location;
 import io.reisub.unethicalite.farming.PatchImplementation;
 import io.reisub.unethicalite.farming.PatchState;
 import io.reisub.unethicalite.utils.Constants;
-import io.reisub.unethicalite.utils.Utils;
+import io.reisub.unethicalite.utils.api.ConfigList;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.List;
@@ -64,8 +64,10 @@ public class Plant extends Task {
       return;
     }
 
+    ConfigList diseaseFreeSeedsList = ConfigList.parseList(config.diseaseFreeSeeds());
+
     List<Item> diseaseFreeSeeds =
-        Inventory.getAll(Predicates.names(Utils.parseStringList(config.diseaseFreeSeeds())));
+        Inventory.getAll(Predicates.itemConfigList(diseaseFreeSeedsList));
 
     Item seed = null;
 

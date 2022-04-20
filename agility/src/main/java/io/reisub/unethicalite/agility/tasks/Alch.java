@@ -46,8 +46,7 @@ public class Alch extends Task {
 
     return canCast()
         && Regular.HIGH_LEVEL_ALCHEMY.canCast()
-        && (Inventory.contains(Predicates.ids(configList.getIntegers()))
-            || Inventory.contains(Predicates.names(configList.getStrings())));
+        && Inventory.contains(Predicates.itemConfigList(configList));
   }
 
   @Override
@@ -58,15 +57,7 @@ public class Alch extends Task {
       Time.sleepTick();
     }
 
-    Item item = null;
-
-    if (!configList.getIntegers().isEmpty()) {
-      item = Inventory.getFirst((i) -> configList.getIntegers().contains(i.getId()));
-    }
-
-    if (item == null && !configList.getStrings().isEmpty()) {
-      item = Inventory.getFirst((i) -> configList.getStrings().contains(i.getName()));
-    }
+    Item item = Inventory.getFirst(Predicates.itemConfigList(configList));
 
     if (item == null) {
       return;

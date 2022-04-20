@@ -20,6 +20,7 @@ import io.reisub.unethicalite.barrows.tasks.TeleportToFeroxEnclave;
 import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
+import io.reisub.unethicalite.utils.api.ConfigList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
@@ -166,7 +167,9 @@ public class Barrows extends TickScript {
   }
 
   private void buildKillOrder() {
-    for (String name : Utils.parseStringList(config.killOrder())) {
+    ConfigList killOrderConfigList = ConfigList.parseList(config.killOrder());
+
+    for (String name : killOrderConfigList.getStrings()) {
       for (Brother brother : Brother.values()) {
         if (brother.getName().equalsIgnoreCase(name)) {
           killOrder.add(brother);

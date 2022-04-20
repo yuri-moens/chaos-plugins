@@ -39,8 +39,6 @@ public class AutoDropper extends Plugin implements KeyListener {
 
   @Inject private KeyManager keyManager;
   private ScheduledExecutorService executor;
-  private String[] itemNames;
-  private int[] itemIds;
   private ConfigList configList;
 
   @Provides
@@ -104,8 +102,7 @@ public class AutoDropper extends Plugin implements KeyListener {
   public void keyReleased(KeyEvent e) {}
 
   private void drop() {
-    List<Item> items = Inventory.getAll(Predicates.ids(configList.getIntegers()));
-    items.addAll(Inventory.getAll(Predicates.names(configList.getStrings())));
+    List<Item> items = Inventory.getAll(Predicates.itemConfigList(configList));
 
     for (Item item : items) {
       item.interact("Drop");

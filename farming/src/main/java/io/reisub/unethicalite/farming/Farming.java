@@ -19,11 +19,11 @@ import io.reisub.unethicalite.farming.tasks.WithdrawTools;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
+import io.reisub.unethicalite.utils.api.ConfigList;
 import io.reisub.unethicalite.utils.api.Predicates;
 import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Set;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +58,7 @@ public class Farming extends TickScript implements KeyListener {
   @Getter private final Queue<Location> locationQueue = new LinkedList<>();
   @Inject private Config config;
   @Getter private Location currentLocation;
-  private Set<String> compostProduceSet;
+  private ConfigList compostProduceConfigList;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
@@ -96,8 +96,8 @@ public class Farming extends TickScript implements KeyListener {
 
   @Subscribe
   private void onGameTick(GameTick event) {
-    if (compostProduceSet == null) {
-      compostProduceSet = Utils.parseStringList(config.oneClickCompostProduce());
+    if (compostProduceConfigList == null) {
+      compostProduceConfigList = ConfigList.parseList(config.oneClickCompostProduce());
     }
 
     if (locationQueue.isEmpty() || !isRunning()) {
@@ -148,7 +148,7 @@ public class Farming extends TickScript implements KeyListener {
     } else {
       String name = Text.removeTags(event.getTarget());
 
-      if (!compostProduceSet.contains(name)
+      if (!compostProduceConfigList.getStrings().contains(name)
           || compostBinState == null
           || compostBinState == CropState.GROWING
           || compostBinState == CropState.HARVESTABLE) {
@@ -204,7 +204,7 @@ public class Farming extends TickScript implements KeyListener {
       }
 
       GameThread.invoke(() -> item.useOn(bin));
-    } else if (compostProduceSet.contains(item.getName())
+    } else if (compostProduceConfigList.getStrings().contains(item.getName())
         && (compostBinState == CropState.EMPTY || compostBinState == CropState.FILLING)) {
       TileObject bin = TileObjects.getNearest(Predicates.ids(Constants.COMPOST_BIN_IDS));
       if (bin == null) {
@@ -229,7 +229,7 @@ public class Farming extends TickScript implements KeyListener {
     }
 
     if (event.getKey().equals("oneClickCompostProduce")) {
-      compostProduceSet = Utils.parseStringList(config.oneClickCompostProduce());
+      compostProduceConfigList = ConfigList.parseList(config.oneClickCompostProduce());
     }
   }
 
@@ -266,7 +266,9 @@ public class Farming extends TickScript implements KeyListener {
   }
 
   private void buildLocationQueue() {
-    for (String name : Utils.parseStringList(config.herbOrder())) {
+    ConfigList herbOrder = ConfigList.parseList(config.herbOrder());
+
+    for (String name : herbOrder.getStrings()) {
       for (Location location : Location.values()) {
         if (location.isEnabled(config) && name.equalsIgnoreCase(location.getName())) {
           locationQueue.add(location);

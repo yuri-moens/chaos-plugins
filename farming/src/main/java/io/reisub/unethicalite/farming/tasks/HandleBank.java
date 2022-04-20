@@ -7,15 +7,14 @@ import io.reisub.unethicalite.farming.Config;
 import io.reisub.unethicalite.farming.Farming;
 import io.reisub.unethicalite.farming.Location;
 import io.reisub.unethicalite.utils.Constants;
-import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.ChaosBank;
+import io.reisub.unethicalite.utils.api.ConfigList;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javax.inject.Inject;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
@@ -139,7 +138,7 @@ public class HandleBank extends BankTask {
             ? plugin.getLocationQueue().size()
             : plugin.getLocationQueue().size() + 1;
     int withdrawn = 0;
-    Set<String> seedsToKeep = Utils.parseStringList(config.seedsToKeep());
+    ConfigList seedsToKeepList = ConfigList.parseList(config.seedsToKeep());
 
     List<Item> seeds;
     int wantedPerSeed = quantityOfSeedsNeeded;
@@ -149,8 +148,8 @@ public class HandleBank extends BankTask {
       hasWithdrawn = false;
 
       if (config.manualMode()) {
-        Set<String> manualSeeds = Utils.parseStringList(config.manualSeeds());
-        seeds = Bank.getAll(Predicates.names(manualSeeds));
+        ConfigList manualSeedsList = ConfigList.parseList(config.manualSeeds());
+        seeds = Bank.getAll(Predicates.itemConfigList(manualSeedsList));
 
         wantedPerSeed =
             config.manualSeedsSplit()
@@ -182,7 +181,7 @@ public class HandleBank extends BankTask {
 
       for (Item seed : seeds) {
         int quantity =
-            seedsToKeep.contains(seed.getName())
+            seedsToKeepList.getStrings().contains(seed.getName())
                 ? seed.getQuantity() - config.amountToKeep()
                 : seed.getQuantity();
 

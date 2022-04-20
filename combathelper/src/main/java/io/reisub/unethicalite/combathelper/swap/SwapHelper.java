@@ -11,7 +11,7 @@ import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.combathelper.Helper;
 import io.reisub.unethicalite.combathelper.prayer.PrayerHelper;
 import io.reisub.unethicalite.combathelper.prayer.QuickPrayer;
-import io.reisub.unethicalite.utils.Utils;
+import io.reisub.unethicalite.utils.api.ConfigList;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.List;
@@ -30,12 +30,9 @@ import net.runelite.client.events.ConfigChanged;
 public class SwapHelper extends Helper {
   @Inject private PrayerHelper prayerHelper;
 
-  private Set<Integer> meleeIds;
-  private Set<String> meleeNames;
-  private Set<Integer> rangedIds;
-  private Set<String> rangedNames;
-  private Set<Integer> magicIds;
-  private Set<String> magicNames;
+  private ConfigList meleeList;
+  private ConfigList rangedList;
+  private ConfigList magicList;
 
   @Override
   public void startUp() {
@@ -57,16 +54,9 @@ public class SwapHelper extends Helper {
   }
 
   private void parseGear() {
-    meleeIds = new HashSet<>();
-    meleeNames = new HashSet<>();
-    rangedIds = new HashSet<>();
-    rangedNames = new HashSet<>();
-    magicIds = new HashSet<>();
-    magicNames = new HashSet<>();
-
-    Utils.parseStringOrIntegerList(config.meleeGear(), meleeIds, meleeNames);
-    Utils.parseStringOrIntegerList(config.rangedGear(), rangedIds, rangedNames);
-    Utils.parseStringOrIntegerList(config.magicGear(), magicIds, magicNames);
+    meleeList = ConfigList.parseList(config.meleeGear());
+    rangedList = ConfigList.parseList(config.rangedGear());
+    magicList = ConfigList.parseList(config.magicGear());
   }
 
   public void keyPressed(KeyEvent e) {
@@ -146,16 +136,16 @@ public class SwapHelper extends Helper {
 
       switch (style) {
         case MELEE:
-          ids = meleeIds;
-          names = meleeNames;
+          ids = meleeList.getIntegers();
+          names = meleeList.getStrings();
           break;
         case RANGE:
-          ids = rangedIds;
-          names = rangedNames;
+          ids = rangedList.getIntegers();
+          names = rangedList.getStrings();
           break;
         case MAGIC:
-          ids = magicIds;
-          names = magicNames;
+          ids = magicList.getIntegers();
+          names = magicList.getStrings();
           break;
         default:
           ids = null;
