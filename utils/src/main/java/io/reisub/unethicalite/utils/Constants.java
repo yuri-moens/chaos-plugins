@@ -535,6 +535,23 @@ public class Constants {
           ItemID.GRIMY_DWARF_WEED,
           ItemID.GRIMY_TORSTOL);
 
+  public static final Set<Integer> CLEAN_HERB_IDS =
+      ImmutableSet.of(
+          ItemID.GUAM_LEAF,
+          ItemID.MARRENTILL,
+          ItemID.TARROMIN,
+          ItemID.HARRALANDER,
+          ItemID.RANARR_WEED,
+          ItemID.TOADFLAX,
+          ItemID.IRIT_LEAF,
+          ItemID.AVANTOE,
+          ItemID.KWUARM,
+          ItemID.SNAPDRAGON,
+          ItemID.CADANTINE,
+          ItemID.LANTADYME,
+          ItemID.DWARF_WEED,
+          ItemID.TORSTOL);
+
   public static final int TOOL_WIDGET_ID = 125;
   public static final Supplier<Widget> TOOLS_WIDGET = () -> Widgets.get(TOOL_WIDGET_ID, 0);
   public static final Supplier<Widget> TOOLS_CLOSE_WIDGET =
