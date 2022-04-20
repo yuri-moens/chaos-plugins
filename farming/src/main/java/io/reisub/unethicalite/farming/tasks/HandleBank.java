@@ -211,5 +211,9 @@ public class HandleBank extends BankTask {
         withdrawn = 0;
       }
     } while (withdrawn == 0 && hasWithdrawn);
+
+    if (config.limpwurt()) {
+      Bank.withdrawAll(ItemID.LIMPWURT_SEED, Bank.WithdrawMode.ITEM);
+    }
   }
 }

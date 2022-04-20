@@ -115,6 +115,26 @@ public interface Config extends net.runelite.client.config.Config {
   }
 
   @ConfigItem(
+      keyName = "limpwurt",
+      name = "Limpwurt",
+      description = "Enable to also plant and harvest Limpwurt roots",
+      section = "seedsConfig",
+      position = 8)
+  default boolean limpwurt() {
+    return false;
+  }
+
+  @ConfigItem(
+      keyName = "cleanHerbs",
+      name = "Clean herbs",
+      description = "Enable to clean any herbs we harvest",
+      section = "seedsConfig",
+      position = 8)
+  default boolean cleanHerbs() {
+    return false;
+  }
+
+  @ConfigItem(
       keyName = "useExplorersRing",
       name = "Use Explorer's ring",
       description = "Use the Explorer's ring to teleport to Falador",

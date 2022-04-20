@@ -18,7 +18,7 @@ import net.runelite.api.events.StatChanged;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.timetracking.farming.CropState;
 
-public class Pick extends Task {
+public class PickHerb extends Task {
   @Inject private Farming plugin;
 
   private boolean experienceReceived;
@@ -36,8 +36,8 @@ public class Pick extends Task {
       return false;
     }
 
-    int varbit = Vars.getBit(plugin.getCurrentLocation().getVarbit());
-    PatchState patchState = PatchImplementation.HERB.forVarbitValue(varbit);
+    int varbitValue = Vars.getBit(plugin.getCurrentLocation().getHerbVarbit());
+    PatchState patchState = PatchImplementation.HERB.forVarbitValue(varbitValue);
 
     return patchState != null && patchState.getCropState() == CropState.HARVESTABLE;
   }
@@ -58,7 +58,7 @@ public class Pick extends Task {
     GameThread.invoke(() -> patch.interact("Pick"));
 
     Time.sleepTicksUntil(
-        () -> Inventory.isFull() || Vars.getBit(plugin.getCurrentLocation().getVarbit()) <= 3, 100);
+        () -> Inventory.isFull() || Vars.getBit(plugin.getCurrentLocation().getHerbVarbit()) <= 3, 100);
   }
 
   @Subscribe

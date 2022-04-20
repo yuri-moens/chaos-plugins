@@ -13,8 +13,10 @@ import io.reisub.unethicalite.farming.tasks.DepositTools;
 import io.reisub.unethicalite.farming.tasks.GoToPatch;
 import io.reisub.unethicalite.farming.tasks.HandleBank;
 import io.reisub.unethicalite.farming.tasks.Note;
-import io.reisub.unethicalite.farming.tasks.Pick;
-import io.reisub.unethicalite.farming.tasks.Plant;
+import io.reisub.unethicalite.farming.tasks.PickHerb;
+import io.reisub.unethicalite.farming.tasks.PickLimpwurt;
+import io.reisub.unethicalite.farming.tasks.PlantHerb;
+import io.reisub.unethicalite.farming.tasks.PlantLimpwurt;
 import io.reisub.unethicalite.farming.tasks.WithdrawTools;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.TickScript;
@@ -77,8 +79,10 @@ public class Farming extends TickScript implements KeyListener {
     addTask(Note.class);
     addTask(Cure.class);
     addTask(Clear.class);
-    addTask(Pick.class);
-    addTask(Plant.class);
+    addTask(PickLimpwurt.class);
+    addTask(PlantLimpwurt.class);
+    addTask(PickHerb.class);
+    addTask(PlantHerb.class);
     addTask(DepositTools.class);
   }
 

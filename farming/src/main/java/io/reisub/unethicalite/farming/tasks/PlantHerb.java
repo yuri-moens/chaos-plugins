@@ -23,14 +23,14 @@ import net.runelite.api.TileObject;
 import net.runelite.client.plugins.timetracking.farming.CropState;
 import net.runelite.client.plugins.timetracking.farming.Produce;
 
-public class Plant extends Task {
+public class PlantHerb extends Task {
   @Inject private Farming plugin;
 
   @Inject private Config config;
 
   @Override
   public String getStatus() {
-    return "Planting seeds";
+    return "Planting herb seeds";
   }
 
   @Override
@@ -41,8 +41,8 @@ public class Plant extends Task {
       return false;
     }
 
-    int varbit = Vars.getBit(plugin.getCurrentLocation().getVarbit());
-    PatchState patchState = PatchImplementation.HERB.forVarbitValue(varbit);
+    int varbitValue = Vars.getBit(plugin.getCurrentLocation().getHerbVarbit());
+    PatchState patchState = PatchImplementation.HERB.forVarbitValue(varbitValue);
 
     return !plugin.getCurrentLocation().isDone()
         && patchState != null
@@ -100,7 +100,7 @@ public class Plant extends Task {
     Time.sleepTicksUntil(() -> !Players.getLocal().isAnimating(), 3);
     GameThread.invoke(() -> finalSeed.useOn(patch));
 
-    if (!Time.sleepTicksUntil(() -> Vars.getBit(plugin.getCurrentLocation().getVarbit()) > 3, 20)) {
+    if (!Time.sleepTicksUntil(() -> Vars.getBit(plugin.getCurrentLocation().getHerbVarbit()) > 3, 20)) {
       return;
     }
 

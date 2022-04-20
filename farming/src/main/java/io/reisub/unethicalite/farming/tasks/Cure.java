@@ -14,6 +14,9 @@ import io.reisub.unethicalite.farming.PatchState;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javax.inject.Inject;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
@@ -26,25 +29,18 @@ public class Cure extends Task {
 
   @Override
   public String getStatus() {
-    return "Curing herb";
+    return "Curing patch";
   }
 
   @Override
   public boolean validate() {
-    TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
-
-    if (patch == null) {
-      return false;
-    }
-
-    int varbit = Vars.getBit(plugin.getCurrentLocation().getVarbit());
-    PatchState patchState = PatchImplementation.HERB.forVarbitValue(varbit);
-
-    return patchState != null && patchState.getCropState() == CropState.DISEASED;
+    return !getDiseasedPatches().isEmpty();
   }
 
   @Override
   public void execute() {
+    final List<TileObject> diseasedPatches = getDiseasedPatches();
+
     if (!Inventory.contains(ItemID.PLANT_CURE)) {
       NPC leprechaun = NPCs.getNearest("Tool Leprechaun");
       if (leprechaun == null) {
@@ -55,23 +51,61 @@ public class Cure extends Task {
       Time.sleepTicksUntil(() -> Widgets.isVisible(Constants.TOOLS_WIDGET.get()), 30);
       Time.sleepTick();
 
-      Constants.TOOLS_WITHDRAW_PLANT_CURE_WIDGET.get().interact(0);
+      for (int i = 0; i < diseasedPatches.size(); i++) {
+        Constants.TOOLS_WITHDRAW_PLANT_CURE_WIDGET.get().interact(0);
+      }
       Constants.TOOLS_CLOSE_WIDGET.get().interact("Close");
 
-      if (!Time.sleepTicksUntil(() -> Inventory.contains(ItemID.PLANT_CURE), 10)) {
+      if (!Time.sleepTicksUntil(() -> Inventory.contains(ItemID.PLANT_CURE), 5)) {
         MessageUtils.addMessage("No plant cure found, can't cure herb.");
         plugin.getCurrentLocation().setDone(true);
         return;
       }
     }
 
-    TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
-    Item plantCure = Inventory.getFirst(ItemID.PLANT_CURE);
+    diseasedPatches.forEach(
+        o -> {
+          Item plantCure = Inventory.getFirst(ItemID.PLANT_CURE);
+          int plantCureCount = Inventory.getCount(ItemID.PLANT_CURE);
 
-    int plantCureCount = Inventory.getCount(ItemID.PLANT_CURE);
+          GameThread.invoke(() -> plantCure.useOn(o));
+          Time.sleepTicksUntil(() -> Inventory.getCount(ItemID.PLANT_CURE) < plantCureCount, 30);
+        });
 
-    GameThread.invoke(() -> plantCure.useOn(patch));
-    Time.sleepTicksUntil(() -> Inventory.getCount(ItemID.PLANT_CURE) < plantCureCount, 30);
-    plugin.getCurrentLocation().setDone(true);
+    if (diseasedPatches.size() == 2 || !plugin.getCurrentLocation().hasLimpwurtPatch()) {
+      plugin.getCurrentLocation().setDone(true);
+    }
+  }
+
+  private List<TileObject> getDiseasedPatches() {
+    final TileObject herbPatch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
+    final TileObject flowerPatch =
+        TileObjects.getNearest(Predicates.ids(Constants.FLOWER_PATCH_IDS));
+
+    if (herbPatch == null && flowerPatch == null) {
+      return Collections.emptyList();
+    }
+
+    final List<TileObject> diseasedPatches = new ArrayList<>(2);
+
+    if (herbPatch != null) {
+      final int herbVarbitValue = Vars.getBit(plugin.getCurrentLocation().getHerbVarbit());
+      final PatchState patchState = PatchImplementation.HERB.forVarbitValue(herbVarbitValue);
+
+      if (patchState != null && patchState.getCropState() == CropState.DISEASED) {
+        diseasedPatches.add(herbPatch);
+      }
+    }
+
+    if (flowerPatch != null) {
+      final int flowerVarbitValue = Vars.getBit(plugin.getCurrentLocation().getFlowerVarbit());
+      final PatchState patchState = PatchImplementation.FLOWER.forVarbitValue(flowerVarbitValue);
+
+      if (patchState != null && patchState.getCropState() == CropState.DISEASED) {
+        diseasedPatches.add(flowerPatch);
+      }
+    }
+
+    return diseasedPatches;
   }
 }

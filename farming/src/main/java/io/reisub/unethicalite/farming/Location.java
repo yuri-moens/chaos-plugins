@@ -28,23 +28,29 @@ public enum Location {
       "Ardougne",
       new WorldPoint(2670, 3376, 0),
       Varbits.FARMING_4774,
-      () -> {
-        return Interact.interactWithInventoryOrEquipment(
-            Constants.ARDOUGNE_CLOAK_IDS, "Farm Teleport", "Ardougne Farm", 0);
-      }),
-  CATHERBY("Catherby", new WorldPoint(2813, 3465, 0), Varbits.FARMING_4774, () -> false),
+      Varbits.FARMING_4773,
+      () ->
+          Interact.interactWithInventoryOrEquipment(
+              Constants.ARDOUGNE_CLOAK_IDS, "Farm Teleport", "Ardougne Farm", 0)),
+  CATHERBY(
+      "Catherby",
+      new WorldPoint(2813, 3465, 0),
+      Varbits.FARMING_4774,
+      Varbits.FARMING_4773,
+      () -> false),
   FALADOR(
       "Falador",
       new WorldPoint(3058, 3310, 0),
       Varbits.FARMING_4774,
-      () -> {
-        return Interact.interactWithInventoryOrEquipment(
-            Constants.EXPLORERS_RING_IDS, "Teleport", null, 0);
-      }),
+      Varbits.FARMING_4773,
+      () ->
+          Interact.interactWithInventoryOrEquipment(
+              Constants.EXPLORERS_RING_IDS, "Teleport", null, 0)),
   FARMING_GUILD(
       "Farming Guild",
       new WorldPoint(1239, 3728, 0),
       Varbits.FARMING_4775,
+      Varbits.FARMING_7906,
       () -> {
         Item necklace = Inventory.getFirst(Predicates.ids(Constants.SKILL_NECKLACE_IDS));
 
@@ -68,11 +74,13 @@ public enum Location {
       "Harmony Island",
       new WorldPoint(3790, 2839, 0),
       Varbits.FARMING_4772,
+      0,
       () -> Location.tpThroughHouse(37589)),
   HOSIDIUS(
       "Hosidius",
       new WorldPoint(1740, 3550, 0),
       Varbits.FARMING_4774,
+      Varbits.FARMING_4773,
       () -> {
         Item talisman = Inventory.getFirst(ItemID.XERICS_TALISMAN);
 
@@ -92,13 +100,14 @@ public enum Location {
       "Port Phasmatys",
       new WorldPoint(3606, 3531, 0),
       Varbits.FARMING_4774,
+      Varbits.FARMING_4773,
       () -> {
         Item ectophial = Inventory.getFirst(ItemID.ECTOPHIAL, ItemID.ECTOPHIAL_4252);
         if (ectophial == null) {
           return false;
         }
 
-        ectophial.interact("Empty"); // TODO
+        ectophial.interact("Empty");
 
         Time.sleepTicksUntil(() -> Inventory.contains(ItemID.ECTOPHIAL_4252), 10);
         return Time.sleepTicksUntil(() -> Inventory.contains(ItemID.ECTOPHIAL), 10);
@@ -107,16 +116,19 @@ public enum Location {
       "Troll Stronghold",
       new WorldPoint(2828, 3694, 0),
       Varbits.FARMING_4771,
+      0,
       () -> Location.tpThroughHouse(33179)),
   WEISS(
       "Weiss",
       new WorldPoint(2847, 3935, 0),
       Varbits.FARMING_4771,
+      0,
       () -> Location.tpThroughHouse(37581));
 
   private final String name;
   private final WorldPoint patchPoint;
-  private final int varbit;
+  private final int herbVarbit;
+  private final int flowerVarbit;
   private final Teleportable teleportable;
 
   @Setter private boolean done;
@@ -140,6 +152,10 @@ public enum Location {
             Players.getLocal().getWorldLocation() != null
                 && Players.getLocal().getWorldLocation().getRegionID() != regionId,
         30);
+  }
+
+  public boolean hasLimpwurtPatch() {
+    return flowerVarbit != 0;
   }
 
   public boolean isEnabled(Config config) {
