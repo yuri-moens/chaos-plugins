@@ -50,8 +50,9 @@ public class Interact {
     }
 
     if (optionIndex > 0) {
-      Time.sleepTicksUntil(Dialog::isViewingOptions, 3);
-      Dialog.chooseOption(optionIndex);
+      if (Time.sleepTicksUntil(Dialog::isViewingOptions, 3)) {
+        Dialog.chooseOption(optionIndex);
+      }
     }
 
     return true;
