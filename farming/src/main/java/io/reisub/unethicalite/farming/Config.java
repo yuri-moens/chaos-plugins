@@ -16,18 +16,21 @@ public interface Config extends net.runelite.client.config.Config {
       description = "Configure seeds",
       position = 0)
   String seedsConfig = "seedsConfig";
+
   @ConfigSection(
       keyName = "teleportItemsConfig",
       name = "Teleport items",
       description = "Configure teleport items",
       position = 100)
   String teleportItemsConfig = "teleportItemsConfig";
+
   @ConfigSection(
       keyName = "oneClickConfig",
       name = "One click",
       description = "Configure one click mode",
       position = 200)
   String oneClickConfig = "oneClickConfig";
+
   @ConfigSection(
       keyName = "herbConfig",
       name = "Herbs",
@@ -73,7 +76,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Split seeds evenly",
       description =
           "Split manually chosen seeds as evenly as possible, otherwise take as many as possible "
-          + "of each until we have enough seeds",
+              + "of each until we have enough seeds",
       hidden = true,
       unhide = "manualMode",
       section = "seedsConfig",
@@ -97,7 +100,7 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Seeds to keep",
       description =
           "Choose which seeds to keep some of in your bank, useful for seeds used in farming "
-          + "contracts",
+              + "contracts",
       section = "seedsConfig",
       position = 6)
   default String seedsToKeep() {
@@ -293,12 +296,12 @@ public interface Config extends net.runelite.client.config.Config {
       name = "Order",
       description =
           "Order in which to do the locations. Any enabled location not in this order list will "
-          + "simply be added to the end.",
+              + "simply be added to the end.",
       section = "herbConfig",
       position = 310)
   default String herbOrder() {
     return "Farming Guild\nArdougne\nCatherby\nFalador\nPort Phasmatys\nHosidius\nHarmony Island\n"
-           + "Troll Stronghold\nWeiss";
+        + "Troll Stronghold\nWeiss";
   }
 
   @ConfigItem(

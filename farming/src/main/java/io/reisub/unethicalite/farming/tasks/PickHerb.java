@@ -58,7 +58,8 @@ public class PickHerb extends Task {
     GameThread.invoke(() -> patch.interact("Pick"));
 
     Time.sleepTicksUntil(
-        () -> Inventory.isFull() || Vars.getBit(plugin.getCurrentLocation().getHerbVarbit()) <= 3, 100);
+        () -> Inventory.isFull() || Vars.getBit(plugin.getCurrentLocation().getHerbVarbit()) <= 3,
+        100);
   }
 
   @Subscribe

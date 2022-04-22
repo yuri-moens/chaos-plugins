@@ -20,8 +20,7 @@ import net.runelite.client.plugins.timetracking.farming.CropState;
 import net.runelite.client.plugins.timetracking.farming.Produce;
 
 public class PlantLimpwurt extends Task {
-  @Inject
-  private Farming plugin;
+  @Inject private Farming plugin;
   @Inject private Config config;
 
   @Override
@@ -64,7 +63,8 @@ public class PlantLimpwurt extends Task {
 
     GameThread.invoke(() -> seed.useOn(patch));
 
-    if (!Time.sleepTicksUntil(() -> Vars.getBit(plugin.getCurrentLocation().getFlowerVarbit()) > 3, 20)) {
+    if (!Time.sleepTicksUntil(
+        () -> Vars.getBit(plugin.getCurrentLocation().getFlowerVarbit()) > 3, 20)) {
       return;
     }
 

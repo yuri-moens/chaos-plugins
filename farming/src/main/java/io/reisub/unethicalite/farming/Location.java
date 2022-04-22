@@ -63,7 +63,10 @@ public enum Location {
           Widget farmingGuild = Widgets.get(187, 3, 5);
           if (farmingGuild != null) {
             farmingGuild.interact(
-                0, MenuAction.WIDGET_CONTINUE.getId(), farmingGuild.getIndex(), farmingGuild.getId());
+                0,
+                MenuAction.WIDGET_CONTINUE.getId(),
+                farmingGuild.getIndex(),
+                farmingGuild.getId());
             return true;
           }
         }

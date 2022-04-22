@@ -56,8 +56,7 @@ public class PickLimpwurt extends Task {
     GameThread.invoke(() -> patch.interact("Pick"));
 
     Time.sleepTicksUntil(
-        () ->
-            Inventory.isFull() || Vars.getBit(plugin.getCurrentLocation().getFlowerVarbit()) <= 3,
+        () -> Inventory.isFull() || Vars.getBit(plugin.getCurrentLocation().getFlowerVarbit()) <= 3,
         100);
   }
 }

@@ -66,8 +66,7 @@ public class PlantHerb extends Task {
 
     ConfigList diseaseFreeSeedsList = ConfigList.parseList(config.diseaseFreeSeeds());
 
-    List<Item> diseaseFreeSeeds =
-        Inventory.getAll(Predicates.itemConfigList(diseaseFreeSeedsList));
+    List<Item> diseaseFreeSeeds = Inventory.getAll(Predicates.itemConfigList(diseaseFreeSeedsList));
 
     Item seed = null;
 
@@ -100,7 +99,8 @@ public class PlantHerb extends Task {
     Time.sleepTicksUntil(() -> !Players.getLocal().isAnimating(), 3);
     GameThread.invoke(() -> finalSeed.useOn(patch));
 
-    if (!Time.sleepTicksUntil(() -> Vars.getBit(plugin.getCurrentLocation().getHerbVarbit()) > 3, 20)) {
+    if (!Time.sleepTicksUntil(
+        () -> Vars.getBit(plugin.getCurrentLocation().getHerbVarbit()) > 3, 20)) {
       return;
     }
 

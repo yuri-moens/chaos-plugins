@@ -120,6 +120,7 @@ public class Farming extends TickScript implements KeyListener {
     }
   }
 
+  // TODO: Doesn't currently work, have to figure out how to get item ID from menu entry.
   @Subscribe
   private void onMenuEntryAdded(MenuEntryAdded event) {
     if (!config.oneClickMode() || event.getType() != MenuAction.EXAMINE_ITEM.getId()) {

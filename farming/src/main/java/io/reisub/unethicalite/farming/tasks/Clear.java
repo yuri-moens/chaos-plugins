@@ -32,15 +32,19 @@ public class Clear extends Task {
 
   @Override
   public void execute() {
-    getDeadPatches().forEach(o -> {
-      GameThread.invoke(() -> o.interact("Clear"));
+    getDeadPatches()
+        .forEach(
+            o -> {
+              GameThread.invoke(() -> o.interact("Clear"));
 
-      if (Constants.HERB_PATCH_IDS.contains(o.getId())) {
-        Time.sleepTicksUntil(() -> Vars.getBit(plugin.getCurrentLocation().getHerbVarbit()) <= 3, 20);
-      } else if (Constants.FLOWER_PATCH_IDS.contains(o.getId())) {
-        Time.sleepTicksUntil(() -> Vars.getBit(plugin.getCurrentLocation().getFlowerVarbit()) <= 3, 20);
-      }
-    });
+              if (Constants.HERB_PATCH_IDS.contains(o.getId())) {
+                Time.sleepTicksUntil(
+                    () -> Vars.getBit(plugin.getCurrentLocation().getHerbVarbit()) <= 3, 20);
+              } else if (Constants.FLOWER_PATCH_IDS.contains(o.getId())) {
+                Time.sleepTicksUntil(
+                    () -> Vars.getBit(plugin.getCurrentLocation().getFlowerVarbit()) <= 3, 20);
+              }
+            });
   }
 
   private List<TileObject> getDeadPatches() {
