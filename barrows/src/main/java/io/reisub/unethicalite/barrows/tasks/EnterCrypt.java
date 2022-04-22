@@ -38,7 +38,7 @@ public class EnterCrypt extends Task {
     RectangularArea digArea = new RectangularArea(digAreaPoint, 2, 2);
 
     if (digArea.contains(Players.getLocal())) {
-      Inventory.getFirst(ItemID.SPADE).interact(0);
+      Inventory.getFirst(ItemID.SPADE).interact(1);
 
       Time.sleepTicksUntil(() -> Utils.isInRegion(Barrows.CRYPT_REGION), 10);
       return;
@@ -77,7 +77,7 @@ public class EnterCrypt extends Task {
       return;
     }
 
-    Inventory.getFirst(ItemID.SPADE).interact(0);
+    Inventory.getFirst(ItemID.SPADE).interact(1);
 
     Time.sleepTicksUntil(() -> Utils.isInRegion(Barrows.CRYPT_REGION), 10);
   }
