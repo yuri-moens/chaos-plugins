@@ -43,7 +43,7 @@ public class GoToMushroomMeadow extends Task {
 
     mushroomMeadowWidget.interact(
         0,
-        MenuAction.WIDGET_TYPE_6.getId(),
+        MenuAction.WIDGET_CONTINUE.getId(),
         mushroomMeadowWidget.getIndex(),
         mushroomMeadowWidget.getId());
 

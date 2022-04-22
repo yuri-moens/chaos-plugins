@@ -33,11 +33,6 @@ public class EmptyBirdHouse extends Task {
                     && Constants.BIRD_HOUSE_IDS.contains(
                         o.getTransformedComposition().getImpostor().getId()));
 
-	if (birdHouse.getId() == Constants.VERDANT_SOUTH_SPACE) {
-		plugin.emptied(birdHouse.getId());
-		return false;
-	}
-
     return birdHouse != null;
   }
 

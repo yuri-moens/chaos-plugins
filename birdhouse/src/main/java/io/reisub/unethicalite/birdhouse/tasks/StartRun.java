@@ -69,6 +69,10 @@ public class StartRun extends BankTask {
 
     Inventory.getAll(i -> i.getName().startsWith("Graceful")).forEach(i -> i.interact("Wear"));
 
+    if (!hasEverything()) {
+      return;
+    }
+
     Item pendant = Inventory.getFirst(Predicates.ids(Constants.DIGSITE_PENDANT_IDS));
     if (pendant == null) {
       return;
@@ -90,5 +94,13 @@ public class StartRun extends BankTask {
     }
 
     return 0;
+  }
+
+  private boolean hasEverything() {
+    return Inventory.contains(ItemID.IMCANDO_HAMMER, ItemID.HAMMER)
+        && Inventory.contains(ItemID.CHISEL)
+        && Inventory.contains(Predicates.ids(Constants.DIGSITE_PENDANT_IDS))
+        && Inventory.getCount(config.logs().getId()) == 4
+        && Inventory.getCount(true, Predicates.ids(Constants.BIRD_HOUSE_SEED_IDS)) == 40;
   }
 }

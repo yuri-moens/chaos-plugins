@@ -44,7 +44,7 @@ public class GoToVerdantValley extends Task {
 
     mushroomValleyWidget.interact(
         0,
-        MenuAction.WIDGET_TYPE_6.getId(),
+        MenuAction.WIDGET_CONTINUE.getId(),
         mushroomValleyWidget.getIndex(),
         mushroomValleyWidget.getId());
 
