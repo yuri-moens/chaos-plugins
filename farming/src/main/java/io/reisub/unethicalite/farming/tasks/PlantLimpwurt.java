@@ -30,7 +30,7 @@ public class PlantLimpwurt extends Task {
 
   @Override
   public boolean validate() {
-    if (!config.limpwurt()) {
+    if (!config.limpwurt() || !Inventory.contains(ItemID.LIMPWURT_SEED)) {
       return false;
     }
 
@@ -43,8 +43,7 @@ public class PlantLimpwurt extends Task {
     final int varbitValue = Vars.getBit(plugin.getCurrentLocation().getFlowerVarbit());
     final PatchState patchState = PatchImplementation.FLOWER.forVarbitValue(varbitValue);
 
-    return !plugin.getCurrentLocation().isDone()
-        && patchState != null
+    return patchState != null
         && patchState.getProduce() == Produce.WEEDS
         && patchState.getCropState() == CropState.GROWING;
   }

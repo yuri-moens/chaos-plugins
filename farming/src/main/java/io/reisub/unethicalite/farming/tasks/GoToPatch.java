@@ -4,6 +4,7 @@ import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.Players;
 import io.reisub.unethicalite.farming.Config;
 import io.reisub.unethicalite.farming.Farming;
+import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
@@ -22,8 +23,7 @@ public class GoToPatch extends Task {
   @Override
   public boolean validate() {
     return plugin.getCurrentLocation() != null
-        && !plugin.getCurrentLocation().isDone()
-        && Players.getLocal().distanceTo(plugin.getCurrentLocation().getPatchPoint()) > 10;
+        && !Utils.isInRegion(plugin.getCurrentLocation().getRegionId());
   }
 
   @Override

@@ -28,7 +28,7 @@ public class PickLimpwurt extends Task {
 
   @Override
   public boolean validate() {
-    if (!config.limpwurt()) {
+    if (!config.limpwurt() || Inventory.isFull()) {
       return false;
     }
 

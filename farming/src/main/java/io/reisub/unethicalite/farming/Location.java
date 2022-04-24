@@ -27,6 +27,7 @@ public enum Location {
   ARDOUGNE(
       "Ardougne",
       new WorldPoint(2670, 3376, 0),
+      10548,
       Varbits.FARMING_4774,
       Varbits.FARMING_4773,
       () ->
@@ -35,12 +36,14 @@ public enum Location {
   CATHERBY(
       "Catherby",
       new WorldPoint(2813, 3465, 0),
+      11062,
       Varbits.FARMING_4774,
       Varbits.FARMING_4773,
       () -> false),
   FALADOR(
       "Falador",
       new WorldPoint(3058, 3310, 0),
+      12083,
       Varbits.FARMING_4774,
       Varbits.FARMING_4773,
       () ->
@@ -49,6 +52,7 @@ public enum Location {
   FARMING_GUILD(
       "Farming Guild",
       new WorldPoint(1239, 3728, 0),
+      4922,
       Varbits.FARMING_4775,
       Varbits.FARMING_7906,
       () -> {
@@ -76,12 +80,14 @@ public enum Location {
   HARMONY_ISLAND(
       "Harmony Island",
       new WorldPoint(3790, 2839, 0),
+      15148,
       Varbits.FARMING_4772,
       0,
       () -> Location.tpThroughHouse(37589)),
   HOSIDIUS(
       "Hosidius",
       new WorldPoint(1740, 3550, 0),
+      6967,
       Varbits.FARMING_4774,
       Varbits.FARMING_4773,
       () -> {
@@ -102,6 +108,7 @@ public enum Location {
   PORT_PHASMATYS(
       "Port Phasmatys",
       new WorldPoint(3606, 3531, 0),
+      14391,
       Varbits.FARMING_4774,
       Varbits.FARMING_4773,
       () -> {
@@ -118,23 +125,26 @@ public enum Location {
   TROLL_STRONGHOLD(
       "Troll Stronghold",
       new WorldPoint(2828, 3694, 0),
+      11321,
       Varbits.FARMING_4771,
       0,
       () -> Location.tpThroughHouse(33179)),
   WEISS(
       "Weiss",
       new WorldPoint(2847, 3935, 0),
+      11325,
       Varbits.FARMING_4771,
       0,
       () -> Location.tpThroughHouse(37581));
 
   private final String name;
   private final WorldPoint patchPoint;
+  private final int regionId;
   private final int herbVarbit;
   private final int flowerVarbit;
   private final Teleportable teleportable;
 
-  @Setter private boolean done;
+  @Setter private boolean skip;
 
   public static boolean tpThroughHouse(int portalId) {
     Magic.cast(Regular.TELEPORT_TO_HOUSE);
@@ -157,7 +167,7 @@ public enum Location {
         30);
   }
 
-  public boolean hasLimpwurtPatch() {
+  public boolean hasFlowerPatch() {
     return flowerVarbit != 0;
   }
 

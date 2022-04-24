@@ -57,8 +57,8 @@ public class Cure extends Task {
       Constants.TOOLS_CLOSE_WIDGET.get().interact("Close");
 
       if (!Time.sleepTicksUntil(() -> Inventory.contains(ItemID.PLANT_CURE), 5)) {
-        MessageUtils.addMessage("No plant cure found, can't cure herb.");
-        plugin.getCurrentLocation().setDone(true);
+        MessageUtils.addMessage("No plant cure found, can't cure diseased plant.");
+        plugin.getCurrentLocation().setSkip(true);
         return;
       }
     }
@@ -71,10 +71,6 @@ public class Cure extends Task {
           GameThread.invoke(() -> plantCure.useOn(o));
           Time.sleepTicksUntil(() -> Inventory.getCount(ItemID.PLANT_CURE) < plantCureCount, 30);
         });
-
-    if (diseasedPatches.size() == 2 || !plugin.getCurrentLocation().hasLimpwurtPatch()) {
-      plugin.getCurrentLocation().setDone(true);
-    }
   }
 
   private List<TileObject> getDiseasedPatches() {

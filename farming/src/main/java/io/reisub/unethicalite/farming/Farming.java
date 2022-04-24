@@ -46,6 +46,7 @@ import net.runelite.client.input.KeyListener;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.timetracking.farming.CropState;
+import net.runelite.client.plugins.timetracking.farming.Produce;
 import org.pf4j.Extension;
 
 @PluginDescriptor(
@@ -76,13 +77,13 @@ public class Farming extends TickScript implements KeyListener {
     addTask(HandleBank.class);
     addTask(GoToPatch.class);
     addTask(WithdrawTools.class);
-    addTask(Note.class);
     addTask(Cure.class);
     addTask(Clear.class);
     addTask(PickLimpwurt.class);
     addTask(PlantLimpwurt.class);
     addTask(PickHerb.class);
     addTask(PlantHerb.class);
+    addTask(Note.class);
     addTask(DepositTools.class);
   }
 
@@ -91,7 +92,7 @@ public class Farming extends TickScript implements KeyListener {
     super.onStop();
 
     for (Location location : Location.values()) {
-      location.setDone(false);
+      location.setSkip(false);
     }
 
     locationQueue.clear();
@@ -108,7 +109,7 @@ public class Farming extends TickScript implements KeyListener {
       return;
     }
 
-    if (currentLocation == null || currentLocation.isDone()) {
+    if (currentLocation == null || isCurrentLocationDone()) {
       while (!locationQueue.isEmpty()) {
         Location location = locationQueue.poll();
 
@@ -268,6 +269,52 @@ public class Farming extends TickScript implements KeyListener {
     } else {
       return patchState.getCropState();
     }
+  }
+
+  public boolean isCurrentLocationDone() {
+    if (!Utils.isInRegion(currentLocation.getRegionId())) {
+      return false;
+    }
+
+    final int herbVarbitValue = Vars.getBit(currentLocation.getHerbVarbit());
+    final PatchState herbPatchState = PatchImplementation.HERB.forVarbitValue(herbVarbitValue);
+
+    final boolean herbReady =
+        herbPatchState != null
+            && herbPatchState.getProduce() != Produce.WEEDS
+            && herbPatchState.getCropState() == CropState.GROWING;
+
+    final boolean herbDiseased =
+        herbPatchState != null
+            && herbPatchState.getProduce() != Produce.WEEDS
+            && herbPatchState.getCropState() == CropState.DISEASED;
+
+    boolean flowerReady;
+    boolean flowerDiseased = false;
+
+    if (currentLocation.hasFlowerPatch()) {
+      final int flowerVarbitValue = Vars.getBit(currentLocation.getFlowerVarbit());
+      final PatchState flowerPatchState =
+          PatchImplementation.FLOWER.forVarbitValue(flowerVarbitValue);
+
+      flowerReady =
+          flowerPatchState != null
+              && flowerPatchState.getProduce() != Produce.WEEDS
+              && flowerPatchState.getCropState() == CropState.GROWING;
+
+      flowerDiseased =
+          flowerPatchState != null
+              && flowerPatchState.getProduce() != Produce.WEEDS
+              && flowerPatchState.getCropState() == CropState.DISEASED;
+    } else {
+      flowerReady = true;
+    }
+
+    return (herbReady || (herbDiseased && currentLocation.isSkip()))
+        && (flowerReady || (flowerDiseased && currentLocation.isSkip()))
+        && !Inventory.contains(Predicates.ids(Constants.GRIMY_HERB_IDS))
+        && !Inventory.contains(Predicates.ids(Constants.CLEAN_HERB_IDS))
+        && !Inventory.contains(ItemID.LIMPWURT_ROOT);
   }
 
   private void buildLocationQueue() {

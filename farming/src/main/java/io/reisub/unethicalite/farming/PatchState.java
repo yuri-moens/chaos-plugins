@@ -6,9 +6,9 @@ import net.runelite.client.plugins.timetracking.farming.Produce;
 
 @Value
 public class PatchState {
-  private final Produce produce;
-  private final CropState cropState;
-  private final int stage;
+  Produce produce;
+  CropState cropState;
+  int stage;
 
   public int getStages() {
     return cropState == CropState.HARVESTABLE || cropState == CropState.FILLING

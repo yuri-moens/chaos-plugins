@@ -6,7 +6,6 @@ import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.game.Vars;
 import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.utils.MessageUtils;
 import io.reisub.unethicalite.farming.Config;
 import io.reisub.unethicalite.farming.Farming;
 import io.reisub.unethicalite.farming.Location;
@@ -35,17 +34,20 @@ public class PlantHerb extends Task {
 
   @Override
   public boolean validate() {
+    if (Inventory.isFull() || !Inventory.contains(Predicates.ids(Constants.HERB_SEED_IDS))) {
+      return false;
+    }
+
     TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
 
     if (patch == null) {
       return false;
     }
 
-    int varbitValue = Vars.getBit(plugin.getCurrentLocation().getHerbVarbit());
-    PatchState patchState = PatchImplementation.HERB.forVarbitValue(varbitValue);
+    final int varbitValue = Vars.getBit(plugin.getCurrentLocation().getHerbVarbit());
+    final PatchState patchState = PatchImplementation.HERB.forVarbitValue(varbitValue);
 
-    return !plugin.getCurrentLocation().isDone()
-        && patchState != null
+    return patchState != null
         && patchState.getProduce() == Produce.WEEDS
         && patchState.getCropState() == CropState.GROWING;
   }
@@ -59,8 +61,6 @@ public class PlantHerb extends Task {
 
     List<Item> seeds = Inventory.getAll(Predicates.ids(Constants.HERB_SEED_IDS));
     if (seeds == null || seeds.isEmpty()) {
-      plugin.getCurrentLocation().setDone(true);
-      MessageUtils.addMessage("No seeds found. Skipping location.");
       return;
     }
 
@@ -110,7 +110,6 @@ public class PlantHerb extends Task {
     }
 
     GameThread.invoke(() -> compost.useOn(patch));
-    plugin.getCurrentLocation().setDone(true);
     Time.sleepTicks(3);
   }
 }

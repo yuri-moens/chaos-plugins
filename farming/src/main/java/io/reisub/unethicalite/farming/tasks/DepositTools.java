@@ -28,7 +28,7 @@ public class DepositTools extends Task {
     NPC leprechaun = NPCs.getNearest("Tool Leprechaun");
 
     return plugin.getLocationQueue().isEmpty()
-        && (plugin.getCurrentLocation() == null || plugin.getCurrentLocation().isDone())
+        && (plugin.getCurrentLocation() == null || plugin.isCurrentLocationDone())
         && Inventory.contains(ItemID.SEED_DIBBER)
         && leprechaun != null;
   }
