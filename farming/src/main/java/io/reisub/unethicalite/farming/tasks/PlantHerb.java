@@ -54,25 +54,25 @@ public class PlantHerb extends Task {
 
   @Override
   public void execute() {
-    TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
+    final TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
     if (patch == null) {
       return;
     }
 
-    List<Item> seeds = Inventory.getAll(Predicates.ids(Constants.HERB_SEED_IDS));
+    final List<Item> seeds = Inventory.getAll(Predicates.ids(Constants.HERB_SEED_IDS));
     if (seeds == null || seeds.isEmpty()) {
       return;
     }
 
-    ConfigList diseaseFreeSeedsList = ConfigList.parseList(config.diseaseFreeSeeds());
-
-    List<Item> diseaseFreeSeeds = Inventory.getAll(Predicates.itemConfigList(diseaseFreeSeedsList));
+    final ConfigList diseaseFreeSeedsList = ConfigList.parseList(config.diseaseFreeSeeds());
+    final List<Item> diseaseFreeSeeds =
+        Inventory.getAll(Predicates.itemConfigList(diseaseFreeSeedsList));
+    final Location currentLocation = plugin.getCurrentLocation();
 
     Item seed = null;
 
     if (!diseaseFreeSeeds.isEmpty()) {
-      if (plugin.getCurrentLocation() == Location.TROLL_STRONGHOLD
-          || plugin.getCurrentLocation() == Location.WEISS) {
+      if (currentLocation == Location.TROLL_STRONGHOLD || currentLocation == Location.WEISS) {
         seed = diseaseFreeSeeds.get(0);
       } else {
         for (Item s : seeds) {
@@ -99,8 +99,7 @@ public class PlantHerb extends Task {
     Time.sleepTicksUntil(() -> !Players.getLocal().isAnimating(), 3);
     GameThread.invoke(() -> finalSeed.useOn(patch));
 
-    if (!Time.sleepTicksUntil(
-        () -> Vars.getBit(plugin.getCurrentLocation().getHerbVarbit()) > 3, 20)) {
+    if (!Time.sleepTicksUntil(() -> Vars.getBit(currentLocation.getHerbVarbit()) > 3, 20)) {
       return;
     }
 
