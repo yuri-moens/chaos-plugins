@@ -682,6 +682,16 @@ public interface Config extends net.runelite.client.config.Config {
   }
 
   @ConfigItem(
+      keyName = "grotesqueGuardiansPrayerFlick",
+      name = "Grotesque Guardians Auto Prayer Flick",
+      description = "Automatically swap prayers against Grotesque Guardians",
+      section = "prayerConfig",
+      position = 316)
+  default boolean grotesqueGuardiansPrayerFlick() {
+    return true;
+  }
+
+  @ConfigItem(
       keyName = "bones",
       name = "Bones",
       description = "Choose which bones to auto-bury.",
@@ -909,6 +919,16 @@ public interface Config extends net.runelite.client.config.Config {
       section = "swapConfig",
       position = 613)
   default boolean autoSwapZulrah() {
+    return true;
+  }
+
+  @ConfigItem(
+      keyName = "autoSwapGrotesqueGuardians",
+      name = "Auto swap Grotesque Guardians",
+      description = "Automatically swap sets against Grotesque Guardians",
+      section = "swapConfig",
+      position = 614)
+  default boolean autoSwapGrotesqueGuardians() {
     return true;
   }
 

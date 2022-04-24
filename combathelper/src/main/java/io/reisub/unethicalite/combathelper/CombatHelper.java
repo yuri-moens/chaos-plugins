@@ -30,6 +30,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.cerberus.CerberusPlugin;
+import net.runelite.client.plugins.grotesqueguardians.GrotesqueGuardiansPlugin;
 import net.runelite.client.plugins.interaction.InteractionPlugin;
 import net.runelite.client.plugins.itemstats.ItemStatPlugin;
 import net.runelite.client.plugins.zulrah.ZulrahPlugin;
@@ -44,6 +45,7 @@ import org.pf4j.Extension;
 @PluginDependency(InteractionPlugin.class)
 @PluginDependency(CerberusPlugin.class)
 @PluginDependency(ZulrahPlugin.class)
+@PluginDependency(GrotesqueGuardiansPlugin.class)
 @Slf4j
 @Extension
 public class CombatHelper extends Plugin {

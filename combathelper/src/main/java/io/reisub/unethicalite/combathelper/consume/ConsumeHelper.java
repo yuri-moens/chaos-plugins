@@ -471,7 +471,7 @@ public class ConsumeHelper extends Helper {
       if (food != null) {
         missingHp += getHealed(food.getId());
 
-        food.interact(0);
+        food.interact(1);
         lastAte = Game.getClient().getTickCount();
         didAction = true;
       }
@@ -670,7 +670,7 @@ public class ConsumeHelper extends Helper {
               ItemID.COOKED_KARAMBWAN_23533,
               ItemID.BLIGHTED_KARAMBWAN);
       if (karambwan != null) {
-        karambwan.interact(0);
+        karambwan.interact(1);
         lastAte = Game.getClient().getTickCount();
         didAction = true;
       }
@@ -761,7 +761,7 @@ public class ConsumeHelper extends Helper {
       return false;
     }
 
-    potion.interact(0);
+    potion.interact(1);
     lastPot = Game.getClient().getTickCount();
     return true;
   }

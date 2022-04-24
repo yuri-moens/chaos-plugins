@@ -107,7 +107,7 @@ public class PrayerHelper extends Helper {
     memorizedPlayers = null;
   }
 
-  @Subscribe(priority = 100)
+  @Subscribe(priority = 99)
   private void onGameTick(GameTick event) {
     checkGorillaAttacks();
     checkPendingAttacks();

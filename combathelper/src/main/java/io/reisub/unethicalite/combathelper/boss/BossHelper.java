@@ -14,6 +14,8 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.cerberus.CerberusPlugin;
 import net.runelite.client.plugins.cerberus.domain.Cerberus;
 import net.runelite.client.plugins.cerberus.domain.CerberusAttack;
+import net.runelite.client.plugins.grotesqueguardians.GrotesqueGuardiansPlugin;
+import net.runelite.client.plugins.grotesqueguardians.entity.Dusk;
 import net.runelite.client.plugins.zulrah.ZulrahPlugin;
 
 @Singleton
@@ -24,8 +26,14 @@ public class BossHelper extends Helper {
 
   @Inject private ZulrahPlugin zulrahPlugin;
 
-  @Subscribe
+  @Inject private GrotesqueGuardiansPlugin grotesqueGuardiansPlugin;
+
+  private WeaponStyle currentStyle;
+
+  @Subscribe(priority = 100)
   private void onGameTick(GameTick event) {
+    currentStyle = Combat.getCurrentWeaponStyle();
+
     if (config.cerberusPrayerFlick() && cerberusPlugin.getCerberus() != null) {
       cerberusFlick();
     }
@@ -36,6 +44,14 @@ public class BossHelper extends Helper {
 
     if (config.zulrahPrayerFlick() && !zulrahPlugin.getZulrahData().isEmpty()) {
       zulrahFlick();
+    }
+
+    if (config.autoSwapGrotesqueGuardians() && grotesqueGuardiansPlugin.isOnRoof()) {
+      grotesqueGuardiansSwap();
+    }
+
+    if (config.grotesqueGuardiansPrayerFlick() && grotesqueGuardiansPlugin.isOnRoof()) {
+      grotesqueGuardiansFlick();
     }
   }
 
@@ -71,8 +87,6 @@ public class BossHelper extends Helper {
   }
 
   private void zulrahSwap() {
-    WeaponStyle current = Combat.getCurrentWeaponStyle();
-
     zulrahPlugin
         .getZulrahData()
         .forEach(
@@ -83,12 +97,12 @@ public class BossHelper extends Helper {
                           switch (phase.getZulrahNpc().getType()) {
                             case MELEE:
                             case RANGE:
-                              if (current != WeaponStyle.MAGIC) {
+                              if (currentStyle != WeaponStyle.MAGIC) {
                                 plugin.getSwapHelper().swap(true, false, WeaponStyle.MAGIC);
                               }
                               break;
                             case MAGIC:
-                              if (current != WeaponStyle.RANGE) {
+                              if (currentStyle != WeaponStyle.RANGE) {
                                 plugin.getSwapHelper().swap(true, false, WeaponStyle.RANGE);
                               }
                               break;
@@ -119,5 +133,57 @@ public class BossHelper extends Helper {
                             default:
                           }
                         }));
+  }
+
+  private void grotesqueGuardiansSwap() {
+    final Dusk dusk = grotesqueGuardiansPlugin.getDusk();
+
+    if (dusk == null) {
+      return;
+    }
+
+    switch (dusk.getPhase()) {
+      case PHASE_1:
+      case PHASE_3:
+        if (currentStyle != WeaponStyle.RANGE) {
+          plugin.getSwapHelper().swap(true, false, WeaponStyle.RANGE);
+        }
+        break;
+      case PHASE_2:
+      case PHASE_4:
+        if (currentStyle != WeaponStyle.MELEE) {
+          plugin.getSwapHelper().swap(true, false, WeaponStyle.MELEE);
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  private void grotesqueGuardiansFlick() {
+    final Dusk dusk = grotesqueGuardiansPlugin.getDusk();
+
+    if (dusk == null) {
+      return;
+    }
+
+    switch (dusk.getPhase()) {
+      case PHASE_1:
+      case PHASE_3:
+        plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
+        break;
+      case PHASE_2:
+        plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MELEE, false);
+        break;
+      case PHASE_4:
+        if (dusk.getLastAttackPrayer() == Prayer.PROTECT_FROM_MELEE) {
+          plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MELEE, false);
+        } else {
+          plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
+        }
+        break;
+      default:
+        break;
+    }
   }
 }

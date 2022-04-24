@@ -44,7 +44,7 @@ public class BonesHelper extends Helper {
         () -> {
           Item buryItem = Inventory.getFirst(itemIds);
           if (buryItem != null) {
-            buryItem.interact(0);
+            buryItem.interact(1);
           }
         },
         Rand.nextInt(0, 100));
