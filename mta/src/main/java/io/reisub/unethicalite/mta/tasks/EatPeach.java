@@ -29,7 +29,7 @@ public class EatPeach extends Task {
       return;
     }
 
-    peach.interact(0);
+    peach.interact(1);
     last = Static.getClient().getTickCount();
   }
 }

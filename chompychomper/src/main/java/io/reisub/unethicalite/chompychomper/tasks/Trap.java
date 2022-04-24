@@ -55,7 +55,7 @@ public class Trap extends Task {
     Inventory.getAll(ItemID.BLOATED_TOAD)
         .forEach(
             (i) -> {
-              i.interact(0);
+              i.interact(1);
               Time.sleepTicks(4);
             });
   }

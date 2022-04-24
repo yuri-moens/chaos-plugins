@@ -37,7 +37,7 @@ public class Inflate extends Task {
 
     int toadCount = Inventory.getCount(ItemID.BLOATED_TOAD);
 
-    GameThread.invoke(() -> toad.interact(0));
+    GameThread.invoke(() -> toad.interact(1));
     Time.sleepTicksUntil(() -> Inventory.getCount(ItemID.BLOATED_TOAD) > toadCount, 20);
   }
 }

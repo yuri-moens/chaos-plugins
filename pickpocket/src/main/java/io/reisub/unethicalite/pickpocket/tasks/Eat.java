@@ -32,7 +32,7 @@ public class Eat extends Task {
   @Override
   public void execute() {
     Inventory.getFirst(i -> i.hasAction("Eat", "Drink") && i.getId() != ItemID.BLOOD_PINT)
-        .interact(0);
+        .interact(1);
     Time.sleepTick();
 
     last = Static.getClient().getTickCount();

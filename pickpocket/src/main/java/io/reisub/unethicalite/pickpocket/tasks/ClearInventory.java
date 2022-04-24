@@ -54,7 +54,7 @@ public class ClearInventory extends Task {
     Inventory.getAll(ItemID.COOKED_MYSTERY_MEAT)
         .forEach(
             i -> {
-              i.interact(0);
+              i.interact(1);
               Time.sleepTicks(3);
             });
 
