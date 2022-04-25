@@ -2,6 +2,7 @@ package io.reisub.unethicalite.birdhouse.tasks;
 
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -31,13 +32,13 @@ public class AddSeeds extends Task {
 
   @Override
   public void execute() {
-    Item seeds = Inventory.getFirst((i) -> Constants.BIRD_HOUSE_SEED_IDS.contains(i.getId()));
+    final Item seeds = Inventory.getFirst((i) -> Constants.BIRD_HOUSE_SEED_IDS.contains(i.getId()));
     if (seeds == null) {
       return;
     }
 
-    int quantity = seeds.getQuantity();
-    seeds.useOn(emptyBirdhouse);
+    final int quantity = seeds.getQuantity();
+    GameThread.invoke(() -> seeds.useOn(emptyBirdhouse));
 
     Time.sleepTicksUntil(
         () ->
