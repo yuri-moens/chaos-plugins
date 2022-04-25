@@ -402,8 +402,8 @@ public class ConsumeHelper extends Helper {
     }
 
     switch (event.getKey()) {
-      case "minEatHP":
-      case "maxEatHP":
+      case "minEatHp":
+      case "maxEatHp":
         generateNewEatThreshold();
         break;
       case "minPrayerPoints":

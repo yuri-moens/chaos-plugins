@@ -56,6 +56,8 @@ public class CombatHelper extends Plugin {
   @Inject @Getter private PrayerHelper prayerHelper;
   @Inject @Getter private SwapHelper swapHelper;
 
+  @Inject @Getter private MiscHelper miscHelper;
+
   @Provides
   Config provideConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
@@ -73,7 +75,7 @@ public class CombatHelper extends Plugin {
     helpers.add(injector.getInstance(BonesHelper.class));
     helpers.add(injector.getInstance(AlchHelper.class));
     helpers.add(swapHelper);
-    helpers.add(injector.getInstance(MiscHelper.class));
+    helpers.add(miscHelper);
     helpers.add(injector.getInstance(BossHelper.class));
 
     for (Helper helper : helpers) {

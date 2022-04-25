@@ -1,6 +1,7 @@
 package io.reisub.unethicalite.combathelper.prayer;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.NPCs;
 import dev.unethicalite.api.entities.Players;
@@ -72,8 +73,9 @@ public class PrayerHelper extends Helper {
   private boolean firstFlick;
   private boolean toggledOff;
   private boolean switchToInventory;
-  private volatile QuickPrayer currentOverhead;
-  private volatile Set<QuickPrayer> swapPrayers;
+  private QuickPrayer currentOverhead;
+  private QuickPrayer currentDefensive;
+  private Set<QuickPrayer> swapPrayers;
 
   private Map<NPC, DemonicGorilla> gorillas;
   private List<WorldPoint> recentBoulders;
@@ -107,7 +109,7 @@ public class PrayerHelper extends Helper {
     memorizedPlayers = null;
   }
 
-  @Subscribe(priority = 99)
+  @Subscribe(priority = 90)
   private void onGameTick(GameTick event) {
     checkGorillaAttacks();
     checkPendingAttacks();
@@ -345,6 +347,8 @@ public class PrayerHelper extends Helper {
       return;
     }
 
+    quickPrayers = Sets.newHashSet(quickPrayers);
+
     if (quickPrayers.contains(currentOverhead)) {
       currentOverhead = QuickPrayer.NONE;
     } else if (quickPrayers.contains(QuickPrayer.PROTECT_FROM_MAGIC)) {
@@ -353,6 +357,24 @@ public class PrayerHelper extends Helper {
       currentOverhead = QuickPrayer.PROTECT_FROM_MISSILES;
     } else if (quickPrayers.contains(QuickPrayer.PROTECT_FROM_MELEE)) {
       currentOverhead = QuickPrayer.PROTECT_FROM_MELEE;
+    }
+
+    quickPrayers.remove(currentDefensive);
+
+    if (quickPrayers.contains(QuickPrayer.THICK_SKIN)) {
+      currentDefensive = QuickPrayer.THICK_SKIN;
+    } else if (quickPrayers.contains(QuickPrayer.ROCK_SKIN)) {
+      currentDefensive = QuickPrayer.ROCK_SKIN;
+    } else if (quickPrayers.contains(QuickPrayer.STEEL_SKIN)) {
+      currentDefensive = QuickPrayer.STEEL_SKIN;
+    } else if (quickPrayers.contains(QuickPrayer.CHIVALRY)) {
+      currentDefensive = QuickPrayer.CHIVALRY;
+    } else if (quickPrayers.contains(QuickPrayer.PIETY)) {
+      currentDefensive = QuickPrayer.PIETY;
+    } else if (quickPrayers.contains(QuickPrayer.RIGOUR)) {
+      currentDefensive = QuickPrayer.RIGOUR;
+    } else if (quickPrayers.contains(QuickPrayer.AUGURY)) {
+      currentDefensive = QuickPrayer.AUGURY;
     }
 
     if (swapPrayers == null) {

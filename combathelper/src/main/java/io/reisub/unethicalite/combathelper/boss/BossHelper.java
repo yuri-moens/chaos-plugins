@@ -6,10 +6,13 @@ import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.combathelper.Helper;
 import io.reisub.unethicalite.combathelper.prayer.QuickPrayer;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.runelite.api.Prayer;
+import net.runelite.api.Skill;
 import net.runelite.api.events.GameTick;
+import net.runelite.api.events.ProjectileSpawned;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.cerberus.CerberusPlugin;
 import net.runelite.client.plugins.cerberus.domain.Cerberus;
@@ -28,9 +31,11 @@ public class BossHelper extends Helper {
 
   @Inject private GrotesqueGuardiansPlugin grotesqueGuardiansPlugin;
 
+  private static final int ZULRAH_RANGED_ANIMATION = 1044;
+
   private WeaponStyle currentStyle;
 
-  @Subscribe(priority = 100)
+  @Subscribe(priority = 95)
   private void onGameTick(GameTick event) {
     currentStyle = Combat.getCurrentWeaponStyle();
 
@@ -52,6 +57,23 @@ public class BossHelper extends Helper {
 
     if (config.grotesqueGuardiansPrayerFlick() && grotesqueGuardiansPlugin.isOnRoof()) {
       grotesqueGuardiansFlick();
+    }
+  }
+
+  @Subscribe(priority = 80)
+  private void onProjectileSpawned(ProjectileSpawned event) {
+    if (config.zulrahAutoVengeance() && event.getProjectile().getId() == ZULRAH_RANGED_ANIMATION) {
+      zulrahPlugin
+          .getZulrahData()
+          .forEach(
+              data ->
+                  data.getCurrentZulrahNpc()
+                      .ifPresent(
+                          zulrah -> {
+                            if (zulrah.getType().getSkill() == Skill.MAGIC) {
+                              plugin.getMiscHelper().castVengeance();
+                            }
+                          }));
     }
   }
 
@@ -94,45 +116,59 @@ public class BossHelper extends Helper {
                 data.getCurrentPhase()
                     .ifPresent(
                         phase -> {
-                          switch (phase.getZulrahNpc().getType()) {
-                            case MELEE:
-                            case RANGE:
-                              if (currentStyle != WeaponStyle.MAGIC) {
-                                plugin.getSwapHelper().swap(true, false, WeaponStyle.MAGIC);
-                              }
-                              break;
-                            case MAGIC:
-                              if (currentStyle != WeaponStyle.RANGE) {
-                                plugin.getSwapHelper().swap(true, false, WeaponStyle.RANGE);
-                              }
-                              break;
-                            default:
+                          if (phase.getZulrahNpc().isJad()) {
+                            if (currentStyle != WeaponStyle.MAGIC) {
+                              plugin.getSwapHelper().swap(true, false, WeaponStyle.MAGIC);
+                            }
+                          } else {
+                            switch (phase.getZulrahNpc().getType()) {
+                              case MELEE:
+                              case RANGE:
+                                if (currentStyle != WeaponStyle.MAGIC) {
+                                  plugin.getSwapHelper().swap(true, false, WeaponStyle.MAGIC);
+                                }
+                                break;
+                              case MAGIC:
+                                if (currentStyle != WeaponStyle.RANGE) {
+                                  plugin.getSwapHelper().swap(true, false, WeaponStyle.RANGE);
+                                }
+                                break;
+                              default:
+                            }
                           }
                         }));
   }
 
   private void zulrahFlick() {
+    AtomicReference<Prayer> prayer = new AtomicReference<>();
+
     zulrahPlugin
         .getZulrahData()
         .forEach(
             data ->
                 data.getCurrentPhasePrayer()
-                    .ifPresent(
-                        prayer -> {
-                          switch (prayer) {
-                            case PROTECT_FROM_MAGIC:
-                              plugin
-                                  .getPrayerHelper()
-                                  .setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
-                              break;
-                            case PROTECT_FROM_MISSILES:
-                              plugin
-                                  .getPrayerHelper()
-                                  .setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
-                              break;
-                            default:
-                          }
-                        }));
+                    .ifPresentOrElse(
+                        prayer::set,
+                        () -> data.getNextPhase()
+                            .ifPresent(
+                                phase -> {
+                                  prayer.set(phase.getAttributes().getPrayer());
+                                })));
+
+    if (prayer.get() == null) {
+      return;
+    }
+
+    switch (prayer.get()) {
+      case PROTECT_FROM_MAGIC:
+        plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
+        break;
+      case PROTECT_FROM_MISSILES:
+        plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
+        break;
+      default:
+        break;
+    }
   }
 
   private void grotesqueGuardiansSwap() {

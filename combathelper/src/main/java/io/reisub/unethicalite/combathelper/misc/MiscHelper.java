@@ -3,12 +3,16 @@ package io.reisub.unethicalite.combathelper.misc;
 import dev.unethicalite.api.commons.Rand;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.game.Combat;
+import dev.unethicalite.api.game.Combat.AttackStyle;
 import dev.unethicalite.api.game.Game;
+import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.items.Equipment;
 import dev.unethicalite.api.magic.Lunar;
 import dev.unethicalite.api.magic.Magic;
 import dev.unethicalite.api.magic.Regular;
 import dev.unethicalite.api.utils.MessageUtils;
+import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.combathelper.Helper;
 import java.awt.event.KeyEvent;
 import javax.inject.Singleton;
@@ -23,7 +27,9 @@ import net.runelite.client.eventbus.Subscribe;
 @Slf4j
 @Singleton
 public class MiscHelper extends Helper {
+  private static final int VENGEANCE_COOLDOWN = 50;
   private boolean pkTeleport;
+  private int lastVengance;
 
   @Subscribe(priority = 100)
   private void onPlayerSpawned(PlayerSpawned event) {
@@ -84,7 +90,15 @@ public class MiscHelper extends Helper {
       plugin.schedule(this::teleport, Rand.nextInt(100, 150));
       e.consume();
     } else if (config.vengeanceHotkey().matches(e)) {
-      plugin.schedule(this::castVengeance, Rand.nextInt(100, 150));
+      castVengeance();
+    } else if (config.attackStyleOneHotkey().matches(e)) {
+      GameThread.invoke(() -> Combat.setAttackStyle(AttackStyle.FIRST));
+    } else if (config.attackStyleTwoHotkey().matches(e)) {
+      GameThread.invoke(() -> Combat.setAttackStyle(AttackStyle.SECOND));
+    } else if (config.attackStyleThreeHotkey().matches(e)) {
+      GameThread.invoke(() -> Combat.setAttackStyle(AttackStyle.THIRD));
+    } else if (config.attackStyleFourHotkey().matches(e)) {
+      GameThread.invoke(() -> Combat.setAttackStyle(AttackStyle.FOURTH));
     }
   }
 
@@ -108,9 +122,13 @@ public class MiscHelper extends Helper {
     }
   }
 
-  private void castVengeance() {
-    if (Lunar.VENGEANCE.canCast()) {
-      Magic.cast(Lunar.VENGEANCE);
-    }
+  public void castVengeance() {
+    plugin.schedule(() -> {
+      if (Static.getClient().getTickCount() - lastVengance > VENGEANCE_COOLDOWN
+          && Lunar.VENGEANCE.canCast()) {
+        Magic.cast(Lunar.VENGEANCE);
+        lastVengance = Static.getClient().getTickCount();
+      }
+    }, Rand.nextInt(100, 150));
   }
 }

@@ -983,4 +983,54 @@ public interface Config extends net.runelite.client.config.Config {
   default Keybind vengeanceHotkey() {
     return new Keybind(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK);
   }
+
+  @ConfigItem(
+      keyName = "zulrahAutoVengeance",
+      name = "Zulrah auto Vengeance",
+      description = "Automatically cast vengeance on Zulrah ranged attack during magic phase",
+      section = "miscConfig",
+      position = 706)
+  default boolean zulrahAutoVengeance() {
+    return false;
+  }
+
+  @ConfigItem(
+      keyName = "attackStyleOneHotkey",
+      name = "Attack style 1",
+      description = "Hotkey to switch to attack style 1",
+      section = "miscConfig",
+      position = 710)
+  default Keybind attackStyleOneHotkey() {
+    return new Keybind(KeyEvent.VK_NUMPAD1, InputEvent.CTRL_DOWN_MASK);
+  }
+
+  @ConfigItem(
+      keyName = "attackStyleTwoHotkey",
+      name = "Attack style 2",
+      description = "Hotkey to switch to attack style 2",
+      section = "miscConfig",
+      position = 711)
+  default Keybind attackStyleTwoHotkey() {
+    return new Keybind(KeyEvent.VK_NUMPAD2, InputEvent.CTRL_DOWN_MASK);
+  }
+
+  @ConfigItem(
+      keyName = "attackStyleThreeHotkey",
+      name = "Attack style 3",
+      description = "Hotkey to switch to attack style 3",
+      section = "miscConfig",
+      position = 712)
+  default Keybind attackStyleThreeHotkey() {
+    return new Keybind(KeyEvent.VK_NUMPAD3, InputEvent.CTRL_DOWN_MASK);
+  }
+
+  @ConfigItem(
+      keyName = "attackStyleFourHotkey",
+      name = "Attack style 4",
+      description = "Hotkey to switch to attack style 4",
+      section = "miscConfig",
+      position = 713)
+  default Keybind attackStyleFourHotkey() {
+    return new Keybind(KeyEvent.VK_NUMPAD4, InputEvent.CTRL_DOWN_MASK);
+  }
 }
