@@ -30,6 +30,10 @@ public class PickHerb extends Task {
 
   @Override
   public boolean validate() {
+    if (Inventory.isFull()) {
+      return false;
+    }
+
     TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
 
     if (patch == null) {
