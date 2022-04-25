@@ -61,6 +61,7 @@ import org.pf4j.Extension;
 @Extension
 public class Farming extends TickScript implements KeyListener {
   private static final Set<Integer> ITEM_OPCODES = ImmutableSet.of(1007, 25, 57);
+  private static final int INVENTORY_WIDGET_ID = 9764864;
   private static final int FARMING_GUILD_REGION = 4922;
   @Getter private final Queue<Location> locationQueue = new LinkedList<>();
   @Inject private Config config;
@@ -125,9 +126,13 @@ public class Farming extends TickScript implements KeyListener {
     }
   }
 
+  // TODO: put custom entry at the top of the menu
   @Subscribe
   private void onMenuEntryAdded(MenuEntryAdded event) {
-    if (!config.oneClickMode() || !ITEM_OPCODES.contains(event.getType())) {
+    if (!config.oneClickMode()
+        || !ITEM_OPCODES.contains(event.getType())
+        || event.getActionParam1() != INVENTORY_WIDGET_ID
+        || event.getIdentifier() != 0) {
       return;
     }
 
@@ -205,8 +210,7 @@ public class Farming extends TickScript implements KeyListener {
 
     if (OneClick.ONE_CLICK_GAME_OBJECTS_MAP.containsKey(itemId)) {
       final TileObject nearest =
-          TileObjects.getNearest(
-              Predicates.ids(OneClick.ONE_CLICK_GAME_OBJECTS_MAP.get(itemId)));
+          TileObjects.getNearest(Predicates.ids(OneClick.ONE_CLICK_GAME_OBJECTS_MAP.get(itemId)));
       if (nearest == null) {
         return;
       }
