@@ -72,8 +72,10 @@ public class EnterCrypt extends Task {
         break;
     }
 
-    if (!Time.sleepTicksUntil(
-        () -> digArea.contains(Players.getLocal()) || !Players.getLocal().isMoving(), 30)) {
+    Time.sleepTicksUntil(
+        () -> digArea.contains(Players.getLocal()) || !Players.getLocal().isMoving(), 30);
+
+    if (!digArea.contains(Players.getLocal())) {
       return;
     }
 
