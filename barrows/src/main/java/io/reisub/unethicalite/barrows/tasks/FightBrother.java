@@ -72,6 +72,12 @@ public class FightBrother extends Task {
     Brother currentBrother = plugin.getCurrentBrother();
     WorldPoint currentLocation = Players.getLocal().getWorldLocation();
 
+    walkNextToStairs(currentBrother, currentLocation);
+
+    safespotInTunnels(currentBrother, currentLocation);
+  }
+
+  private void walkNextToStairs(Brother currentBrother, WorldPoint currentLocation) {
     if (currentBrother != Brother.KARIL
         && currentLocation.getPlane() == 3
         && !currentLocation.equals(currentBrother.getPointNextToStairs())
@@ -84,7 +90,9 @@ public class FightBrother extends Task {
       Movement.walk(currentBrother.getPointNextToStairs());
       Time.sleepTicks(1);
     }
+  }
 
+  private void safespotInTunnels(Brother currentBrother, WorldPoint currentLocation) {
     if (currentLocation.getPlane() == 0) {
       if (currentBrother.isMelee()) {
         Room currentRoom = Room.getCurrentRoom();
