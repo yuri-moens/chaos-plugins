@@ -3,6 +3,7 @@ package io.reisub.unethicalite.shopper.tasks;
 import dev.unethicalite.api.commons.Rand;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.NPCs;
+import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.items.Shop;
@@ -13,6 +14,7 @@ import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.NPC;
+import net.runelite.api.TileObject;
 
 public class OpenShop extends Task {
   @Inject private Shopper plugin;
@@ -39,12 +41,23 @@ public class OpenShop extends Task {
       ChaosMovement.walkTo(plugin.getNpcLocation(), 1);
     }
 
-    NPC npc = NPCs.getNearest(config.npcName());
-    if (npc == null) {
-      return;
+    if (config.isGameObject()) {
+      TileObject obj = TileObjects.getNearest(config.npcName());
+
+      if (obj == null) {
+        return;
+      }
+
+      GameThread.invoke(() -> obj.interact(config.tradeAction()));
+    } else {
+      NPC npc = NPCs.getNearest(config.npcName());
+      if (npc == null) {
+        return;
+      }
+
+      GameThread.invoke(() -> npc.interact(config.tradeAction()));
     }
 
-    GameThread.invoke(() -> npc.interact("Trade"));
     Time.sleepTicksUntil(Shop::isOpen, 20);
   }
 }

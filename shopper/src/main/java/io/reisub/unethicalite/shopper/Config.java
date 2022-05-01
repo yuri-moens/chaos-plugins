@@ -110,6 +110,24 @@ public interface Config extends net.runelite.client.config.Config {
   }
 
   @ConfigItem(
+      keyName = "isGameObject",
+      name = "Is game object",
+      description = "Enable if the store is actually a game object rather than an NPC",
+      position = 8)
+  default boolean isGameObject() {
+    return false;
+  }
+
+  @ConfigItem(
+      keyName = "tradeAction",
+      name = "Trade action",
+      description = "The action name to open the shop with. This is usually 'Trade'",
+      position = 9)
+  default String tradeAction() {
+    return "Trade";
+  }
+
+  @ConfigItem(
       keyName = "itemOneEnabled",
       name = "Enable",
       description = "Enable the buying of this item",
