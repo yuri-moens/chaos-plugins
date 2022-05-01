@@ -25,7 +25,7 @@ public class TarHerbs extends Task {
     return plugin.getConfig().task() == HerbloreTask.TAR_HERBS
         && plugin.getCurrentActivity() == Activity.IDLE
         && Inventory.contains(ItemID.PESTLE_AND_MORTAR)
-        && Inventory.getCount(ItemID.SWAMP_TAR) >= 15
+        && Inventory.getCount(true, ItemID.SWAMP_TAR) >= 15
         && Inventory.contains(plugin.getCleanTarHerbIds());
   }
 
@@ -35,8 +35,6 @@ public class TarHerbs extends Task {
 
     List<Item> herbs = Inventory.getAll(plugin.getCleanTarHerbIds());
     Item swampTar = Inventory.getFirst(ItemID.SWAMP_TAR);
-
-    int quantity = Math.min(herbs.size(), swampTar.getQuantity() / 15);
 
     swampTar.useOn(herbs.get(0));
     Time.sleepTicksUntil(Production::isOpen, 5);

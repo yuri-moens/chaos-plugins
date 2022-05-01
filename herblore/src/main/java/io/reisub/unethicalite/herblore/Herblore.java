@@ -66,7 +66,9 @@ public class Herblore extends TickScript {
 
     if (grimyHerbs == 0 && currentActivity == Activity.CLEANING_HERBS) {
       setActivity(Activity.IDLE);
-    } else if (cleanHerbs == 0 && currentActivity == Activity.CREATING_UNFINISHED_POTIONS) {
+    } else if (cleanHerbs == 0
+        && (currentActivity == Activity.CREATING_UNFINISHED_POTIONS
+            || currentActivity == Activity.TARRING_HERBS)) {
       setActivity(Activity.IDLE);
     } else if (bases == 0 && currentActivity == Activity.CREATING_POTIONS) {
       setActivity(Activity.IDLE);
