@@ -1,7 +1,11 @@
-version = "1.4.25"
+version = "1.0.0"
 
-project.extra["PluginName"] = "Chaos Utils"
-project.extra["PluginDescription"] = "Utilities for Chaos scripts"
+project.extra["PluginName"] = "Chaos Plank Maker"
+project.extra["PluginDescription"] = "Planking's still hip, right?"
+
+dependencies {
+    compileOnly(project(":utils"))
+}
 
 tasks {
     jar {
@@ -12,6 +16,10 @@ tasks {
                     "Plugin-Id" to nameToId(project.extra["PluginName"] as String),
                     "Plugin-Provider" to project.extra["PluginProvider"],
                     "Plugin-Description" to project.extra["PluginDescription"],
+                    "Plugin-Dependencies" to
+                            arrayOf(
+                                nameToId("Chaos Utils")
+                            ).joinToString(),
                     "Plugin-License" to project.extra["PluginLicense"]
                 )
             )

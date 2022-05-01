@@ -779,6 +779,7 @@ public class Constants {
           ObjectID.BANK_BOOTH_10527,
           ObjectID.BANK_BOOTH_10583,
           ObjectID.BANK_BOOTH_10584,
+          NullObjectID.NULL_10777,
           ObjectID.BANK_BOOTH_11338,
           ObjectID.BANK_BOOTH_12798,
           ObjectID.BANK_BOOTH_12799,
