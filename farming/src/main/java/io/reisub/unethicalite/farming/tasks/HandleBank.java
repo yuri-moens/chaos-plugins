@@ -34,6 +34,8 @@ public class HandleBank extends BankTask {
   public void execute() {
     open(true);
 
+    Time.sleepTicksUntil(Bank::isMainTabOpen, 3);
+
     ChaosBank.depositAllExcept(
         false,
         ItemID.SEED_DIBBER,
