@@ -5,7 +5,6 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.movement.Movement;
 import dev.unethicalite.api.widgets.Dialog;
-import dev.unethicalite.api.widgets.DialogOption;
 import dev.unethicalite.managers.Static;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.barrows.Brother;
@@ -13,6 +12,7 @@ import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
+import net.runelite.api.DialogOption;
 import net.runelite.api.TileObject;
 
 public class OpenTomb extends Task {

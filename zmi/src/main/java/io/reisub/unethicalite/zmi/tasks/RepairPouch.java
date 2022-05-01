@@ -6,11 +6,11 @@ import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.magic.Lunar;
 import dev.unethicalite.api.magic.Magic;
 import dev.unethicalite.api.widgets.Dialog;
-import dev.unethicalite.api.widgets.DialogOption;
 import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
+import net.runelite.api.DialogOption;
 import net.runelite.api.ItemID;
 import net.runelite.api.widgets.Widget;
 

@@ -3,12 +3,12 @@ package io.reisub.unethicalite.mahoganyhomes.tasks;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.magic.Lunar;
 import dev.unethicalite.api.widgets.Dialog;
-import dev.unethicalite.api.widgets.DialogOption;
 import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.mahoganyhomes.Config;
 import io.reisub.unethicalite.mahoganyhomes.MahoganyHomes;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
+import net.runelite.api.DialogOption;
 import net.runelite.api.widgets.Widget;
 
 public class GetTask extends Task {
