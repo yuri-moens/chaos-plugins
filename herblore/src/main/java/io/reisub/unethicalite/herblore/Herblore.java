@@ -5,6 +5,7 @@ import dev.unethicalite.api.game.Game;
 import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.herblore.tasks.Clean;
 import io.reisub.unethicalite.herblore.tasks.HandleBank;
+import io.reisub.unethicalite.herblore.tasks.MakeCoconutMilk;
 import io.reisub.unethicalite.herblore.tasks.MakePotion;
 import io.reisub.unethicalite.herblore.tasks.MakeUnfinished;
 import io.reisub.unethicalite.herblore.tasks.ProcessSecondary;
@@ -16,6 +17,7 @@ import javax.inject.Inject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.InventoryID;
+import net.runelite.api.ItemID;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
@@ -44,6 +46,7 @@ public class Herblore extends TickScript {
 
     idleCheckInventoryChange = true;
 
+    addTask(MakeCoconutMilk.class);
     addTask(Clean.class);
     addTask(TarHerbs.class);
     addTask(MakeUnfinished.class);
@@ -63,6 +66,7 @@ public class Herblore extends TickScript {
     int cleanHerbs = Inventory.getCount(getCleanHerbIds());
     int bases = Inventory.getCount(getBaseIds());
     int secondaries = Inventory.getCount(config.secondary().getOriginalId());
+    int vials = Inventory.getCount(ItemID.VIAL);
 
     if (grimyHerbs == 0 && currentActivity == Activity.CLEANING_HERBS) {
       setActivity(Activity.IDLE);
@@ -73,6 +77,8 @@ public class Herblore extends TickScript {
     } else if (bases == 0 && currentActivity == Activity.CREATING_POTIONS) {
       setActivity(Activity.IDLE);
     } else if (secondaries == 0 && currentActivity == Activity.PROCESSING_SECONDARIES) {
+      setActivity(Activity.IDLE);
+    } else if (vials == 0 && currentActivity == Activity.MAKING_COCONUT_MILK) {
       setActivity(Activity.IDLE);
     }
   }
@@ -177,7 +183,7 @@ public class Herblore extends TickScript {
     if (potion.getHerb() == null || potion.getSecondaryId() == -1) {
       return new int[] {potion.getBaseId()};
     } else {
-      return new int[] {potion.getHerb().getUnfinishedId()};
+      return potion.getHerb().getUnfinishedIds();
     }
   }
 

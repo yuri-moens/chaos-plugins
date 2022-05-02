@@ -31,8 +31,8 @@ public class MakePotion extends Task {
   public void execute() {
     plugin.setActivity(Activity.CREATING_POTIONS);
 
-    List<Item> secondaries = Inventory.getAll(plugin.getSecondaryIds());
-    List<Item> bases = Inventory.getAll(plugin.getBaseIds());
+    final List<Item> secondaries = Inventory.getAll(plugin.getSecondaryIds());
+    final List<Item> bases = Inventory.getAll(plugin.getBaseIds());
 
     if (secondaries.size() == 0 || bases.size() == 0) {
       return;

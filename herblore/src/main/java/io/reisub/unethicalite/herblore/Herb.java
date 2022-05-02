@@ -1,10 +1,8 @@
 package io.reisub.unethicalite.herblore;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.runelite.api.ItemID;
 
-@AllArgsConstructor
 @Getter
 public enum Herb {
   ALL(-1, -1, -1),
@@ -13,8 +11,9 @@ public enum Herb {
   TARROMIN(ItemID.GRIMY_TARROMIN, ItemID.TARROMIN, ItemID.TARROMIN_POTION_UNF),
   HARRALANDER(ItemID.GRIMY_HARRALANDER, ItemID.HARRALANDER, ItemID.HARRALANDER_POTION_UNF),
   RANARR_WEED(ItemID.GRIMY_RANARR_WEED, ItemID.RANARR_WEED, ItemID.RANARR_POTION_UNF),
-  TOADFLAX(ItemID.GRIMY_TOADFLAX, ItemID.TOADFLAX, ItemID.TOADFLAX_POTION_UNF),
-  IRIT_LEAF(ItemID.GRIMY_IRIT_LEAF, ItemID.IRIT_LEAF, ItemID.IRIT_POTION_UNF),
+  TOADFLAX(ItemID.GRIMY_TOADFLAX, ItemID.TOADFLAX, ItemID.TOADFLAX_POTION_UNF, ItemID.ANTIDOTE_UNF),
+  IRIT_LEAF(
+      ItemID.GRIMY_IRIT_LEAF, ItemID.IRIT_LEAF, ItemID.IRIT_POTION_UNF, ItemID.ANTIDOTE_UNF_5951),
   AVANTOE(ItemID.GRIMY_AVANTOE, ItemID.AVANTOE, ItemID.AVANTOE_POTION_UNF),
   KWUARM(ItemID.GRIMY_KWUARM, ItemID.KWUARM, ItemID.KWUARM_POTION_UNF),
   SNAPDRAGON(ItemID.GRIMY_SNAPDRAGON, ItemID.SNAPDRAGON, ItemID.SNAPDRAGON_POTION_UNF),
@@ -25,7 +24,13 @@ public enum Herb {
 
   private final int grimyId;
   private final int cleanId;
-  private final int unfinishedId;
+  private final int[] unfinishedIds;
+
+  Herb(int grimyId, int cleanId, int... unfinishedIds) {
+    this.grimyId = grimyId;
+    this.cleanId = cleanId;
+    this.unfinishedIds = unfinishedIds;
+  }
 
   public static int[] getAllGrimyIds() {
     final int[] ids = new int[Herb.values().length - 1];

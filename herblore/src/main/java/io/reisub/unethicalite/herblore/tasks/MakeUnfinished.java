@@ -42,8 +42,6 @@ public class MakeUnfinished extends Task {
       return;
     }
 
-    int quantity = Math.min(herbs.size(), bases.size());
-
     herbs.get(0).useOn(bases.get(0));
     Time.sleepTicksUntil(Production::isOpen, 5);
 

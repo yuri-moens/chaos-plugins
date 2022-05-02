@@ -1,5 +1,6 @@
 package io.reisub.unethicalite.herblore.tasks;
 
+import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.herblore.Herblore;
 import io.reisub.unethicalite.herblore.HerbloreTask;
@@ -31,9 +32,22 @@ public class MakeCoconutMilk extends Task {
   public void execute() {
     plugin.setActivity(Activity.MAKING_COCONUT_MILK);
 
-    List<Item> coconuts = Inventory.getAll(ItemID.COCONUT);
-    Item hammer = Inventory.getFirst(ItemID.HAMMER, ItemID.IMCANDO_HAMMER);
+    final List<Item> coconuts = Inventory.getAll(ItemID.COCONUT);
+    final Item hammer = Inventory.getFirst(ItemID.HAMMER, ItemID.IMCANDO_HAMMER);
 
     coconuts.forEach(hammer::useOn);
+    Time.sleepTicksUntil(() -> !Inventory.contains(ItemID.COCONUT), 3);
+
+    final List<Item> halfCoconuts = Inventory.getAll(ItemID.HALF_COCONUT);
+    final List<Item> vials = Inventory.getAll(ItemID.VIAL);
+
+    for (int i = 0; i < halfCoconuts.size(); i++) {
+      if (i >= vials.size()) {
+        break;
+      }
+
+      halfCoconuts.get(i).useOn(vials.get(i));
+      Time.sleepTick();
+    }
   }
 }
