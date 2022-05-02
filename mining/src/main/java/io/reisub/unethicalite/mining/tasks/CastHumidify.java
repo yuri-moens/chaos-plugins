@@ -19,7 +19,8 @@ public class CastHumidify extends Task {
   public boolean validate() {
     return Inventory.contains(ItemID.WATERSKIN0)
         && !Inventory.contains(
-            ItemID.WATERSKIN1, ItemID.WATERSKIN2, ItemID.WATERSKIN3, ItemID.WATERSKIN4);
+            ItemID.WATERSKIN1, ItemID.WATERSKIN2, ItemID.WATERSKIN3, ItemID.WATERSKIN4)
+        && Lunar.HUMIDIFY.canCast();
   }
 
   @Override
