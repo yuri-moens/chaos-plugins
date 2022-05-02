@@ -13,7 +13,7 @@ import io.reisub.unethicalite.mining.Mining;
 import io.reisub.unethicalite.mining.RockPosition;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -35,11 +35,13 @@ public class Mine extends Task {
           ItemID.SANDSTONE_10KG,
           ItemID.GRANITE_500G,
           ItemID.GRANITE_2KG,
-          ItemID.GRANITE_5KG);
+          ItemID.GRANITE_5KG,
+          ItemID.SODA_ASH);
+
   private final AtomicInteger ticks = new AtomicInteger(0);
   @Inject private Mining plugin;
   @Inject private Config config;
-  private LinkedList<RockPosition> rockPositions;
+  private ArrayDeque<RockPosition> rockPositions;
   private RockPosition currentRockPosition;
 
   @Override
@@ -49,7 +51,7 @@ public class Mine extends Task {
 
   @Override
   public boolean validate() {
-    return !Inventory.isFull() && isReady();
+    return (!Inventory.isFull() || config.location() == Location.VOLCANIC_ASH) && isReady();
   }
 
   @Override
@@ -61,8 +63,8 @@ public class Mine extends Task {
     TileObject rock = getRock();
 
     if (config.location().isThreeTick()) {
-      Item knife = Inventory.getFirst(ItemID.KNIFE);
-      Item logs = Inventory.getFirst(ItemID.TEAK_LOGS, ItemID.MAHOGANY_LOGS);
+      final Item knife = Inventory.getFirst(ItemID.KNIFE);
+      final Item logs = Inventory.getFirst(ItemID.TEAK_LOGS, ItemID.MAHOGANY_LOGS);
 
       if (knife == null || logs == null) {
         return;
@@ -71,7 +73,9 @@ public class Mine extends Task {
       knife.useOn(logs);
     }
 
-    if (rock == null && currentRockPosition != null) {
+    if (rock == null
+        && currentRockPosition != null
+        && currentRockPosition.getInteractFrom() != null) {
       Movement.walk(currentRockPosition.getInteractFrom());
     }
 
@@ -81,7 +85,7 @@ public class Mine extends Task {
               currentRockPosition.getRock(), Predicates.ids(config.location().getRockIds()));
     }
 
-    if (rock == null || Inventory.isFull()) {
+    if (rock == null || (Inventory.isFull() && config.location() != Location.VOLCANIC_ASH)) {
       return;
     }
 
@@ -124,7 +128,34 @@ public class Mine extends Task {
 
       return ticks.get() % 3 == 0;
     } else {
-      return Players.getLocal().isIdle();
+      return rocksAvailable()
+          && (currentRockPosition == null
+          || TileObjects.getFirstAt(
+                  currentRockPosition.getRock(), Predicates.ids(config.location().getRockIds()))
+              == null);
+    }
+  }
+
+  private boolean rocksAvailable() {
+    final ArrayDeque<RockPosition> rockPositions = config.location().getRockPositions();
+
+    if (rockPositions == null || rockPositions.isEmpty()) {
+      return TileObjects.getNearest(Predicates.ids(config.location().getRockIds())) != null;
+    } else {
+      return TileObjects.getNearest(
+          o -> {
+            if (!config.location().getRockIds().contains(o.getId())) {
+              return false;
+            }
+
+            for (RockPosition rockPosition : config.location().getRockPositions()) {
+              if (o.getWorldLocation().equals(rockPosition.getRock())) {
+                return true;
+              }
+            }
+
+            return false;
+          }) != null;
     }
   }
 
@@ -134,18 +165,49 @@ public class Mine extends Task {
     }
 
     if (rockPositions == null || rockPositions.isEmpty()) {
-      return null;
-    } else {
-      currentRockPosition = rockPositions.poll();
-      rockPositions.add(currentRockPosition);
+      final TileObject rock =
+          TileObjects.getNearest(o -> config.location().getRockIds().contains(o.getId()));
 
-      return TileObjects.getFirstAt(
-          currentRockPosition.getRock(), Predicates.ids(config.location().getRockIds()));
+      if (rock != null) {
+        currentRockPosition = new RockPosition(rock.getWorldLocation(), null);
+      }
+
+      return rock;
+    } else {
+      if (config.location().isThreeTick()) {
+        currentRockPosition = rockPositions.poll();
+        assert currentRockPosition != null;
+        rockPositions.add(currentRockPosition);
+
+        return TileObjects.getFirstAt(
+            currentRockPosition.getRock(), Predicates.ids(config.location().getRockIds()));
+      } else {
+        final TileObject rock = TileObjects.getNearest(
+            o -> {
+              if (!config.location().getRockIds().contains(o.getId())) {
+                return false;
+              }
+
+              for (RockPosition rockPosition : config.location().getRockPositions()) {
+                if (o.getWorldLocation().equals(rockPosition.getRock())) {
+                  return true;
+                }
+              }
+
+              return false;
+            });
+
+        if (rock != null) {
+          currentRockPosition = new RockPosition(rock.getWorldLocation(), null);
+        }
+
+        return rock;
+      }
     }
   }
 
   private void resetQueue() {
-    rockPositions = new LinkedList<>();
+    rockPositions = new ArrayDeque<>();
     rockPositions.addAll(config.location().getRockPositions());
   }
 
@@ -154,6 +216,7 @@ public class Mine extends Task {
       return true;
     }
 
-    return config.location() == Location.QUARRY_GRANITE;
+    return config.location() == Location.QUARRY_GRANITE
+        || config.location() == Location.VOLCANIC_ASH;
   }
 }

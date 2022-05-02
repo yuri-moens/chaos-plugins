@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.mining;
 
 import com.google.common.collect.ImmutableSet;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,8 +13,9 @@ import net.runelite.api.coords.WorldPoint;
 public enum Location {
   QUARRY_SANDSTONE(
       new WorldPoint(3165, 2914, 0),
+      8,
       ImmutableSet.of(ObjectID.ROCKS_11386),
-      new LinkedList<>() {
+      new ArrayDeque<>() {
         {
           add(new RockPosition(new WorldPoint(3166, 2913, 0), new WorldPoint(3166, 2914, 0)));
           add(new RockPosition(new WorldPoint(3164, 2915, 0), new WorldPoint(3165, 2915, 0)));
@@ -25,8 +26,9 @@ public enum Location {
       true),
   QUARRY_GRANITE(
       new WorldPoint(3167, 2908, 0),
+      8,
       ImmutableSet.of(ObjectID.ROCKS_11387),
-      new LinkedList<>() {
+      new ArrayDeque<>() {
         {
           add(new RockPosition(new WorldPoint(3165, 2908, 0), new WorldPoint(3166, 2908, 0)));
           add(new RockPosition(new WorldPoint(3165, 2909, 0), new WorldPoint(3166, 2909, 0)));
@@ -34,10 +36,23 @@ public enum Location {
           add(new RockPosition(new WorldPoint(3167, 2911, 0), new WorldPoint(3167, 2910, 0)));
         }
       },
-      true);
+      true),
+  VOLCANIC_ASH(
+      new WorldPoint(3788, 3772, 0),
+      20,
+      ImmutableSet.of(ObjectID.ASH_PILE),
+      new ArrayDeque<>() {
+        {
+          add(new RockPosition(new WorldPoint(3794, 3773, 0), new WorldPoint(3794, 3772, 0)));
+          add(new RockPosition(new WorldPoint(3789, 3769, 0), new WorldPoint(3789, 3770, 0)));
+          add(new RockPosition(new WorldPoint(3781, 3774, 0), new WorldPoint(3782, 3774, 0)));
+        }
+      },
+      false);
 
   private final WorldPoint miningAreaPoint;
+  private final int miningAreaDistance;
   private final Set<Integer> rockIds;
-  private final LinkedList<RockPosition> rockPositions;
+  private final ArrayDeque<RockPosition> rockPositions;
   private final boolean threeTick;
 }

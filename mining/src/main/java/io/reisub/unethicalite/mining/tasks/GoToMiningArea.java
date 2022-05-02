@@ -22,7 +22,8 @@ public class GoToMiningArea extends Task {
 
   @Override
   public boolean validate() {
-    return Players.getLocal().distanceTo(config.location().getMiningAreaPoint()) > 8
+    return Players.getLocal().distanceTo(config.location().getMiningAreaPoint())
+            > config.location().getMiningAreaDistance()
         && !Inventory.isFull();
   }
 

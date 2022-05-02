@@ -5,6 +5,7 @@ import io.reisub.unethicalite.mining.tasks.CastHumidify;
 import io.reisub.unethicalite.mining.tasks.Deposit;
 import io.reisub.unethicalite.mining.tasks.GoToMiningArea;
 import io.reisub.unethicalite.mining.tasks.Mine;
+import io.reisub.unethicalite.mining.tasks.MoveToRespawning;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import javax.inject.Inject;
@@ -40,5 +41,6 @@ public class Mining extends TickScript {
     addTask(Deposit.class);
     addTask(GoToMiningArea.class);
     addTask(Mine.class);
+    addTask(MoveToRespawning.class);
   }
 }
