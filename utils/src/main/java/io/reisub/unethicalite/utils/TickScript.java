@@ -6,6 +6,7 @@ import dev.unethicalite.api.game.Game;
 import dev.unethicalite.api.input.Keyboard;
 import dev.unethicalite.api.utils.MessageUtils;
 import dev.unethicalite.managers.Static;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.awt.event.KeyEvent;
@@ -39,7 +40,7 @@ import net.runelite.client.input.KeyListener;
 import net.runelite.client.plugins.Plugin;
 
 @Slf4j
-public abstract class TickScript extends Plugin {
+public abstract class TickScript extends Plugin implements KeyListener {
   protected final List<Task> tasks = new ArrayList<>();
   protected final Map<Skill, Activity> idleCheckSkills = new HashMap<>();
   @Getter protected Activity currentActivity;
@@ -298,5 +299,22 @@ public abstract class TickScript extends Plugin {
         break;
       }
     }
+  }
+
+  @Override
+  public void keyTyped(KeyEvent e) {
+
+  }
+
+  @Override
+  public void keyPressed(KeyEvent e) {
+    if (utilsConfig.walkingInterruptHotkey().matches(e)) {
+      ChaosMovement.interrupted = true;
+    }
+  }
+
+  @Override
+  public void keyReleased(KeyEvent e) {
+
   }
 }

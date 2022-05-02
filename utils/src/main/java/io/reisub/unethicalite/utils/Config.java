@@ -1,7 +1,10 @@
 package io.reisub.unethicalite.utils;
 
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
+import net.runelite.client.config.Keybind;
 import net.runelite.client.config.Range;
 
 @ConfigGroup("chaosutils")
@@ -24,5 +27,14 @@ public interface Config extends net.runelite.client.config.Config {
       position = 1)
   default int maxDelay() {
     return 300;
+  }
+
+  @ConfigItem(
+      keyName = "walkingInterruptHotkey",
+      name = "Walking interrupt hotkey",
+      description = "Hotkey to interrupt walking with",
+      position = 2)
+  default Keybind walkingInterruptHotkey() {
+    return new Keybind(KeyEvent.VK_F12, InputEvent.CTRL_DOWN_MASK + InputEvent.ALT_DOWN_MASK);
   }
 }

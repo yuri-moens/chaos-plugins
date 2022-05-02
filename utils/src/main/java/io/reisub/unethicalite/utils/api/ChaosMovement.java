@@ -15,6 +15,8 @@ public class ChaosMovement {
   private static final int DEFAULT_TIMEOUT = 100;
   private static final int DESTINATION_DISTANCE = 8;
 
+  public static boolean interrupted;
+
   public static void walkTo(WorldPoint destination) {
     walkTo(destination, 0);
   }
@@ -56,10 +58,13 @@ public class ChaosMovement {
       }
 
       Time.sleepTick();
-    } while (Players.getLocal().distanceTo(destination) > destinationDistance
+    } while (!interrupted
+        && Players.getLocal().distanceTo(destination) > destinationDistance
         && Game.getClient().getTickCount() <= start + tickTimeout
         && (Static.getClient().getGameState() == GameState.LOADING
             || Static.getClient().getGameState() == GameState.LOGGED_IN));
+
+    interrupted = false;
   }
 
   public static void sendMovementPacket(WorldPoint worldPoint) {
