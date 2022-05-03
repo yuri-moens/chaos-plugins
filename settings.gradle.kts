@@ -52,6 +52,7 @@ include("shopper")
 include("smithing")
 include("superglassmake")
 include("tempoross")
+include("thermyflicker")
 include("utils")
 include("zmi")
 
