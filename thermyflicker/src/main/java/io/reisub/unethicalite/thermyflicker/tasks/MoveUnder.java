@@ -39,6 +39,7 @@ public class MoveUnder extends Task {
     final WorldPoint nearest = area.getNearest();
 
     Movement.walk(nearest);
+    Time.sleepTick();
 
     if (Prayers.getPoints() == 0) {
       final Item prayerPotion = Inventory.getFirst(
@@ -48,7 +49,7 @@ public class MoveUnder extends Task {
         prayerPotion.interact("Drink");
       }
     }
-    
-    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(nearest), 5);
+
+    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(nearest), 3);
   }
 }

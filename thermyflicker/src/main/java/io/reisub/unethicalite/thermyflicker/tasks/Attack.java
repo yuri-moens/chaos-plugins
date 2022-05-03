@@ -4,7 +4,7 @@ import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.NPCs;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.thermyflicker.ThermyFlicker;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.NPC;
@@ -35,7 +35,7 @@ public class Attack extends Task {
   public void execute() {
     GameThread.invoke(() -> thermy.interact("Attack"));
 
-    Time.sleepTicksUntil(() -> Static.getClient().getTickCount() - ThermyFlicker.lastAttack <= 1, 5);
+    Time.sleepTicksUntil(() -> Static.getClient().getTickCount() - ThermyFlicker.lastAttack <= 1, 3);
   }
 
   @Subscribe
