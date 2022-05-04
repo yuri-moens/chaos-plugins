@@ -3,11 +3,8 @@ package io.reisub.unethicalite.birdhouse.tasks;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.magic.Ancient;
-import dev.unethicalite.api.magic.Lunar;
 import dev.unethicalite.api.magic.Magic;
-import dev.unethicalite.api.magic.Necromancy;
-import dev.unethicalite.api.magic.Regular;
+import dev.unethicalite.api.magic.SpellBook;
 import dev.unethicalite.api.widgets.Dialog;
 import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
@@ -73,18 +70,18 @@ public class Teleport extends Task {
         Dialog.chooseOption(config.tpLocation().getOptionIndex());
         break;
       case HOME_TELEPORT:
-        switch (Magic.SpellBook.getCurrent()) {
+        switch (SpellBook.getCurrent()) {
           case LUNAR:
-            Magic.cast(Lunar.LUNAR_HOME_TELEPORT);
+            Magic.cast(SpellBook.Lunar.LUNAR_HOME_TELEPORT);
             break;
           case ANCIENT:
-            Magic.cast(Ancient.EDGEVILLE_HOME_TELEPORT);
+            Magic.cast(SpellBook.Ancient.EDGEVILLE_HOME_TELEPORT);
             break;
-          case REGULAR:
-            Magic.cast(Regular.HOME_TELEPORT);
+          case STANDARD:
+            Magic.cast(SpellBook.Standard.HOME_TELEPORT);
             break;
           case NECROMANCY:
-            Magic.cast(Necromancy.ARCEUUS_HOME_TELEPORT);
+            Magic.cast(SpellBook.Necromancy.ARCEUUS_HOME_TELEPORT);
             break;
           default:
         }

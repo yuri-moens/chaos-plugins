@@ -3,7 +3,7 @@ package io.reisub.unethicalite.utils;
 import com.google.inject.Provides;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.game.Game;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import java.util.Collection;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;

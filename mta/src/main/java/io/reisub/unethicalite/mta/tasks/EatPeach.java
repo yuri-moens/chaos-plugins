@@ -2,7 +2,7 @@ package io.reisub.unethicalite.mta.tasks;
 
 import dev.unethicalite.api.game.Combat;
 import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
@@ -24,7 +24,7 @@ public class EatPeach extends Task {
 
   @Override
   public void execute() {
-    Item peach = Inventory.getFirst(ItemID.PEACH);
+    final Item peach = Inventory.getFirst(ItemID.PEACH);
     if (peach == null) {
       return;
     }

@@ -3,8 +3,8 @@ package io.reisub.unethicalite.plankmaker.tasks;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.magic.Magic;
-import dev.unethicalite.api.magic.Regular;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.api.magic.SpellBook;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.plankmaker.Config;
 import io.reisub.unethicalite.plankmaker.PlankMaker;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -25,13 +25,13 @@ public class TeleportHouse extends Task {
     return Static.getClient().getTickCount() - PlankMaker.lastGive > BUTLER_TASK_TIME
         && Inventory.contains(config.logType().getLogId())
         && Inventory.contains("Coins")
-        && Regular.TELEPORT_TO_HOUSE.canCast()
+        && SpellBook.Standard.TELEPORT_TO_HOUSE.canCast()
         && !Static.getClient().isInInstancedRegion();
   }
 
   @Override
   public void execute() {
-    Magic.cast(Regular.TELEPORT_TO_HOUSE);
+    Magic.cast(SpellBook.Standard.TELEPORT_TO_HOUSE);
     Time.sleepTicksUntil(() -> Static.getClient().isInInstancedRegion(), 5);
   }
 }

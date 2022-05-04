@@ -3,8 +3,8 @@ package io.reisub.unethicalite.zmi.tasks;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.magic.Lunar;
 import dev.unethicalite.api.magic.Magic;
+import dev.unethicalite.api.magic.SpellBook;
 import dev.unethicalite.api.widgets.Dialog;
 import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.utils.Constants;
@@ -29,7 +29,7 @@ public class RepairPouch extends Task {
 
   @Override
   public void execute() {
-    Widget npcContact = Widgets.get(Lunar.NPC_CONTACT.getWidget());
+    final Widget npcContact = Widgets.get(SpellBook.Lunar.NPC_CONTACT.getWidget());
     if (npcContact == null) {
       return;
     }
@@ -37,7 +37,7 @@ public class RepairPouch extends Task {
     if (npcContact.hasAction("Dark Mage")) {
       npcContact.interact("Dark Mage");
     } else {
-      Magic.cast(Lunar.NPC_CONTACT);
+      Magic.cast(SpellBook.Lunar.NPC_CONTACT);
       Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(75, 12)), 5);
 
       Widgets.get(75, 12).interact("Dark Mage");

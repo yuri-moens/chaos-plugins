@@ -6,7 +6,7 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.movement.Movement;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.mining.Config;
 import io.reisub.unethicalite.mining.Location;
 import io.reisub.unethicalite.mining.Mining;

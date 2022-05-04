@@ -5,7 +5,7 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.magic.Magic;
-import dev.unethicalite.api.magic.Regular;
+import dev.unethicalite.api.magic.SpellBook;
 import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.Interact;
@@ -94,7 +94,7 @@ public enum Location {
         Item talisman = Inventory.getFirst(ItemID.XERICS_TALISMAN);
 
         if (talisman == null) {
-          Widget widget = Widgets.get(Regular.TELEPORT_TO_HOUSE.getWidget());
+          Widget widget = Widgets.get(SpellBook.Standard.TELEPORT_TO_HOUSE.getWidget());
           if (widget != null) {
             widget.interact("Outside");
             return true;
@@ -147,7 +147,7 @@ public enum Location {
   @Setter private boolean skip;
 
   public static boolean tpThroughHouse(int portalId) {
-    Magic.cast(Regular.TELEPORT_TO_HOUSE);
+    Magic.cast(SpellBook.Standard.TELEPORT_TO_HOUSE);
 
     Time.sleepTicksUntil(() -> TileObjects.getNearest(portalId) != null, 10);
     Time.sleepTicks(2);

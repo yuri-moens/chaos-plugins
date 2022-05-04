@@ -9,7 +9,7 @@ import dev.unethicalite.api.game.Skills;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.movement.Movement;
 import dev.unethicalite.api.movement.Reachable;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.pickpocket.Config;
 import io.reisub.unethicalite.pickpocket.Target;
 import io.reisub.unethicalite.utils.Utils;
@@ -27,9 +27,12 @@ import net.runelite.api.events.ChatMessage;
 import net.runelite.client.eventbus.Subscribe;
 
 public class Pickpocket extends Task {
-  @Inject private io.reisub.unethicalite.pickpocket.Pickpocket plugin;
 
-  @Inject private Config config;
+  @Inject
+  private io.reisub.unethicalite.pickpocket.Pickpocket plugin;
+
+  @Inject
+  private Config config;
 
   private int lastStun;
 
@@ -46,12 +49,12 @@ public class Pickpocket extends Task {
         && Players.getLocal().getModelHeight() != 1000
         && (!config.healAtBank() || !Inventory.contains(config.food()))
         && (Inventory.contains(config.food())
-            || Skills.getBoostedLevel(Skill.HITPOINTS) > config.eatHp());
+        || Skills.getBoostedLevel(Skill.HITPOINTS) > config.eatHp());
   }
 
   @Override
   public void execute() {
-    NPC target = NPCs.getNearest(Predicates.ids(config.target().getIds()));
+    final NPC target = NPCs.getNearest(Predicates.ids(config.target().getIds()));
     if (target == null) {
       if (config.target() == Target.VALLESSIA_VON_PITT) {
         goToVallessia();
@@ -91,14 +94,14 @@ public class Pickpocket extends Task {
   }
 
   private void goToVallessia() {
-    TileObject stairs = TileObjects.getNearest(ObjectID.STAIRS_38601);
+    final TileObject stairs = TileObjects.getNearest(ObjectID.STAIRS_38601);
     if (stairs != null) {
       stairs.interact("Climb-up");
       Time.sleepTicksUntil(() -> Utils.isInRegion(14644), 20);
       Time.sleepTicks(3);
     }
 
-    WorldPoint doorLocation = new WorldPoint(3662, 3378, 0);
+    final WorldPoint doorLocation = new WorldPoint(3662, 3378, 0);
 
     TileObject door = TileObjects.getFirstAt(doorLocation, ObjectID.DOOR_39406);
     if (door != null) {

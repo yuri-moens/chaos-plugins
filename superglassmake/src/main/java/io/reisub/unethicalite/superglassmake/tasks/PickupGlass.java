@@ -4,7 +4,7 @@ import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileItems;
 import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.superglassmake.Config;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;

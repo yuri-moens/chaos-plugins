@@ -2,9 +2,9 @@ package io.reisub.unethicalite.pickpocket.tasks;
 
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.game.Skills;
-import dev.unethicalite.api.magic.Necromancy;
+import dev.unethicalite.api.magic.SpellBook;
 import dev.unethicalite.api.widgets.Widgets;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.pickpocket.Config;
 import io.reisub.unethicalite.pickpocket.Pickpocket;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -16,9 +16,12 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 
 public class CastShadowVeil extends Task {
-  @Inject private Pickpocket plugin;
 
-  @Inject private Config config;
+  @Inject
+  private Pickpocket plugin;
+
+  @Inject
+  private Config config;
 
   private int last;
 
@@ -31,7 +34,7 @@ public class CastShadowVeil extends Task {
   public boolean validate() {
     return config.castShadowVeil()
         && plugin.getCurrentActivity() == Activity.IDLE
-        && Necromancy.SHADOW_VEIL.canCast()
+        && SpellBook.Necromancy.SHADOW_VEIL.canCast()
         && Players.getLocal().getModelHeight() != 1000
         && Players.getLocal().distanceTo(config.target().getNearest().getPickpocketLocation()) < 5
         && last + Skills.getLevel(Skill.MAGIC) - 1 < Static.getClient().getTickCount();
@@ -39,12 +42,13 @@ public class CastShadowVeil extends Task {
 
   @Override
   public void execute() {
-    Widget w = Widgets.get(WidgetInfo.SPELL_SHADOW_VEIL);
+    final Widget w = Widgets.get(WidgetInfo.SPELL_SHADOW_VEIL);
     if (w == null) {
       return;
     }
 
-    w.interact(1, MenuAction.CC_OP.getId(), -1, Necromancy.SHADOW_VEIL.getWidget().getId());
+    w.interact(1, MenuAction.CC_OP.getId(), -1,
+        SpellBook.Necromancy.SHADOW_VEIL.getWidget().getId());
     last = Static.getClient().getTickCount();
   }
 }

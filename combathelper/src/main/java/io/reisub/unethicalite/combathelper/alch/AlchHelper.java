@@ -4,11 +4,12 @@ import dev.unethicalite.api.commons.Rand;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.game.Game;
 import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.magic.Magic;
-import dev.unethicalite.api.magic.Regular;
+import dev.unethicalite.api.magic.SpellBook;
+import dev.unethicalite.api.magic.SpellBook.Standard;
 import dev.unethicalite.api.utils.MessageUtils;
 import dev.unethicalite.api.widgets.Tab;
 import dev.unethicalite.api.widgets.Tabs;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.combathelper.Helper;
 import io.reisub.unethicalite.utils.api.ConfigList;
 import java.awt.event.KeyEvent;
@@ -74,7 +75,7 @@ public class AlchHelper extends Helper {
       return;
     }
 
-    if (Inventory.contains(itemPredicate) && Regular.HIGH_LEVEL_ALCHEMY.canCast()) {
+    if (Inventory.contains(itemPredicate) && SpellBook.Standard.HIGH_LEVEL_ALCHEMY.canCast()) {
       plugin.schedule(this::alch, Rand.nextInt(100, 200));
     }
   }
@@ -118,13 +119,13 @@ public class AlchHelper extends Helper {
   }
 
   private void alch() {
-    Item item = Inventory.getFirst(itemPredicate);
+    final Item item = Inventory.getFirst(itemPredicate);
     if (item == null) {
       return;
     }
 
-    Magic.cast(Regular.HIGH_LEVEL_ALCHEMY, item);
-    last = Game.getClient().getTickCount();
+    Standard.HIGH_LEVEL_ALCHEMY.castOn(item);
+    last = Static.getClient().getTickCount();
 
     Time.sleepTicks(3);
     Tabs.openInterface(Tab.INVENTORY);

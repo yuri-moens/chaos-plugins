@@ -3,7 +3,7 @@ package io.reisub.unethicalite.barrows.tasks;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.widgets.Prayers;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.barrows.Brother;
 import io.reisub.unethicalite.utils.Constants;

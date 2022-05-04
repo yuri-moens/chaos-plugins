@@ -3,9 +3,9 @@ package io.reisub.unethicalite.mta.tasks;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.magic.Magic;
-import dev.unethicalite.api.magic.Regular;
+import dev.unethicalite.api.magic.SpellBook;
 import dev.unethicalite.api.widgets.Widgets;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.mta.Mta;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -37,26 +37,26 @@ public class HighAlch extends Task {
 
   @Override
   public void execute() {
-    Item item = Inventory.getFirst(best.getId());
+    final Item item = Inventory.getFirst(best.getId());
     if (item == null) {
       return;
     }
 
-    Magic.cast(Regular.HIGH_LEVEL_ALCHEMY, item);
+    Magic.cast(SpellBook.Standard.HIGH_LEVEL_ALCHEMY, item);
 
     last = Static.getClient().getTickCount();
   }
 
   private AlchemyItem getBest() {
     for (int i = 0; i < 5; i++) { // 12
-      Widget textWidget = Widgets.get(WidgetID.MTA_ALCHEMY_GROUP_ID, 7 + i);
+      final Widget textWidget = Widgets.get(WidgetID.MTA_ALCHEMY_GROUP_ID, 7 + i);
       if (textWidget == null) {
         return null;
       }
 
-      String item = textWidget.getText();
-      Widget pointsWidget = Widgets.get(WidgetID.MTA_ALCHEMY_GROUP_ID, 12 + i);
-      int points = Integer.parseInt(pointsWidget.getText());
+      final String item = textWidget.getText();
+      final Widget pointsWidget = Widgets.get(WidgetID.MTA_ALCHEMY_GROUP_ID, 12 + i);
+      final int points = Integer.parseInt(pointsWidget.getText());
 
       if (points == 30) {
         return AlchemyItem.find(item);

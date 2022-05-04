@@ -5,8 +5,8 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.magic.Magic;
-import dev.unethicalite.api.magic.Regular;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.api.magic.SpellBook;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.mta.Mta;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.Predicates;
@@ -41,12 +41,12 @@ public class Enchant extends Task {
 
   @Override
   public void execute() {
-    Item item = Inventory.getFirst(Predicates.ids(ENCHANT_ITEM_IDS));
+    final Item item = Inventory.getFirst(Predicates.ids(ENCHANT_ITEM_IDS));
     if (item == null) {
       return;
     }
 
-    GameThread.invoke(() -> Magic.cast(Regular.LVL_6_ENCHANT, item));
+    GameThread.invoke(() -> Magic.cast(SpellBook.Standard.LVL_6_ENCHANT, item));
 
     last = Static.getClient().getTickCount();
   }

@@ -35,13 +35,14 @@ public class Attack extends Task {
   public void execute() {
     GameThread.invoke(() -> thermy.interact("Attack"));
 
-    Time.sleepTicksUntil(() -> Static.getClient().getTickCount() - ThermyFlicker.lastAttack <= 1, 3);
+    Time.sleepTicksUntil(() -> Static.getClient().getTickCount() - ThermyFlicker.lastAttack <= 1,
+        3);
   }
 
   @Subscribe
   private void onHitsplatApplied(HitsplatApplied event) {
     if (event.getActor().getId() == NpcID.THERMONUCLEAR_SMOKE_DEVIL) {
-      ThermyFlicker.lastAttack =  Static.getClient().getTickCount();
+      ThermyFlicker.lastAttack = Static.getClient().getTickCount();
     }
   }
 }

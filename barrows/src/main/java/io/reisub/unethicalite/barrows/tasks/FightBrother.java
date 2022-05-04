@@ -7,7 +7,7 @@ import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.movement.Movement;
 import dev.unethicalite.api.movement.Reachable;
 import dev.unethicalite.api.widgets.Prayers;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.barrows.Brother;
 import io.reisub.unethicalite.barrows.Room;

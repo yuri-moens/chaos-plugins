@@ -6,7 +6,7 @@ import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.game.Worlds;
 import dev.unethicalite.api.items.Shop;
 import dev.unethicalite.api.packets.DialogPackets;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.shopper.Config;
 import io.reisub.unethicalite.shopper.Shopper;
 import io.reisub.unethicalite.utils.tasks.Task;

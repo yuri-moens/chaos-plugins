@@ -9,7 +9,7 @@ import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.widgets.Dialog;
 import dev.unethicalite.api.widgets.Widgets;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.plankmaker.Config;
 import io.reisub.unethicalite.plankmaker.PlankMaker;
 import io.reisub.unethicalite.utils.tasks.Task;

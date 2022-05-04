@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.mahoganyhomes.tasks;
 
 import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.magic.Lunar;
+import dev.unethicalite.api.magic.SpellBook;
 import dev.unethicalite.api.widgets.Dialog;
 import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.mahoganyhomes.Config;
@@ -28,7 +28,7 @@ public class GetTask extends Task {
 
   @Override
   public void execute() {
-    Widget npcContact = Widgets.get(Lunar.NPC_CONTACT.getWidget());
+    Widget npcContact = Widgets.get(SpellBook.Lunar.NPC_CONTACT.getWidget());
     if (npcContact == null) {
       return;
     }

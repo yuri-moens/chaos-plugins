@@ -3,7 +3,7 @@ package io.reisub.unethicalite.barrows.tasks;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.barrows.Room;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.NullObjectID;

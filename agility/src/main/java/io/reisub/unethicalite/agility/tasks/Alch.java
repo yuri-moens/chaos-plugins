@@ -3,10 +3,9 @@ package io.reisub.unethicalite.agility.tasks;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.magic.Magic;
-import dev.unethicalite.api.magic.Regular;
+import dev.unethicalite.api.magic.SpellBook;
 import dev.unethicalite.api.movement.Movement;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.agility.Agility;
 import io.reisub.unethicalite.agility.Config;
 import io.reisub.unethicalite.utils.api.ConfigList;
@@ -20,7 +19,9 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 
 public class Alch extends Task {
-  @Inject private Config config;
+
+  @Inject
+  private Config config;
 
   private ConfigList configList;
 
@@ -45,7 +46,7 @@ public class Alch extends Task {
     }
 
     return canCast()
-        && Regular.HIGH_LEVEL_ALCHEMY.canCast()
+        && SpellBook.Standard.HIGH_LEVEL_ALCHEMY.canCast()
         && Inventory.contains(Predicates.itemConfigList(configList));
   }
 
@@ -57,13 +58,13 @@ public class Alch extends Task {
       Time.sleepTick();
     }
 
-    Item item = Inventory.getFirst(Predicates.itemConfigList(configList));
+    final Item item = Inventory.getFirst(Predicates.itemConfigList(configList));
 
     if (item == null) {
       return;
     }
 
-    Magic.cast(Regular.HIGH_LEVEL_ALCHEMY, item);
+    SpellBook.Standard.HIGH_LEVEL_ALCHEMY.castOn(item);
     lastTick = Static.getClient().getTickCount();
   }
 

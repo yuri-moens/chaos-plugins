@@ -7,7 +7,7 @@ import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.game.Vars;
 import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.farming.tasks.Clear;
 import io.reisub.unethicalite.farming.tasks.Cure;
 import io.reisub.unethicalite.farming.tasks.DepositTools;

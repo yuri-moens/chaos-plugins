@@ -5,7 +5,7 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.movement.Movement;
 import dev.unethicalite.api.widgets.Dialog;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.barrows.Brother;
 import io.reisub.unethicalite.utils.Utils;

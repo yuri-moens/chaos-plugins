@@ -4,7 +4,7 @@ import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.items.Bank;
 import dev.unethicalite.api.items.Bank.WithdrawMode;
 import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.plankmaker.Config;
 import io.reisub.unethicalite.plankmaker.PlankMaker;
 import io.reisub.unethicalite.utils.Utils;

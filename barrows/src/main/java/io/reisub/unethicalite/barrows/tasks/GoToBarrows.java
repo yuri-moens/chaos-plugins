@@ -6,10 +6,9 @@ import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.game.Skills;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.magic.Magic;
-import dev.unethicalite.api.magic.Necromancy;
-import dev.unethicalite.api.magic.Regular;
+import dev.unethicalite.api.magic.SpellBook;
 import dev.unethicalite.api.movement.Movement;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.Utils;
@@ -48,12 +47,12 @@ public class GoToBarrows extends Task {
 
       if (barrowsTeleport != null) {
         barrowsTeleport.interact(0);
-      } else if (Necromancy.BARROWS_TELEPORT.canCast()) {
-        Magic.cast(Necromancy.BARROWS_TELEPORT);
+      } else if (SpellBook.Necromancy.BARROWS_TELEPORT.canCast()) {
+        Magic.cast(SpellBook.Necromancy.BARROWS_TELEPORT);
       } else if (houseTeleport != null) {
         houseTeleport.interact(0);
       } else {
-        Magic.cast(Regular.TELEPORT_TO_HOUSE);
+        Magic.cast(SpellBook.Standard.TELEPORT_TO_HOUSE);
       }
 
       Time.sleepTicksUntil(() -> !Players.getLocal().getWorldLocation().equals(current), 10);

@@ -6,7 +6,7 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.game.Game;
 import dev.unethicalite.api.movement.Movement;
 import dev.unethicalite.api.packets.MovementPackets;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.coords.WorldPoint;

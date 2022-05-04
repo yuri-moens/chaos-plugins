@@ -10,7 +10,7 @@ import dev.unethicalite.api.items.Equipment;
 import dev.unethicalite.api.movement.Movement;
 import dev.unethicalite.api.packets.DialogPackets;
 import dev.unethicalite.api.widgets.Widgets;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.api.Predicates;

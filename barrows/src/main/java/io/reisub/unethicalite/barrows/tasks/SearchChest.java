@@ -5,7 +5,7 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.widgets.Widgets;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.barrows.Config;
 import io.reisub.unethicalite.barrows.Room;

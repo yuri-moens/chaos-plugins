@@ -5,7 +5,7 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.game.Game;
 import dev.unethicalite.api.input.Keyboard;
 import dev.unethicalite.api.utils.MessageUtils;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -37,14 +37,17 @@ import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.StatChanged;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.input.KeyListener;
+import net.runelite.client.input.KeyManager;
 import net.runelite.client.plugins.Plugin;
 
 @Slf4j
 public abstract class TickScript extends Plugin implements KeyListener {
+  @Inject
+  private KeyManager keyManager;
+
   protected final List<Task> tasks = new ArrayList<>();
   protected final Map<Skill, Activity> idleCheckSkills = new HashMap<>();
   @Getter protected Activity currentActivity;
-
   @Getter protected Activity previousActivity;
   protected ScheduledExecutorService executor;
   protected Instant lastLogin = Instant.EPOCH;
@@ -180,9 +183,7 @@ public abstract class TickScript extends Plugin implements KeyListener {
   protected final void startUp() {
     executor = Executors.newSingleThreadScheduledExecutor();
 
-    if (this instanceof KeyListener) {
-      Static.getKeyManager().registerKeyListener((KeyListener) this);
-    }
+    Static.getKeyManager().registerKeyListener((KeyListener) this);
   }
 
   @Override
@@ -190,9 +191,7 @@ public abstract class TickScript extends Plugin implements KeyListener {
     stop();
     executor.shutdownNow();
 
-    if (this instanceof KeyListener) {
-      Static.getKeyManager().unregisterKeyListener((KeyListener) this);
-    }
+    Static.getKeyManager().unregisterKeyListener((KeyListener) this);
   }
 
   public void start() {

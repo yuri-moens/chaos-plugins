@@ -3,7 +3,7 @@ package io.reisub.unethicalite.mta.tasks;
 import dev.unethicalite.api.entities.NPCs;
 import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.magic.Magic;
-import dev.unethicalite.api.magic.Regular;
+import dev.unethicalite.api.magic.SpellBook;
 import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.mta.Config;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -32,12 +32,12 @@ public class TelekineticGrab extends Task implements KeyListener {
   public void execute() {
     cast = false;
 
-    NPC mazeGuardian = NPCs.getNearest(n -> n.getName().contains("Maze Guardian"));
+    final NPC mazeGuardian = NPCs.getNearest(n -> n.getName().contains("Maze Guardian"));
     if (mazeGuardian == null) {
       return;
     }
 
-    GameThread.invoke(() -> Magic.cast(Regular.TELEKINETIC_GRAB, mazeGuardian));
+    GameThread.invoke(() -> Magic.cast(SpellBook.Standard.TELEKINETIC_GRAB, mazeGuardian));
   }
 
   @Override

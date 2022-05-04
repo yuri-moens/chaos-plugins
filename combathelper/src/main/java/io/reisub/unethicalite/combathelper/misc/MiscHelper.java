@@ -8,11 +8,9 @@ import dev.unethicalite.api.game.Combat.AttackStyle;
 import dev.unethicalite.api.game.Game;
 import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.items.Equipment;
-import dev.unethicalite.api.magic.Lunar;
-import dev.unethicalite.api.magic.Magic;
-import dev.unethicalite.api.magic.Regular;
+import dev.unethicalite.api.magic.SpellBook;
 import dev.unethicalite.api.utils.MessageUtils;
-import dev.unethicalite.managers.Static;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.combathelper.Helper;
 import java.awt.event.KeyEvent;
 import javax.inject.Singleton;
@@ -116,8 +114,8 @@ public class MiscHelper extends Helper {
   }
 
   private void teleport() {
-    if (Regular.TELEPORT_TO_HOUSE.canCast()) {
-      Magic.cast(Regular.TELEPORT_TO_HOUSE);
+    if (SpellBook.Standard.TELEPORT_TO_HOUSE.canCast()) {
+      SpellBook.Standard.TELEPORT_TO_HOUSE.cast();
       Time.sleep(1500, 1800);
     }
   }
@@ -125,8 +123,8 @@ public class MiscHelper extends Helper {
   public void castVengeance() {
     plugin.schedule(() -> {
       if (Static.getClient().getTickCount() - lastVengance > VENGEANCE_COOLDOWN
-          && Lunar.VENGEANCE.canCast()) {
-        Magic.cast(Lunar.VENGEANCE);
+          && SpellBook.Lunar.VENGEANCE.canCast()) {
+        SpellBook.Lunar.VENGEANCE.cast();
         lastVengance = Static.getClient().getTickCount();
       }
     }, Rand.nextInt(100, 150));

@@ -5,8 +5,8 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileItems;
 import dev.unethicalite.api.items.Bank;
 import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.magic.Lunar;
 import dev.unethicalite.api.magic.Magic;
+import dev.unethicalite.api.magic.SpellBook;
 import io.reisub.unethicalite.superglassmake.Config;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.List;
@@ -26,12 +26,13 @@ public class CastSuperglassMake extends Task {
   public boolean validate() {
     return Inventory.contains(ItemID.BUCKET_OF_SAND)
         && Inventory.contains(ItemID.SODA_ASH, ItemID.GIANT_SEAWEED)
+        && SpellBook.Lunar.SUPERGLASS_MAKE.canCast()
         && !Bank.isOpen();
   }
 
   @Override
   public void execute() {
-    Magic.cast(Lunar.SUPERGLASS_MAKE);
+    Magic.cast(SpellBook.Lunar.SUPERGLASS_MAKE);
     Time.sleepTicksUntil((() -> Inventory.contains(ItemID.MOLTEN_GLASS)), 5);
     Time.sleepTicks(3);
 
