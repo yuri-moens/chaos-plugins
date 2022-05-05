@@ -34,7 +34,7 @@ public class HandleBank extends BankTask {
     Bank.depositAll(ItemID.BLUE_DRAGON_SCALE);
 
     if (Combat.getMissingHealth() > 25) {
-      Bank.withdraw(config.food(), 3, WithdrawMode.ITEM);
+      Bank.withdraw(config.food(), 2, WithdrawMode.ITEM);
     }
   }
 }
