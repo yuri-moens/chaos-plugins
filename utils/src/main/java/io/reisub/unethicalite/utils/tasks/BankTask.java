@@ -59,6 +59,7 @@ public abstract class BankTask extends Task {
         Time.sleepTicksUntil(Bank::isMainTabOpen, 2);
       }
 
+      last = Instant.now();
       return true;
     }
 
