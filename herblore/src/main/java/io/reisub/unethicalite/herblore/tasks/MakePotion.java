@@ -10,9 +10,12 @@ import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.List;
 import javax.inject.Inject;
 import net.runelite.api.Item;
+import net.runelite.api.ItemID;
 
 public class MakePotion extends Task {
-  @Inject private Herblore plugin;
+
+  @Inject
+  private Herblore plugin;
 
   @Override
   public String getStatus() {
@@ -24,7 +27,7 @@ public class MakePotion extends Task {
     return plugin.getConfig().task() == HerbloreTask.MAKE_POTION
         && plugin.getCurrentActivity() == Activity.IDLE
         && Inventory.contains(plugin.getSecondaryIds())
-        && Inventory.contains(plugin.getBaseIds());
+        && (Inventory.contains(plugin.getBaseIds()) || hasSuperCombatIngredients());
   }
 
   @Override
@@ -32,7 +35,8 @@ public class MakePotion extends Task {
     plugin.setActivity(Activity.CREATING_POTIONS);
 
     final List<Item> secondaries = Inventory.getAll(plugin.getSecondaryIds());
-    final List<Item> bases = Inventory.getAll(plugin.getBaseIds());
+    final List<Item> bases = plugin.getBaseIds()[0] == -1 ? Inventory.getAll(ItemID.SUPER_ATTACK4)
+        : Inventory.getAll(plugin.getBaseIds());
 
     if (secondaries.size() == 0 || bases.size() == 0) {
       return;
@@ -42,5 +46,11 @@ public class MakePotion extends Task {
     Time.sleepTicksUntil(Production::isOpen, 5);
 
     Production.chooseOption(1);
+  }
+
+  private boolean hasSuperCombatIngredients() {
+    return Inventory.contains(ItemID.SUPER_ATTACK4)
+        && Inventory.contains(ItemID.SUPER_STRENGTH4)
+        && Inventory.contains(ItemID.SUPER_DEFENCE4);
   }
 }

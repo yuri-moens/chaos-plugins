@@ -33,7 +33,10 @@ import org.pf4j.Extension;
 @Extension
 @Slf4j
 public class Herblore extends TickScript {
-  @Inject @Getter private Config config;
+
+  @Inject
+  @Getter
+  private Config config;
 
   @Provides
   Config provideConfig(ConfigManager configManager) {
@@ -64,7 +67,8 @@ public class Herblore extends TickScript {
 
     int grimyHerbs = Inventory.getCount(getGrimyHerbIds());
     int cleanHerbs = Inventory.getCount(getCleanHerbIds());
-    int bases = Inventory.getCount(getBaseIds());
+    int bases = getBaseIds()[0] == -1 ? Inventory.getCount(ItemID.SUPER_ATTACK4)
+        : Inventory.getCount(getBaseIds());
     int secondaries = Inventory.getCount(config.secondary().getOriginalId());
     int vials = Inventory.getCount(ItemID.VIAL);
 
@@ -72,7 +76,7 @@ public class Herblore extends TickScript {
       setActivity(Activity.IDLE);
     } else if (cleanHerbs == 0
         && (currentActivity == Activity.CREATING_UNFINISHED_POTIONS
-            || currentActivity == Activity.TARRING_HERBS)) {
+        || currentActivity == Activity.TARRING_HERBS)) {
       setActivity(Activity.IDLE);
     } else if (bases == 0 && currentActivity == Activity.CREATING_POTIONS) {
       setActivity(Activity.IDLE);
@@ -95,11 +99,11 @@ public class Herblore extends TickScript {
     Herb herb = getHerb();
 
     if (herb == null) {
-      return new int[] {};
+      return new int[]{};
     } else if (herb == Herb.ALL) {
       return Herb.getAllGrimyIds();
     } else {
-      return new int[] {herb.getGrimyId()};
+      return new int[]{herb.getGrimyId()};
     }
   }
 
@@ -107,11 +111,11 @@ public class Herblore extends TickScript {
     Herb herb = getHerb();
 
     if (herb == null) {
-      return new int[] {};
+      return new int[]{};
     } else if (herb == Herb.ALL) {
       return Herb.getAllCleanIds();
     } else {
-      return new int[] {herb.getCleanId()};
+      return new int[]{herb.getCleanId()};
     }
   }
 
@@ -120,19 +124,19 @@ public class Herblore extends TickScript {
 
     switch (herb) {
       case ALL:
-        return new int[] {
-          Herb.GUAM_LEAF.getGrimyId(),
-          Herb.MARRENTILL.getGrimyId(),
-          Herb.TARROMIN.getGrimyId(),
-          Herb.HARRALANDER.getGrimyId()
+        return new int[]{
+            Herb.GUAM_LEAF.getGrimyId(),
+            Herb.MARRENTILL.getGrimyId(),
+            Herb.TARROMIN.getGrimyId(),
+            Herb.HARRALANDER.getGrimyId()
         };
       case GUAM_LEAF:
       case MARRENTILL:
       case TARROMIN:
       case HARRALANDER:
-        return new int[] {herb.getGrimyId()};
+        return new int[]{herb.getGrimyId()};
       default:
-        return new int[] {};
+        return new int[]{};
     }
   }
 
@@ -141,19 +145,19 @@ public class Herblore extends TickScript {
 
     switch (herb) {
       case ALL:
-        return new int[] {
-          Herb.GUAM_LEAF.getCleanId(),
-          Herb.MARRENTILL.getCleanId(),
-          Herb.TARROMIN.getCleanId(),
-          Herb.HARRALANDER.getCleanId()
+        return new int[]{
+            Herb.GUAM_LEAF.getCleanId(),
+            Herb.MARRENTILL.getCleanId(),
+            Herb.TARROMIN.getCleanId(),
+            Herb.HARRALANDER.getCleanId()
         };
       case GUAM_LEAF:
       case MARRENTILL:
       case TARROMIN:
       case HARRALANDER:
-        return new int[] {herb.getCleanId()};
+        return new int[]{herb.getCleanId()};
       default:
-        return new int[] {};
+        return new int[]{};
     }
   }
 
@@ -173,7 +177,7 @@ public class Herblore extends TickScript {
 
       return ids;
     } else {
-      return new int[] {config.secondary().getOriginalId()};
+      return new int[]{config.secondary().getOriginalId()};
     }
   }
 
@@ -181,7 +185,7 @@ public class Herblore extends TickScript {
     Potion potion = config.potion();
 
     if (potion.getHerb() == null || potion.getSecondaryId() == -1) {
-      return new int[] {potion.getBaseId()};
+      return new int[]{potion.getBaseId()};
     } else {
       return potion.getHerb().getUnfinishedIds();
     }
@@ -189,9 +193,9 @@ public class Herblore extends TickScript {
 
   public int[] getSecondaryIds() {
     if (config.potion().getSecondaryId() == -1) {
-      return new int[] {config.potion().getHerb().getCleanId()};
+      return new int[]{config.potion().getHerb().getCleanId()};
     } else {
-      return new int[] {config.potion().getSecondaryId()};
+      return new int[]{config.potion().getSecondaryId()};
     }
   }
 }
