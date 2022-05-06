@@ -3,6 +3,7 @@ package io.reisub.unethicalite.blastfurnace.tasks;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.game.Vars;
 import dev.unethicalite.api.items.Bank;
+import dev.unethicalite.api.items.Bank.WithdrawMode;
 import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.blastfurnace.BlastFurnace;
 import io.reisub.unethicalite.blastfurnace.Config;
@@ -73,7 +74,29 @@ public class HandleBank extends BankTask {
           plugin.setExpectingBars(true);
         }
         break;
+      case ADAMANTITE:
+        ChaosBank.bankInventoryInteract(coalBag, "Fill");
+
+        if (getCoalInPot() == 0) {
+          Bank.withdrawAll(ItemID.COAL, Bank.WithdrawMode.ITEM);
+        } else {
+          Bank.withdrawAll(ItemID.ADAMANTITE_ORE, WithdrawMode.ITEM);
+          plugin.setExpectingBars(true);
+        }
+        break;
+      case RUNITE:
+        final int coalInPot = getCoalInPot();
+
+        if (coalInPot == 0 || coalInPot == 54 || coalInPot == 108) {
+          Bank.withdrawAll(ItemID.COAL, Bank.WithdrawMode.ITEM);
+        } else {
+          Bank.withdrawAll(ItemID.RUNITE_ORE, WithdrawMode.ITEM);
+          plugin.setExpectingBars(true);
+        }
+        break;
       default:
+        plugin.stop("Unsupported metal type. Stopping plugin.");
+        break;
     }
   }
 

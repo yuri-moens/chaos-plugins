@@ -9,6 +9,7 @@ import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.blastfurnace.BlastFurnace;
 import io.reisub.unethicalite.blastfurnace.Config;
 import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.enums.Metal;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.Item;
@@ -42,46 +43,41 @@ public class DepositMaterials extends Task {
       Movement.toggleRun();
     }
 
-    TileObject conveyorBelt = TileObjects.getNearest(ObjectID.CONVEYOR_BELT);
+    final TileObject conveyorBelt = TileObjects.getNearest(ObjectID.CONVEYOR_BELT);
     if (conveyorBelt == null) {
       return;
     }
 
-    Item coalBag = Inventory.getFirst(ItemID.COAL_BAG_12019);
+    final Item coalBag = Inventory.getFirst(ItemID.COAL_BAG_12019);
 
-    switch (config.metal()) {
-      case STEEL:
-      case MITHRIL:
+    if (config.metal() == Metal.GOLD) {
+      if (!Equipment.contains(ItemID.GOLDSMITH_GAUNTLETS)) {
         conveyorBelt.interact(CONVEYER_BELT_ACTION);
-        Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 25);
+        Time.sleepTicks(Rand.nextInt(4, 7));
 
-        plugin.setActivity(Activity.DEPOSITING);
-
-        coalBag.interact("Empty");
-        Time.sleepTick();
-
-        boolean successful = false;
-
-        while (!successful) {
-          conveyorBelt.interact(CONVEYER_BELT_ACTION);
-          successful = Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 3);
+        final Item gauntlets = Inventory.getFirst(ItemID.GOLDSMITH_GAUNTLETS);
+        if (gauntlets != null) {
+          gauntlets.interact("Wear");
         }
-        break;
-      case GOLD:
-        if (!Equipment.contains(ItemID.GOLDSMITH_GAUNTLETS)) {
-          conveyorBelt.interact(CONVEYER_BELT_ACTION);
-          Time.sleepTicks(Rand.nextInt(4, 7));
+      }
 
-          Item gauntlets = Inventory.getFirst(ItemID.GOLDSMITH_GAUNTLETS);
-          if (gauntlets != null) {
-            gauntlets.interact("Wear");
-          }
-        }
+      conveyorBelt.interact(CONVEYER_BELT_ACTION);
+      Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 25);
+    } else {
+      conveyorBelt.interact(CONVEYER_BELT_ACTION);
+      Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 25);
 
+      plugin.setActivity(Activity.DEPOSITING);
+
+      coalBag.interact("Empty");
+      Time.sleepTick();
+
+      boolean successful = false;
+
+      while (!successful) {
         conveyorBelt.interact(CONVEYER_BELT_ACTION);
-        Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 25);
-        break;
-      default:
+        successful = Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 3);
+      }
     }
 
     if (!Movement.isRunEnabled()) {
