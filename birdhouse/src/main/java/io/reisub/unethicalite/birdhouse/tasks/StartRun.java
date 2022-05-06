@@ -2,6 +2,7 @@ package io.reisub.unethicalite.birdhouse.tasks;
 
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.items.Bank;
+import dev.unethicalite.api.items.Equipment;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.widgets.Dialog;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
@@ -14,9 +15,12 @@ import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 
 public class StartRun extends BankTask {
-  @Inject private BirdHouse plugin;
 
-  @Inject private Config config;
+  @Inject
+  private BirdHouse plugin;
+
+  @Inject
+  private Config config;
 
   @Override
   public String getStatus() {
@@ -69,11 +73,11 @@ public class StartRun extends BankTask {
 
     Inventory.getAll(i -> i.getName().startsWith("Graceful")).forEach(i -> i.interact("Wear"));
 
-    if (!hasEverything()) {
+    if (!Time.sleepTicksUntil(this::hasEverything, 3)) {
       return;
     }
 
-    Item pendant = Inventory.getFirst(Predicates.ids(Constants.DIGSITE_PENDANT_IDS));
+    final Item pendant = Inventory.getFirst(Predicates.ids(Constants.DIGSITE_PENDANT_IDS));
     if (pendant == null) {
       return;
     }
@@ -97,7 +101,8 @@ public class StartRun extends BankTask {
   }
 
   private boolean hasEverything() {
-    return Inventory.contains(ItemID.IMCANDO_HAMMER, ItemID.HAMMER)
+    return (Inventory.contains(ItemID.IMCANDO_HAMMER, ItemID.HAMMER) || Equipment.contains(
+        ItemID.IMCANDO_HAMMER))
         && Inventory.contains(ItemID.CHISEL)
         && Inventory.contains(Predicates.ids(Constants.DIGSITE_PENDANT_IDS))
         && Inventory.getCount(config.logs().getId()) == 4
