@@ -48,5 +48,7 @@ public class HandleBank extends BankTask {
     }
 
     plugin.setLastBank(Game.getClient().getTickCount());
+
+    close();
   }
 }
