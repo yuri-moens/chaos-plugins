@@ -2,6 +2,7 @@ package io.reisub.unethicalite.thermyflicker;
 
 import com.google.inject.Provides;
 import io.reisub.unethicalite.thermyflicker.tasks.Attack;
+import io.reisub.unethicalite.thermyflicker.tasks.DrinkPrayerPotion;
 import io.reisub.unethicalite.thermyflicker.tasks.MoveUnder;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
@@ -37,5 +38,6 @@ public class ThermyFlicker extends TickScript {
 
     addTask(Attack.class);
     addTask(MoveUnder.class);
+    addTask(DrinkPrayerPotion.class);
   }
 }
