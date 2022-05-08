@@ -11,7 +11,6 @@ import net.runelite.api.ObjectID;
 import net.runelite.api.widgets.Widget;
 
 public class Constants {
-  public static final int MAKE_FIRST_ITEM_WIDGET_ID = 17694734;
 
   public static final Set<Integer> LOG_IDS =
       ImmutableSet.of(
@@ -166,6 +165,33 @@ public class Constants {
           ItemID.SUPER_RESTORE4,
           ItemID.SUPER_RESTORE_MIX1,
           ItemID.SUPER_RESTORE_MIX2);
+
+  public static final Set<Integer> ANTI_POISON_IDS = Set.of(
+      ItemID.ANTIPOISON1,
+      ItemID.ANTIPOISON2,
+      ItemID.ANTIPOISON3,
+      ItemID.ANTIPOISON4,
+      ItemID.SUPERANTIPOISON1,
+      ItemID.SUPERANTIPOISON2,
+      ItemID.SUPERANTIPOISON3,
+      ItemID.SUPERANTIPOISON4,
+      ItemID.ANTIDOTE1,
+      ItemID.ANTIDOTE2,
+      ItemID.ANTIDOTE3,
+      ItemID.ANTIDOTE4,
+      ItemID.ANTIDOTE1_5958,
+      ItemID.ANTIDOTE2_5956,
+      ItemID.ANTIDOTE3_5954,
+      ItemID.ANTIDOTE4_5952,
+      ItemID.ANTIVENOM1,
+      ItemID.ANTIVENOM2,
+      ItemID.ANTIVENOM3,
+      ItemID.ANTIVENOM4,
+      ItemID.ANTIVENOM4_12913,
+      ItemID.ANTIVENOM3_12915,
+      ItemID.ANTIVENOM2_12917,
+      ItemID.ANTIVENOM1_12919
+  );
 
   public static final Set<Integer> MINEABLE_GEM_IDS =
       ImmutableSet.of(
@@ -790,8 +816,6 @@ public class Constants {
           ObjectID.BANK_BOOTH_16642,
           ObjectID.BANK_BOOTH_16700,
           ObjectID.BANK_BOOTH_18491,
-          ObjectID.PRIVATE_BANK_BOOTH,
-          ObjectID.PRIVATE_BANK_BOOTH_20324,
           ObjectID.BANK_BOOTH_20325,
           ObjectID.BANK_BOOTH_20326,
           ObjectID.BANK_BOOTH_20327,

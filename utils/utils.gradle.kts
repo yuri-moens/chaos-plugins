@@ -1,4 +1,4 @@
-version = "1.4.28"
+version = "1.4.29"
 
 project.extra["PluginName"] = "Chaos Utils"
 project.extra["PluginDescription"] = "Utilities for Chaos scripts"
