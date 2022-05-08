@@ -1,6 +1,7 @@
 package io.reisub.unethicalite.pyramidplunder.tasks;
 
 import com.google.common.collect.ImmutableSet;
+import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.game.Combat;
 import dev.unethicalite.api.items.Bank;
 import dev.unethicalite.api.items.Bank.WithdrawMode;
@@ -38,6 +39,7 @@ public class HandleBank extends BankTask {
     }
 
     ChaosBank.depositAll(false, Predicates.ids(TREASURE_IDS));
+    Time.sleepTick();
 
     if (!Inventory.contains(Predicates.ids(Constants.ANTI_POISON_IDS))) {
       Bank.withdraw(ItemID.SUPERANTIPOISON4, 1, WithdrawMode.ITEM);
@@ -49,8 +51,8 @@ public class HandleBank extends BankTask {
 
     final int amountOfFood = Math.floorDiv(Combat.getMissingHealth(), 12);
 
-    if (amountOfFood > 0) {
-      Bank.withdraw(ItemID.LOBSTER, amountOfFood, WithdrawMode.ITEM);
+    for (int i = 0; i < amountOfFood; i++) {
+      Bank.withdraw(ItemID.LOBSTER, 1, WithdrawMode.ITEM);
     }
   }
 }

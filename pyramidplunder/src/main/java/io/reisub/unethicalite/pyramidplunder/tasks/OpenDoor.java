@@ -18,6 +18,7 @@ public class OpenDoor extends Task {
 
   private static final Set<String> FINISHED_MESSAGES = ImmutableSet.of(
       "This door leads to a dead end.",
+      "You've already opened this door and it leads to a dead end.",
       "Your attempt fails."
   );
 
@@ -54,7 +55,7 @@ public class OpenDoor extends Task {
 
     door.interact(action);
 
-    Time.sleepTicksUntil(() -> finished || !PyramidPlunder.isPastTraps(), 15);
+    Time.sleepTicksUntil(() -> finished || !PyramidPlunder.isPastTraps(), 40);
   }
 
   @Subscribe

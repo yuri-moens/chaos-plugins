@@ -1,12 +1,15 @@
 package io.reisub.unethicalite.pyramidplunder.tasks;
 
+import dev.unethicalite.api.commons.Predicates;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.NPCs;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.movement.Reachable;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.pyramidplunder.PyramidPlunder;
+import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.ArrayDeque;
@@ -42,11 +45,18 @@ public class GoToPyramid extends Task {
       }
 
       ladder.interact(0);
+      Time.sleepTicks(2);
 
       if (Inventory.contains(ItemID.LOBSTER)) {
-        Time.sleepTick();
         Inventory.getFirst(ItemID.LOBSTER).interact(1);
-        Time.sleepTick();
+
+        if (Static.getClient().getEnergy() < 30
+            && Inventory.contains(Predicates.ids(Constants.STAMINA_POTION_IDS))) {
+          Inventory.getFirst(Predicates.ids(Constants.STAMINA_POTION_IDS)).interact("Drink");
+        }
+
+        Time.sleepTicks(2);
+
         ladder.interact(0);
       }
 

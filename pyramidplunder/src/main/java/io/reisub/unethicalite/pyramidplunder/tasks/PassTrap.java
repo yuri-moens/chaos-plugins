@@ -40,7 +40,6 @@ public class PassTrap extends Task {
 
     spearTrap.interact(0);
     Time.sleepTicksUntil(() -> PyramidPlunder.isPastTraps() || failed, 15);
-    Time.sleepTick();
   }
 
   @Subscribe

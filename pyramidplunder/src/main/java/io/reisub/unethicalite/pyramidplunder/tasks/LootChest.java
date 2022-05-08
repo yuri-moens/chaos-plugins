@@ -5,6 +5,7 @@ import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.movement.Reachable;
 import io.reisub.unethicalite.pyramidplunder.PyramidPlunder;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.Item;
@@ -28,7 +29,7 @@ public class LootChest extends Task {
     chest = TileObjects.getNearest(
         o -> o.getName().equals("Grand Gold Chest") && o.hasAction("Search"));
 
-    return chest != null;
+    return chest != null && Reachable.isInteractable(chest);
   }
 
   @Override
