@@ -31,8 +31,8 @@ import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.cerberus.CerberusPlugin;
 import net.runelite.client.plugins.grotesqueguardians.GrotesqueGuardiansPlugin;
-import net.runelite.client.plugins.interaction.InteractionPlugin;
 import net.runelite.client.plugins.itemstats.ItemStatPlugin;
+import net.runelite.client.plugins.unethicalite.UnethicalitePlugin;
 import net.runelite.client.plugins.zulrah.ZulrahPlugin;
 import org.pf4j.Extension;
 
@@ -42,7 +42,7 @@ import org.pf4j.Extension;
     description = "Various utilities to make combat easier",
     enabledByDefault = true)
 @PluginDependency(ItemStatPlugin.class)
-@PluginDependency(InteractionPlugin.class)
+@PluginDependency(UnethicalitePlugin.class)
 @PluginDependency(CerberusPlugin.class)
 @PluginDependency(ZulrahPlugin.class)
 @PluginDependency(GrotesqueGuardiansPlugin.class)

@@ -15,8 +15,8 @@ import dev.unethicalite.api.widgets.Prayers;
 import dev.unethicalite.api.widgets.Tab;
 import dev.unethicalite.api.widgets.Tabs;
 import dev.unethicalite.api.widgets.Widgets;
+import dev.unethicalite.client.config.UnethicaliteConfig;
 import dev.unethicalite.managers.interaction.InteractMethod;
-import dev.unethicalite.managers.interaction.InteractionConfig;
 import io.reisub.unethicalite.combathelper.Helper;
 import io.reisub.unethicalite.utils.Utils;
 import java.awt.event.KeyEvent;
@@ -68,7 +68,7 @@ public class PrayerHelper extends Helper {
           ProjectileID.DEMONIC_GORILLA_BOULDER);
   private static final int JALTOK_JAD_MAGE_ATTACK = 7592;
   private static final int JALTOK_JAD_RANGE_ATTACK = 7593;
-  @Inject private InteractionConfig interactionConfig;
+  @Inject private UnethicaliteConfig unethicaliteConfig;
   private boolean toggleFlicking;
   private boolean firstFlick;
   private boolean toggledOff;
@@ -168,7 +168,7 @@ public class PrayerHelper extends Helper {
     Widget quickPrayersWidget = Widgets.get(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB);
 
     if (swapPrayers != null && !swapPrayers.isEmpty()) {
-      if (interactionConfig.interactMethod() == InteractMethod.PACKETS) {
+      if (unethicaliteConfig.interactMethod() == InteractMethod.PACKETS) {
         WidgetPackets.queueWidgetAction2Packet(
             WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId(), -1, -1);
 

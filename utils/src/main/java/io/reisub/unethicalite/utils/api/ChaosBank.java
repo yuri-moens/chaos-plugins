@@ -70,7 +70,7 @@ public class ChaosBank {
   }
 
   public static void bankInventoryInteract(Item item, String action) {
-    int index = item.getActions().indexOf(action);
+    final int index = item.getActionIndex(action);
     if (index == -1) {
       return;
     }
