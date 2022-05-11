@@ -5,13 +5,11 @@ import dev.unethicalite.api.commons.Rand;
 import dev.unethicalite.api.entities.NPCs;
 import dev.unethicalite.api.game.Combat;
 import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.game.Skills;
-import dev.unethicalite.api.game.Vars;
 import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.combathelper.Helper;
 import io.reisub.unethicalite.combathelper.prayer.PrayerHelper;
-import io.reisub.unethicalite.combathelper.prayer.QuickPrayer;
 import io.reisub.unethicalite.utils.api.ConfigList;
+import io.reisub.unethicalite.utils.enums.ChaosPrayer;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.List;
@@ -20,15 +18,14 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.runelite.api.Item;
 import net.runelite.api.NPC;
-import net.runelite.api.Skill;
-import net.runelite.api.Varbits;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 
 @Singleton
 public class SwapHelper extends Helper {
-  @Inject private PrayerHelper prayerHelper;
+  @Inject
+  private PrayerHelper prayerHelper;
 
   private ConfigList meleeList;
   private ConfigList rangedList;
@@ -173,39 +170,34 @@ public class SwapHelper extends Helper {
           }
         }
 
-        Set<QuickPrayer> prayers = new HashSet<>();
-        int level = Skills.getLevel(Skill.PRAYER);
+        Set<ChaosPrayer> prayers = new HashSet<>();
 
         switch (style) {
           case MELEE:
             if (offensivePrayers) {
-              prayers.addAll(
-                  QuickPrayer.getBestMeleeBuff(
-                      level, Vars.getBit(Varbits.CAMELOT_TRAINING_ROOM_STATUS) == 8));
+              prayers.addAll(ChaosPrayer.getBestMeleeBuff());
             }
 
             if (defensivePrayers) {
-              prayers.add(config.meleePrayer().getQuickPrayer());
+              prayers.add(config.meleePrayer().getPrayer());
             }
             break;
           case RANGE:
             if (offensivePrayers) {
-              prayers.addAll(
-                  QuickPrayer.getBestRangedBuff(level, Vars.getBit(Varbits.RIGOUR_UNLOCKED) != 0));
+              prayers.addAll(ChaosPrayer.getBestRangedBuff());
             }
 
             if (defensivePrayers) {
-              prayers.add(config.rangedPrayer().getQuickPrayer());
+              prayers.add(config.rangedPrayer().getPrayer());
             }
             break;
           case MAGIC:
             if (offensivePrayers) {
-              prayers.addAll(
-                  QuickPrayer.getBestMagicBuff(level, Vars.getBit(Varbits.AUGURY_UNLOCKED) != 0));
+              prayers.addAll(ChaosPrayer.getBestMagicBuff());
             }
 
             if (defensivePrayers) {
-              prayers.add(config.magicPrayer().getQuickPrayer());
+              prayers.add(config.magicPrayer().getPrayer());
             }
             break;
           default:

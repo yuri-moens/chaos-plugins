@@ -8,7 +8,6 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.game.Game;
 import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.game.Skills;
-import dev.unethicalite.api.game.Vars;
 import dev.unethicalite.api.packets.WidgetPackets;
 import dev.unethicalite.api.utils.MessageUtils;
 import dev.unethicalite.api.widgets.Prayers;
@@ -19,6 +18,7 @@ import dev.unethicalite.client.config.UnethicaliteConfig;
 import dev.unethicalite.managers.interaction.InteractMethod;
 import io.reisub.unethicalite.combathelper.Helper;
 import io.reisub.unethicalite.utils.Utils;
+import io.reisub.unethicalite.utils.enums.ChaosPrayer;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +41,6 @@ import net.runelite.api.Player;
 import net.runelite.api.Projectile;
 import net.runelite.api.ProjectileID;
 import net.runelite.api.Skill;
-import net.runelite.api.Varbits;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.AnimationChanged;
@@ -61,21 +60,24 @@ import net.runelite.client.eventbus.Subscribe;
 
 @Singleton
 public class PrayerHelper extends Helper {
+
   private static final Set<Integer> DEMONIC_PROJECTILES =
       ImmutableSet.of(
           ProjectileID.DEMONIC_GORILLA_RANGED,
           ProjectileID.DEMONIC_GORILLA_MAGIC,
-          ProjectileID.DEMONIC_GORILLA_BOULDER);
+          ProjectileID.DEMONIC_GORILLA_BOULDER
+      );
   private static final int JALTOK_JAD_MAGE_ATTACK = 7592;
   private static final int JALTOK_JAD_RANGE_ATTACK = 7593;
-  @Inject private UnethicaliteConfig unethicaliteConfig;
+  @Inject
+  private UnethicaliteConfig unethicaliteConfig;
   private boolean toggleFlicking;
   private boolean firstFlick;
   private boolean toggledOff;
   private boolean switchToInventory;
-  private QuickPrayer currentOverhead;
-  private QuickPrayer currentDefensive;
-  private Set<QuickPrayer> swapPrayers;
+  private ChaosPrayer currentOverhead;
+  private ChaosPrayer currentDefensive;
+  private Set<ChaosPrayer> swapPrayers;
 
   private Map<NPC, DemonicGorilla> gorillas;
   private List<WorldPoint> recentBoulders;
@@ -141,18 +143,18 @@ public class PrayerHelper extends Helper {
       if (style != null) {
         switch (style) {
           case MELEE:
-            if (currentOverhead != QuickPrayer.PROTECT_FROM_MELEE) {
-              setPrayer(QuickPrayer.PROTECT_FROM_MELEE, false);
+            if (currentOverhead != ChaosPrayer.PROTECT_FROM_MELEE) {
+              setPrayer(ChaosPrayer.PROTECT_FROM_MELEE, false);
             }
             break;
           case RANGED:
-            if (currentOverhead != QuickPrayer.PROTECT_FROM_MISSILES) {
-              setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
+            if (currentOverhead != ChaosPrayer.PROTECT_FROM_MISSILES) {
+              setPrayer(ChaosPrayer.PROTECT_FROM_MISSILES, false);
             }
             break;
           case MAGIC:
-            if (currentOverhead != QuickPrayer.PROTECT_FROM_MAGIC) {
-              setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
+            if (currentOverhead != ChaosPrayer.PROTECT_FROM_MAGIC) {
+              setPrayer(ChaosPrayer.PROTECT_FROM_MAGIC, false);
             }
             break;
           default:
@@ -172,8 +174,8 @@ public class PrayerHelper extends Helper {
         WidgetPackets.queueWidgetAction2Packet(
             WidgetInfo.MINIMAP_QUICK_PRAYER_ORB.getPackedId(), -1, -1);
 
-        for (QuickPrayer quickPrayer : swapPrayers) {
-          WidgetPackets.queueWidgetAction1Packet(5046276, -1, quickPrayer.getChildId());
+        for (ChaosPrayer quickPrayer : swapPrayers) {
+          WidgetPackets.queueWidgetAction1Packet(5046276, -1, quickPrayer.getQuickPrayerId());
         }
 
         WidgetPackets.queueWidgetAction1Packet(5046277, -1, -1);
@@ -217,12 +219,12 @@ public class PrayerHelper extends Helper {
       switch (actor.getAnimation()) {
         case AnimationID.TZTOK_JAD_MAGIC_ATTACK:
         case JALTOK_JAD_MAGE_ATTACK:
-          setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
+          setPrayer(ChaosPrayer.PROTECT_FROM_MAGIC, false);
           MessageUtils.addMessage("Pray against magic!");
           break;
         case AnimationID.TZTOK_JAD_RANGE_ATTACK:
         case JALTOK_JAD_RANGE_ATTACK:
-          setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
+          setPrayer(ChaosPrayer.PROTECT_FROM_MISSILES, false);
           MessageUtils.addMessage("Pray against missiles!");
           break;
         default:
@@ -237,24 +239,22 @@ public class PrayerHelper extends Helper {
       toggleFlicking();
       e.consume();
     } else if (config.hotkeyMelee().matches(e)) {
-      setPrayer(QuickPrayer.PROTECT_FROM_MELEE);
+      setPrayer(ChaosPrayer.PROTECT_FROM_MELEE);
       e.consume();
     } else if (config.hotkeyMissiles().matches(e)) {
-      setPrayer(QuickPrayer.PROTECT_FROM_MISSILES);
+      setPrayer(ChaosPrayer.PROTECT_FROM_MISSILES);
       e.consume();
     } else if (config.hotkeyMagic().matches(e)) {
-      setPrayer(QuickPrayer.PROTECT_FROM_MAGIC);
+      setPrayer(ChaosPrayer.PROTECT_FROM_MAGIC);
       e.consume();
     } else if (config.hotkeyMeleeBuff().matches(e)) {
-      setPrayers(
-          QuickPrayer.getBestMeleeBuff(
-              level, Vars.getBit(Varbits.CAMELOT_TRAINING_ROOM_STATUS) == 8));
+      setPrayers(ChaosPrayer.getBestMeleeBuff());
       e.consume();
     } else if (config.hotkeyRangedBuff().matches(e)) {
-      setPrayers(QuickPrayer.getBestRangedBuff(level, Vars.getBit(Varbits.RIGOUR_UNLOCKED) != 0));
+      setPrayers(ChaosPrayer.getBestRangedBuff());
       e.consume();
     } else if (config.hotkeyMagicBuff().matches(e)) {
-      setPrayers(QuickPrayer.getBestMagicBuff(level, Vars.getBit(Varbits.AUGURY_UNLOCKED) != 0));
+      setPrayers(ChaosPrayer.getBestMagicBuff());
       e.consume();
     }
   }
@@ -278,7 +278,7 @@ public class PrayerHelper extends Helper {
     plugin.schedule(() -> widget.interact(0), 0);
   }
 
-  private void swapPrayers(Set<QuickPrayer> quickPrayers) {
+  private void swapPrayers(Set<ChaosPrayer> quickPrayers) {
     plugin.schedule(
         () -> {
           Widget quickPrayersWidget = Widgets.get(WidgetInfo.MINIMAP_QUICK_PRAYER_ORB);
@@ -290,9 +290,9 @@ public class PrayerHelper extends Helper {
           Time.sleepTicksUntil(
               () -> Widgets.isVisible(Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4)), 3);
 
-          for (QuickPrayer quickPrayer : quickPrayers) {
+          for (ChaosPrayer quickPrayer : quickPrayers) {
             Widget prayer =
-                Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4, quickPrayer.getChildId());
+                Widgets.get(WidgetID.QUICK_PRAYERS_GROUP_ID, 4, quickPrayer.getQuickPrayerId());
             if (prayer == null) {
               return;
             }
@@ -311,7 +311,8 @@ public class PrayerHelper extends Helper {
             Tabs.openInterface(Tab.INVENTORY);
           }
         },
-        0);
+        0
+    );
   }
 
   public void toggleFlicking() {
@@ -328,19 +329,19 @@ public class PrayerHelper extends Helper {
     return toggleFlicking;
   }
 
-  public void setPrayer(QuickPrayer quickPrayer) {
+  public void setPrayer(ChaosPrayer quickPrayer) {
     setPrayers(ImmutableSet.of(quickPrayer), config.allowToggleOff());
   }
 
-  public void setPrayer(QuickPrayer quickPrayer, boolean allowToggleOff) {
+  public void setPrayer(ChaosPrayer quickPrayer, boolean allowToggleOff) {
     setPrayers(ImmutableSet.of(quickPrayer), allowToggleOff);
   }
 
-  public void setPrayers(Set<QuickPrayer> quickPrayers) {
+  public void setPrayers(Set<ChaosPrayer> quickPrayers) {
     setPrayers(quickPrayers, config.allowToggleOff());
   }
 
-  public void setPrayers(Set<QuickPrayer> quickPrayers, boolean allowToggleOff) {
+  public void setPrayers(Set<ChaosPrayer> quickPrayers, boolean allowToggleOff) {
     if (quickPrayers == null
         || quickPrayers.isEmpty()
         || (!allowToggleOff && quickPrayers.contains(currentOverhead))) {
@@ -350,31 +351,31 @@ public class PrayerHelper extends Helper {
     quickPrayers = Sets.newHashSet(quickPrayers);
 
     if (quickPrayers.contains(currentOverhead)) {
-      currentOverhead = QuickPrayer.NONE;
-    } else if (quickPrayers.contains(QuickPrayer.PROTECT_FROM_MAGIC)) {
-      currentOverhead = QuickPrayer.PROTECT_FROM_MAGIC;
-    } else if (quickPrayers.contains(QuickPrayer.PROTECT_FROM_MISSILES)) {
-      currentOverhead = QuickPrayer.PROTECT_FROM_MISSILES;
-    } else if (quickPrayers.contains(QuickPrayer.PROTECT_FROM_MELEE)) {
-      currentOverhead = QuickPrayer.PROTECT_FROM_MELEE;
+      currentOverhead = null;
+    } else if (quickPrayers.contains(ChaosPrayer.PROTECT_FROM_MAGIC)) {
+      currentOverhead = ChaosPrayer.PROTECT_FROM_MAGIC;
+    } else if (quickPrayers.contains(ChaosPrayer.PROTECT_FROM_MISSILES)) {
+      currentOverhead = ChaosPrayer.PROTECT_FROM_MISSILES;
+    } else if (quickPrayers.contains(ChaosPrayer.PROTECT_FROM_MELEE)) {
+      currentOverhead = ChaosPrayer.PROTECT_FROM_MELEE;
     }
 
     quickPrayers.remove(currentDefensive);
 
-    if (quickPrayers.contains(QuickPrayer.THICK_SKIN)) {
-      currentDefensive = QuickPrayer.THICK_SKIN;
-    } else if (quickPrayers.contains(QuickPrayer.ROCK_SKIN)) {
-      currentDefensive = QuickPrayer.ROCK_SKIN;
-    } else if (quickPrayers.contains(QuickPrayer.STEEL_SKIN)) {
-      currentDefensive = QuickPrayer.STEEL_SKIN;
-    } else if (quickPrayers.contains(QuickPrayer.CHIVALRY)) {
-      currentDefensive = QuickPrayer.CHIVALRY;
-    } else if (quickPrayers.contains(QuickPrayer.PIETY)) {
-      currentDefensive = QuickPrayer.PIETY;
-    } else if (quickPrayers.contains(QuickPrayer.RIGOUR)) {
-      currentDefensive = QuickPrayer.RIGOUR;
-    } else if (quickPrayers.contains(QuickPrayer.AUGURY)) {
-      currentDefensive = QuickPrayer.AUGURY;
+    if (quickPrayers.contains(ChaosPrayer.THICK_SKIN)) {
+      currentDefensive = ChaosPrayer.THICK_SKIN;
+    } else if (quickPrayers.contains(ChaosPrayer.ROCK_SKIN)) {
+      currentDefensive = ChaosPrayer.ROCK_SKIN;
+    } else if (quickPrayers.contains(ChaosPrayer.STEEL_SKIN)) {
+      currentDefensive = ChaosPrayer.STEEL_SKIN;
+    } else if (quickPrayers.contains(ChaosPrayer.CHIVALRY)) {
+      currentDefensive = ChaosPrayer.CHIVALRY;
+    } else if (quickPrayers.contains(ChaosPrayer.PIETY)) {
+      currentDefensive = ChaosPrayer.PIETY;
+    } else if (quickPrayers.contains(ChaosPrayer.RIGOUR)) {
+      currentDefensive = ChaosPrayer.RIGOUR;
+    } else if (quickPrayers.contains(ChaosPrayer.AUGURY)) {
+      currentDefensive = ChaosPrayer.AUGURY;
     }
 
     if (swapPrayers == null) {
@@ -633,7 +634,7 @@ public class PrayerHelper extends Helper {
           && !gorilla.isChangedAttackStyleThisTick()
           && gorilla.getNextPosibleAttackStyles().size() >= 2
           && gorilla.getNextPosibleAttackStyles().stream()
-              .anyMatch(x -> x == DemonicGorilla.AttackStyle.MELEE)) {
+          .anyMatch(x -> x == DemonicGorilla.AttackStyle.MELEE)) {
         // If melee is a possibility, we can check if the gorilla
         // is or isn't moving toward the player to determine if
         // it is actually attempting to melee or not.
@@ -654,36 +655,37 @@ public class PrayerHelper extends Helper {
                         // or other players
                         final WorldArea area1 = new WorldArea(x, 1, 1);
                         return gorillas.values().stream()
-                                .noneMatch(
-                                    y -> {
-                                      if (y == gorilla) {
-                                        return false;
-                                      }
-                                      final WorldArea area2 =
-                                          y.getNpc().getIndex() < gorilla.getNpc().getIndex()
-                                              ? y.getNpc().getWorldArea()
-                                              : y.getLastWorldArea();
-                                      return area2 != null && area1.intersectsWith(area2);
-                                    })
+                            .noneMatch(
+                                y -> {
+                                  if (y == gorilla) {
+                                    return false;
+                                  }
+                                  final WorldArea area2 =
+                                      y.getNpc().getIndex() < gorilla.getNpc().getIndex()
+                                          ? y.getNpc().getWorldArea()
+                                          : y.getLastWorldArea();
+                                  return area2 != null && area1.intersectsWith(area2);
+                                })
                             && memorizedPlayers.values().stream()
-                                .noneMatch(
-                                    y -> {
-                                      final WorldArea area2 = y.getLastWorldArea();
-                                      return area2 != null && area1.intersectsWith(area2);
-                                    });
+                            .noneMatch(
+                                y -> {
+                                  final WorldArea area2 = y.getLastWorldArea();
+                                  return area2 != null && area1.intersectsWith(area2);
+                                });
 
                         // There is a special case where if a player walked through
                         // a gorilla, or a player walked through another player,
                         // the tiles that were walked through becomes
                         // walkable, but I didn't feel like it's necessary to handle
                         // that special case as it should rarely happen.
-                      });
+                      }
+                  );
           if (predictedNewArea != null) {
             int distance = gorilla.getNpc().getWorldArea().distanceTo(mp.getLastWorldArea());
             WorldPoint predictedMovement = predictedNewArea.toWorldPoint();
             if (distance <= DemonicGorilla.MAX_ATTACK_RANGE
                 && mp.getLastWorldArea()
-                    .hasLineOfSightTo(Game.getClient(), gorilla.getLastWorldArea())) {
+                .hasLineOfSightTo(Game.getClient(), gorilla.getLastWorldArea())) {
               if (predictedMovement.distanceTo(gorilla.getLastWorldArea().toWorldPoint()) != 0) {
                 if (predictedMovement.distanceTo(gorilla.getNpc().getWorldLocation()) == 0) {
                   gorilla.setNextPosibleAttackStyles(
@@ -699,7 +701,7 @@ public class PrayerHelper extends Helper {
               } else if (tickCounter >= gorilla.getNextAttackTick()
                   && gorilla.getRecentProjectileId() == -1
                   && recentBoulders.stream()
-                      .noneMatch(x -> x.distanceTo(mp.getLastWorldArea()) == 0)) {
+                  .noneMatch(x -> x.distanceTo(mp.getLastWorldArea()) == 0)) {
                 gorilla.setNextPosibleAttackStyles(
                     gorilla.getNextPosibleAttackStyles().stream()
                         .filter(x -> x == DemonicGorilla.AttackStyle.MELEE)
@@ -820,7 +822,7 @@ public class PrayerHelper extends Helper {
       Hitsplat.HitsplatType hitsplatType = event.getHitsplat().getHitsplatType();
       if (gorilla != null
           && (hitsplatType == Hitsplat.HitsplatType.BLOCK_ME
-              || hitsplatType == Hitsplat.HitsplatType.DAMAGE_ME)) {
+          || hitsplatType == Hitsplat.HitsplatType.DAMAGE_ME)) {
         gorilla.setTakenDamageRecently(true);
       }
     }

@@ -4,7 +4,7 @@ import com.openosrs.client.util.WeaponStyle;
 import dev.unethicalite.api.game.Combat;
 import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.combathelper.Helper;
-import io.reisub.unethicalite.combathelper.prayer.QuickPrayer;
+import io.reisub.unethicalite.utils.enums.ChaosPrayer;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.inject.Inject;
@@ -92,16 +92,16 @@ public class BossHelper extends Helper {
     if (prayer != null) {
       switch (prayer) {
         case PROTECT_FROM_MELEE:
-          plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MELEE, false);
+          plugin.getPrayerHelper().setPrayer(ChaosPrayer.PROTECT_FROM_MELEE, false);
           break;
         case PROTECT_FROM_MISSILES:
           if (cerberusPlugin.getUpcomingAttacks().get(0).getAttack() == Cerberus.Attack.GHOST_RANGED
               || cerberusPlugin.getCerberus().getLastTripleAttack() != null) {
-            plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
+            plugin.getPrayerHelper().setPrayer(ChaosPrayer.PROTECT_FROM_MISSILES, false);
           }
           break;
         case PROTECT_FROM_MAGIC:
-          plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
+          plugin.getPrayerHelper().setPrayer(ChaosPrayer.PROTECT_FROM_MAGIC, false);
           break;
         default:
       }
@@ -161,10 +161,10 @@ public class BossHelper extends Helper {
 
     switch (prayer.get()) {
       case PROTECT_FROM_MAGIC:
-        plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MAGIC, false);
+        plugin.getPrayerHelper().setPrayer(ChaosPrayer.PROTECT_FROM_MAGIC, false);
         break;
       case PROTECT_FROM_MISSILES:
-        plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
+        plugin.getPrayerHelper().setPrayer(ChaosPrayer.PROTECT_FROM_MISSILES, false);
         break;
       default:
         break;
@@ -206,16 +206,16 @@ public class BossHelper extends Helper {
     switch (dusk.getPhase()) {
       case PHASE_1:
       case PHASE_3:
-        plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
+        plugin.getPrayerHelper().setPrayer(ChaosPrayer.PROTECT_FROM_MISSILES, false);
         break;
       case PHASE_2:
-        plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MELEE, false);
+        plugin.getPrayerHelper().setPrayer(ChaosPrayer.PROTECT_FROM_MELEE, false);
         break;
       case PHASE_4:
         if (dusk.getLastAttackPrayer() == Prayer.PROTECT_FROM_MELEE) {
-          plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MELEE, false);
+          plugin.getPrayerHelper().setPrayer(ChaosPrayer.PROTECT_FROM_MELEE, false);
         } else {
-          plugin.getPrayerHelper().setPrayer(QuickPrayer.PROTECT_FROM_MISSILES, false);
+          plugin.getPrayerHelper().setPrayer(ChaosPrayer.PROTECT_FROM_MISSILES, false);
         }
         break;
       default:

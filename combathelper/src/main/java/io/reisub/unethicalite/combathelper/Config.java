@@ -3,7 +3,7 @@ package io.reisub.unethicalite.combathelper;
 import io.reisub.unethicalite.combathelper.bones.Ashes;
 import io.reisub.unethicalite.combathelper.bones.Bones;
 import io.reisub.unethicalite.combathelper.consume.SpecialActivation;
-import io.reisub.unethicalite.combathelper.prayer.ProtectionPrayer;
+import io.reisub.unethicalite.utils.enums.OverheadPrayer;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import net.runelite.client.config.ConfigGroup;
@@ -869,37 +869,37 @@ public interface Config extends net.runelite.client.config.Config {
   @ConfigItem(
       keyName = "meleePrayer",
       name = "Melee set prayer",
-      description = "Select protection prayer to enable when swapping to melee set",
+      description = "Select overhead prayer to enable when swapping to melee set",
       section = "swapConfig",
       hidden = true,
       unhide = "swapDefensivePrayers",
       position = 609)
-  default ProtectionPrayer meleePrayer() {
-    return ProtectionPrayer.PROTECT_FROM_MISSILES;
+  default OverheadPrayer meleePrayer() {
+    return OverheadPrayer.PROTECT_FROM_MISSILES;
   }
 
   @ConfigItem(
       keyName = "rangedPrayer",
       name = "Ranged set prayer",
-      description = "Select protection prayer to enable when swapping to ranged set",
+      description = "Select overhead prayer to enable when swapping to ranged set",
       section = "swapConfig",
       hidden = true,
       unhide = "swapDefensivePrayers",
       position = 610)
-  default ProtectionPrayer rangedPrayer() {
-    return ProtectionPrayer.PROTECT_FROM_MAGIC;
+  default OverheadPrayer rangedPrayer() {
+    return OverheadPrayer.PROTECT_FROM_MAGIC;
   }
 
   @ConfigItem(
       keyName = "magicPrayer",
       name = "Magic set prayer",
-      description = "Select protection prayer to enable when swapping to magic set",
+      description = "Select overhead prayer to enable when swapping to magic set",
       section = "swapConfig",
       hidden = true,
       unhide = "swapDefensivePrayers",
       position = 611)
-  default ProtectionPrayer magicPrayer() {
-    return ProtectionPrayer.PROTECT_FROM_MELEE;
+  default OverheadPrayer magicPrayer() {
+    return OverheadPrayer.PROTECT_FROM_MELEE;
   }
 
   @ConfigItem(
