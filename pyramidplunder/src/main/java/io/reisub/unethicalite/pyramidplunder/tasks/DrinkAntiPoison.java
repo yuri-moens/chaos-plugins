@@ -18,12 +18,12 @@ public class DrinkAntiPoison extends Task {
   @Override
   public boolean validate() {
     return Vars.getVarp(VarPlayer.POISON.getId()) > 0
-        && Inventory.contains(Predicates.ids(Constants.ANTI_POISON_IDS));
+        && Inventory.contains(Predicates.ids(Constants.ANTI_POISON_POTION_IDS));
   }
 
   @Override
   public void execute() {
-    Inventory.getFirst(Predicates.ids(Constants.ANTI_POISON_IDS)).interact("Drink");
+    Inventory.getFirst(Predicates.ids(Constants.ANTI_POISON_POTION_IDS)).interact("Drink");
     Time.sleepTicksUntil(() -> Vars.getVarp(VarPlayer.POISON.getId()) == 0, 3);
   }
 }

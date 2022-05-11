@@ -41,7 +41,7 @@ public class HandleBank extends BankTask {
     ChaosBank.depositAll(false, Predicates.ids(TREASURE_IDS));
     Time.sleepTick();
 
-    if (!Inventory.contains(Predicates.ids(Constants.ANTI_POISON_IDS))) {
+    if (!Inventory.contains(Predicates.ids(Constants.ANTI_POISON_POTION_IDS))) {
       Bank.withdraw(ItemID.SUPERANTIPOISON4, 1, WithdrawMode.ITEM);
     }
 

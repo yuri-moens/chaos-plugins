@@ -12,7 +12,9 @@ import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.movement.Movement;
 import dev.unethicalite.api.utils.MessageUtils;
 import dev.unethicalite.api.widgets.Dialog;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.combathelper.Helper;
+import io.reisub.unethicalite.utils.Constants;
 import java.awt.event.KeyEvent;
 import java.util.Set;
 import javax.inject.Inject;
@@ -39,244 +41,13 @@ import net.runelite.client.plugins.itemstats.stats.Stats;
 
 @Singleton
 public class ConsumeHelper extends Helper {
+
   private static final Set<Integer> IGNORE_FOOD =
       Set.of(ItemID.DWARVEN_ROCK_CAKE, ItemID.DWARVEN_ROCK_CAKE_7510);
   private static final Set<Integer> NON_EAT_FOOD_IDS = Set.of(ItemID.JUG_OF_WINE, ItemID.BANDAGES);
-  private static final Set<Integer> BREW_IDS =
-      Set.of(
-          ItemID.SARADOMIN_BREW1,
-          ItemID.SARADOMIN_BREW2,
-          ItemID.SARADOMIN_BREW3,
-          ItemID.SARADOMIN_BREW4,
-          ItemID.XERICS_AID_1,
-          ItemID.XERICS_AID_2,
-          ItemID.XERICS_AID_3,
-          ItemID.XERICS_AID_4,
-          ItemID.XERICS_AID_1_20977,
-          ItemID.XERICS_AID_2_20978,
-          ItemID.XERICS_AID_3_20979,
-          ItemID.XERICS_AID_4_20980,
-          ItemID.XERICS_AID_1_20981,
-          ItemID.XERICS_AID_2_20982,
-          ItemID.XERICS_AID_3_20983,
-          ItemID.XERICS_AID_4_20984);
-  private static final Set<Integer> RESTORE_IDS =
-      Set.of(
-          ItemID.RESTORE_POTION1,
-          ItemID.RESTORE_POTION2,
-          ItemID.RESTORE_POTION3,
-          ItemID.RESTORE_POTION4,
-          ItemID.SUPER_RESTORE1,
-          ItemID.SUPER_RESTORE2,
-          ItemID.SUPER_RESTORE3,
-          ItemID.SUPER_RESTORE4,
-          ItemID.BLIGHTED_SUPER_RESTORE1,
-          ItemID.BLIGHTED_SUPER_RESTORE2,
-          ItemID.BLIGHTED_SUPER_RESTORE3,
-          ItemID.BLIGHTED_SUPER_RESTORE4,
-          ItemID.EGNIOL_POTION_1,
-          ItemID.EGNIOL_POTION_2,
-          ItemID.EGNIOL_POTION_3,
-          ItemID.EGNIOL_POTION_4,
-          ItemID.SANFEW_SERUM1,
-          ItemID.SANFEW_SERUM2,
-          ItemID.SANFEW_SERUM3,
-          ItemID.SANFEW_SERUM4);
-  private static final Set<Integer> ANTI_POISON_IDS =
-      Set.of(
-          ItemID.ANTIPOISON1,
-          ItemID.ANTIPOISON2,
-          ItemID.ANTIPOISON3,
-          ItemID.ANTIPOISON4,
-          ItemID.SUPERANTIPOISON1,
-          ItemID.SUPERANTIPOISON2,
-          ItemID.SUPERANTIPOISON3,
-          ItemID.SUPERANTIPOISON4,
-          ItemID.ANTIDOTE1,
-          ItemID.ANTIDOTE2,
-          ItemID.ANTIDOTE3,
-          ItemID.ANTIDOTE4,
-          ItemID.ANTIDOTE1_5958,
-          ItemID.ANTIDOTE2_5956,
-          ItemID.ANTIDOTE3_5954,
-          ItemID.ANTIDOTE4_5952,
-          ItemID.ANTIVENOM1,
-          ItemID.ANTIVENOM2,
-          ItemID.ANTIVENOM3,
-          ItemID.ANTIVENOM4,
-          ItemID.ANTIVENOM4_12913,
-          ItemID.ANTIVENOM3_12915,
-          ItemID.ANTIVENOM2_12917,
-          ItemID.ANTIVENOM1_12919);
-  private static final Set<Integer> ANTI_FIRE_IDS =
-      Set.of(
-          ItemID.ANTIFIRE_POTION1,
-          ItemID.ANTIFIRE_POTION2,
-          ItemID.ANTIFIRE_POTION3,
-          ItemID.ANTIFIRE_POTION4,
-          ItemID.SUPER_ANTIFIRE_POTION1,
-          ItemID.SUPER_ANTIFIRE_POTION2,
-          ItemID.SUPER_ANTIFIRE_POTION3,
-          ItemID.SUPER_ANTIFIRE_POTION4,
-          ItemID.EXTENDED_ANTIFIRE1,
-          ItemID.EXTENDED_ANTIFIRE2,
-          ItemID.EXTENDED_ANTIFIRE3,
-          ItemID.EXTENDED_ANTIFIRE4,
-          ItemID.EXTENDED_SUPER_ANTIFIRE1,
-          ItemID.EXTENDED_SUPER_ANTIFIRE2,
-          ItemID.EXTENDED_SUPER_ANTIFIRE3,
-          ItemID.EXTENDED_SUPER_ANTIFIRE4);
-  private static final Set<Integer> PRAYER_IDS =
-      Set.of(
-          ItemID.PRAYER_POTION1,
-          ItemID.PRAYER_POTION2,
-          ItemID.PRAYER_POTION3,
-          ItemID.PRAYER_POTION4,
-          ItemID.SUPER_RESTORE1,
-          ItemID.SUPER_RESTORE2,
-          ItemID.SUPER_RESTORE3,
-          ItemID.SUPER_RESTORE4,
-          ItemID.BLIGHTED_SUPER_RESTORE1,
-          ItemID.BLIGHTED_SUPER_RESTORE2,
-          ItemID.BLIGHTED_SUPER_RESTORE3,
-          ItemID.BLIGHTED_SUPER_RESTORE4,
-          ItemID.EGNIOL_POTION_1,
-          ItemID.EGNIOL_POTION_2,
-          ItemID.EGNIOL_POTION_3,
-          ItemID.EGNIOL_POTION_4);
-  private static final Set<Integer> STRENGTH_IDS =
-      Set.of(
-          ItemID.STRENGTH_POTION1,
-          ItemID.STRENGTH_POTION2,
-          ItemID.STRENGTH_POTION3,
-          ItemID.STRENGTH_POTION4,
-          ItemID.SUPER_STRENGTH1,
-          ItemID.SUPER_STRENGTH2,
-          ItemID.SUPER_STRENGTH3,
-          ItemID.SUPER_STRENGTH4,
-          ItemID.DIVINE_SUPER_STRENGTH_POTION1,
-          ItemID.DIVINE_SUPER_STRENGTH_POTION2,
-          ItemID.DIVINE_SUPER_STRENGTH_POTION3,
-          ItemID.DIVINE_SUPER_STRENGTH_POTION4,
-          ItemID.DIVINE_SUPER_COMBAT_POTION1,
-          ItemID.DIVINE_SUPER_COMBAT_POTION2,
-          ItemID.DIVINE_SUPER_COMBAT_POTION3,
-          ItemID.DIVINE_SUPER_COMBAT_POTION4,
-          ItemID.COMBAT_POTION1,
-          ItemID.COMBAT_POTION2,
-          ItemID.COMBAT_POTION3,
-          ItemID.COMBAT_POTION4,
-          ItemID.SUPER_COMBAT_POTION1,
-          ItemID.SUPER_COMBAT_POTION2,
-          ItemID.SUPER_COMBAT_POTION3,
-          ItemID.SUPER_COMBAT_POTION4);
-  private static final Set<Integer> ATTACK_IDS =
-      Set.of(
-          ItemID.ATTACK_POTION1,
-          ItemID.ATTACK_POTION2,
-          ItemID.ATTACK_POTION3,
-          ItemID.ATTACK_POTION4,
-          ItemID.SUPER_ATTACK1,
-          ItemID.SUPER_ATTACK2,
-          ItemID.SUPER_ATTACK3,
-          ItemID.SUPER_ATTACK4,
-          ItemID.DIVINE_SUPER_ATTACK_POTION1,
-          ItemID.DIVINE_SUPER_ATTACK_POTION2,
-          ItemID.DIVINE_SUPER_ATTACK_POTION3,
-          ItemID.DIVINE_SUPER_ATTACK_POTION4,
-          ItemID.DIVINE_SUPER_COMBAT_POTION1,
-          ItemID.DIVINE_SUPER_COMBAT_POTION2,
-          ItemID.DIVINE_SUPER_COMBAT_POTION3,
-          ItemID.DIVINE_SUPER_COMBAT_POTION4,
-          ItemID.COMBAT_POTION1,
-          ItemID.COMBAT_POTION2,
-          ItemID.COMBAT_POTION3,
-          ItemID.COMBAT_POTION4,
-          ItemID.SUPER_COMBAT_POTION1,
-          ItemID.SUPER_COMBAT_POTION2,
-          ItemID.SUPER_COMBAT_POTION3,
-          ItemID.SUPER_COMBAT_POTION4);
-  private static final Set<Integer> DEFENCE_IDS =
-      Set.of(
-          ItemID.DEFENCE_POTION1,
-          ItemID.DEFENCE_POTION2,
-          ItemID.DEFENCE_POTION3,
-          ItemID.DEFENCE_POTION4,
-          ItemID.SUPER_DEFENCE1,
-          ItemID.SUPER_DEFENCE2,
-          ItemID.SUPER_DEFENCE3,
-          ItemID.SUPER_DEFENCE4,
-          ItemID.DIVINE_SUPER_DEFENCE_POTION1,
-          ItemID.DIVINE_SUPER_DEFENCE_POTION2,
-          ItemID.DIVINE_SUPER_DEFENCE_POTION3,
-          ItemID.DIVINE_SUPER_DEFENCE_POTION4,
-          ItemID.DIVINE_SUPER_COMBAT_POTION1,
-          ItemID.DIVINE_SUPER_COMBAT_POTION2,
-          ItemID.DIVINE_SUPER_COMBAT_POTION3,
-          ItemID.DIVINE_SUPER_COMBAT_POTION4,
-          ItemID.SUPER_COMBAT_POTION1,
-          ItemID.SUPER_COMBAT_POTION2,
-          ItemID.SUPER_COMBAT_POTION3,
-          ItemID.SUPER_COMBAT_POTION4);
-  private static final Set<Integer> RANGED_IDS =
-      Set.of(
-          ItemID.RANGING_POTION1,
-          ItemID.RANGING_POTION2,
-          ItemID.RANGING_POTION3,
-          ItemID.RANGING_POTION4,
-          ItemID.BASTION_POTION1,
-          ItemID.BASTION_POTION2,
-          ItemID.BASTION_POTION3,
-          ItemID.BASTION_POTION4,
-          ItemID.DIVINE_RANGING_POTION1,
-          ItemID.DIVINE_RANGING_POTION2,
-          ItemID.DIVINE_RANGING_POTION3,
-          ItemID.DIVINE_RANGING_POTION4,
-          ItemID.DIVINE_BASTION_POTION1,
-          ItemID.DIVINE_BASTION_POTION2,
-          ItemID.DIVINE_BASTION_POTION3,
-          ItemID.DIVINE_BASTION_POTION4,
-          ItemID.SUPER_RANGING_1,
-          ItemID.SUPER_RANGING_2,
-          ItemID.SUPER_RANGING_3,
-          ItemID.SUPER_RANGING_4);
-  private static final Set<Integer> MAGIC_IDS =
-      Set.of(
-          ItemID.MAGIC_POTION1,
-          ItemID.MAGIC_POTION2,
-          ItemID.MAGIC_POTION3,
-          ItemID.MAGIC_POTION4,
-          ItemID.BATTLEMAGE_POTION1,
-          ItemID.BATTLEMAGE_POTION2,
-          ItemID.BATTLEMAGE_POTION3,
-          ItemID.BATTLEMAGE_POTION4,
-          ItemID.DIVINE_MAGIC_POTION1,
-          ItemID.DIVINE_MAGIC_POTION2,
-          ItemID.DIVINE_MAGIC_POTION3,
-          ItemID.DIVINE_MAGIC_POTION4,
-          ItemID.DIVINE_BATTLEMAGE_POTION1,
-          ItemID.DIVINE_BATTLEMAGE_POTION2,
-          ItemID.DIVINE_BATTLEMAGE_POTION3,
-          ItemID.DIVINE_BATTLEMAGE_POTION4);
-  private static final Set<Integer> ENERGY_IDS =
-      Set.of(
-          ItemID.ENERGY_POTION1,
-          ItemID.ENERGY_POTION2,
-          ItemID.ENERGY_POTION3,
-          ItemID.ENERGY_POTION4,
-          ItemID.ENERGY_MIX1,
-          ItemID.ENERGY_MIX2,
-          ItemID.SUPER_ENERGY_MIX1,
-          ItemID.SUPER_ENERGY_MIX2,
-          ItemID.SUPER_ENERGY1,
-          ItemID.SUPER_ENERGY2,
-          ItemID.SUPER_ENERGY3,
-          ItemID.SUPER_ENERGY4,
-          ItemID.SUPER_ENERGY1_20551,
-          ItemID.SUPER_ENERGY2_20550,
-          ItemID.SUPER_ENERGY3_20549,
-          ItemID.SUPER_ENERGY4_20548);
-  @Inject private ItemStatChanges statChanges;
+
+  @Inject
+  private ItemStatChanges statChanges;
   private long lastAte;
   private long lastPot;
   private int timeout;
@@ -446,7 +217,7 @@ public class ConsumeHelper extends Helper {
   private int getHealed(int itemId) {
     Effect effect = statChanges.get(itemId);
     if (effect != null) {
-      StatsChanges statsChanges = effect.calculate(Game.getClient());
+      StatsChanges statsChanges = effect.calculate(Static.getClient());
       for (StatChange statChange : statsChanges.getStatChanges()) {
         if (statChange.getStat().getName().equals(Stats.HITPOINTS.getName())) {
           return statChange.getTheoretical();
@@ -472,7 +243,7 @@ public class ConsumeHelper extends Helper {
         missingHp += getHealed(food.getId());
 
         food.interact(1);
-        lastAte = Game.getClient().getTickCount();
+        lastAte = Static.getClient().getTickCount();
         didAction = true;
       }
 
@@ -519,10 +290,10 @@ public class ConsumeHelper extends Helper {
     }
 
     if (config.enableEating() && hp <= eatThreshold && canPot()) {
-      if ((lastAte == Game.getClient().getTickCount() && config.comboBrew())
-          || (lastAte != Game.getClient().getTickCount())) {
+      if ((lastAte == Static.getClient().getTickCount() && config.comboBrew())
+          || (lastAte != Static.getClient().getTickCount())) {
 
-        if (drinkPotion(BREW_IDS)) {
+        if (drinkPotion(Constants.BREW_POTION_IDS)) {
           didAction = true;
           missingHp += getHealed(ItemID.SARADOMIN_BREW1);
           if (config.restoreAfterBrew()) {
@@ -533,14 +304,14 @@ public class ConsumeHelper extends Helper {
     }
 
     if (shouldDrinkRestore && canPot()) {
-      if (drinkPotion(RESTORE_IDS)) {
+      if (drinkPotion(Constants.RESTORE_POTION_IDS)) {
         didAction = true;
       }
 
       shouldDrinkRestore = false;
       shouldDrinkPrayer = false;
     } else if (shouldDrinkAntiPoison && canPot()) {
-      if (drinkPotion(ANTI_POISON_IDS)) {
+      if (drinkPotion(Constants.ANTI_POISON_POTION_IDS)) {
         didAction = true;
       } else {
         if (config.antiPoisonWarnings()) {
@@ -549,11 +320,11 @@ public class ConsumeHelper extends Helper {
       }
 
       shouldDrinkAntiPoison = false;
-      lastAntiPoison = Game.getClient().getTickCount();
+      lastAntiPoison = Static.getClient().getTickCount();
     }
 
     if (shouldDrinkAntiFire && canPot()) {
-      if (drinkPotion(ANTI_FIRE_IDS)) {
+      if (drinkPotion(Constants.ANTI_FIRE_POTION_IDS)) {
         didAction = true;
       } else {
         if (config.antiFireWarnings()) {
@@ -563,11 +334,11 @@ public class ConsumeHelper extends Helper {
       }
 
       shouldDrinkAntiFire = false;
-      lastAntiFire = Game.getClient().getTickCount();
+      lastAntiFire = Static.getClient().getTickCount();
     }
 
     if (shouldDrinkPrayer && canPot()) {
-      if (drinkPotion(PRAYER_IDS)) {
+      if (drinkPotion(Constants.PRAYER_RESTORE_POTION_IDS)) {
         didAction = true;
       } else {
         if (config.prayerWarnings()) {
@@ -577,11 +348,11 @@ public class ConsumeHelper extends Helper {
       }
 
       shouldDrinkPrayer = false;
-      lastPrayer = Game.getClient().getTickCount();
+      lastPrayer = Static.getClient().getTickCount();
     }
 
     if (shouldDrinkStrength && canPot()) {
-      if (drinkPotion(STRENGTH_IDS)) {
+      if (drinkPotion(Constants.STRENGTH_POTION_IDS)) {
         didAction = true;
       } else {
         if (config.strengthWarnings()) {
@@ -591,11 +362,11 @@ public class ConsumeHelper extends Helper {
       }
 
       shouldDrinkStrength = false;
-      lastStrength = Game.getClient().getTickCount();
+      lastStrength = Static.getClient().getTickCount();
     }
 
     if (shouldDrinkAttack && canPot()) {
-      if (drinkPotion(ATTACK_IDS)) {
+      if (drinkPotion(Constants.ATTACK_POTION_IDS)) {
         didAction = true;
       } else {
         if (config.attackWarnings()) {
@@ -604,11 +375,11 @@ public class ConsumeHelper extends Helper {
       }
 
       shouldDrinkAttack = false;
-      lastAttack = Game.getClient().getTickCount();
+      lastAttack = Static.getClient().getTickCount();
     }
 
     if (shouldDrinkDefence && canPot()) {
-      if (drinkPotion(DEFENCE_IDS)) {
+      if (drinkPotion(Constants.DEFENCE_POTION_IDS)) {
         didAction = true;
       } else {
         if (config.defenceWarnings()) {
@@ -618,11 +389,11 @@ public class ConsumeHelper extends Helper {
       }
 
       shouldDrinkDefence = false;
-      lastDefence = Game.getClient().getTickCount();
+      lastDefence = Static.getClient().getTickCount();
     }
 
     if (shouldDrinkRanged && canPot()) {
-      if (drinkPotion(RANGED_IDS)) {
+      if (drinkPotion(Constants.RANGED_POTION_IDS)) {
         didAction = true;
       } else {
         if (config.rangedWarnings()) {
@@ -631,11 +402,11 @@ public class ConsumeHelper extends Helper {
       }
 
       shouldDrinkRanged = false;
-      lastRanged = Game.getClient().getTickCount();
+      lastRanged = Static.getClient().getTickCount();
     }
 
     if (shouldDrinkMagic && canPot()) {
-      if (drinkPotion(MAGIC_IDS)) {
+      if (drinkPotion(Constants.MAGIC_POTION_IDS)) {
         didAction = true;
       } else {
         if (config.magicWarnings()) {
@@ -644,14 +415,14 @@ public class ConsumeHelper extends Helper {
       }
 
       shouldDrinkMagic = false;
-      lastMagic = Game.getClient().getTickCount();
+      lastMagic = Static.getClient().getTickCount();
     }
 
     if (config.drinkEnergy()
         && canPot()
-        && lastEnergy + 5 < Game.getClient().getTickCount()
+        && lastEnergy + 5 < Static.getClient().getTickCount()
         && Movement.getRunEnergy() <= config.energyLevel()) {
-      if (drinkPotion(ENERGY_IDS)) {
+      if (drinkPotion(Constants.ENERGY_POTION_IDS)) {
         didAction = true;
       } else {
         if (config.energyWarnings()) {
@@ -659,7 +430,7 @@ public class ConsumeHelper extends Helper {
         }
       }
 
-      lastEnergy = Game.getClient().getTickCount();
+      lastEnergy = Static.getClient().getTickCount();
     }
 
     if (config.enableEating() && hp < eatThreshold && missingHp >= 18 && config.comboKarambwan()) {
@@ -668,10 +439,11 @@ public class ConsumeHelper extends Helper {
               ItemID.COOKED_KARAMBWAN,
               ItemID.COOKED_KARAMBWAN_3147,
               ItemID.COOKED_KARAMBWAN_23533,
-              ItemID.BLIGHTED_KARAMBWAN);
+              ItemID.BLIGHTED_KARAMBWAN
+          );
       if (karambwan != null) {
         karambwan.interact(1);
-        lastAte = Game.getClient().getTickCount();
+        lastAte = Static.getClient().getTickCount();
         didAction = true;
       }
     }
@@ -690,11 +462,11 @@ public class ConsumeHelper extends Helper {
   }
 
   private boolean canPot() {
-    return Game.getClient().getTickCount() > lastPot + 3;
+    return Static.getClient().getTickCount() > lastPot + 3;
   }
 
   private boolean canEat() {
-    return Game.getClient().getTickCount() > lastAte + 3;
+    return Static.getClient().getTickCount() > lastAte + 3;
   }
 
   private void checkSkill(Skill skill) {
@@ -711,42 +483,42 @@ public class ConsumeHelper extends Helper {
         case PRAYER:
           if (config.drinkPrayer()
               && level <= prayerThreshold
-              && Game.getClient().getTickCount() > lastPrayer + 5) {
+              && Static.getClient().getTickCount() > lastPrayer + 5) {
             shouldDrinkPrayer = true;
           }
           break;
         case STRENGTH:
           if (config.drinkStrength()
               && level <= config.strengthLevel()
-              && Game.getClient().getTickCount() > lastStrength + 5) {
+              && Static.getClient().getTickCount() > lastStrength + 5) {
             shouldDrinkStrength = true;
           }
           break;
         case ATTACK:
           if (config.drinkAttack()
               && level <= config.attackLevel()
-              && Game.getClient().getTickCount() > lastAttack + 5) {
+              && Static.getClient().getTickCount() > lastAttack + 5) {
             shouldDrinkAttack = true;
           }
           break;
         case DEFENCE:
           if (config.drinkDefence()
               && level <= config.defenceLevel()
-              && Game.getClient().getTickCount() > lastDefence + 5) {
+              && Static.getClient().getTickCount() > lastDefence + 5) {
             shouldDrinkDefence = true;
           }
           break;
         case RANGED:
           if (config.drinkRanged()
               && level <= config.rangedLevel()
-              && Game.getClient().getTickCount() > lastRanged + 5) {
+              && Static.getClient().getTickCount() > lastRanged + 5) {
             shouldDrinkRanged = true;
           }
           break;
         case MAGIC:
           if (config.drinkMagic()
               && level <= config.magicLevel()
-              && Game.getClient().getTickCount() > lastMagic + 5) {
+              && Static.getClient().getTickCount() > lastMagic + 5) {
             shouldDrinkMagic = true;
           }
           break;
@@ -762,7 +534,7 @@ public class ConsumeHelper extends Helper {
     }
 
     potion.interact(1);
-    lastPot = Game.getClient().getTickCount();
+    lastPot = Static.getClient().getTickCount();
     return true;
   }
 
