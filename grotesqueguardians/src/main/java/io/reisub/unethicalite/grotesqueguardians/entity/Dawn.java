@@ -1,5 +1,7 @@
 /*
- * Copyright (c) 2019 Owain van Brakel <https://github.com/Owain94>
+ * BSD 2-Clause License
+ *
+ * Copyright (c) 2020, dutta64 <https://github.com/dutta64>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,26 +25,56 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-object ProjectVersions {
-    const val openosrsVersion = "4.26.1-SNAPSHOT"
-    const val rlVersion = openosrsVersion
-    const val apiVersion = "^1.0.0"
-}
+package io.reisub.unethicalite.grotesqueguardians.entity;
 
-object Libraries {
-    private object Versions {
-        const val guice = "5.0.1"
-        const val javax = "1.3.2"
-        const val lombok = "1.18.20"
-        const val pf4j = "3.6.0"
-        const val slf4j = "1.7.32"
-        const val apacheCommonsText = "1.8"
+import com.google.common.collect.ImmutableMap;
+import java.util.Map;
+import java.util.Set;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import net.runelite.api.NPC;
+import net.runelite.api.NpcID;
+
+public class Dawn extends Gargoyle {
+
+  public Dawn(@NonNull final NPC npc) {
+    super(npc);
+  }
+
+  public Phase getPhase() {
+    return Phase.of(npc.getId());
+  }
+
+  @Override
+  protected void updateTicksUntilNextAttack() {
+    // Dawn npc does not always show animation ID when attacking
+    // Currently unused
+  }
+
+  @Getter
+  @RequiredArgsConstructor
+  enum Phase {
+    PHASE_1(NpcID.DAWN_7852, Set.of(7770, 7771)),
+    PHASE_3(NpcID.DAWN_7884, Set.of(7770));
+
+    private static final Map<Integer, Phase> MAP;
+
+    static {
+      final ImmutableMap.Builder<Integer, Phase> builder = new ImmutableMap.Builder<>();
+
+      for (final Phase phase : Phase.values()) {
+        builder.put(phase.getNpcId(), phase);
+      }
+
+      MAP = builder.build();
     }
 
-    const val guice = "com.google.inject:guice:${Versions.guice}"
-    const val javax = "javax.annotation:javax.annotation-api:${Versions.javax}"
-    const val lombok = "org.projectlombok:lombok:${Versions.lombok}"
-    const val pf4j = "org.pf4j:pf4j:${Versions.pf4j}"
-    const val slf4j = "org.slf4j:slf4j-api:${Versions.slf4j}"
-    const val apacheCommonsText = "org.apache.commons:commons-text:${Versions.apacheCommonsText}"
+    private final int npcId;
+    private final Set<Integer> attackAnimationIdSet;
+
+    static Phase of(final int npcId) {
+      return MAP.get(npcId);
+    }
+  }
 }

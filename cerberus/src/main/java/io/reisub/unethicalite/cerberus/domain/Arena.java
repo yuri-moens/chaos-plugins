@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Owain van Brakel <https://github.com/Owain94>
+ * Copyright (c) 2019 Im2be <https://github.com/Im2be>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,26 +23,42 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-object ProjectVersions {
-    const val openosrsVersion = "4.26.1-SNAPSHOT"
-    const val rlVersion = openosrsVersion
-    const val apiVersion = "^1.0.0"
-}
+package io.reisub.unethicalite.cerberus.domain;
 
-object Libraries {
-    private object Versions {
-        const val guice = "5.0.1"
-        const val javax = "1.3.2"
-        const val lombok = "1.18.20"
-        const val pf4j = "3.6.0"
-        const val slf4j = "1.7.32"
-        const val apacheCommonsText = "1.8"
+import javax.annotation.Nullable;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import net.runelite.api.coords.WorldPoint;
+
+@Getter
+@RequiredArgsConstructor
+public enum Arena {
+  WEST(1231, 1249, 1243, 1257),
+  NORTH(1295, 1313, 1307, 1321),
+  EAST(1359, 1377, 1243, 1257);
+
+  private final int x1;
+  private final int x2;
+  private final int  y1;
+  private final int y2;
+
+  @Nullable
+  public static Arena getArena(final WorldPoint worldPoint) {
+    for (final Arena arena : Arena.values()) {
+      if (worldPoint.getX() >= arena.getX1() && worldPoint.getX() <= arena.getX2()
+          && worldPoint.getY() >= arena.getY1() && worldPoint.getY() <= arena.getY2()) {
+        return arena;
+      }
     }
 
-    const val guice = "com.google.inject:guice:${Versions.guice}"
-    const val javax = "javax.annotation:javax.annotation-api:${Versions.javax}"
-    const val lombok = "org.projectlombok:lombok:${Versions.lombok}"
-    const val pf4j = "org.pf4j:pf4j:${Versions.pf4j}"
-    const val slf4j = "org.slf4j:slf4j-api:${Versions.slf4j}"
-    const val apacheCommonsText = "org.apache.commons:commons-text:${Versions.apacheCommonsText}"
+    return null;
+  }
+
+  public WorldPoint getGhostTile(final int ghostIndex) {
+    if (ghostIndex > 2 || ghostIndex < 0) {
+      return null;
+    }
+
+    return new WorldPoint(x1 + 8 + ghostIndex, y1 + 13, 0);
+  }
 }

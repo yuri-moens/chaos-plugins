@@ -72,11 +72,13 @@ subprojects {
 
         compileOnly("com.openosrs:runelite-api:$openosrsVersion+")
         compileOnly("com.openosrs:runelite-client:$openosrsVersion+")
+        compileOnly("com.openosrs:http-api:$openosrsVersion+")
 
         compileOnly(Libraries.guice)
         compileOnly(Libraries.javax)
         compileOnly(Libraries.lombok)
         compileOnly(Libraries.pf4j)
+        compileOnly(Libraries.apacheCommonsText)
     }
 
     configure<JavaPluginConvention> {

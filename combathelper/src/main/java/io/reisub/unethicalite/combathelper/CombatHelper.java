@@ -4,6 +4,7 @@ import com.google.inject.Provides;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.game.Game;
 import dev.unethicalite.client.Static;
+import io.reisub.unethicalite.cerberus.ChaosCerberus;
 import io.reisub.unethicalite.combathelper.alch.AlchHelper;
 import io.reisub.unethicalite.combathelper.bones.BonesHelper;
 import io.reisub.unethicalite.combathelper.boss.BossHelper;
@@ -12,6 +13,8 @@ import io.reisub.unethicalite.combathelper.misc.MiscHelper;
 import io.reisub.unethicalite.combathelper.prayer.PrayerHelper;
 import io.reisub.unethicalite.combathelper.special.SpecialHelper;
 import io.reisub.unethicalite.combathelper.swap.SwapHelper;
+import io.reisub.unethicalite.grotesqueguardians.ChaosGrotesqueGuardians;
+import io.reisub.unethicalite.zulrah.ChaosZulrah;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -30,11 +33,8 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
-import net.runelite.client.plugins.cerberus.CerberusPlugin;
-import net.runelite.client.plugins.grotesqueguardians.GrotesqueGuardiansPlugin;
 import net.runelite.client.plugins.itemstats.ItemStatPlugin;
 import net.runelite.client.plugins.unethicalite.UnethicalitePlugin;
-import net.runelite.client.plugins.zulrah.ZulrahPlugin;
 import org.pf4j.Extension;
 
 @Singleton
@@ -44,9 +44,9 @@ import org.pf4j.Extension;
     enabledByDefault = true)
 @PluginDependency(ItemStatPlugin.class)
 @PluginDependency(UnethicalitePlugin.class)
-@PluginDependency(CerberusPlugin.class)
-@PluginDependency(ZulrahPlugin.class)
-@PluginDependency(GrotesqueGuardiansPlugin.class)
+@PluginDependency(ChaosCerberus.class)
+@PluginDependency(ChaosZulrah.class)
+@PluginDependency(ChaosGrotesqueGuardians.class)
 @Slf4j
 @Extension
 public class CombatHelper extends Plugin {

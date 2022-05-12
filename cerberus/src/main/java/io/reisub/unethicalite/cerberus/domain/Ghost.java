@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2019 Owain van Brakel <https://github.com/Owain94>
+ * Copyright (c) 2018, Tomas Slusny <slusnucky@gmail.com>
+ * Copyright (c) 2019 Im2be <https://github.com/Im2be>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,26 +24,49 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-object ProjectVersions {
-    const val openosrsVersion = "4.26.1-SNAPSHOT"
-    const val rlVersion = openosrsVersion
-    const val apiVersion = "^1.0.0"
-}
+package io.reisub.unethicalite.cerberus.domain;
 
-object Libraries {
-    private object Versions {
-        const val guice = "5.0.1"
-        const val javax = "1.3.2"
-        const val lombok = "1.18.20"
-        const val pf4j = "3.6.0"
-        const val slf4j = "1.7.32"
-        const val apacheCommonsText = "1.8"
+import com.google.common.collect.ImmutableMap;
+import java.awt.Color;
+import java.util.Map;
+import javax.annotation.Nullable;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import net.runelite.api.NPC;
+import net.runelite.api.NpcID;
+import net.runelite.api.Skill;
+
+@Getter
+@RequiredArgsConstructor
+public enum Ghost {
+  RANGE(NpcID.SUMMONED_SOUL, Skill.RANGED, Color.GREEN),
+  MAGE(NpcID.SUMMONED_SOUL_5868, Skill.MAGIC, Color.BLUE),
+  MELEE(NpcID.SUMMONED_SOUL_5869, Skill.ATTACK, Color.RED);
+
+  private static final Map<Integer, Ghost> MAP;
+
+  static {
+    final ImmutableMap.Builder<Integer, Ghost> builder = new ImmutableMap.Builder<>();
+
+    for (final Ghost ghost : values()) {
+      builder.put(ghost.getNpcId(), ghost);
     }
 
-    const val guice = "com.google.inject:guice:${Versions.guice}"
-    const val javax = "javax.annotation:javax.annotation-api:${Versions.javax}"
-    const val lombok = "org.projectlombok:lombok:${Versions.lombok}"
-    const val pf4j = "org.pf4j:pf4j:${Versions.pf4j}"
-    const val slf4j = "org.slf4j:slf4j-api:${Versions.slf4j}"
-    const val apacheCommonsText = "org.apache.commons:commons-text:${Versions.apacheCommonsText}"
+    MAP = builder.build();
+  }
+
+  private final int npcId;
+  private final Skill type;
+  private final Color color;
+
+  /**
+   * Try to identify if NPC is ghost.
+   *
+   * @param npc npc
+   * @return optional ghost
+   */
+  @Nullable
+  public static Ghost fromNpc(final NPC npc) {
+    return MAP.get(npc.getId());
+  }
 }

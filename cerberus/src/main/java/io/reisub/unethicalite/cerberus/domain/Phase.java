@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Owain van Brakel <https://github.com/Owain94>
+ * Copyright (c) 2019 Im2be <https://github.com/Im2be>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,26 +23,23 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-object ProjectVersions {
-    const val openosrsVersion = "4.26.1-SNAPSHOT"
-    const val rlVersion = openosrsVersion
-    const val apiVersion = "^1.0.0"
-}
+package io.reisub.unethicalite.cerberus.domain;
 
-object Libraries {
-    private object Versions {
-        const val guice = "5.0.1"
-        const val javax = "1.3.2"
-        const val lombok = "1.18.20"
-        const val pf4j = "3.6.0"
-        const val slf4j = "1.7.32"
-        const val apacheCommonsText = "1.8"
-    }
+import java.awt.Color;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import net.runelite.api.Skill;
 
-    const val guice = "com.google.inject:guice:${Versions.guice}"
-    const val javax = "javax.annotation:javax.annotation-api:${Versions.javax}"
-    const val lombok = "org.projectlombok:lombok:${Versions.lombok}"
-    const val pf4j = "org.pf4j:pf4j:${Versions.pf4j}"
-    const val slf4j = "org.slf4j:slf4j-api:${Versions.slf4j}"
-    const val apacheCommonsText = "org.apache.commons:commons-text:${Versions.apacheCommonsText}"
+@Getter
+@RequiredArgsConstructor
+public enum Phase {
+  SPAWNING(null, 4, null),
+  AUTO(Skill.ATTACK, 6, null),
+  TRIPLE(Skill.FLETCHING, 6, new Color(153, 214, 255)),
+  GHOSTS(Skill.PRAYER, 8, new Color(255, 255, 255)),
+  LAVA(Skill.FIREMAKING, 8, new Color(255, 153, 153));
+
+  private final Skill type;
+  private final int tickDelay;
+  private final Color textColor;
 }

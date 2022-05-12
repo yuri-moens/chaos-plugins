@@ -2,9 +2,15 @@ package io.reisub.unethicalite.combathelper.boss;
 
 import com.openosrs.client.util.WeaponStyle;
 import dev.unethicalite.api.game.Combat;
+import io.reisub.unethicalite.cerberus.ChaosCerberus;
+import io.reisub.unethicalite.cerberus.domain.Cerberus;
+import io.reisub.unethicalite.cerberus.domain.CerberusAttack;
 import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.combathelper.Helper;
+import io.reisub.unethicalite.grotesqueguardians.ChaosGrotesqueGuardians;
+import io.reisub.unethicalite.grotesqueguardians.entity.Dusk;
 import io.reisub.unethicalite.utils.enums.ChaosPrayer;
+import io.reisub.unethicalite.zulrah.ChaosZulrah;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.inject.Inject;
@@ -14,22 +20,16 @@ import net.runelite.api.Skill;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.ProjectileSpawned;
 import net.runelite.client.eventbus.Subscribe;
-import net.runelite.client.plugins.cerberus.CerberusPlugin;
-import net.runelite.client.plugins.cerberus.domain.Cerberus;
-import net.runelite.client.plugins.cerberus.domain.CerberusAttack;
-import net.runelite.client.plugins.grotesqueguardians.GrotesqueGuardiansPlugin;
-import net.runelite.client.plugins.grotesqueguardians.entity.Dusk;
-import net.runelite.client.plugins.zulrah.ZulrahPlugin;
 
 @Singleton
 public class BossHelper extends Helper {
   @Inject private CombatHelper plugin;
 
-  @Inject private CerberusPlugin cerberusPlugin;
+  @Inject private ChaosCerberus cerberusPlugin;
 
-  @Inject private ZulrahPlugin zulrahPlugin;
+  @Inject private ChaosZulrah zulrahPlugin;
 
-  @Inject private GrotesqueGuardiansPlugin grotesqueGuardiansPlugin;
+  @Inject private ChaosGrotesqueGuardians grotesqueGuardiansPlugin;
 
   private static final int ZULRAH_RANGED_ANIMATION = 1044;
 

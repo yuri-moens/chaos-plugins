@@ -1,13 +1,14 @@
-version = "1.8.2"
+version = "1.8.3"
 
 project.extra["PluginName"] = "Chaos Combat Helper"
 project.extra["PluginDescription"] = "Various utilities to make combat easier"
 
 dependencies {
     compileOnly(project(":utils"))
-    compileOnly(group = "com.openosrs.externals", name = "cerberus", version = "5.0.2")
-    compileOnly(group = "com.openosrs.externals", name = "zulrah", version = "5.0.7")
-    compileOnly(group = "com.openosrs.externals", name = "grotesqueguardians", version = "5.0.4")
+    compileOnly(project(":cerberus"))
+    compileOnly(project(":demonicgorillas"))
+    compileOnly(project(":grotesqueguardians"))
+    compileOnly(project(":zulrah"))
 }
 
 tasks {
@@ -22,9 +23,10 @@ tasks {
                             "Plugin-Dependencies" to
                                     arrayOf(
                                             nameToId("Chaos Utils"),
-                                            nameToId("Cerberus"),
-                                            nameToId("Zulrah"),
-                                            nameToId("Grotesque Guardians")
+                                            nameToId("Chaos Cerberus"),
+                                            nameToId("Chaos Demonic Gorillas"),
+                                            nameToId("Chaos Grotesque Guardians"),
+                                            nameToId("Chaos Zulrah")
                                     ).joinToString(),
                             "Plugin-License" to project.extra["PluginLicense"]
                     )
