@@ -4,6 +4,8 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.magic.Magic;
 import dev.unethicalite.api.magic.SpellBook;
+import dev.unethicalite.api.widgets.Tab;
+import dev.unethicalite.api.widgets.Tabs;
 import dev.unethicalite.api.widgets.Widgets;
 import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.mta.Mta;
@@ -43,6 +45,8 @@ public class HighAlch extends Task {
     }
 
     Magic.cast(SpellBook.Standard.HIGH_LEVEL_ALCHEMY, item);
+
+    Tabs.openInterface(Tab.INVENTORY);
 
     last = Static.getClient().getTickCount();
   }
