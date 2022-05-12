@@ -10,6 +10,7 @@ import io.reisub.unethicalite.combathelper.boss.BossHelper;
 import io.reisub.unethicalite.combathelper.consume.ConsumeHelper;
 import io.reisub.unethicalite.combathelper.misc.MiscHelper;
 import io.reisub.unethicalite.combathelper.prayer.PrayerHelper;
+import io.reisub.unethicalite.combathelper.special.SpecialHelper;
 import io.reisub.unethicalite.combathelper.swap.SwapHelper;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,7 @@ public class CombatHelper extends Plugin {
 
     helpers.add(prayerHelper);
     helpers.add(injector.getInstance(ConsumeHelper.class));
+    helpers.add(injector.getInstance(SpecialHelper.class));
     helpers.add(injector.getInstance(BonesHelper.class));
     helpers.add(injector.getInstance(AlchHelper.class));
     helpers.add(swapHelper);

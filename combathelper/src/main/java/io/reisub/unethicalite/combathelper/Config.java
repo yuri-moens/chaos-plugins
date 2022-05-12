@@ -2,7 +2,7 @@ package io.reisub.unethicalite.combathelper;
 
 import io.reisub.unethicalite.combathelper.bones.Ashes;
 import io.reisub.unethicalite.combathelper.bones.Bones;
-import io.reisub.unethicalite.combathelper.consume.SpecialActivation;
+import io.reisub.unethicalite.combathelper.special.SpecialActivation;
 import io.reisub.unethicalite.utils.enums.OverheadPrayer;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;

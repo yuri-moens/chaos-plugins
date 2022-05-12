@@ -1,4 +1,4 @@
-package io.reisub.unethicalite.combathelper.consume;
+package io.reisub.unethicalite.combathelper.special;
 
 public enum SpecialActivation {
   AUTOMATIC(),

@@ -7,7 +7,6 @@ import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.game.Skills;
 import dev.unethicalite.api.game.Vars;
 import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Equipment;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.movement.Movement;
 import dev.unethicalite.api.utils.MessageUtils;
@@ -15,17 +14,14 @@ import dev.unethicalite.api.widgets.Dialog;
 import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.combathelper.Helper;
 import io.reisub.unethicalite.utils.Constants;
-import java.awt.event.KeyEvent;
 import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import net.runelite.api.EquipmentInventorySlot;
 import net.runelite.api.GameState;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 import net.runelite.api.Skill;
 import net.runelite.api.VarPlayer;
-import net.runelite.api.Varbits;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
@@ -71,11 +67,6 @@ public class ConsumeHelper extends Helper {
   private long lastRanged;
   private boolean shouldDrinkMagic;
   private long lastMagic;
-  private boolean shouldUseSpecial;
-  private boolean shouldSwap;
-  private boolean shouldSwapBack;
-  private int originalWeaponId;
-  private long lastSpecial;
   private long lastEnergy;
 
   @Override
@@ -88,19 +79,6 @@ public class ConsumeHelper extends Helper {
   private void onGameTick(GameTick event) {
     if (Bank.isOpen() || Dialog.isOpen()) {
       return;
-    }
-
-    if (config.useSpecial()
-        && config.activationMethod() == SpecialActivation.AUTOMATIC
-        && Combat.getSpecEnergy() >= config.specialCost()
-        && lastSpecial + 1800 < System.currentTimeMillis()) {
-      shouldUseSpecial = true;
-    }
-
-    if (config.useSpecial()
-        && originalWeaponId != 0
-        && Combat.getSpecEnergy() < config.specialCost()) {
-      shouldSwapBack = true;
     }
 
     if (timeout > 0) {
@@ -203,17 +181,6 @@ public class ConsumeHelper extends Helper {
     }
   }
 
-  public void keyPressed(KeyEvent e) {
-    if (config.specialHotkey().matches(e)
-        && config.useSpecial()
-        && config.activationMethod() == SpecialActivation.HOTKEY
-        && Combat.getSpecEnergy() >= config.specialCost()
-        && lastSpecial + 1200 < System.currentTimeMillis()) {
-      shouldUseSpecial = true;
-      e.consume();
-    }
-  }
-
   private int getHealed(int itemId) {
     Effect effect = statChanges.get(itemId);
     if (effect != null) {
@@ -250,43 +217,6 @@ public class ConsumeHelper extends Helper {
       if (!didAction && config.eatWarnings()) {
         MessageUtils.addMessage("HP below threshold but you don't have any food!");
       }
-    }
-
-    if (shouldSwapBack) {
-      Item weapon = Inventory.getFirst(originalWeaponId);
-      if (weapon != null) {
-        weapon.interact("Wield");
-        didAction = true;
-        shouldSwapBack = false;
-        originalWeaponId = 0;
-      }
-    }
-
-    if (shouldUseSpecial && !Combat.isSpecEnabled()) {
-      if (!config.specialWeapon().equals("")
-          && !Equipment.contains(config.specialWeapon())
-          && Inventory.contains(config.specialWeapon())
-          && (config.swapFromWeapon().equals("") || Equipment.contains(config.swapFromWeapon()))) {
-        originalWeaponId = Equipment.fromSlot(EquipmentInventorySlot.WEAPON).getId();
-
-        Item weapon = Inventory.getFirst(config.specialWeapon());
-        if (weapon != null) {
-          weapon.interact("Wield");
-          didAction = true;
-        }
-      }
-
-      if (!config.swapFromWeapon().equals("")
-          && !Equipment.contains(config.swapFromWeapon(), config.specialWeapon())) {
-        shouldUseSpecial = false;
-      }
-
-      if (Vars.getBit(Varbits.PVP_SPEC_ORB) == 0 && shouldUseSpecial) {
-        Combat.toggleSpec();
-      }
-
-      shouldUseSpecial = false;
-      lastSpecial = System.currentTimeMillis();
     }
 
     if (config.enableEating() && hp <= eatThreshold && canPot()) {
