@@ -1,5 +1,6 @@
 package io.reisub.unethicalite.thermyflicker.tasks;
 
+import com.google.common.collect.ImmutableSet;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.NPCs;
 import dev.unethicalite.api.entities.Players;
@@ -7,12 +8,20 @@ import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.thermyflicker.ThermyFlicker;
 import io.reisub.unethicalite.utils.tasks.Task;
+import java.util.Set;
+import net.runelite.api.Actor;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
+import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.client.eventbus.Subscribe;
 
 public class Attack extends Task {
+
+  private static final Set<Integer> ANIMATION_IDS = ImmutableSet.of(
+      1658, // whip attack
+      1062 // dds spec
+  );
 
   private NPC thermy;
 
@@ -42,6 +51,19 @@ public class Attack extends Task {
   @Subscribe
   private void onHitsplatApplied(HitsplatApplied event) {
     if (event.getActor().getId() == NpcID.THERMONUCLEAR_SMOKE_DEVIL) {
+      ThermyFlicker.lastAttack = Static.getClient().getTickCount();
+    }
+  }
+
+  @Subscribe
+  private void onAnimationChanged(AnimationChanged event) {
+    final Actor actor = event.getActor();
+
+    if (actor == null || !actor.equals(Players.getLocal())) {
+      return;
+    }
+
+    if (ANIMATION_IDS.contains(event.getActor().getAnimation())) {
       ThermyFlicker.lastAttack = Static.getClient().getTickCount();
     }
   }
