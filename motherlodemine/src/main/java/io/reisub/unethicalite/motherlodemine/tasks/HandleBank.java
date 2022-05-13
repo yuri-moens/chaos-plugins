@@ -3,6 +3,7 @@ package io.reisub.unethicalite.motherlodemine.tasks;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.items.Bank;
 import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.motherlodemine.MotherlodeMine;
 import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -13,6 +14,8 @@ import net.runelite.api.ItemID;
 
 public class HandleBank extends BankTask {
   @Inject private MotherlodeMine plugin;
+
+  private int lastGemBagEmpty;
 
   @Override
   public boolean validate() {
@@ -37,8 +40,9 @@ public class HandleBank extends BankTask {
 
     final Item gemBag = Bank.Inventory.getFirst(ItemID.OPEN_GEM_BAG);
 
-    if (gemBag != null) {
+    if (gemBag != null && Static.getClient().getTickCount() - lastGemBagEmpty > 100) {
       ChaosBank.bankInventoryInteract(gemBag, "Empty");
+      lastGemBagEmpty = Static.getClient().getTickCount();
       Time.sleepTick();
     }
 
