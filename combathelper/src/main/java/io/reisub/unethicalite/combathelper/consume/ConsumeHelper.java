@@ -463,6 +463,12 @@ public class ConsumeHelper extends Helper {
       return false;
     }
 
+    if (potion.getName().contains("ombat potion")) {
+      shouldDrinkAttack = false;
+      shouldDrinkStrength = false;
+      shouldDrinkDefence = false;
+    }
+
     potion.interact(1);
     lastPot = Static.getClient().getTickCount();
     return true;
