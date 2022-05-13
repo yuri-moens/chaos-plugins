@@ -40,7 +40,7 @@ public class HandleBank extends BankTask {
       Time.sleepTick();
     }
 
-    ChaosBank.depositAllExcept(ItemID.OPEN_GEM_BAG);
+    ChaosBank.depositAllExcept(false, ItemID.OPEN_GEM_BAG);
 
     if (config.location() == Location.SOFT_CLAY
         && !Equipment.contains(ItemID.BRACELET_OF_CLAY)
