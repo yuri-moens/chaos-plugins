@@ -14,6 +14,7 @@ public enum Location {
   QUARRY_SANDSTONE(
       new WorldPoint(3165, 2914, 0),
       8,
+      null,
       ImmutableSet.of(ObjectID.ROCKS_11386),
       new ArrayDeque<>() {
         {
@@ -27,6 +28,7 @@ public enum Location {
   QUARRY_GRANITE(
       new WorldPoint(3167, 2908, 0),
       8,
+      null,
       ImmutableSet.of(ObjectID.ROCKS_11387),
       new ArrayDeque<>() {
         {
@@ -40,6 +42,7 @@ public enum Location {
   VOLCANIC_ASH(
       new WorldPoint(3788, 3772, 0),
       20,
+      null,
       ImmutableSet.of(ObjectID.ASH_PILE),
       new ArrayDeque<>() {
         {
@@ -48,10 +51,23 @@ public enum Location {
           add(new RockPosition(new WorldPoint(3781, 3774, 0), new WorldPoint(3782, 3774, 0)));
         }
       },
+      false),
+  SOFT_CLAY(
+      new WorldPoint(3294, 12451, 0),
+      20,
+      new WorldPoint(3295, 6059, 0),
+      ImmutableSet.of(ObjectID.ROCKS_36210),
+      new ArrayDeque<>() {
+        {
+          add(new RockPosition(new WorldPoint(3293, 12451, 0), new WorldPoint(3294, 12451, 0)));
+          add(new RockPosition(new WorldPoint(3294, 12450, 0), new WorldPoint(3294, 12451, 0)));
+        }
+      },
       false);
 
   private final WorldPoint miningAreaPoint;
   private final int miningAreaDistance;
+  private final WorldPoint bankPoint;
   private final Set<Integer> rockIds;
   private final ArrayDeque<RockPosition> rockPositions;
   private final boolean threeTick;

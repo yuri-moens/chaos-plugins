@@ -116,6 +116,10 @@ public class Mine extends Task {
     if (Inventory.isFull() && rockPositions != null) {
       resetQueue();
     }
+
+    if (Inventory.isFull() && !config.drop() && config.location().getBankPoint() != null) {
+      currentRockPosition = null;
+    }
   }
 
   private boolean isReady() {
