@@ -20,16 +20,15 @@ import net.runelite.client.events.ConfigChanged;
 
 public class Alch extends Task {
 
-  @Inject
-  private Config config;
-
+  private final Config config;
   private ConfigList configList;
 
   private int lastTick;
   private boolean ready;
 
   @Inject
-  public Alch() {
+  public Alch(Config config) {
+    this.config = config;
     configList = ConfigList.parseList(config.alchItems());
   }
 
