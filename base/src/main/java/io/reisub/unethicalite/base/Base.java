@@ -11,7 +11,11 @@ import org.pf4j.Extension;
 
 import javax.inject.Inject;
 
-@PluginDescriptor(name = "Chaos Base", description = "", enabledByDefault = false)
+@PluginDescriptor(
+    name = "Chaos Base",
+    description = "",
+    enabledByDefault = false
+)
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
