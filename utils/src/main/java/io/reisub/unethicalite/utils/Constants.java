@@ -12,6 +12,8 @@ import net.runelite.api.widgets.Widget;
 
 public class Constants {
 
+  public static final int CRAFTING_GUILD_REGION = 11571;
+
   public static final Set<Integer> LOG_IDS = ImmutableSet.of(
       ItemID.LOGS,
       ItemID.OAK_LOGS,
@@ -127,6 +129,24 @@ public class Constants {
       ItemID.RUNE_ESSENCE,
       ItemID.PURE_ESSENCE,
       ItemID.DAEYALT_ESSENCE
+  );
+
+  public static final Set<Integer> RUNE_IDS = ImmutableSet.of(
+      ItemID.AIR_RUNE,
+      ItemID.MIND_RUNE,
+      ItemID.WATER_RUNE,
+      ItemID.EARTH_RUNE,
+      ItemID.FIRE_RUNE,
+      ItemID.BODY_RUNE,
+      ItemID.COSMIC_RUNE,
+      ItemID.CHAOS_RUNE,
+      ItemID.NATURE_RUNE,
+      ItemID.LAW_RUNE,
+      ItemID.DEATH_RUNE,
+      ItemID.ASTRAL_RUNE,
+      ItemID.BLOOD_RUNE,
+      ItemID.SOUL_RUNE,
+      ItemID.WRATH_RUNE
   );
 
   public static final Set<Integer> ANVIL_IDS = ImmutableSet.of(

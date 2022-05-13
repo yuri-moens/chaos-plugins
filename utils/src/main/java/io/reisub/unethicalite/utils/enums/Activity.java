@@ -29,5 +29,7 @@ public enum Activity {
   DOUSING_FIRE(),
   TETHERING_MAST(),
   STOCKING_CANNON(),
-  FILLING_BUCKETS();
+  FILLING_BUCKETS(),
+  MAKING_TABS(),
+  ;
 }
