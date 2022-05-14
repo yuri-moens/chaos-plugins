@@ -5,16 +5,27 @@ import dev.unethicalite.api.magic.SpellBook;
 import dev.unethicalite.api.widgets.Dialog;
 import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.mahoganyhomes.Config;
+import io.reisub.unethicalite.mahoganyhomes.Home;
 import io.reisub.unethicalite.mahoganyhomes.MahoganyHomes;
 import io.reisub.unethicalite.utils.tasks.Task;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.inject.Inject;
 import net.runelite.api.DialogOption;
+import net.runelite.api.util.Text;
 import net.runelite.api.widgets.Widget;
+import net.runelite.api.widgets.WidgetInfo;
 
 public class GetTask extends Task {
-  @Inject private MahoganyHomes plugin;
 
-  @Inject private Config config;
+  private static final Pattern CONTRACT_PATTERN = Pattern.compile(
+      "(Please could you g|G)o see (\\w*)[ ,][\\w\\s,-]*[?.] "
+          + "You can get another job once you have furnished \\w* home\\.");
+
+  @Inject
+  private MahoganyHomes plugin;
+  @Inject
+  private Config config;
 
   @Override
   public String getStatus() {
@@ -28,7 +39,9 @@ public class GetTask extends Task {
 
   @Override
   public void execute() {
-    Widget npcContact = Widgets.get(SpellBook.Lunar.NPC_CONTACT.getWidget());
+    plugin.setLastStairsUsed(0);
+
+    final Widget npcContact = Widgets.get(SpellBook.Lunar.NPC_CONTACT.getWidget());
     if (npcContact == null) {
       return;
     }
@@ -62,6 +75,38 @@ public class GetTask extends Task {
       default:
     }
 
-    Dialog.invokeDialog(chooseOption);
+    Dialog.invokeDialog(
+        DialogOption.PLAYER_CONTINUE,
+        DialogOption.NPC_CONTINUE,
+        chooseOption,
+        DialogOption.PLAYER_CONTINUE
+    );
+
+    Time.sleepTicks(2);
+
+    plugin.setCurrentHome(getHome());
+  }
+
+  private Home getHome() {
+
+    final Widget dialog = Widgets.get(WidgetInfo.DIALOG_NPC_TEXT);
+
+    if (dialog == null) {
+      return null;
+    }
+
+    final String npcText = Text.sanitizeMultilineText(dialog.getText());
+    final Matcher startContractMatcher = CONTRACT_PATTERN.matcher(npcText);
+
+    if (startContractMatcher.matches()) {
+      final String name = startContractMatcher.group(2);
+      for (final Home h : Home.values()) {
+        if (h.getName().equalsIgnoreCase(name)) {
+          return h;
+        }
+      }
+    }
+
+    return null;
   }
 }

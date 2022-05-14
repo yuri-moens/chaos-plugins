@@ -2,13 +2,16 @@ package io.reisub.unethicalite.mahoganyhomes;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import dev.unethicalite.api.game.Vars;
+import java.util.List;
 import javax.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-enum Hotspot {
+public enum Hotspot {
   MAHOGANY_HOMES_HOTSPOT_1(
       10554,
       ImmutableSet.of(
@@ -61,5 +64,35 @@ enum Hotspot {
 
   public static boolean isHotspotObject(final int id) {
     return HOTSPOT_BY_OBJECT_ID.containsKey(id);
+  }
+
+  public static List<Hotspot> getBrokenHotspots() {
+    List<Hotspot> brokenHotspots = Lists.newArrayList();
+
+    for (Hotspot h : Hotspot.values()) {
+      if (h.isFixed()) {
+        continue;
+      }
+
+      brokenHotspots.add(h);
+    }
+
+    return brokenHotspots;
+  }
+
+  public static boolean isEverythingFixed() {
+    for (Hotspot h : Hotspot.values()) {
+      if (!h.isFixed()) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  public boolean isFixed() {
+    final int varb = Vars.getBit(getVarb());
+
+    return varb != 1 && varb != 3 && varb != 4;
   }
 }
