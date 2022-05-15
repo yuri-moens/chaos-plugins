@@ -5,6 +5,7 @@ import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.game.Game;
 import dev.unethicalite.api.input.Keyboard;
 import dev.unethicalite.api.utils.MessageUtils;
+import dev.unethicalite.api.widgets.Dialog;
 import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -26,6 +27,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
+import net.runelite.api.DialogOption;
 import net.runelite.api.GameState;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Skill;
@@ -123,6 +125,19 @@ public abstract class TickScript extends Plugin implements KeyListener {
     if (event.getType() == ChatMessageType.GAMEMESSAGE) {
       if (event.getMessage().startsWith("Congratulations, you've just advanced your")) {
         setActivity(Activity.IDLE);
+
+        if (Dialog.canContinue()) {
+          Dialog.invokeDialog(DialogOption.LEVEL_UP_CONTINUE);
+          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+        }
       }
     }
   }
