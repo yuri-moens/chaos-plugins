@@ -14,7 +14,6 @@ import io.reisub.unethicalite.mahoganyhomes.RequiredMaterials;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
-import io.reisub.unethicalite.utils.api.Interact;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.time.Duration;
 import java.time.Instant;
@@ -54,7 +53,11 @@ public class HandleBank extends BankTask {
 
   @Override
   public void execute() {
-    teleport();
+    plugin.teleport();
+
+    if (Players.getLocal().getWorldLocation().getPlane() > 0) {
+      plugin.useStairs();
+    }
 
     final Home previousHome = plugin.getPreviousHome();
     final Home currentHome = plugin.getCurrentHome();
@@ -87,49 +90,24 @@ public class HandleBank extends BankTask {
       Bank.withdraw(ItemID.STEEL_BAR, 1, WithdrawMode.ITEM);
     }
 
-    while (Bank.Inventory.getAll().size() < 28) {
+    final Item plankSack = Bank.Inventory.getFirst(ItemID.PLANK_SACK);
+
+    if (plankSack == null || plugin.getPlankSack().getPlankCount() == 28) {
       Bank.withdrawAll(config.plank().getPlankId(), WithdrawMode.ITEM);
-
-      final Item plankSack = Bank.Inventory.getFirst(ItemID.PLANK_SACK, ItemID.PLANK_SACK_25629);
-
-      if (plankSack != null && plugin.getPlankSack().getPlankCount() != 28) {
+    } else {
+      do {
+        Bank.withdrawAll(config.plank().getPlankId(), WithdrawMode.ITEM);
         Time.sleepTick();
+
         ChaosBank.bankInventoryInteract(plankSack, "Use");
+
         Time.sleepTicksUntil(() -> Bank.Inventory.getAll().size() < 28
             || plugin.getPlankSack().getPlankCount() == 28, 3);
-      }
+
+      } while (plugin.getPlankSack().getPlankCount() < 28);
     }
 
     last = Instant.now();
-  }
-
-  private void teleport() {
-    final Home home = plugin.getCurrentHome();
-
-    if (Utils.isInRegion(home.getRegions())) {
-      return;
-    }
-
-    final Item tab = Inventory.getFirst(home.getTabletId());
-
-    if (tab == null) {
-      if (home.getTabletId() == ItemID.TELEPORT_TO_HOUSE) {
-        Interact.interactWithInventoryOrEquipment(
-            ItemID.XERICS_TALISMAN,
-            "Rub",
-            "Xeric's Glade",
-            4
-        );
-      } else {
-        plugin.stop("Couldn't find teleport tab. Stopping plugin.");
-        return;
-      }
-    } else {
-      tab.interact("Break");
-    }
-
-    Time.sleepTicksUntil(() -> Utils.isInRegion(home.getRegions()), 10);
-    Time.sleepTicks(2);
   }
 
   private boolean isPassingBank() {

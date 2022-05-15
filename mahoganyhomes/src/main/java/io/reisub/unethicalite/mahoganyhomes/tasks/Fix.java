@@ -4,7 +4,6 @@ import com.google.common.collect.Sets;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.input.Keyboard;
 import dev.unethicalite.api.movement.Reachable;
 import dev.unethicalite.api.widgets.Widgets;
@@ -58,7 +57,7 @@ public class Fix extends Task {
     );
 
     if (nearest == null) {
-      useStairs();
+      plugin.useStairs(true);
 
       nearest = TileObjects.getNearest(
           o -> {
@@ -86,16 +85,17 @@ public class Fix extends Task {
     while (!Reachable.isInteractable(finalNearest) && tries++ < maxTries) {
       if (plugin.getCurrentHome() == Home.NOELLA
           && Players.getLocal().getWorldLocation().getPlane() == 1) {
-        useStairs();
+        plugin.useStairs(true);
         return;
       }
 
       Set<WorldPoint> ignoreLocations = Sets.newHashSet(
-          new WorldPoint(3231, 3387, 0)
+          new WorldPoint(3231, 3387, 0),
+          new WorldPoint(1762, 3612, 0)
       );
 
       if (!ChaosMovement.openDoor(finalNearest, ignoreLocations)) {
-        useStairs();
+        plugin.useStairs(true);
         return;
       }
     }
@@ -133,39 +133,9 @@ public class Fix extends Task {
       return;
     }
 
+    plugin.setFixed(true);
+
     Time.sleepTicksUntil(hotspot::isFixed, 15);
     Time.sleepTick();
-  }
-
-  private void useStairs() {
-    final TileObject stairs = TileObjects.getNearest(
-        o -> o.hasAction("Climb-up", "Climb-down")
-            && o.getId() != plugin.getLastStairsUsed()
-            && plugin.getCurrentHome().isInHome(o)
-    );
-
-    if (stairs == null) {
-      return;
-    }
-
-    final int maxTries = 5;
-    int tries = 0;
-
-    while (!Reachable.isInteractable(stairs) && tries++ < maxTries) {
-      if (!ChaosMovement.openDoor(stairs)) {
-        return;
-      }
-    }
-
-    final int plane = Players.getLocal().getWorldLocation().getPlane();
-
-    if (stairs.hasAction("Climb-up")) {
-      plugin.setLastStairsUsed(stairs.getId());
-      GameThread.invoke(() -> stairs.interact("Climb-up"));
-    } else if (stairs.hasAction("Climb-down")) {
-      GameThread.invoke(() -> stairs.interact("Climb-down"));
-    }
-
-    Time.sleepTicksUntil(() -> plane != Players.getLocal().getWorldLocation().getPlane(), 20);
   }
 }

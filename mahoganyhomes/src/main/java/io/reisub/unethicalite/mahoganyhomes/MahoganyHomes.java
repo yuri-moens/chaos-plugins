@@ -1,7 +1,12 @@
 package io.reisub.unethicalite.mahoganyhomes;
 
 import com.google.inject.Provides;
+import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.movement.Reachable;
 import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.mahoganyhomes.tasks.Fix;
 import io.reisub.unethicalite.mahoganyhomes.tasks.GetTask;
@@ -10,11 +15,15 @@ import io.reisub.unethicalite.mahoganyhomes.tasks.HandleBank;
 import io.reisub.unethicalite.mahoganyhomes.tasks.TalkToNpc;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
+import io.reisub.unethicalite.utils.api.Interact;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.Item;
 import net.runelite.api.ItemID;
+import net.runelite.api.TileObject;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -42,6 +51,7 @@ public class MahoganyHomes extends TickScript {
   @Getter
   @Setter
   private int lastStairsUsed;
+  private boolean fixed;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
@@ -74,5 +84,77 @@ public class MahoganyHomes extends TickScript {
     Static.getEventBus().unregister(plankSack);
     plankSack = null;
     currentHome = null;
+  }
+
+  public boolean hasFixed() {
+    return fixed;
+  }
+
+  public void setFixed(final boolean fixed) {
+    this.fixed = fixed;
+  }
+
+  public void teleport() {
+    if (Utils.isInRegion(currentHome.getRegions())) {
+      return;
+    }
+
+    final Item tab = Inventory.getFirst(currentHome.getTabletId());
+
+    if (tab == null) {
+      if (currentHome.getTabletId() == ItemID.TELEPORT_TO_HOUSE) {
+        Interact.interactWithInventoryOrEquipment(
+            ItemID.XERICS_TALISMAN,
+            "Rub",
+            "Xeric's Glade",
+            4
+        );
+      } else {
+        stop("Couldn't find teleport tab. Stopping plugin.");
+        return;
+      }
+    } else {
+      tab.interact("Break");
+    }
+
+    Time.sleepTicksUntil(() -> Utils.isInRegion(currentHome.getRegions()), 10);
+    Time.sleepTicks(2);
+  }
+
+  public void useStairs() {
+    useStairs(false);
+  }
+
+  public void useStairs(boolean ignoreLastStairs) {
+    final TileObject stairs = ignoreLastStairs
+        ? TileObjects.getNearest(
+        o -> o.hasAction("Climb-up", "Climb-down")
+            && o.getId() != lastStairsUsed
+            && currentHome.isInHome(o))
+        : TileObjects.getNearest(
+        o -> o.hasAction("Climb-up", "Climb-down")
+    );
+
+    if (stairs == null) {
+      return;
+    }
+
+    final int maxTries = 3;
+    int tries = 0;
+
+    while (!Reachable.isInteractable(stairs) && tries++ < maxTries) {
+      ChaosMovement.openDoor(stairs);
+    }
+
+    final int plane = Players.getLocal().getWorldLocation().getPlane();
+
+    if (stairs.hasAction("Climb-up")) {
+      lastStairsUsed = stairs.getId();
+      GameThread.invoke(() -> stairs.interact("Climb-up"));
+    } else if (stairs.hasAction("Climb-down")) {
+      GameThread.invoke(() -> stairs.interact("Climb-down"));
+    }
+
+    Time.sleepTicksUntil(() -> plane != Players.getLocal().getWorldLocation().getPlane(), 20);
   }
 }

@@ -93,7 +93,7 @@ public enum Home {
       new WorldPoint(1748, 3534, 0),
       new RequiredMaterials(9, 10, 0, 1),
       ItemID.TELEPORT_TO_HOUSE,
-      ImmutableSet.of(6967, 6968)),
+      ImmutableSet.of(6966, 6967, 6968)),
   LEELA(
       new WorldArea(1781, 3589, 9, 8, 0),
       BankLocation.HOSIDIUS_BANK,
@@ -102,7 +102,7 @@ public enum Home {
       new WorldPoint(1785, 3592, 0),
       new RequiredMaterials(9, 13, 0, 1),
       ItemID.TELEPORT_TO_HOUSE,
-      ImmutableSet.of(6967, 6968),
+      ImmutableSet.of(6966, 6967, 6968),
       11794,
       11802),
   MARIAH(
@@ -113,7 +113,7 @@ public enum Home {
       new WorldPoint(1765, 3623, 0),
       new RequiredMaterials(11, 14, 0, 1),
       ItemID.TELEPORT_TO_HOUSE,
-      ImmutableSet.of(6967, 6968),
+      ImmutableSet.of(6966, 6967, 6968),
       11794,
       11802),
 
