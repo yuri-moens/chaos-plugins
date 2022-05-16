@@ -610,11 +610,29 @@ public class Constants {
 
   public static final Set<Integer> BUSH_PATCH_IDS = ImmutableSet.of(NullObjectID.NULL_34006);
 
-  public static final Set<Integer> TREE_PATCH_IDS = ImmutableSet.of(NullObjectID.NULL_33732);
+  public static final Set<Integer> TREE_PATCH_IDS = ImmutableSet.of(
+      NullObjectID.NULL_8388,
+      NullObjectID.NULL_8389,
+      NullObjectID.NULL_8390,
+      NullObjectID.NULL_8391,
+      NullObjectID.NULL_19147,
+      NullObjectID.NULL_33732
+  );
 
-  public static final Set<Integer> FRUIT_TREE_PATCH_IDS = ImmutableSet.of(NullObjectID.NULL_34007);
+  public static final Set<Integer> FRUIT_TREE_PATCH_IDS = ImmutableSet.of(
+      NullObjectID.NULL_7962,
+      NullObjectID.NULL_7963,
+      NullObjectID.NULL_7964,
+      NullObjectID.NULL_7965,
+      NullObjectID.NULL_26579,
+      NullObjectID.NULL_34007
+  );
 
-  public static final Set<Integer> HARDWOOD_TREE_PATCH_IDS = ImmutableSet.of();
+  public static final Set<Integer> HARDWOOD_TREE_PATCH_IDS = ImmutableSet.of(
+      NullObjectID.NULL_30480,
+      NullObjectID.NULL_30481,
+      NullObjectID.NULL_30482
+  );
 
   public static final Set<Integer> SPIRIT_TREE_PATCH_IDS = ImmutableSet.of(NullObjectID.NULL_33733);
 
@@ -632,7 +650,9 @@ public class Constants {
 
   public static final Set<Integer> ANIMA_PATCH_IDS = ImmutableSet.of(NullObjectID.NULL_33998);
 
-  public static final Set<Integer> CALQUAT_PATCH_IDS = ImmutableSet.of();
+  public static final Set<Integer> CALQUAT_PATCH_IDS = ImmutableSet.of(
+      NullObjectID.NULL_7807
+  );
 
   public static final Set<Integer> CRYSTAL_PATCH_IDS = ImmutableSet.of();
 
@@ -872,6 +892,27 @@ public class Constants {
       ObjectID.POOL_OF_REFRESHMENT,
       ObjectID.ORNATE_POOL_OF_REJUVENATION,
       ObjectID.FROZEN_ORNATE_POOL_OF_REJUVENATION
+  );
+
+  public static final Set<Integer> PHARAOHS_SCEPTRE_IDS = ImmutableSet.of(
+      ItemID.PHARAOHS_SCEPTRE,
+      ItemID.PHARAOHS_SCEPTRE_9045,
+      ItemID.PHARAOHS_SCEPTRE_9046,
+      ItemID.PHARAOHS_SCEPTRE_9047,
+      ItemID.PHARAOHS_SCEPTRE_9048,
+      ItemID.PHARAOHS_SCEPTRE_9049,
+      ItemID.PHARAOHS_SCEPTRE_9050,
+      ItemID.PHARAOHS_SCEPTRE_9051,
+      ItemID.PHARAOHS_SCEPTRE_13074,
+      ItemID.PHARAOHS_SCEPTRE_13075,
+      ItemID.PHARAOHS_SCEPTRE_13076,
+      ItemID.PHARAOHS_SCEPTRE_13077,
+      ItemID.PHARAOHS_SCEPTRE_13078,
+      ItemID.PHARAOHS_SCEPTRE_16176,
+      ItemID.PHARAOHS_SCEPTRE_21445,
+      ItemID.PHARAOHS_SCEPTRE_21446,
+      ItemID.PHARAOHS_SCEPTRE_26948,
+      ItemID.PHARAOHS_SCEPTRE_26950
   );
 
   public static final Set<Integer> BARROWS_UNDEGRADED_IDS = ImmutableSet.of(
