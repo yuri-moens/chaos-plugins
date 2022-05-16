@@ -127,13 +127,10 @@ public class MahoganyHomes extends TickScript {
 
   public void useStairs(boolean ignoreLastStairs) {
     final TileObject stairs = ignoreLastStairs
-        ? TileObjects.getNearest(
-        o -> o.hasAction("Climb-up", "Climb-down")
+        ? TileObjects.getNearest(o -> o.hasAction("Climb-up", "Climb-down")
             && o.getId() != lastStairsUsed
             && currentHome.isInHome(o))
-        : TileObjects.getNearest(
-        o -> o.hasAction("Climb-up", "Climb-down")
-    );
+        : TileObjects.getNearest(o -> o.hasAction("Climb-up", "Climb-down"));
 
     if (stairs == null) {
       return;
