@@ -77,6 +77,10 @@ public class StartRun extends BankTask {
       return;
     }
 
+    if (Dialog.isOpen()) {
+      Dialog.close();
+    }
+
     final Item pendant = Inventory.getFirst(Predicates.ids(Constants.DIGSITE_PENDANT_IDS));
     if (pendant == null) {
       return;
