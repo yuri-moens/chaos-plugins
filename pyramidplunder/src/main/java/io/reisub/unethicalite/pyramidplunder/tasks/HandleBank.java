@@ -1,22 +1,29 @@
 package io.reisub.unethicalite.pyramidplunder.tasks;
 
 import com.google.common.collect.ImmutableSet;
+import dev.unethicalite.api.commons.Predicates;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.game.Combat;
 import dev.unethicalite.api.items.Bank;
 import dev.unethicalite.api.items.Bank.WithdrawMode;
+import dev.unethicalite.api.items.Equipment;
 import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.movement.Movement;
+import dev.unethicalite.api.widgets.Dialog;
 import io.reisub.unethicalite.pyramidplunder.PyramidPlunder;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.ChaosBank;
-import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.time.Duration;
 import java.util.Set;
+import javax.inject.Inject;
 import net.runelite.api.ItemID;
 
 public class HandleBank extends BankTask {
+
+  @Inject
+  private PyramidPlunder plugin;
 
   private static final Set<Integer> TREASURE_IDS = ImmutableSet.of(
       ItemID.IVORY_COMB,
@@ -27,8 +34,8 @@ public class HandleBank extends BankTask {
 
   @Override
   public boolean validate() {
-    return Utils.isInRegion(PyramidPlunder.SOPHANEM_BANK_REGION)
-        && Inventory.getFreeSlots() < 14
+    return Utils.isInRegion(PyramidPlunder.SOPHANEM_BANK_REGION, Constants.CRAFTING_GUILD_REGION)
+        && (Inventory.getFreeSlots() < 10 || hasTwoSceptres())
         && isLastBankDurationAgo(Duration.ofSeconds(10));
   }
 
@@ -42,11 +49,22 @@ public class HandleBank extends BankTask {
     Time.sleepTick();
 
     if (!Inventory.contains(Predicates.ids(Constants.ANTI_POISON_POTION_IDS))) {
-      Bank.withdraw(ItemID.SUPERANTIPOISON4, 1, WithdrawMode.ITEM);
+      Bank.withdraw(Predicates.ids(ItemID.SUPERANTIPOISON4, ItemID.ANTIDOTE4), 1,
+          WithdrawMode.ITEM);
     }
 
-    if (!Inventory.contains(Predicates.ids(Constants.STAMINA_POTION_IDS))) {
+    if (Movement.getRunEnergy() < 80
+        && !Inventory.contains(Predicates.ids(Constants.STAMINA_POTION_IDS))) {
       Bank.withdraw(ItemID.STAMINA_POTION4, 1, WithdrawMode.ITEM);
+    }
+
+    if (hasTwoSceptres()) {
+      Bank.deposit(Predicates.ids(Constants.PHARAOHS_SCEPTRE_IDS), 1);
+    }
+
+    if (plugin.getSceptreCharges() == 1) {
+      withdrawTreasure();
+      Dialog.close();
     }
 
     final int amountOfFood = Math.floorDiv(Combat.getMissingHealth(), 12);
@@ -54,5 +72,50 @@ public class HandleBank extends BankTask {
     for (int i = 0; i < amountOfFood; i++) {
       Bank.withdraw(ItemID.LOBSTER, 1, WithdrawMode.ITEM);
     }
+  }
+
+  private void withdrawTreasure() {
+    int id = 0;
+    int amount = 0;
+
+    if (Bank.getCount(true, ItemID.STONE_STATUETTE) >= 12) {
+      id = ItemID.STONE_STATUETTE;
+      amount = 12;
+    } else if (Bank.getCount(true, ItemID.STONE_SCARAB) >= 12) {
+      id = ItemID.STONE_SCARAB;
+      amount = 12;
+    } else if (Bank.getCount(true, ItemID.STONE_SEAL) >= 12) {
+      id = ItemID.STONE_SEAL;
+      amount = 12;
+    } else if (Bank.getCount(true, ItemID.GOLDEN_SCARAB) >= 6) {
+      id = ItemID.GOLDEN_SCARAB;
+      amount = 6;
+    } else if (Bank.getCount(true, ItemID.GOLD_SEAL) >= 6) {
+      id = ItemID.GOLD_SEAL;
+      amount = 6;
+    } else if (Bank.getCount(true, ItemID.GOLDEN_STATUETTE) >= 6) {
+      id = ItemID.GOLDEN_STATUETTE;
+      amount = 6;
+    }
+
+    if (id == 0) {
+      plugin.stop("No treasure found to recharge sceptre with. Stopping plugin.");
+      return;
+    }
+
+    final int finalId = id;
+    final int finalAmount = amount;
+
+    Bank.withdraw(finalId, finalAmount, WithdrawMode.ITEM);
+    Time.sleepTicksUntil(() -> Inventory.getCount(finalId) >= finalAmount, 5);
+  }
+
+  private boolean hasTwoSceptres() {
+    if (Inventory.getCount(Predicates.ids(Constants.PHARAOHS_SCEPTRE_IDS)) > 1) {
+      return true;
+    }
+
+    return Inventory.contains(Predicates.ids(Constants.PHARAOHS_SCEPTRE_IDS))
+        && Equipment.contains(Predicates.ids(Constants.PHARAOHS_SCEPTRE_IDS));
   }
 }

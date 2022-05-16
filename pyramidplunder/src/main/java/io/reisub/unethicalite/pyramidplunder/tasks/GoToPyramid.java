@@ -5,14 +5,17 @@ import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.NPCs;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.items.Equipment;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.movement.Reachable;
 import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.pyramidplunder.PyramidPlunder;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.Utils;
+import io.reisub.unethicalite.utils.api.Interact;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.ArrayDeque;
+import javax.inject.Inject;
 import net.runelite.api.ItemID;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
@@ -20,6 +23,9 @@ import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
 
 public class GoToPyramid extends Task {
+
+  @Inject
+  private PyramidPlunder plugin;
 
   private static final ArrayDeque<Integer> DOOR_IDS = new ArrayDeque<>(4);
 
@@ -33,11 +39,26 @@ public class GoToPyramid extends Task {
   @Override
   public boolean validate() {
     return !Utils.isInRegion(PyramidPlunder.PYRAMID_PLUNDER_REGION)
-        && Inventory.getFreeSlots() > 14;
+        && Inventory.getFreeSlots() > 10;
   }
 
   @Override
   public void execute() {
+    if (Inventory.contains(Predicates.ids(Constants.PHARAOHS_SCEPTRE_IDS))
+        || Equipment.contains(Predicates.ids(Constants.PHARAOHS_SCEPTRE_IDS))) {
+      Interact.interactWithInventoryOrEquipment(
+          Constants.PHARAOHS_SCEPTRE_IDS,
+          "Teleport",
+          "Jalsavrah",
+          1
+      );
+
+      plugin.setSceptreCharges(plugin.getSceptreCharges() - 1);
+
+      Time.sleepTicksUntil(() -> Utils.isInRegion(PyramidPlunder.PYRAMID_PLUNDER_REGION), 15);
+      return;
+    }
+
     if (Utils.isInRegion(PyramidPlunder.SOPHANEM_BANK_REGION)) {
       final TileObject ladder = TileObjects.getNearest(ObjectID.LADDER_20277);
       if (ladder == null) {
