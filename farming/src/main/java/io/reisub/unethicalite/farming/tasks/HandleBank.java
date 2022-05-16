@@ -3,6 +3,7 @@ package io.reisub.unethicalite.farming.tasks;
 import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.items.Bank;
 import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.api.widgets.Dialog;
 import io.reisub.unethicalite.farming.Config;
 import io.reisub.unethicalite.farming.Farming;
 import io.reisub.unethicalite.farming.Location;
@@ -55,6 +56,10 @@ public class HandleBank extends BankTask {
     withdrawSeeds();
 
     Time.sleepTicksUntil(() -> Inventory.contains(Predicates.ids(Constants.HERB_SEED_IDS)), 5);
+
+    if (Dialog.isOpen()) {
+      Dialog.close();
+    }
   }
 
   private void withdrawTeleportItems() {

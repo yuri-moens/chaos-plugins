@@ -38,7 +38,7 @@ public class PlantHerb extends Task {
       return false;
     }
 
-    TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
+    final TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
 
     if (patch == null) {
       return false;
