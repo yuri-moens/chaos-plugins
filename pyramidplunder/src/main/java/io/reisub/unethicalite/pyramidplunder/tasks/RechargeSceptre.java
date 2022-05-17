@@ -53,7 +53,7 @@ public class RechargeSceptre extends Task {
         DialogOption.NPC_CONTINUE
     );
 
-    Time.sleepTick();
+    Time.sleepTicks(2);
 
     Interact.interactWithInventoryOrEquipment(
         Constants.PHARAOHS_SCEPTRE_IDS,
@@ -61,5 +61,7 @@ public class RechargeSceptre extends Task {
         null,
         -1
     );
+
+    Time.sleepTicks(2);
   }
 }
