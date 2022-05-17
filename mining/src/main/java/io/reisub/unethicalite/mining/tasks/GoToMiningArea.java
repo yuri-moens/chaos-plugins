@@ -19,6 +19,7 @@ import net.runelite.api.coords.WorldPoint;
 public class GoToMiningArea extends Task {
 
   private static final int TRAHAEARN_MINE_REGION = 13250;
+  private static final int SALT_MINE_REGION = 11425;
 
   @Inject private Mining plugin;
   @Inject private Config config;
@@ -73,6 +74,22 @@ public class GoToMiningArea extends Task {
             }
 
             Time.sleepTicksUntil(() -> Players.getLocal().distanceTo(destination) < 3, 15);
+          }
+          break;
+        case BASALT:
+          final TileObject caveEntrance2 = TileObjects.getNearest(ObjectID.STAIRS_33234);
+
+          if (caveEntrance2 != null) {
+            caveEntrance2.interact("Descend");
+
+            Time.sleepTicksUntil(() -> Utils.isInRegion(SALT_MINE_REGION), 20);
+            Time.sleepTick();
+
+            final WorldPoint destination = config.location().getMiningAreaPoint();
+
+            Movement.walk(destination);
+
+            Time.sleepTicksUntil(() -> Players.getLocal().distanceTo(destination) < 6, 15);
           }
           break;
         default:

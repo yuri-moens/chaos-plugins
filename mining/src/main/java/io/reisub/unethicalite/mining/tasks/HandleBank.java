@@ -1,7 +1,9 @@
 package io.reisub.unethicalite.mining.tasks;
 
 import dev.unethicalite.api.commons.Time;
+import dev.unethicalite.api.entities.NPCs;
 import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.items.Bank;
 import dev.unethicalite.api.items.Bank.WithdrawMode;
 import dev.unethicalite.api.items.Equipment;
@@ -14,6 +16,8 @@ import java.time.Duration;
 import javax.inject.Inject;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
+import net.runelite.api.NPC;
+import net.runelite.api.NpcID;
 
 public class HandleBank extends BankTask {
 
@@ -31,6 +35,20 @@ public class HandleBank extends BankTask {
 
   @Override
   public void execute() {
+    if (config.location() == Location.BASALT) {
+      final Item basalt = Inventory.getFirst(ItemID.BASALT);
+      final NPC snowflake = NPCs.getNearest(NpcID.SNOWFLAKE);
+
+      if (basalt == null || snowflake == null) {
+        return;
+      }
+
+      GameThread.invoke(() -> basalt.useOn(snowflake));
+
+      Time.sleepTicksUntil(() -> !Inventory.contains(ItemID.BASALT), 20);
+      return;
+    }
+
     open(true);
 
     final Item gemBag = Bank.Inventory.getFirst(ItemID.OPEN_GEM_BAG);

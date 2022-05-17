@@ -15,6 +15,7 @@ import net.runelite.api.TileObject;
 public class GoToBank extends Task {
 
   private static final int TRAHAEARN_MINE_REGION = 13250;
+  private static final int SALT_MINE_REGION = 11425;
 
   @Inject
   private Config config;
@@ -48,6 +49,18 @@ public class GoToBank extends Task {
         Time.sleepTick();
 
         ChaosMovement.walkTo(config.location().getBankPoint());
+        break;
+      case BASALT:
+        final TileObject steps2 = TileObjects.getNearest(ObjectID.STEPS_33261);
+
+        if (steps2 == null) {
+          return;
+        }
+
+        steps2.interact("Climb");
+
+        Time.sleepTicksUntil(() -> !Utils.isInRegion(SALT_MINE_REGION), 30);
+        Time.sleepTick();
         break;
       default:
         ChaosMovement.walkTo(config.location().getBankPoint());

@@ -63,6 +63,39 @@ public enum Location {
           add(new RockPosition(new WorldPoint(3294, 12450, 0), new WorldPoint(3294, 12451, 0)));
         }
       },
+      false),
+  TE_SALT(
+      new WorldPoint(2845, 10334, 0),
+      15,
+      null,
+      ImmutableSet.of(ObjectID.ROCKS_33256),
+      null,
+      false),
+  EFH_SALT(
+      new WorldPoint(2836, 10334, 0),
+      15,
+      null,
+      ImmutableSet.of(ObjectID.ROCKS_33255),
+      null,
+      false),
+  URT_SALT(
+      new WorldPoint(2833, 10340, 0),
+      15,
+      null,
+      ImmutableSet.of(ObjectID.ROCKS_33254),
+      null,
+      false),
+  BASALT(
+      new WorldPoint(2838, 10336, 0),
+      15,
+      new WorldPoint(2871, 3936, 0),
+      ImmutableSet.of(ObjectID.ROCKS_33257),
+      new ArrayDeque<>() {
+        {
+          add(new RockPosition(new WorldPoint(2841, 10338, 0), new WorldPoint(2841, 10337, 0)));
+          add(new RockPosition(new WorldPoint(2838, 10335, 0), new WorldPoint(2838, 10336, 0)));
+        }
+      },
       false);
 
   private final WorldPoint miningAreaPoint;
