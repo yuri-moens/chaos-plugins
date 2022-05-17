@@ -56,6 +56,7 @@ public class HandleBank extends BankTask {
     withdrawSeeds();
 
     Time.sleepTicksUntil(() -> Inventory.contains(Predicates.ids(Constants.HERB_SEED_IDS)), 5);
+    Time.sleepTicks(2);
 
     if (Dialog.isOpen()) {
       Dialog.close();
