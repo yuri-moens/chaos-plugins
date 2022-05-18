@@ -888,6 +888,11 @@ public class Constants {
       ItemID.CRAFTING_CAPET
   );
 
+  public static final Set<Integer> CONSTRUCTION_CAPE_IDS = ImmutableSet.of(
+      ItemID.CONSTRUCT_CAPE,
+      ItemID.CONSTRUCT_CAPET
+  );
+
   public static final Set<Integer> REJUVENATION_POOL_IDS = ImmutableSet.of(
       ObjectID.POOL_OF_REFRESHMENT,
       ObjectID.ORNATE_POOL_OF_REJUVENATION,
