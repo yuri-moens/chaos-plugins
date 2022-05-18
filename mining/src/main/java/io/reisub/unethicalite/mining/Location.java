@@ -86,8 +86,8 @@ public enum Location {
       null,
       false),
   BASALT(
-      new WorldPoint(2838, 10336, 0),
-      15,
+      new WorldPoint(2841, 10339, 0),
+      20,
       new WorldPoint(2871, 3936, 0),
       ImmutableSet.of(ObjectID.ROCKS_33257),
       new ArrayDeque<>() {
