@@ -1,22 +1,20 @@
 package io.reisub.unethicalite.farming;
 
 import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.magic.Magic;
 import dev.unethicalite.api.magic.SpellBook;
 import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.utils.Constants;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.api.Interact;
 import io.reisub.unethicalite.utils.api.Predicates;
+import io.reisub.unethicalite.utils.enums.PortalTeleport;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 import net.runelite.api.MenuAction;
-import net.runelite.api.TileObject;
 import net.runelite.api.Varbits;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.widgets.Widget;
@@ -83,7 +81,7 @@ public enum Location {
       15148,
       Varbits.FARMING_4772,
       0,
-      () -> Location.tpThroughHouse(37589)),
+      () -> ChaosMovement.teleportThroughHouse(PortalTeleport.HARMONY_ISLAND)),
   HOSIDIUS(
       "Hosidius",
       new WorldPoint(1740, 3550, 0),
@@ -128,14 +126,14 @@ public enum Location {
       11321,
       Varbits.FARMING_4771,
       0,
-      () -> Location.tpThroughHouse(33179)),
+      () -> ChaosMovement.teleportThroughHouse(PortalTeleport.TROLL_STRONGHOLD)),
   WEISS(
       "Weiss",
       new WorldPoint(2847, 3935, 0),
       11325,
       Varbits.FARMING_4771,
       0,
-      () -> Location.tpThroughHouse(37581));
+      () -> ChaosMovement.teleportThroughHouse(PortalTeleport.WEISS));
 
   private final String name;
   private final WorldPoint patchPoint;
@@ -145,27 +143,6 @@ public enum Location {
   private final Teleportable teleportable;
 
   @Setter private boolean skip;
-
-  public static boolean tpThroughHouse(int portalId) {
-    Magic.cast(SpellBook.Standard.TELEPORT_TO_HOUSE);
-
-    Time.sleepTicksUntil(() -> TileObjects.getNearest(portalId) != null, 10);
-    Time.sleepTicks(2);
-
-    TileObject portal = TileObjects.getNearest(portalId);
-    if (portal == null) {
-      return false;
-    }
-
-    int regionId = Players.getLocal().getWorldLocation().getRegionID();
-
-    portal.interact("Enter");
-    return Time.sleepTicksUntil(
-        () ->
-            Players.getLocal().getWorldLocation() != null
-                && Players.getLocal().getWorldLocation().getRegionID() != regionId,
-        30);
-  }
 
   public boolean hasFlowerPatch() {
     return flowerVarbit != 0;
