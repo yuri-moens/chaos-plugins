@@ -27,7 +27,15 @@ public enum Target {
   VALLESSIA_VON_PITT(
       ImmutableSet.of(NpcID.VALLESSIA_VON_PITT),
       ImmutableSet.of(
-          new Location(new WorldPoint(3662, 3379, 0), new WorldPoint(2400, 5982, 0), null)));
+          new Location(new WorldPoint(3662, 3379, 0), new WorldPoint(2400, 5982, 0), null))),
+  KNIGHT_OF_ARDOUGNE(
+          ImmutableSet.of(NpcID.KNIGHT_OF_ARDOUGNE),
+          ImmutableSet.of(
+                  new Location(new WorldPoint(2652, 3285, 0),
+                          new WorldPoint(2655, 3286, 0),
+                          null
+                  )
+          ));
 
   private final Set<Integer> ids;
   private final Set<Location> locations;
