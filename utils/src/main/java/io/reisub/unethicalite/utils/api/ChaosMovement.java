@@ -149,7 +149,12 @@ public class ChaosMovement {
       Standard.TELEPORT_TO_HOUSE.cast();
     } else if (Inventory.contains(Predicates.ids(Constants.CONSTRUCTION_CAPE_IDS))
         || Equipment.contains(Predicates.ids(Constants.CONSTRUCTION_CAPE_IDS))) {
-      // TODO
+      Interact.interactWithInventoryOrEquipment(
+          Constants.CONSTRUCTION_CAPE_IDS,
+          "Teleport",
+          null,
+          -1
+      );
     } else if (Inventory.contains(ItemID.TELEPORT_TO_HOUSE)) {
       Inventory.getFirst(ItemID.TELEPORT_TO_HOUSE).interact("Break");
     } else {
