@@ -29,6 +29,7 @@ public class Deposit extends Task {
     return plugin.getCurrentActivity() == Activity.IDLE
         && !plugin.isUpstairs()
         && Inventory.contains(ItemID.PAYDIRT)
+        && Inventory.isFull()
         && (hopper = TileObjects.getNearest("Hopper")) != null;
   }
 
