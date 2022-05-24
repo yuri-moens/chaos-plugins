@@ -1,6 +1,5 @@
 package io.reisub.unethicalite.motherlodemine.tasks;
 
-import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.game.GameThread;
@@ -46,8 +45,8 @@ public class Mine extends Task {
 
   @Override
   public void execute() {
+    plugin.setActivity(Activity.MINING);
     GameThread.invoke(() -> oreVein.interact("Mine"));
-    Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.MINING, 15);
   }
 
   @Subscribe
