@@ -69,12 +69,8 @@ public class ChaosBank {
     depositAll(delay, filter.negate());
   }
 
+  @Deprecated
   public static void bankInventoryInteract(Item item, String action) {
-    final int index = item.getActionIndex(action);
-    if (index == -1) {
-      return;
-    }
-
-    item.interact(index + 1);
+    item.interact(action);
   }
 }
