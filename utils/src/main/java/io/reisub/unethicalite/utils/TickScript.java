@@ -6,6 +6,7 @@ import dev.unethicalite.api.game.Game;
 import dev.unethicalite.api.input.Keyboard;
 import dev.unethicalite.api.utils.MessageUtils;
 import dev.unethicalite.api.widgets.Dialog;
+import dev.unethicalite.api.widgets.Widgets;
 import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -37,6 +38,8 @@ import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.StatChanged;
+import net.runelite.api.events.WidgetHiddenChanged;
+import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.input.KeyListener;
 import net.runelite.client.input.KeyManager;
@@ -153,6 +156,14 @@ public abstract class TickScript extends Plugin implements KeyListener {
         setActivity(idleCheckSkills.get(skill));
         lastExperience = Instant.now();
       }
+    }
+  }
+
+  @Subscribe
+  private void onWidgetHiddenChanged(WidgetHiddenChanged event) {
+    if (Widgets.isVisible(Widgets.get(WidgetInfo.LEVEL_UP_LEVEL))) {
+      Dialog.continueSpace();
+      Dialog.continueSpace();
     }
   }
 
