@@ -191,7 +191,7 @@ public abstract class BankTask extends Task {
       return;
     }
 
-    ChaosBank.bankInventoryInteract(potion, "Drink");
+    potion.interact("Drink");
     Time.sleepTick();
 
     Bank.depositAll(Predicates.ids(Constants.STAMINA_POTION_IDS));
