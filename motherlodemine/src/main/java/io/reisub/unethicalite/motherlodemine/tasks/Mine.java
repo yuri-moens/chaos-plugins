@@ -1,27 +1,27 @@
 package io.reisub.unethicalite.motherlodemine.tasks;
 
 import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.coords.RectangularArea;
 import dev.unethicalite.api.entities.Players;
 import dev.unethicalite.api.entities.TileObjects;
 import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.items.Inventory;
 import dev.unethicalite.api.movement.Reachable;
+import io.reisub.unethicalite.motherlodemine.Config;
+import io.reisub.unethicalite.motherlodemine.MiningArea;
 import io.reisub.unethicalite.motherlodemine.MotherlodeMine;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
-import java.util.List;
 import javax.inject.Inject;
 import net.runelite.api.TileObject;
-import net.runelite.api.coords.Direction;
-import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.eventbus.Subscribe;
 
 public class Mine extends Task {
-  private static final RectangularArea MINING_AREA =
-      new RectangularArea(new WorldPoint(3747, 5676, 0), new WorldPoint(3754, 5684, 0));
-  @Inject private MotherlodeMine plugin;
+
+  @Inject
+  private MotherlodeMine plugin;
+  @Inject
+  private Config config;
   private TileObject oreVein;
 
   @Override
@@ -31,10 +31,17 @@ public class Mine extends Task {
 
   @Override
   public boolean validate() {
+    if (plugin.getMiningArea() == MiningArea.NORTH) {
+      if (Players.getLocal().getWorldLocation().getY() < 5684) {
+        return false;
+      }
+    }
+
     return plugin.getCurrentActivity() == Activity.IDLE
         && !Inventory.isFull()
-        && plugin.isUpstairs()
-        && (oreVein = getNearestVein()) != null;
+        && (plugin.isUpstairs() || !config.upstairs())
+        && (oreVein = plugin.getMiningArea().getNearestVein()) != null
+        && Reachable.isInteractable(oreVein);
   }
 
   @Override
@@ -49,48 +56,14 @@ public class Mine extends Task {
       if (oreVein == null) {
         plugin.setActivity(Activity.IDLE);
       } else {
-        TileObject oreVeinCheck =
+        final TileObject oreVeinCheck =
             TileObjects.getFirstAt(oreVein.getWorldLocation(), o -> o.hasAction("Mine"));
+
         if (oreVeinCheck == null) {
           oreVein = null;
           plugin.setActivity(Activity.IDLE);
         }
       }
     }
-  }
-
-  private TileObject getNearestVein() {
-    List<TileObject> oreVeins =
-        TileObjects.getAll(
-            o ->
-                o.getName().equals("Ore vein")
-                    && o.hasAction("Mine")
-                    && MINING_AREA.contains(o.getWorldLocation())
-                    && !o.getWorldLocation().equals(new WorldPoint(3764, 5665, 0)));
-
-    TileObject oreVein = null;
-    float nearest = Float.MAX_VALUE;
-    WorldPoint current = Players.getLocal().getWorldLocation();
-
-    for (TileObject o : oreVeins) {
-      for (Direction dir : Direction.values()) {
-        WorldPoint neighbour = Reachable.getNeighbour(dir, o.getWorldLocation());
-        if (Reachable.isWalkable(neighbour)) {
-          float distance = current.distanceToHypotenuse(neighbour);
-          if (oreVein == null || distance < nearest) {
-            nearest = distance;
-            oreVein = o;
-          } else if (distance == nearest) {
-            oreVein =
-                current.distanceToHypotenuse(oreVein.getWorldLocation())
-                        > current.distanceToHypotenuse(o.getWorldLocation())
-                    ? o
-                    : oreVein;
-          }
-        }
-      }
-    }
-
-    return oreVein;
   }
 }

@@ -10,12 +10,15 @@ import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
+import net.runelite.api.NullObjectID;
 import net.runelite.api.TileObject;
 
 public class GoUp extends Task {
-  @Inject private MotherlodeMine plugin;
 
-  @Inject private Config config;
+  @Inject
+  private MotherlodeMine plugin;
+  @Inject
+  private Config config;
 
   @Override
   public String getStatus() {
@@ -32,8 +35,8 @@ public class GoUp extends Task {
 
   @Override
   public void execute() {
-    TileObject ladder =
-        TileObjects.getNearest(o -> o.getName().equals("Ladder") && o.hasAction("Climb"));
+    final TileObject ladder = TileObjects.getNearest(NullObjectID.NULL_19044);
+
     if (ladder == null) {
       return;
     }

@@ -41,7 +41,7 @@ public class HandleBank extends BankTask {
     final Item gemBag = Bank.Inventory.getFirst(ItemID.OPEN_GEM_BAG);
 
     if (gemBag != null && Static.getClient().getTickCount() - lastGemBagEmpty > 100) {
-      ChaosBank.bankInventoryInteract(gemBag, "Empty");
+      gemBag.interact("Empty");
       lastGemBagEmpty = Static.getClient().getTickCount();
       Time.sleepTick();
     }

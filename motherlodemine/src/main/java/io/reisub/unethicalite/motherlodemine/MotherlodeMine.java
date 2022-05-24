@@ -2,15 +2,21 @@ package io.reisub.unethicalite.motherlodemine;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
+import dev.unethicalite.api.commons.Time;
 import dev.unethicalite.api.entities.Players;
+import dev.unethicalite.api.entities.TileObjects;
+import dev.unethicalite.api.game.GameThread;
 import dev.unethicalite.api.game.Vars;
 import dev.unethicalite.api.items.Inventory;
+import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.motherlodemine.tasks.Deposit;
 import io.reisub.unethicalite.motherlodemine.tasks.FixWheel;
 import io.reisub.unethicalite.motherlodemine.tasks.GoDown;
+import io.reisub.unethicalite.motherlodemine.tasks.GoToMiningArea;
 import io.reisub.unethicalite.motherlodemine.tasks.GoUp;
 import io.reisub.unethicalite.motherlodemine.tasks.HandleBank;
 import io.reisub.unethicalite.motherlodemine.tasks.Mine;
+import io.reisub.unethicalite.motherlodemine.tasks.UseShortcut;
 import io.reisub.unethicalite.motherlodemine.tasks.WithdrawSack;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
@@ -22,6 +28,9 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Actor;
 import net.runelite.api.AnimationID;
 import net.runelite.api.ItemID;
+import net.runelite.api.ObjectID;
+import net.runelite.api.Perspective;
+import net.runelite.api.TileObject;
 import net.runelite.api.Varbits;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.GameObjectDespawned;
@@ -41,15 +50,19 @@ import org.pf4j.Extension;
 @Slf4j
 @Extension
 public class MotherlodeMine extends TickScript {
+
   private static final Set<Integer> MOTHERLODE_MAP_REGIONS =
       ImmutableSet.of(14679, 14680, 14681, 14935, 14936, 14937, 15191, 15192, 15193);
-  private static final int UPSTAIRS_VARBIT = 2086;
   private static final int SACK_LARGE_SIZE = 162;
   private static final int SACK_SIZE = 81;
-  @Inject private Config config;
+  private static final int UPPER_FLOOR_HEIGHT = -490;
+
+  @Inject
+  private Config config;
   private int curSackSize;
   private int maxSackSize;
-  @Getter private boolean sackFull;
+  @Getter
+  private boolean sackFull;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
@@ -62,10 +75,12 @@ public class MotherlodeMine extends TickScript {
 
     addTask(Mine.class);
     addTask(GoDown.class);
-    addTask(Deposit.class);
     addTask(FixWheel.class);
+    addTask(Deposit.class);
     addTask(WithdrawSack.class);
     addTask(HandleBank.class);
+    addTask(UseShortcut.class);
+    addTask(GoToMiningArea.class);
     addTask(GoUp.class);
   }
 
@@ -143,7 +158,31 @@ public class MotherlodeMine extends TickScript {
   }
 
   public boolean isUpstairs() {
-    return Vars.getBit(UPSTAIRS_VARBIT) == 1;
+    return Perspective.getTileHeight(
+        Static.getClient(), Players.getLocal().getLocalLocation(), 0) < UPPER_FLOOR_HEIGHT;
+  }
+
+  public void mineRockfall(final int x, final int y) {
+    final TileObject rockfall = TileObjects.getFirstAt(x, y, 0,
+        ObjectID.ROCKFALL, ObjectID.ROCKFALL_26680, ObjectID.ROCKFALL_28786);
+
+    if (rockfall != null) {
+      GameThread.invoke(() -> rockfall.interact("Mine"));
+      Time.sleepTicksUntil(
+          () -> TileObjects.getFirstAt(x, y, 0,
+              ObjectID.ROCKFALL, ObjectID.ROCKFALL_26680, ObjectID.ROCKFALL_28786) == null, 50
+      );
+    }
+  }
+
+  public MiningArea getMiningArea() {
+    if (config.upstairs()) {
+      return MiningArea.UPSTAIRS;
+    } else if (config.shortcut()) {
+      return MiningArea.BEHIND_SHORTCUT;
+    } else {
+      return MiningArea.NORTH;
+    }
   }
 
   private boolean inMlm() {

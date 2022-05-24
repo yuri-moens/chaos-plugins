@@ -25,6 +25,7 @@ public class WithdrawSack extends Task {
         && !plugin.isUpstairs()
         && plugin.isSackFull()
         && !Inventory.contains(
+            ItemID.PAYDIRT,
             ItemID.RUNITE_ORE,
             ItemID.ADAMANTITE_ORE,
             ItemID.MITHRIL_ORE,
