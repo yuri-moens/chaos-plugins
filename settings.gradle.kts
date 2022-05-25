@@ -60,6 +60,7 @@ include("tabmaker")
 include("tempoross")
 include("thermyflicker")
 include("utils")
+include("woodcutting")
 include("zmi")
 include("zulrah")
 
