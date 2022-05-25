@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.twotickteaks;
 
 import com.google.inject.Provides;
+import io.reisub.unethicalite.twotickteaks.tasks.CutAndReset;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
-import io.reisub.unethicalite.twotickteaks.tasks.CutAndReset;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.config.ConfigManager;
