@@ -5,9 +5,6 @@ import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
 import com.google.common.collect.Sets;
 import com.google.common.primitives.Ints;
-import dev.unethicalite.api.events.MenuAutomated;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.client.Static;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +30,9 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.game.ItemManager;
+import net.unethicalite.api.events.MenuAutomated;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.client.Static;
 
 // Taken from https://github.com/TheStonedTurtle/Mahogany-Homes
 public class PlankSack {

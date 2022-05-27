@@ -1,11 +1,5 @@
 package io.reisub.unethicalite.barrows.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.NPCs;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.movement.Reachable;
-import dev.unethicalite.api.widgets.Prayers;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.barrows.Config;
 import io.reisub.unethicalite.barrows.Potential;
@@ -15,6 +9,12 @@ import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.NPC;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.NPCs;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.movement.Reachable;
+import net.unethicalite.api.widgets.Prayers;
 
 public class FightMonster extends Task {
   @Inject private Barrows plugin;

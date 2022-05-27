@@ -1,10 +1,5 @@
 package io.reisub.unethicalite.mining.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.mining.Config;
 import io.reisub.unethicalite.mining.Mining;
 import io.reisub.unethicalite.utils.Utils;
@@ -15,6 +10,11 @@ import net.runelite.api.ItemID;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.movement.Movement;
 
 public class GoToMiningArea extends Task {
 

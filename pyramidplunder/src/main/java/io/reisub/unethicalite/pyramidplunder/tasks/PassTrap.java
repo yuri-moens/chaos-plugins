@@ -1,7 +1,5 @@
 package io.reisub.unethicalite.pyramidplunder.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.TileObjects;
 import io.reisub.unethicalite.pyramidplunder.PyramidPlunder;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
@@ -9,6 +7,8 @@ import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.TileObjects;
 
 public class PassTrap extends Task {
 

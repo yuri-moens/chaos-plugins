@@ -1,13 +1,13 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.NPCs;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.NPCs;
 
 public class Attack extends Task {
   @Inject private Tempoross plugin;

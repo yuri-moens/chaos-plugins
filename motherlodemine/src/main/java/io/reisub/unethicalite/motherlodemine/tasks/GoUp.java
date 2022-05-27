@@ -1,9 +1,5 @@
 package io.reisub.unethicalite.motherlodemine.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.motherlodemine.Config;
 import io.reisub.unethicalite.motherlodemine.MotherlodeMine;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -12,6 +8,10 @@ import javax.inject.Inject;
 import net.runelite.api.ItemID;
 import net.runelite.api.NullObjectID;
 import net.runelite.api.TileObject;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.items.Inventory;
 
 public class GoUp extends Task {
 

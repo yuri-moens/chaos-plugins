@@ -1,11 +1,5 @@
 package io.reisub.unethicalite.agility.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.magic.SpellBook;
-import dev.unethicalite.api.movement.Movement;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.agility.Agility;
 import io.reisub.unethicalite.agility.Config;
 import io.reisub.unethicalite.utils.api.ConfigList;
@@ -17,6 +11,12 @@ import net.runelite.api.Skill;
 import net.runelite.api.events.StatChanged;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.magic.SpellBook;
+import net.unethicalite.api.movement.Movement;
+import net.unethicalite.client.Static;
 
 public class Alch extends Task {
 

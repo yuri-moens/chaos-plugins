@@ -1,7 +1,6 @@
 package io.reisub.unethicalite.daeyaltessence;
 
 import com.google.inject.Provides;
-import dev.unethicalite.api.entities.Players;
 import io.reisub.unethicalite.daeyaltessence.tasks.GoToMine;
 import io.reisub.unethicalite.daeyaltessence.tasks.HandleBank;
 import io.reisub.unethicalite.daeyaltessence.tasks.Mine;
@@ -16,6 +15,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.api.entities.Players;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

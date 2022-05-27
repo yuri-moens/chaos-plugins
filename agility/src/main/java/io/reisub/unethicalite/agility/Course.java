@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.agility;
 
-import dev.unethicalite.api.entities.Players;
 import net.runelite.api.Locatable;
 import net.runelite.api.ObjectID;
 import net.runelite.api.coords.WorldPoint;
+import net.unethicalite.api.entities.Players;
 
 public enum Course {
   TREE_GNOME_STRONGHOLD(

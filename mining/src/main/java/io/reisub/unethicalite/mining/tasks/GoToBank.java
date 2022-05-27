@@ -1,9 +1,5 @@
 package io.reisub.unethicalite.mining.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.mining.Config;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
@@ -11,6 +7,10 @@ import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.items.Inventory;
 
 public class GoToBank extends Task {
 

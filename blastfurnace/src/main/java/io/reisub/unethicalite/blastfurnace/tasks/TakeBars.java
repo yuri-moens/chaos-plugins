@@ -1,11 +1,5 @@
 package io.reisub.unethicalite.blastfurnace.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.game.Vars;
-import dev.unethicalite.api.items.Equipment;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.widgets.Production;
 import io.reisub.unethicalite.blastfurnace.BlastFurnace;
 import io.reisub.unethicalite.blastfurnace.Config;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -20,6 +14,12 @@ import net.runelite.api.Varbits;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.StatChanged;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.Vars;
+import net.unethicalite.api.items.Equipment;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.widgets.Production;
 
 public class TakeBars extends Task {
   @Inject private BlastFurnace plugin;

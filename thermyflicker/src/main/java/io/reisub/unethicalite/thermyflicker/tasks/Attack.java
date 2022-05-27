@@ -1,11 +1,6 @@
 package io.reisub.unethicalite.thermyflicker.tasks;
 
 import com.google.common.collect.ImmutableSet;
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.NPCs;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.thermyflicker.ThermyFlicker;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.Set;
@@ -15,6 +10,11 @@ import net.runelite.api.NpcID;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.NPCs;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.client.Static;
 
 public class Attack extends Task {
 

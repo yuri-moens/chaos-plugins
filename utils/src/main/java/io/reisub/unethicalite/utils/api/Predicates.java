@@ -1,14 +1,14 @@
 package io.reisub.unethicalite.utils.api;
 
-import dev.unethicalite.api.EntityNameable;
-import dev.unethicalite.api.Identifiable;
-import dev.unethicalite.api.SceneEntity;
 import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import net.runelite.api.Item;
+import net.unethicalite.api.EntityNameable;
+import net.unethicalite.api.Identifiable;
+import net.unethicalite.api.SceneEntity;
 
 public class Predicates {
   public static <T> Predicate<T> distinctByProperty(Function<? super T, ?> propertyExtractor) {

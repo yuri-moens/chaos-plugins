@@ -1,12 +1,6 @@
 package io.reisub.unethicalite.tabmaker.tasks;
 
 import com.google.common.collect.ImmutableSet;
-import dev.unethicalite.api.commons.Predicates;
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Bank.WithdrawMode;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.tabmaker.Config;
 import io.reisub.unethicalite.tabmaker.TabMaker;
 import io.reisub.unethicalite.utils.Constants;
@@ -18,6 +12,12 @@ import java.time.Duration;
 import java.util.Set;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
+import net.unethicalite.api.commons.Predicates;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Bank.WithdrawMode;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.client.Static;
 
 public class HandleBank extends BankTask {
 

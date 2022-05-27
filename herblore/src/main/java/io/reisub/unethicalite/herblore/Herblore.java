@@ -1,8 +1,6 @@
 package io.reisub.unethicalite.herblore;
 
 import com.google.inject.Provides;
-import dev.unethicalite.api.game.Game;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.herblore.tasks.Clean;
 import io.reisub.unethicalite.herblore.tasks.HandleBank;
 import io.reisub.unethicalite.herblore.tasks.MakeCoconutMilk;
@@ -23,6 +21,8 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.api.game.Game;
+import net.unethicalite.api.items.Inventory;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

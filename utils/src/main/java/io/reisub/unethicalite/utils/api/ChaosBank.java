@@ -1,12 +1,12 @@
 package io.reisub.unethicalite.utils.api;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.items.Bank;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import net.runelite.api.Item;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.items.Bank;
 
 public class ChaosBank {
   public static void depositAll(String... names) {

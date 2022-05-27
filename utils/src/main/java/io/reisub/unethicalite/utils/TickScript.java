@@ -1,13 +1,5 @@
 package io.reisub.unethicalite.utils;
 
-import dev.unethicalite.api.commons.Rand;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.game.Game;
-import dev.unethicalite.api.input.Keyboard;
-import dev.unethicalite.api.utils.MessageUtils;
-import dev.unethicalite.api.widgets.Dialog;
-import dev.unethicalite.api.widgets.Widgets;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -44,6 +36,14 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.input.KeyListener;
 import net.runelite.client.input.KeyManager;
 import net.runelite.client.plugins.Plugin;
+import net.unethicalite.api.commons.Rand;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.game.Game;
+import net.unethicalite.api.input.Keyboard;
+import net.unethicalite.api.utils.MessageUtils;
+import net.unethicalite.api.widgets.Dialog;
+import net.unethicalite.api.widgets.Widgets;
+import net.unethicalite.client.Static;
 
 @Slf4j
 public abstract class TickScript extends Plugin implements KeyListener {

@@ -2,13 +2,6 @@ package io.reisub.unethicalite.motherlodemine;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.game.Vars;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.motherlodemine.tasks.Deposit;
 import io.reisub.unethicalite.motherlodemine.tasks.FixWheel;
 import io.reisub.unethicalite.motherlodemine.tasks.GoDown;
@@ -40,6 +33,13 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.game.Vars;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.client.Static;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

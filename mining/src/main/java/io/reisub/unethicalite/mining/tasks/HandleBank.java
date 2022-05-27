@@ -1,13 +1,5 @@
 package io.reisub.unethicalite.mining.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.NPCs;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Bank.WithdrawMode;
-import dev.unethicalite.api.items.Equipment;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.mining.Config;
 import io.reisub.unethicalite.mining.Location;
 import io.reisub.unethicalite.utils.api.ChaosBank;
@@ -18,6 +10,14 @@ import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.NPCs;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Bank.WithdrawMode;
+import net.unethicalite.api.items.Equipment;
+import net.unethicalite.api.items.Inventory;
 
 public class HandleBank extends BankTask {
 

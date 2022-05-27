@@ -1,16 +1,5 @@
 package io.reisub.unethicalite.combathelper.misc;
 
-import dev.unethicalite.api.commons.Rand;
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.game.Combat;
-import dev.unethicalite.api.game.Combat.AttackStyle;
-import dev.unethicalite.api.game.Game;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.items.Equipment;
-import dev.unethicalite.api.magic.SpellBook;
-import dev.unethicalite.api.utils.MessageUtils;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.combathelper.Helper;
 import java.awt.event.KeyEvent;
 import javax.inject.Singleton;
@@ -21,6 +10,17 @@ import net.runelite.api.Varbits;
 import net.runelite.api.events.InteractingChanged;
 import net.runelite.api.events.PlayerSpawned;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.commons.Rand;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.game.Combat;
+import net.unethicalite.api.game.Combat.AttackStyle;
+import net.unethicalite.api.game.Game;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.items.Equipment;
+import net.unethicalite.api.magic.SpellBook;
+import net.unethicalite.api.utils.MessageUtils;
+import net.unethicalite.client.Static;
 
 @Slf4j
 @Singleton

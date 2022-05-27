@@ -1,8 +1,6 @@
 package io.reisub.unethicalite.utils.enums;
 
 import com.google.common.collect.ImmutableSet;
-import dev.unethicalite.api.game.Skills;
-import dev.unethicalite.api.game.Vars;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
@@ -12,6 +10,8 @@ import net.runelite.api.Skill;
 import net.runelite.api.Varbits;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
+import net.unethicalite.api.game.Skills;
+import net.unethicalite.api.game.Vars;
 
 @RequiredArgsConstructor
 @Getter

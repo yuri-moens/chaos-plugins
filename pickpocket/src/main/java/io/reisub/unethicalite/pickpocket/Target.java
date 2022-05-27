@@ -1,8 +1,6 @@
 package io.reisub.unethicalite.pickpocket;
 
 import com.google.common.collect.ImmutableSet;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.game.Skills;
 import java.util.Set;
 import java.util.function.BooleanSupplier;
 import lombok.AllArgsConstructor;
@@ -11,6 +9,8 @@ import lombok.Value;
 import net.runelite.api.NpcID;
 import net.runelite.api.Skill;
 import net.runelite.api.coords.WorldPoint;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.game.Skills;
 
 @AllArgsConstructor
 @Getter

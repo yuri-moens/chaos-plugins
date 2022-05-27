@@ -1,8 +1,6 @@
 package io.reisub.unethicalite.smithing;
 
 import com.google.inject.Provides;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.smithing.tasks.HandleBank;
 import io.reisub.unethicalite.smithing.tasks.Smith;
 import io.reisub.unethicalite.utils.TickScript;
@@ -20,6 +18,8 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.items.Inventory;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

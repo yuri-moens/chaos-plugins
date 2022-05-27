@@ -1,8 +1,5 @@
 package io.reisub.unethicalite.enchanter.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.magic.Magic;
 import io.reisub.unethicalite.enchanter.Config;
 import io.reisub.unethicalite.enchanter.EnchantItem;
 import io.reisub.unethicalite.utils.api.Predicates;
@@ -10,6 +7,9 @@ import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.List;
 import javax.inject.Inject;
 import net.runelite.api.Item;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.magic.Magic;
 
 public class Enchant extends Task {
   @Inject private Config config;

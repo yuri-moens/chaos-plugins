@@ -1,12 +1,5 @@
 package io.reisub.unethicalite.motherlodemine.tasks;
 
-import dev.unethicalite.api.commons.Rand;
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.motherlodemine.MotherlodeMine;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -14,6 +7,13 @@ import javax.inject.Inject;
 import net.runelite.api.ItemID;
 import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
+import net.unethicalite.api.commons.Rand;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.movement.Movement;
 
 public class Deposit extends Task {
 

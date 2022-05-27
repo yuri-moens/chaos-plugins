@@ -2,7 +2,6 @@ package io.reisub.unethicalite.barrows;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
-import dev.unethicalite.api.game.Vars;
 import io.reisub.unethicalite.barrows.tasks.DrinkPool;
 import io.reisub.unethicalite.barrows.tasks.DrinkPrayerPotion;
 import io.reisub.unethicalite.barrows.tasks.EnterCrypt;
@@ -36,6 +35,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.api.game.Vars;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

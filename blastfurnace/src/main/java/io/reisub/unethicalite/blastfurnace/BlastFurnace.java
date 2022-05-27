@@ -1,7 +1,6 @@
 package io.reisub.unethicalite.blastfurnace;
 
 import com.google.inject.Provides;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.blastfurnace.tasks.DepositMaterials;
 import io.reisub.unethicalite.blastfurnace.tasks.HandleBank;
 import io.reisub.unethicalite.blastfurnace.tasks.TakeBars;
@@ -18,6 +17,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.api.items.Inventory;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

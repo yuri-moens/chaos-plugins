@@ -1,12 +1,5 @@
 package io.reisub.unethicalite.shopper.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.game.Game;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.game.Worlds;
-import dev.unethicalite.api.items.Shop;
-import dev.unethicalite.api.packets.DialogPackets;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.shopper.Config;
 import io.reisub.unethicalite.shopper.Shopper;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -18,6 +11,13 @@ import net.runelite.api.GameState;
 import net.runelite.api.World;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.game.Game;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.game.Worlds;
+import net.unethicalite.api.items.Shop;
+import net.unethicalite.api.packets.DialogPackets;
+import net.unethicalite.client.Static;
 
 public class Hop extends Task {
   @Inject private Shopper plugin;

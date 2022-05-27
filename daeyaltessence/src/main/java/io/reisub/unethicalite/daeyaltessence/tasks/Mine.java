@@ -1,14 +1,14 @@
 package io.reisub.unethicalite.daeyaltessence.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
 import io.reisub.unethicalite.daeyaltessence.DaeyaltEssence;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import lombok.RequiredArgsConstructor;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileObjects;
 
 @RequiredArgsConstructor
 public class Mine extends Task {

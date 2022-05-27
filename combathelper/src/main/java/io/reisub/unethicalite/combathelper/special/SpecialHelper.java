@@ -1,15 +1,5 @@
 package io.reisub.unethicalite.combathelper.special;
 
-import dev.unethicalite.api.commons.Predicates;
-import dev.unethicalite.api.commons.Rand;
-import dev.unethicalite.api.game.Combat;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.game.Vars;
-import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Equipment;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.widgets.Dialog;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.combathelper.Helper;
 import java.awt.event.KeyEvent;
 import javax.inject.Singleton;
@@ -18,6 +8,16 @@ import net.runelite.api.Item;
 import net.runelite.api.Varbits;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.commons.Predicates;
+import net.unethicalite.api.commons.Rand;
+import net.unethicalite.api.game.Combat;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.game.Vars;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Equipment;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.widgets.Dialog;
+import net.unethicalite.client.Static;
 
 @Singleton
 public class SpecialHelper extends Helper {

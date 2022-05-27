@@ -1,10 +1,5 @@
 package io.reisub.unethicalite.barrows.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Equipment;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.widgets.Dialog;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.barrows.Config;
 import io.reisub.unethicalite.utils.Constants;
@@ -18,6 +13,11 @@ import net.runelite.api.EquipmentInventorySlot;
 import net.runelite.api.ItemID;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Equipment;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.widgets.Dialog;
 
 public class HandleBank extends BankTask {
   @Inject private Barrows plugin;

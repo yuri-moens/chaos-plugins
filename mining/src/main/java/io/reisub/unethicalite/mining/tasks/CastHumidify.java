@@ -1,13 +1,13 @@
 package io.reisub.unethicalite.mining.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.magic.SpellBook;
-import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ItemID;
 import net.runelite.api.MenuAction;
 import net.runelite.api.widgets.Widget;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.magic.SpellBook;
+import net.unethicalite.api.widgets.Widgets;
 
 public class CastHumidify extends Task {
   @Override

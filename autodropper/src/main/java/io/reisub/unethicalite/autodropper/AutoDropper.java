@@ -1,8 +1,6 @@
 package io.reisub.unethicalite.autodropper;
 
 import com.google.inject.Provides;
-import dev.unethicalite.api.game.Game;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.ConfigList;
 import io.reisub.unethicalite.utils.api.Predicates;
@@ -25,6 +23,8 @@ import net.runelite.client.input.KeyManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.api.game.Game;
+import net.unethicalite.api.items.Inventory;
 import org.pf4j.Extension;
 
 @Extension

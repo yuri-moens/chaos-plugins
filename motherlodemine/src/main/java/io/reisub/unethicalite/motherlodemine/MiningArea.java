@@ -1,10 +1,6 @@
 package io.reisub.unethicalite.motherlodemine;
 
 import com.google.common.collect.ImmutableSet;
-import dev.unethicalite.api.coords.RectangularArea;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.movement.Reachable;
 import java.util.List;
 import java.util.Set;
 import lombok.Getter;
@@ -12,6 +8,10 @@ import lombok.RequiredArgsConstructor;
 import net.runelite.api.TileObject;
 import net.runelite.api.coords.Direction;
 import net.runelite.api.coords.WorldPoint;
+import net.unethicalite.api.coords.RectangularArea;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.movement.Reachable;
 
 @RequiredArgsConstructor
 @Getter

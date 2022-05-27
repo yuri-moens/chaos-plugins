@@ -1,8 +1,5 @@
 package io.reisub.unethicalite.secondarygatherer.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
 import io.reisub.unethicalite.secondarygatherer.Config;
 import io.reisub.unethicalite.secondarygatherer.Secondary;
 import io.reisub.unethicalite.secondarygatherer.SecondaryGatherer;
@@ -13,6 +10,9 @@ import javax.inject.Inject;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileObjects;
 
 public class GoToScales extends Task {
 

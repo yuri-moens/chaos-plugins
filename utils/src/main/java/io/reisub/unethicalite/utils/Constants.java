@@ -1,7 +1,6 @@
 package io.reisub.unethicalite.utils;
 
 import com.google.common.collect.ImmutableSet;
-import dev.unethicalite.api.widgets.Widgets;
 import java.util.Set;
 import java.util.function.Supplier;
 import net.runelite.api.ItemID;
@@ -9,6 +8,7 @@ import net.runelite.api.NpcID;
 import net.runelite.api.NullObjectID;
 import net.runelite.api.ObjectID;
 import net.runelite.api.widgets.Widget;
+import net.unethicalite.api.widgets.Widgets;
 
 public class Constants {
 

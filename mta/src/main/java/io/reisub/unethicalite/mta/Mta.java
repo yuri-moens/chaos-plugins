@@ -1,7 +1,6 @@
 package io.reisub.unethicalite.mta;
 
 import com.google.inject.Provides;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.mta.tasks.BonesTo;
 import io.reisub.unethicalite.mta.tasks.EatPeach;
 import io.reisub.unethicalite.mta.tasks.Enchant;
@@ -14,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.client.Static;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

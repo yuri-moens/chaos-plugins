@@ -2,11 +2,6 @@ package io.reisub.unethicalite.tempoross;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.game.Game;
-import dev.unethicalite.api.game.Vars;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.tempoross.tasks.Attack;
 import io.reisub.unethicalite.tempoross.tasks.Cook;
 import io.reisub.unethicalite.tempoross.tasks.DodgeFire;
@@ -57,6 +52,11 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.Game;
+import net.unethicalite.api.game.Vars;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.widgets.Widgets;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

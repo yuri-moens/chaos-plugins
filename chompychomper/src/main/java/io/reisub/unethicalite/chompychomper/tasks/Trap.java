@@ -1,11 +1,6 @@
 package io.reisub.unethicalite.chompychomper.tasks;
 
 import com.google.common.collect.ImmutableSet;
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.NPCs;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.chompychomper.ChompyChomper;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -16,6 +11,11 @@ import net.runelite.api.ItemID;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 import net.runelite.api.coords.WorldPoint;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.NPCs;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.movement.Movement;
 
 public class Trap extends Task {
   private static final Set<WorldPoint> TRAP_LOCATIONS =

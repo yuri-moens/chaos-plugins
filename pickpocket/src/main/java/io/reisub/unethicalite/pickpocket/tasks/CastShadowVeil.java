@@ -1,10 +1,5 @@
 package io.reisub.unethicalite.pickpocket.tasks;
 
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.game.Skills;
-import dev.unethicalite.api.magic.SpellBook;
-import dev.unethicalite.api.widgets.Widgets;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.pickpocket.Config;
 import io.reisub.unethicalite.pickpocket.Pickpocket;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -14,6 +9,11 @@ import net.runelite.api.MenuAction;
 import net.runelite.api.Skill;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.game.Skills;
+import net.unethicalite.api.magic.SpellBook;
+import net.unethicalite.api.widgets.Widgets;
+import net.unethicalite.client.Static;
 
 public class CastShadowVeil extends Task {
 

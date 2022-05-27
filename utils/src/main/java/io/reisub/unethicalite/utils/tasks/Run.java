@@ -1,12 +1,12 @@
 package io.reisub.unethicalite.utils.tasks;
 
-import dev.unethicalite.api.commons.Rand;
-import dev.unethicalite.api.game.Game;
-import dev.unethicalite.api.movement.Movement;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import net.unethicalite.api.commons.Rand;
+import net.unethicalite.api.game.Game;
+import net.unethicalite.api.movement.Movement;
 
 @Slf4j
 public class Run extends Task {

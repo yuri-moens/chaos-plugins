@@ -1,7 +1,6 @@
 package io.reisub.unethicalite.combathelper.boss;
 
 import com.openosrs.client.util.WeaponStyle;
-import dev.unethicalite.api.game.Combat;
 import io.reisub.unethicalite.cerberus.ChaosCerberus;
 import io.reisub.unethicalite.cerberus.domain.Cerberus;
 import io.reisub.unethicalite.cerberus.domain.CerberusAttack;
@@ -20,6 +19,7 @@ import net.runelite.api.Skill;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.ProjectileSpawned;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.game.Combat;
 
 @Singleton
 public class BossHelper extends Helper {

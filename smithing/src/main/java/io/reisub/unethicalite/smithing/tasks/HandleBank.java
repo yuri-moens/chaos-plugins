@@ -1,8 +1,5 @@
 package io.reisub.unethicalite.smithing.tasks;
 
-import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Equipment;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.smithing.Config;
 import io.reisub.unethicalite.smithing.Smithing;
 import io.reisub.unethicalite.utils.api.ChaosBank;
@@ -11,6 +8,9 @@ import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.time.Duration;
 import lombok.AllArgsConstructor;
 import net.runelite.api.ItemID;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Equipment;
+import net.unethicalite.api.items.Inventory;
 
 @AllArgsConstructor
 public class HandleBank extends BankTask {

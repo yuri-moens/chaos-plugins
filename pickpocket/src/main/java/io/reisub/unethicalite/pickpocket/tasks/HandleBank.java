@@ -1,17 +1,6 @@
 package io.reisub.unethicalite.pickpocket.tasks;
 
 import com.google.common.collect.ImmutableSet;
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.game.Combat;
-import dev.unethicalite.api.game.Game;
-import dev.unethicalite.api.game.Skills;
-import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Equipment;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.magic.Rune;
-import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.pickpocket.Config;
 import io.reisub.unethicalite.pickpocket.Pickpocket;
 import io.reisub.unethicalite.pickpocket.Target;
@@ -34,6 +23,17 @@ import net.runelite.client.plugins.itemstats.ItemStatChanges;
 import net.runelite.client.plugins.itemstats.StatChange;
 import net.runelite.client.plugins.itemstats.StatsChanges;
 import net.runelite.client.plugins.itemstats.stats.Stats;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.Combat;
+import net.unethicalite.api.game.Game;
+import net.unethicalite.api.game.Skills;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Equipment;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.magic.Rune;
+import net.unethicalite.api.movement.Movement;
 
 public class HandleBank extends BankTask {
   @Inject private ItemStatChanges statChanges;

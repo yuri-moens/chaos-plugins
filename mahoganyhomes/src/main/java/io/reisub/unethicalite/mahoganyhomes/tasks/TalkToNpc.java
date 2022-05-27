@@ -1,11 +1,5 @@
 package io.reisub.unethicalite.mahoganyhomes.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.NPCs;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.movement.Reachable;
-import dev.unethicalite.api.widgets.Dialog;
 import io.reisub.unethicalite.mahoganyhomes.Hotspot;
 import io.reisub.unethicalite.mahoganyhomes.MahoganyHomes;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
@@ -13,6 +7,12 @@ import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.DialogOption;
 import net.runelite.api.NPC;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.NPCs;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.movement.Reachable;
+import net.unethicalite.api.widgets.Dialog;
 
 public class TalkToNpc extends Task {
 

@@ -1,7 +1,6 @@
 package io.reisub.unethicalite.mahoganyhomes;
 
 import com.google.common.collect.ImmutableSet;
-import dev.unethicalite.api.movement.pathfinder.BankLocation;
 import java.util.Set;
 import lombok.Getter;
 import net.runelite.api.ItemID;
@@ -9,6 +8,7 @@ import net.runelite.api.Locatable;
 import net.runelite.api.NpcID;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
+import net.unethicalite.api.movement.pathfinder.BankLocation;
 import org.apache.commons.text.WordUtils;
 
 @Getter

@@ -2,7 +2,6 @@ package io.reisub.unethicalite.chompychomper;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
-import dev.unethicalite.api.entities.Players;
 import io.reisub.unethicalite.chompychomper.tasks.Fill;
 import io.reisub.unethicalite.chompychomper.tasks.Inflate;
 import io.reisub.unethicalite.chompychomper.tasks.Pluck;
@@ -21,6 +20,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.api.entities.Players;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

@@ -1,14 +1,14 @@
 package io.reisub.unethicalite.plankmaker.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.magic.Magic;
-import dev.unethicalite.api.magic.SpellBook;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.plankmaker.Config;
 import io.reisub.unethicalite.plankmaker.PlankMaker;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.magic.Magic;
+import net.unethicalite.api.magic.SpellBook;
+import net.unethicalite.client.Static;
 
 public class TeleportHouse extends Task {
   @Inject private Config config;

@@ -1,12 +1,5 @@
 package io.reisub.unethicalite.birdhouse.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.magic.Magic;
-import dev.unethicalite.api.magic.SpellBook;
-import dev.unethicalite.api.widgets.Dialog;
-import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.birdhouse.BirdHouse;
 import io.reisub.unethicalite.birdhouse.Config;
 import io.reisub.unethicalite.birdhouse.TeleportLocation;
@@ -17,6 +10,13 @@ import net.runelite.api.Item;
 import net.runelite.api.MenuAction;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.widgets.Widget;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.magic.Magic;
+import net.unethicalite.api.magic.SpellBook;
+import net.unethicalite.api.widgets.Dialog;
+import net.unethicalite.api.widgets.Widgets;
 
 public class Teleport extends Task {
   @Inject private BirdHouse plugin;

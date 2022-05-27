@@ -1,16 +1,11 @@
 package io.reisub.unethicalite.farming.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.widgets.Dialog;
 import io.reisub.unethicalite.farming.Config;
 import io.reisub.unethicalite.farming.Farming;
 import io.reisub.unethicalite.farming.Location;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.api.ConfigList;
-import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -19,11 +14,19 @@ import java.util.Map;
 import javax.inject.Inject;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
+import net.unethicalite.api.commons.Predicates;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.widgets.Dialog;
 
 public class HandleBank extends BankTask {
-  @Inject private Farming plugin;
 
-  @Inject private Config config;
+  @Inject
+  private Farming plugin;
+
+  @Inject
+  private Config config;
 
   @Override
   public boolean validate() {
@@ -45,12 +48,14 @@ public class HandleBank extends BankTask {
         ItemID.BOTTOMLESS_COMPOST_BUCKET,
         ItemID.BOTTOMLESS_COMPOST_BUCKET_22997,
         ItemID.HERB_SACK,
-        ItemID.OPEN_HERB_SACK);
+        ItemID.OPEN_HERB_SACK
+    );
 
     Bank.withdraw(
-        dev.unethicalite.api.commons.Predicates.ids(ItemID.OPEN_HERB_SACK, ItemID.HERB_SACK),
+        net.unethicalite.api.commons.Predicates.ids(ItemID.OPEN_HERB_SACK, ItemID.HERB_SACK),
         1,
-        Bank.WithdrawMode.ITEM);
+        Bank.WithdrawMode.ITEM
+    );
 
     withdrawTeleportItems();
     withdrawSeeds();
@@ -134,9 +139,10 @@ public class HandleBank extends BankTask {
 
     if (Bank.contains(ItemID.CRAFTING_CAPE, ItemID.CRAFTING_CAPET)) {
       Bank.withdraw(
-          dev.unethicalite.api.commons.Predicates.ids(ItemID.CRAFTING_CAPE, ItemID.CRAFTING_CAPET),
+          Predicates.ids(ItemID.CRAFTING_CAPE, ItemID.CRAFTING_CAPET),
           1,
-          Bank.WithdrawMode.ITEM);
+          Bank.WithdrawMode.ITEM
+      );
     }
   }
 
@@ -157,7 +163,8 @@ public class HandleBank extends BankTask {
 
       if (config.manualMode()) {
         ConfigList manualSeedsList = ConfigList.parseList(config.manualSeeds());
-        seeds = Bank.getAll(Predicates.itemConfigList(manualSeedsList));
+        seeds = Bank.getAll(
+            io.reisub.unethicalite.utils.api.Predicates.itemConfigList(manualSeedsList));
 
         wantedPerSeed =
             config.manualSeedsSplit()

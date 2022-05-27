@@ -1,13 +1,13 @@
 package io.reisub.unethicalite.combathelper.bones;
 
-import dev.unethicalite.api.commons.Rand;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.combathelper.Helper;
 import javax.inject.Singleton;
 import net.runelite.api.Item;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
+import net.unethicalite.api.commons.Rand;
+import net.unethicalite.api.items.Inventory;
 
 @Singleton
 public class BonesHelper extends Helper {

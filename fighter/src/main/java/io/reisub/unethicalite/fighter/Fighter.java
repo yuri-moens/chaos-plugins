@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.fighter;
 
 import com.google.inject.Provides;
-import dev.unethicalite.managers.Static;
+import net.unethicalite.managers.Static;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import lombok.extern.slf4j.Slf4j;

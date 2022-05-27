@@ -1,9 +1,5 @@
 package io.reisub.unethicalite.barrows.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.game.Skills;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.Utils;
@@ -11,6 +7,10 @@ import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.Skill;
 import net.runelite.api.TileObject;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.game.Skills;
 
 public class DrinkPool extends Task {
   private TileObject pool;

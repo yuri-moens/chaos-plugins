@@ -1,12 +1,6 @@
 package io.reisub.unethicalite.barrows.tasks;
 
 import com.openosrs.client.util.WeaponStyle;
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.coords.RectangularArea;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.game.Combat;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.combathelper.CombatHelper;
 import io.reisub.unethicalite.utils.Utils;
@@ -15,6 +9,12 @@ import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
 import net.runelite.api.coords.WorldPoint;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.coords.RectangularArea;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.game.Combat;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.movement.Movement;
 
 public class EnterCrypt extends Task {
   @Inject private Barrows plugin;

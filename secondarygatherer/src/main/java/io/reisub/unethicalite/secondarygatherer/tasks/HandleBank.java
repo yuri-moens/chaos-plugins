@@ -1,9 +1,5 @@
 package io.reisub.unethicalite.secondarygatherer.tasks;
 
-import dev.unethicalite.api.game.Combat;
-import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Bank.WithdrawMode;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.secondarygatherer.Config;
 import io.reisub.unethicalite.secondarygatherer.Secondary;
 import io.reisub.unethicalite.utils.Utils;
@@ -11,6 +7,10 @@ import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.time.Duration;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
+import net.unethicalite.api.game.Combat;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Bank.WithdrawMode;
+import net.unethicalite.api.items.Inventory;
 
 public class HandleBank extends BankTask {
 

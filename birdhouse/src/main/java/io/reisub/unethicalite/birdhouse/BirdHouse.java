@@ -1,10 +1,6 @@
 package io.reisub.unethicalite.birdhouse;
 
 import com.google.inject.Provides;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.birdhouse.tasks.AddSeeds;
 import io.reisub.unethicalite.birdhouse.tasks.BuildBirdHouse;
 import io.reisub.unethicalite.birdhouse.tasks.CraftBirdhouse;
@@ -45,6 +41,10 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.input.KeyListener;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.widgets.Widgets;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

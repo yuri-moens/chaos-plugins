@@ -1,17 +1,5 @@
 package io.reisub.unethicalite.combathelper.consume;
 
-import dev.unethicalite.api.commons.Rand;
-import dev.unethicalite.api.game.Combat;
-import dev.unethicalite.api.game.Game;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.game.Skills;
-import dev.unethicalite.api.game.Vars;
-import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.movement.Movement;
-import dev.unethicalite.api.utils.MessageUtils;
-import dev.unethicalite.api.widgets.Dialog;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.combathelper.Helper;
 import io.reisub.unethicalite.utils.Constants;
 import java.util.Set;
@@ -34,6 +22,18 @@ import net.runelite.client.plugins.itemstats.ItemStatChanges;
 import net.runelite.client.plugins.itemstats.StatChange;
 import net.runelite.client.plugins.itemstats.StatsChanges;
 import net.runelite.client.plugins.itemstats.stats.Stats;
+import net.unethicalite.api.commons.Rand;
+import net.unethicalite.api.game.Combat;
+import net.unethicalite.api.game.Game;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.game.Skills;
+import net.unethicalite.api.game.Vars;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.movement.Movement;
+import net.unethicalite.api.utils.MessageUtils;
+import net.unethicalite.api.widgets.Dialog;
+import net.unethicalite.client.Static;
 
 @Singleton
 public class ConsumeHelper extends Helper {

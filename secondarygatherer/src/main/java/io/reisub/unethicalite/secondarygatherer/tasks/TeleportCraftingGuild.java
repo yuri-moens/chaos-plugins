@@ -1,8 +1,5 @@
 package io.reisub.unethicalite.secondarygatherer.tasks;
 
-import dev.unethicalite.api.commons.Predicates;
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.secondarygatherer.Config;
 import io.reisub.unethicalite.secondarygatherer.Secondary;
 import io.reisub.unethicalite.secondarygatherer.SecondaryGatherer;
@@ -10,6 +7,9 @@ import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
+import net.unethicalite.api.commons.Predicates;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.items.Inventory;
 
 public class TeleportCraftingGuild extends Task {
 

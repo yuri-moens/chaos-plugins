@@ -1,14 +1,14 @@
 package io.reisub.unethicalite.pickpocket.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.game.Skills;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.pickpocket.Config;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
 import net.runelite.api.Skill;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.game.Skills;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.client.Static;
 
 public class Eat extends Task {
   @Inject private Config config;

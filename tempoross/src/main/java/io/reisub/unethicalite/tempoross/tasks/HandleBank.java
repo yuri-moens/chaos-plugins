@@ -1,13 +1,13 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
-import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Equipment;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.tempoross.Tempoross;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.time.Duration;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Equipment;
+import net.unethicalite.api.items.Inventory;
 
 public class HandleBank extends BankTask {
   @Inject private Tempoross plugin;

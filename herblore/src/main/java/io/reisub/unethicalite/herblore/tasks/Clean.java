@@ -1,11 +1,11 @@
 package io.reisub.unethicalite.herblore.tasks;
 
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.herblore.Herblore;
 import io.reisub.unethicalite.herblore.HerbloreTask;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
+import net.unethicalite.api.items.Inventory;
 
 public class Clean extends Task {
   @Inject private Herblore plugin;

@@ -1,9 +1,6 @@
 package io.reisub.unethicalite.utils;
 
 import com.google.inject.Provides;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.game.Game;
-import dev.unethicalite.client.Static;
 import java.util.Collection;
 import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +9,9 @@ import net.runelite.api.Player;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.game.Game;
+import net.unethicalite.client.Static;
 import org.pf4j.Extension;
 
 @PluginDescriptor(name = "Chaos Utils", description = "Utilities for Chaos scripts")

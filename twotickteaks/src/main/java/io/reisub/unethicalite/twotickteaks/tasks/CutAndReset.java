@@ -1,12 +1,12 @@
 package io.reisub.unethicalite.twotickteaks.tasks;
 
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.TileObject;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.items.Inventory;
 
 public class CutAndReset extends Task {
 

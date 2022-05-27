@@ -1,11 +1,11 @@
 package io.reisub.unethicalite.mta.tasks;
 
-import dev.unethicalite.api.game.Combat;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
+import net.unethicalite.api.game.Combat;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.client.Static;
 
 public class EatPeach extends Task {
   private int last;

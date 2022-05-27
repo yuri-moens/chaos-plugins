@@ -1,7 +1,5 @@
 package io.reisub.unethicalite.farming.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
 import io.reisub.unethicalite.farming.Config;
 import io.reisub.unethicalite.farming.Farming;
 import io.reisub.unethicalite.utils.Utils;
@@ -9,6 +7,8 @@ import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.coords.WorldPoint;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
 
 public class GoToPatch extends Task {
   @Inject private Farming plugin;

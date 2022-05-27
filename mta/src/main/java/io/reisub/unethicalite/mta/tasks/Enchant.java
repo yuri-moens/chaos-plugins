@@ -1,12 +1,6 @@
 package io.reisub.unethicalite.mta.tasks;
 
 import com.google.common.collect.ImmutableSet;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.magic.Magic;
-import dev.unethicalite.api.magic.SpellBook;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.mta.Mta;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.Predicates;
@@ -14,6 +8,12 @@ import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.Set;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.magic.Magic;
+import net.unethicalite.api.magic.SpellBook;
+import net.unethicalite.client.Static;
 
 public class Enchant extends Task {
   private static final Set<Integer> ENCHANT_ITEM_IDS =

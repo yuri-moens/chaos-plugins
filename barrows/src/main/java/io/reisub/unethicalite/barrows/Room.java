@@ -1,9 +1,6 @@
 package io.reisub.unethicalite.barrows;
 
 import com.google.common.collect.ImmutableSet;
-import dev.unethicalite.api.coords.RectangularArea;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
@@ -15,6 +12,9 @@ import net.runelite.api.NullObjectID;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
+import net.unethicalite.api.coords.RectangularArea;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileObjects;
 
 @RequiredArgsConstructor
 public enum Room {

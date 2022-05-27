@@ -1,9 +1,5 @@
 package io.reisub.unethicalite.farming.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.game.Vars;
 import io.reisub.unethicalite.farming.Farming;
 import io.reisub.unethicalite.farming.PatchImplementation;
 import io.reisub.unethicalite.farming.PatchState;
@@ -16,6 +12,10 @@ import java.util.List;
 import javax.inject.Inject;
 import net.runelite.api.TileObject;
 import net.runelite.client.plugins.timetracking.farming.CropState;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.game.Vars;
 
 public class Clear extends Task {
   @Inject private Farming plugin;

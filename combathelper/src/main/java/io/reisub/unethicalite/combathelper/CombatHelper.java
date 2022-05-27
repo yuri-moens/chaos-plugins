@@ -1,9 +1,6 @@
 package io.reisub.unethicalite.combathelper;
 
 import com.google.inject.Provides;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.game.Game;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.cerberus.ChaosCerberus;
 import io.reisub.unethicalite.combathelper.alch.AlchHelper;
 import io.reisub.unethicalite.combathelper.bones.BonesHelper;
@@ -35,6 +32,9 @@ import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.itemstats.ItemStatPlugin;
 import net.runelite.client.plugins.unethicalite.UnethicalitePlugin;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.game.Game;
+import net.unethicalite.client.Static;
 import org.pf4j.Extension;
 
 @Singleton

@@ -1,10 +1,5 @@
 package io.reisub.unethicalite.funguspicker.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.widgets.Tab;
-import dev.unethicalite.api.widgets.Tabs;
 import io.reisub.unethicalite.funguspicker.FungusPicker;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
@@ -13,6 +8,11 @@ import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.widgets.Tab;
+import net.unethicalite.api.widgets.Tabs;
 
 public class GoToFungus extends Task {
   @Inject private FungusPicker plugin;

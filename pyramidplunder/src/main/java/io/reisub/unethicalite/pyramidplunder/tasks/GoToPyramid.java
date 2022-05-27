@@ -1,14 +1,5 @@
 package io.reisub.unethicalite.pyramidplunder.tasks;
 
-import dev.unethicalite.api.commons.Predicates;
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.NPCs;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.items.Equipment;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.movement.Reachable;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.pyramidplunder.PyramidPlunder;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.Utils;
@@ -21,6 +12,15 @@ import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
+import net.unethicalite.api.commons.Predicates;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.NPCs;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.items.Equipment;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.movement.Reachable;
+import net.unethicalite.client.Static;
 
 public class GoToPyramid extends Task {
 

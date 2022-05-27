@@ -1,11 +1,5 @@
 package io.reisub.unethicalite.pyramidplunder.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.NPCs;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.movement.Reachable;
-import dev.unethicalite.api.widgets.Dialog;
 import io.reisub.unethicalite.pyramidplunder.PyramidPlunder;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.Utils;
@@ -15,6 +9,12 @@ import javax.inject.Inject;
 import net.runelite.api.DialogOption;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.NPCs;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.movement.Reachable;
+import net.unethicalite.api.widgets.Dialog;
 
 public class RechargeSceptre extends Task {
 

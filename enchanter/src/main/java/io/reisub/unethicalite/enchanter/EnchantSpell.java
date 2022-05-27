@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.enchanter;
 
-import dev.unethicalite.api.magic.Spell;
-import dev.unethicalite.api.magic.SpellBook;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.unethicalite.api.magic.Spell;
+import net.unethicalite.api.magic.SpellBook;
 
 @AllArgsConstructor
 @Getter

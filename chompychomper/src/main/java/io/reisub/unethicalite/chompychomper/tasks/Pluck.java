@@ -1,9 +1,5 @@
 package io.reisub.unethicalite.chompychomper.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.NPCs;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.chompychomper.ChompyChomper;
 import io.reisub.unethicalite.chompychomper.Config;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -12,6 +8,10 @@ import javax.inject.Inject;
 import net.runelite.api.ItemID;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.NPCs;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.items.Inventory;
 
 public class Pluck extends Task {
   @Inject private ChompyChomper plugin;

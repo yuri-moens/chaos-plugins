@@ -1,13 +1,13 @@
 package io.reisub.unethicalite.zmi.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import io.reisub.unethicalite.zmi.Zmi;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.client.Static;
 
 public class EmptyPouch extends Task {
   @Override

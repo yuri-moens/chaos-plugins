@@ -1,10 +1,6 @@
 package io.reisub.unethicalite.agility.tasks;
 
 import com.google.common.collect.ImmutableSet;
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.agility.Agility;
 import io.reisub.unethicalite.agility.Config;
 import io.reisub.unethicalite.agility.Course;
@@ -20,6 +16,10 @@ import net.runelite.api.events.GameTick;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.api.events.StatChanged;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.movement.Movement;
 
 public class HandleObstacle extends Task {
   private static final Set<WorldPoint> NO_EXPERIENCE_POINTS =

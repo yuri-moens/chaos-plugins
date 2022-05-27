@@ -1,11 +1,6 @@
 package io.reisub.unethicalite.pyramidplunder;
 
 import com.google.inject.Provides;
-import dev.unethicalite.api.commons.Predicates;
-import dev.unethicalite.api.game.Skills;
-import dev.unethicalite.api.game.Vars;
-import dev.unethicalite.api.items.Equipment;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.pyramidplunder.tasks.DrinkAntiPoison;
 import io.reisub.unethicalite.pyramidplunder.tasks.DrinkFountain;
 import io.reisub.unethicalite.pyramidplunder.tasks.GoToBank;
@@ -35,6 +30,11 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.api.commons.Predicates;
+import net.unethicalite.api.game.Skills;
+import net.unethicalite.api.game.Vars;
+import net.unethicalite.api.items.Equipment;
+import net.unethicalite.api.items.Inventory;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

@@ -1,8 +1,5 @@
 package io.reisub.unethicalite.agility.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileItems;
 import io.reisub.unethicalite.agility.Config;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
@@ -11,6 +8,9 @@ import net.runelite.api.TileItem;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.api.events.StatChanged;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileItems;
 
 public class PickupMark extends Task {
   @Inject private Config config;

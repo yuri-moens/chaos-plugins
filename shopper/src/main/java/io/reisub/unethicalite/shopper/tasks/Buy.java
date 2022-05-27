@@ -1,13 +1,13 @@
 package io.reisub.unethicalite.shopper.tasks;
 
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.items.Shop;
 import io.reisub.unethicalite.shopper.BuyItem;
 import io.reisub.unethicalite.shopper.Shopper;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.items.Shop;
 
 public class Buy extends Task {
   private final Map<BuyItem, Integer> buyMap = new HashMap<>();

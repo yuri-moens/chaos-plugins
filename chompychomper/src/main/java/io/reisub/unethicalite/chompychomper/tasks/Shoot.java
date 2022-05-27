@@ -1,7 +1,5 @@
 package io.reisub.unethicalite.chompychomper.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.game.GameThread;
 import io.reisub.unethicalite.chompychomper.ChompyChomper;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
@@ -12,6 +10,8 @@ import net.runelite.api.NpcID;
 import net.runelite.api.events.NpcDespawned;
 import net.runelite.api.events.NpcSpawned;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.game.GameThread;
 
 public class Shoot extends Task {
   private final LinkedList<NPC> chompies = new LinkedList<>();

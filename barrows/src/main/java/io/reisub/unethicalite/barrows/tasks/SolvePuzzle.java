@@ -1,10 +1,6 @@
 package io.reisub.unethicalite.barrows.tasks;
 
 import com.google.common.collect.ImmutableMap;
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.barrows.Room;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.Map;
@@ -13,6 +9,10 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.widgets.Widgets;
 
 public class SolvePuzzle extends Task {
   private static final Map<WidgetInfo, WidgetInfo> POSSIBLE_SOLUTIONS =

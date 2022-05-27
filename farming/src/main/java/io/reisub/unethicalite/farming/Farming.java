@@ -2,12 +2,6 @@ package io.reisub.unethicalite.farming;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
-import dev.unethicalite.api.entities.NPCs;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.game.Vars;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.farming.tasks.Clear;
 import io.reisub.unethicalite.farming.tasks.Cure;
 import io.reisub.unethicalite.farming.tasks.DepositTools;
@@ -50,6 +44,12 @@ import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.timetracking.farming.CropState;
 import net.runelite.client.plugins.timetracking.farming.Produce;
+import net.unethicalite.api.entities.NPCs;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.game.Vars;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.client.Static;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

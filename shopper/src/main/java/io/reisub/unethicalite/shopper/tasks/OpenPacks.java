@@ -1,12 +1,12 @@
 package io.reisub.unethicalite.shopper.tasks;
 
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.items.Shop;
-import dev.unethicalite.api.packets.DialogPackets;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.shopper.Config;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.items.Shop;
+import net.unethicalite.api.packets.DialogPackets;
+import net.unethicalite.client.Static;
 
 public class OpenPacks extends Task {
   @Inject private Config config;

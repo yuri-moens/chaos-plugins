@@ -1,12 +1,5 @@
 package io.reisub.unethicalite.tabmaker.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.magic.Magic;
-import dev.unethicalite.api.magic.SpellBook.Standard;
-import dev.unethicalite.api.widgets.Widgets;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.tabmaker.Config;
 import io.reisub.unethicalite.tabmaker.TabMaker;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -15,6 +8,13 @@ import javax.inject.Inject;
 import net.runelite.api.ItemID;
 import net.runelite.api.TileObject;
 import net.runelite.api.widgets.Widget;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.magic.Magic;
+import net.unethicalite.api.magic.SpellBook.Standard;
+import net.unethicalite.api.widgets.Widgets;
+import net.unethicalite.client.Static;
 
 public class MakeTabs extends Task {
 

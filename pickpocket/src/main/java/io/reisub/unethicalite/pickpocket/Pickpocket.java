@@ -1,7 +1,6 @@
 package io.reisub.unethicalite.pickpocket;
 
 import com.google.inject.Provides;
-import dev.unethicalite.api.entities.Players;
 import io.reisub.unethicalite.pickpocket.tasks.CastShadowVeil;
 import io.reisub.unethicalite.pickpocket.tasks.ClearInventory;
 import io.reisub.unethicalite.pickpocket.tasks.Eat;
@@ -23,6 +22,7 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.itemstats.ItemStatPlugin;
+import net.unethicalite.api.entities.Players;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

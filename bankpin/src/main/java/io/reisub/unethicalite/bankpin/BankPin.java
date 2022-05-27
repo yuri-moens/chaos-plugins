@@ -1,8 +1,6 @@
 package io.reisub.unethicalite.bankpin;
 
 import com.google.inject.Provides;
-import dev.unethicalite.api.input.Keyboard;
-import dev.unethicalite.api.widgets.Widgets;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.events.GameTick;
@@ -14,6 +12,8 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.api.input.Keyboard;
+import net.unethicalite.api.widgets.Widgets;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

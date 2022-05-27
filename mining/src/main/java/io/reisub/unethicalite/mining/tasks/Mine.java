@@ -1,12 +1,6 @@
 package io.reisub.unethicalite.mining.tasks;
 
 import com.google.common.collect.ImmutableSet;
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.movement.Movement;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.mining.Config;
 import io.reisub.unethicalite.mining.Location;
 import io.reisub.unethicalite.mining.Mining;
@@ -25,6 +19,12 @@ import net.runelite.api.TileObject;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.movement.Movement;
+import net.unethicalite.client.Static;
 
 public class Mine extends Task {
   private static final Set<Integer> DROP_IDS =

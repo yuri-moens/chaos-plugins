@@ -1,7 +1,6 @@
 package io.reisub.unethicalite.tabmaker;
 
 import com.google.inject.Provides;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.tabmaker.tasks.HandleBank;
 import io.reisub.unethicalite.tabmaker.tasks.MakeTabs;
 import io.reisub.unethicalite.utils.TickScript;
@@ -15,6 +14,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.api.items.Inventory;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

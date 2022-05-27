@@ -1,9 +1,5 @@
 package io.reisub.unethicalite.farming;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.magic.SpellBook;
-import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.api.Interact;
@@ -18,6 +14,10 @@ import net.runelite.api.MenuAction;
 import net.runelite.api.Varbits;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.widgets.Widget;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.magic.SpellBook;
+import net.unethicalite.api.widgets.Widgets;
 
 @RequiredArgsConstructor
 @Getter

@@ -1,10 +1,5 @@
 package io.reisub.unethicalite.mta.tasks;
 
-import dev.unethicalite.api.entities.NPCs;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.magic.Magic;
-import dev.unethicalite.api.magic.SpellBook;
-import dev.unethicalite.api.widgets.Widgets;
 import io.reisub.unethicalite.mta.Config;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.awt.event.KeyEvent;
@@ -12,6 +7,11 @@ import javax.inject.Inject;
 import net.runelite.api.NPC;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.client.input.KeyListener;
+import net.unethicalite.api.entities.NPCs;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.magic.Magic;
+import net.unethicalite.api.magic.SpellBook;
+import net.unethicalite.api.widgets.Widgets;
 
 public class TelekineticGrab extends Task implements KeyListener {
   @Inject private Config config;

@@ -1,14 +1,14 @@
 package io.reisub.unethicalite.barrows;
 
-import dev.unethicalite.api.coords.RectangularArea;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.game.Vars;
 import io.reisub.unethicalite.utils.Utils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.runelite.api.Varbits;
 import net.runelite.api.coords.WorldPoint;
+import net.unethicalite.api.coords.RectangularArea;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.game.Vars;
 
 @RequiredArgsConstructor
 @Getter

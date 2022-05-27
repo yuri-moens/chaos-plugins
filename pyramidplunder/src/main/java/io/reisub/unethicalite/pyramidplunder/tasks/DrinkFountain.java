@@ -1,17 +1,17 @@
 package io.reisub.unethicalite.pyramidplunder.tasks;
 
-import dev.unethicalite.api.commons.Predicates;
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.game.Combat;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.magic.SpellBook.Standard;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.pyramidplunder.PyramidPlunder;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.TileObject;
+import net.unethicalite.api.commons.Predicates;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.Combat;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.magic.SpellBook.Standard;
+import net.unethicalite.client.Static;
 
 public class DrinkFountain extends Task {
 

@@ -1,6 +1,5 @@
 package io.reisub.unethicalite.herblore.tasks;
 
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.herblore.Herblore;
 import io.reisub.unethicalite.herblore.HerbloreTask;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -9,6 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
+import net.unethicalite.api.items.Inventory;
 
 public class ProcessSecondary extends Task {
   @Inject private Herblore plugin;

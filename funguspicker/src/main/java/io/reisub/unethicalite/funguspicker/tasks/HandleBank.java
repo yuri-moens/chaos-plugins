@@ -1,10 +1,5 @@
 package io.reisub.unethicalite.funguspicker.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Equipment;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.funguspicker.FungusPicker;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.Interact;
@@ -13,6 +8,11 @@ import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.time.Duration;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Equipment;
+import net.unethicalite.api.items.Inventory;
 
 public class HandleBank extends BankTask {
   @Inject private FungusPicker plugin;

@@ -1,10 +1,5 @@
 package io.reisub.unethicalite.motherlodemine.tasks;
 
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.movement.Reachable;
 import io.reisub.unethicalite.motherlodemine.Config;
 import io.reisub.unethicalite.motherlodemine.MiningArea;
 import io.reisub.unethicalite.motherlodemine.MotherlodeMine;
@@ -14,6 +9,11 @@ import javax.inject.Inject;
 import net.runelite.api.TileObject;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.movement.Reachable;
 
 public class Mine extends Task {
 

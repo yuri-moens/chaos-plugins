@@ -1,6 +1,5 @@
 package io.reisub.unethicalite.barrows.tasks;
 
-import dev.unethicalite.api.commons.Time;
 import io.reisub.unethicalite.barrows.Barrows;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.Utils;
@@ -10,6 +9,7 @@ import javax.inject.Inject;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.commons.Time;
 
 public class TeleportToFeroxEnclave extends Task {
   @Inject private Barrows plugin;

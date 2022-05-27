@@ -3,11 +3,11 @@ package io.reisub.unethicalite.mahoganyhomes;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
-import dev.unethicalite.api.game.Vars;
 import java.util.List;
 import javax.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.unethicalite.api.game.Vars;
 
 @Getter
 @AllArgsConstructor

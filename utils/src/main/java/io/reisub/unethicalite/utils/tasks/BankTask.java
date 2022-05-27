@@ -1,18 +1,6 @@
 package io.reisub.unethicalite.utils.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.entities.NPCs;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.entities.TileObjects;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Equipment;
-import dev.unethicalite.api.movement.Movement;
-import dev.unethicalite.api.packets.DialogPackets;
-import dev.unethicalite.api.widgets.Widgets;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.utils.Constants;
-import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.api.Predicates;
 import java.time.Duration;
 import java.time.Instant;
@@ -21,6 +9,17 @@ import net.runelite.api.ItemID;
 import net.runelite.api.NPC;
 import net.runelite.api.TileObject;
 import net.runelite.api.widgets.WidgetID;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.NPCs;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Equipment;
+import net.unethicalite.api.movement.Movement;
+import net.unethicalite.api.packets.DialogPackets;
+import net.unethicalite.api.widgets.Widgets;
+import net.unethicalite.client.Static;
 
 public abstract class BankTask extends Task {
   protected Instant last = Instant.EPOCH;

@@ -1,11 +1,6 @@
 package io.reisub.unethicalite.combathelper.swap;
 
 import com.openosrs.client.util.WeaponStyle;
-import dev.unethicalite.api.commons.Rand;
-import dev.unethicalite.api.entities.NPCs;
-import dev.unethicalite.api.game.Combat;
-import dev.unethicalite.api.game.GameThread;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.combathelper.Helper;
 import io.reisub.unethicalite.combathelper.prayer.PrayerHelper;
 import io.reisub.unethicalite.utils.api.ConfigList;
@@ -21,6 +16,11 @@ import net.runelite.api.NPC;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
+import net.unethicalite.api.commons.Rand;
+import net.unethicalite.api.entities.NPCs;
+import net.unethicalite.api.game.Combat;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.api.items.Inventory;
 
 @Singleton
 public class SwapHelper extends Helper {

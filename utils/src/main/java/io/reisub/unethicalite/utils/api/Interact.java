@@ -1,12 +1,12 @@
 package io.reisub.unethicalite.utils.api;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.items.Equipment;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.widgets.Dialog;
 import java.util.Collection;
 import java.util.function.Predicate;
 import net.runelite.api.Item;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.items.Equipment;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.widgets.Dialog;
 
 public class Interact {
   public static boolean interactWithInventoryOrEquipment(

@@ -1,8 +1,6 @@
 package io.reisub.unethicalite.cooking;
 
 import com.google.inject.Provides;
-import dev.unethicalite.api.entities.Players;
-import dev.unethicalite.api.items.Inventory;
 import io.reisub.unethicalite.cooking.tasks.Cook;
 import io.reisub.unethicalite.cooking.tasks.Drop;
 import io.reisub.unethicalite.cooking.tasks.HandleBank;
@@ -21,6 +19,8 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.unethicalite.api.entities.Players;
+import net.unethicalite.api.items.Inventory;
 import org.pf4j.Extension;
 
 @PluginDescriptor(

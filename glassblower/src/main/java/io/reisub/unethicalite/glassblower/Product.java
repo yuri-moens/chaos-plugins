@@ -1,9 +1,9 @@
 package io.reisub.unethicalite.glassblower;
 
-import dev.unethicalite.api.game.Skills;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.runelite.api.Skill;
+import net.unethicalite.api.game.Skills;
 
 @AllArgsConstructor
 @Getter

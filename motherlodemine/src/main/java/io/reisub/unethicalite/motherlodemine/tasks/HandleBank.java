@@ -1,9 +1,5 @@
 package io.reisub.unethicalite.motherlodemine.tasks;
 
-import dev.unethicalite.api.commons.Time;
-import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.client.Static;
 import io.reisub.unethicalite.motherlodemine.MotherlodeMine;
 import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.enums.Activity;
@@ -11,6 +7,10 @@ import io.reisub.unethicalite.utils.tasks.BankTask;
 import javax.inject.Inject;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.client.Static;
 
 public class HandleBank extends BankTask {
   @Inject private MotherlodeMine plugin;

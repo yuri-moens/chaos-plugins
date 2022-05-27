@@ -1,8 +1,5 @@
 package io.reisub.unethicalite.shopper.tasks;
 
-import dev.unethicalite.api.items.Bank;
-import dev.unethicalite.api.items.Inventory;
-import dev.unethicalite.api.movement.Movement;
 import io.reisub.unethicalite.shopper.Config;
 import io.reisub.unethicalite.shopper.Shopper;
 import io.reisub.unethicalite.utils.api.ChaosBank;
@@ -11,6 +8,9 @@ import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.time.Duration;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.movement.Movement;
 
 public class HandleBank extends BankTask {
   @Inject private Shopper plugin;
