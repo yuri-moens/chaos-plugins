@@ -56,7 +56,7 @@ import net.unethicalite.api.widgets.Tab;
 import net.unethicalite.api.widgets.Tabs;
 import net.unethicalite.api.widgets.Widgets;
 import net.unethicalite.client.config.UnethicaliteConfig;
-import net.unethicalite.managers.interaction.InteractMethod;
+import net.unethicalite.client.managers.interaction.InteractMethod;
 
 @Singleton
 public class PrayerHelper extends Helper {
