@@ -164,6 +164,8 @@ public abstract class TickScript extends Plugin implements KeyListener {
     if (Widgets.isVisible(Widgets.get(WidgetInfo.LEVEL_UP_LEVEL))) {
       Dialog.continueSpace();
       Dialog.continueSpace();
+
+      setActivity(Activity.IDLE);
     }
   }
 
