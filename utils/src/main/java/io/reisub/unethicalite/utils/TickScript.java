@@ -162,8 +162,16 @@ public abstract class TickScript extends Plugin implements KeyListener {
   @Subscribe
   private void onWidgetHiddenChanged(WidgetHiddenChanged event) {
     if (Widgets.isVisible(Widgets.get(WidgetInfo.LEVEL_UP_LEVEL))) {
-      Dialog.continueSpace();
-      Dialog.continueSpace();
+      Dialog.invokeDialog(DialogOption.LEVEL_UP_CONTINUE);
+      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
+      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
 
       setActivity(Activity.IDLE);
     }
