@@ -79,6 +79,8 @@ subprojects {
         compileOnly(Libraries.lombok)
         compileOnly(Libraries.pf4j)
         compileOnly(Libraries.apacheCommonsText)
+        compileOnly(Libraries.okhttp3)
+        compileOnly(Libraries.gson)
     }
 
     configure<JavaPluginConvention> {
