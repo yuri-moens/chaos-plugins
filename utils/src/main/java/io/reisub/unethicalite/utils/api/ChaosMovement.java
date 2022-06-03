@@ -35,6 +35,18 @@ public class ChaosMovement {
 
   public static boolean interrupted;
 
+  public static void walk(WorldPoint destination, final int rand) {
+    walk(destination, rand, rand);
+  }
+
+  public static void walk(WorldPoint destination, final int x, final int y) {
+    destination = destination
+        .dx(Rand.nextInt(-x, x + 1))
+        .dy(Rand.nextInt(-y, y + 1));
+
+    Movement.walk(destination);
+  }
+
   public static void walkTo(WorldPoint destination) {
     walkTo(destination, 0);
   }
@@ -168,10 +180,35 @@ public class ChaosMovement {
     return teleportThroughHouse(portalTeleport, false);
   }
 
+  public static boolean teleportThroughHouse(PortalTeleport portalTeleport, int energyThreshold) {
+    return teleportThroughHouse(portalTeleport, false, energyThreshold);
+  }
+
   public static boolean teleportThroughHouse(PortalTeleport portalTeleport, boolean forceNexus) {
+    return teleportThroughHouse(portalTeleport, forceNexus, 30);
+  }
+
+  public static boolean teleportThroughHouse(PortalTeleport portalTeleport,
+      boolean forceNexus, int energyThreshold) {
     if (!Static.getClient().isInInstancedRegion()) {
       if (!teleportToHouse()) {
         return false;
+      }
+    }
+
+    if (Movement.getRunEnergy() < energyThreshold) {
+      final TileObject pool =
+          TileObjects.getNearest(Predicates.ids(Constants.REJUVENATION_POOL_IDS));
+
+      if (pool != null) {
+        GameThread.invoke(() -> pool.interact(0));
+
+        Time.sleepTicksUntil(() -> Movement.getRunEnergy() >= 99, 10);
+        Time.sleepTick();
+
+        if (!Movement.isRunEnabled()) {
+          Movement.toggleRun();
+        }
       }
     }
 
