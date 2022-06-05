@@ -21,7 +21,7 @@ apply<UpdateVersionsPlugin>()
 
 allprojects {
     group = "io.reisub"
-    version = ProjectVersions.rlVersion
+    version = openosrsVersion
     apply<MavenPublishPlugin>()
 
     repositories {
