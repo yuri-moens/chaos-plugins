@@ -19,12 +19,9 @@ import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.ChatMessageType;
-import net.runelite.api.DialogOption;
 import net.runelite.api.GameState;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Skill;
-import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.ConfigButtonClicked;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
@@ -120,32 +117,6 @@ public abstract class TickScript extends Plugin implements KeyListener {
   }
 
   @Subscribe
-  private void onChatMessage(ChatMessage event) {
-    if (!isRunning() || !Utils.isLoggedIn()) {
-      return;
-    }
-
-    if (event.getType() == ChatMessageType.GAMEMESSAGE) {
-      if (event.getMessage().startsWith("Congratulations, you've just advanced your")) {
-        setActivity(Activity.IDLE);
-
-        if (Dialog.canContinue()) {
-          Dialog.invokeDialog(DialogOption.LEVEL_UP_CONTINUE);
-          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-          Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-        }
-      }
-    }
-  }
-
-  @Subscribe
   private void onStatChanged(StatChanged event) {
     if (!isRunning() || !Utils.isLoggedIn()) {
       return;
@@ -162,17 +133,8 @@ public abstract class TickScript extends Plugin implements KeyListener {
   @Subscribe
   private void onWidgetHiddenChanged(WidgetHiddenChanged event) {
     if (Widgets.isVisible(Widgets.get(WidgetInfo.LEVEL_UP_LEVEL))) {
-      Dialog.invokeDialog(DialogOption.LEVEL_UP_CONTINUE);
-      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-      Dialog.invokeDialog(DialogOption.PLAIN_CONTINUE_TWO);
-
+      Dialog.continueSpace();
+      Dialog.continueSpace();
       setActivity(Activity.IDLE);
     }
   }
