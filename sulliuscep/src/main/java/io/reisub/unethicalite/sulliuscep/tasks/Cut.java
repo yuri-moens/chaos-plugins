@@ -48,6 +48,12 @@ public class Cut extends Task {
     }
 
     GameThread.invoke(() -> sulliuscep.interact("Cut"));
+
+    if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving()
+        || Players.getLocal().isAnimating(), 3)) {
+      return;
+    }
+
     Time.sleepTicksUntil(() -> Players.getLocal().isAnimating()
         || Combat.isPoisoned()
         || Combat.getCurrentHealth() < 30, 35);
@@ -72,6 +78,6 @@ public class Cut extends Task {
       Time.sleepTicksUntil(() -> Players.getLocal().isAnimating(), 35);
     }
 
-    Time.sleepTick();
+    Time.sleepTicks(3);
   }
 }
