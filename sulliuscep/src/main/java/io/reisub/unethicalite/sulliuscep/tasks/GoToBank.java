@@ -10,6 +10,7 @@ import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.game.Combat;
 import net.unethicalite.api.items.Inventory;
 
 public class GoToBank extends Task {
@@ -24,6 +25,11 @@ public class GoToBank extends Task {
 
   @Override
   public boolean validate() {
+    if (!Inventory.contains(Predicates.ids(Constants.BREW_POTION_IDS))
+        && Combat.getCurrentHealth() < 20) {
+      return true;
+    }
+
     if (plugin.getCurrentSulliuscep() != SulliuscepObject.SULLIUSCEP_1
         || Utils.isInRegion(Sulliuscep.SWAMP_LOWER_REGION_ID)) {
       return false;
