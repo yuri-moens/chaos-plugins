@@ -1,8 +1,10 @@
 package io.reisub.unethicalite.sulliuscep.tasks;
 
+import com.google.common.collect.ImmutableSet;
 import io.reisub.unethicalite.sulliuscep.Sulliuscep;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
+import net.runelite.api.AnimationID;
 import net.runelite.api.ItemID;
 import net.runelite.api.TileObject;
 import net.unethicalite.api.commons.Time;
@@ -14,6 +16,23 @@ import net.unethicalite.api.items.Inventory;
 import net.unethicalite.client.Static;
 
 public class Cut extends Task {
+
+  private static final ImmutableSet<Integer> ANIMATION_IDS = ImmutableSet.of(
+      AnimationID.WOODCUTTING_BRONZE,
+      AnimationID.WOODCUTTING_IRON,
+      AnimationID.WOODCUTTING_STEEL,
+      AnimationID.WOODCUTTING_BLACK,
+      AnimationID.WOODCUTTING_MITHRIL,
+      AnimationID.WOODCUTTING_ADAMANT,
+      AnimationID.WOODCUTTING_RUNE,
+      AnimationID.WOODCUTTING_GILDED,
+      AnimationID.WOODCUTTING_DRAGON,
+      AnimationID.WOODCUTTING_DRAGON_OR,
+      AnimationID.WOODCUTTING_INFERNAL,
+      AnimationID.WOODCUTTING_3A_AXE,
+      AnimationID.WOODCUTTING_CRYSTAL,
+      AnimationID.WOODCUTTING_TRAILBLAZER
+  );
 
   @Inject
   private Sulliuscep plugin;
@@ -30,7 +49,7 @@ public class Cut extends Task {
   @Override
   public boolean validate() {
     return !Inventory.isFull()
-        && (!Players.getLocal().isAnimating()
+        && (!isWoodcutting()
         || Static.getClient().getTickCount() - plugin.getLastDrop() <= 1)
         && plugin.getCurrentSulliuscep().isReachable();
   }
@@ -50,11 +69,11 @@ public class Cut extends Task {
     GameThread.invoke(() -> sulliuscep.interact("Cut"));
 
     if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving()
-        || Players.getLocal().isAnimating(), 3)) {
+        || isWoodcutting(), 3)) {
       return;
     }
 
-    Time.sleepTicksUntil(() -> Players.getLocal().isAnimating()
+    Time.sleepTicksUntil(() -> isWoodcutting()
         || Combat.isPoisoned()
         || Combat.getCurrentHealth() < 30, 35);
 
@@ -65,7 +84,7 @@ public class Cut extends Task {
       GameThread.invoke(() -> sulliuscep.interact("Cut"));
       Time.sleepTicks(5);
 
-      Time.sleepTicksUntil(() -> Players.getLocal().isAnimating(), 35);
+      Time.sleepTicksUntil(this::isWoodcutting, 35);
     }
 
     if (Combat.getCurrentHealth() < 30) {
@@ -75,9 +94,13 @@ public class Cut extends Task {
       GameThread.invoke(() -> sulliuscep.interact("Cut"));
       Time.sleepTicks(5);
 
-      Time.sleepTicksUntil(() -> Players.getLocal().isAnimating(), 35);
+      Time.sleepTicksUntil(this::isWoodcutting, 35);
     }
 
     Time.sleepTicks(3);
+  }
+
+  private boolean isWoodcutting() {
+    return ANIMATION_IDS.contains(Players.getLocal().getAnimation());
   }
 }

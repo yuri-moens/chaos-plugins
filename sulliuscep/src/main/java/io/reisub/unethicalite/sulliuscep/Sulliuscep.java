@@ -12,6 +12,7 @@ import io.reisub.unethicalite.sulliuscep.tasks.GoToFirst;
 import io.reisub.unethicalite.sulliuscep.tasks.GoToFossilIsland;
 import io.reisub.unethicalite.sulliuscep.tasks.HandleBank;
 import io.reisub.unethicalite.sulliuscep.tasks.HandleObstacle;
+import io.reisub.unethicalite.sulliuscep.tasks.Move;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
 import java.util.Set;
@@ -67,6 +68,7 @@ public class Sulliuscep extends TickScript {
     currentSulliuscep = getCurrentSulliuscepFromVarbit();
     pitFilled = Vars.getBit(VARBIT_PIT_FILLED) == 1;
 
+    addTask(Move.class);
     addTask(HandleBank.class);
     addTask(GoToFossilIsland.class);
     addTask(Eat.class);
