@@ -15,11 +15,10 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class GetCommission extends Task {
-    private final GiantsFoundry plugin;
-    private final Config config;
+    @Inject private GiantsFoundry plugin;
 
     @Inject
-    GiantsFoundryState giantsFoundryState;
+    private GiantsFoundryState giantsFoundryState;
 
     @Override
     public String getStatus() {

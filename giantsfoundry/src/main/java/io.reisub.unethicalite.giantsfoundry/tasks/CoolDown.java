@@ -15,14 +15,13 @@ import javax.inject.Inject;
 
 @RequiredArgsConstructor
 public class CoolDown extends Task {
-    private final GiantsFoundry plugin;
-    private final Config config;
+    @Inject private GiantsFoundry plugin;
 
     @Inject
-    GiantsFoundryState giantsFoundryState;
+    private GiantsFoundryState giantsFoundryState;
 
     @Inject
-    GiantsFoundryHelper giantsFoundryHelper;
+    private GiantsFoundryHelper giantsFoundryHelper;
 
     @Override
     public String getStatus() {

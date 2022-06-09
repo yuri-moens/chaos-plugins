@@ -15,8 +15,7 @@ import javax.inject.Inject;
 
 @RequiredArgsConstructor
 public class HeatUp extends Task {
-    private final GiantsFoundry plugin;
-    private final Config config;
+    @Inject private GiantsFoundry plugin;
 
     @Inject
     GiantsFoundryState giantsFoundryState;
