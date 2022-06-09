@@ -8,6 +8,7 @@ import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.items.Inventory;
 
 public class CraftBirdhouse extends Task {
+
   @Override
   public String getStatus() {
     return "Crafting bird house";
@@ -20,8 +21,9 @@ public class CraftBirdhouse extends Task {
 
   @Override
   public void execute() {
-    Item chisel = Inventory.getFirst(ItemID.CHISEL);
-    Item logs = Inventory.getFirst((i) -> Constants.LOG_IDS.contains(i.getId()));
+    final Item chisel = Inventory.getFirst(ItemID.CHISEL);
+    final Item logs = Inventory.getFirst((i) -> Constants.LOG_IDS.contains(i.getId()));
+
     if (chisel == null || logs == null) {
       return;
     }

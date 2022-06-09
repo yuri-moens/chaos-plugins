@@ -81,17 +81,17 @@ public class Fish extends Task {
         Time.sleep(400, 600);
       }
 
-      ChaosMovement.sendMovementPacket(target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
+      ChaosMovement.walk(target, 2);
 
-      if (!Time.sleepUntil(() -> Players.getLocal().isMoving(), 1500)) {
+      if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 3)) {
         return;
       }
 
-      Time.sleepUntil(
+      Time.sleepTicksUntil(
           () ->
               Players.getLocal().getWorldLocation().getY() >= target.getY() - Rand.nextInt(4, 6)
                   || plugin.isWaveIncoming(),
-          15000);
+          25);
     }
 
     if (plugin.getPhase() >= 2) {
@@ -117,8 +117,7 @@ public class Fish extends Task {
     }
 
     spot.interact(0);
-    Time.sleepTick();
-    Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.FISHING, 3000);
+    Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.FISHING, 3);
   }
 
   private NPC getNearestSafeSpot(int id) {

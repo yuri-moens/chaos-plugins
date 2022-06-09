@@ -1,14 +1,18 @@
 package io.reisub.unethicalite.birdhouse.tasks;
 
+import io.reisub.unethicalite.birdhouse.BirdHouseSpace;
+import io.reisub.unethicalite.birdhouse.BirdHouseState;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.TileObject;
 import net.unethicalite.api.commons.Time;
-import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.game.GameThread;
 import net.unethicalite.api.items.Inventory;
 
 public class BuildBirdHouse extends Task {
+
+  private TileObject space;
+
   @Override
   public String getStatus() {
     return "Building bird house";
@@ -21,13 +25,7 @@ public class BuildBirdHouse extends Task {
 
   @Override
   public void execute() {
-    TileObject space =
-        TileObjects.getNearest(
-            (o) ->
-                Constants.BIRD_HOUSE_SPACES.contains(o.getId())
-                    && o.getTransformedComposition().getImpostor() != null
-                    && o.getTransformedComposition().getImpostor().getId()
-                        == Constants.BIRD_HOUSE_EMPTY_SPACE);
+    space = BirdHouseSpace.getNearest(BirdHouseState.EMPTY);
 
     if (space == null) {
       return;

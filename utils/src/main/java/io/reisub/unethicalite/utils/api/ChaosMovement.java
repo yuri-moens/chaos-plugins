@@ -18,6 +18,7 @@ import net.unethicalite.api.commons.Rand;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.Combat;
 import net.unethicalite.api.game.GameThread;
 import net.unethicalite.api.items.Equipment;
 import net.unethicalite.api.items.Inventory;
@@ -34,6 +35,18 @@ public class ChaosMovement {
   private static final int DESTINATION_DISTANCE = 8;
 
   public static boolean interrupted;
+
+  public static void walk(WorldPoint destination, final int rand) {
+    walk(destination, rand, rand);
+  }
+
+  public static void walk(WorldPoint destination, final int x, final int y) {
+    destination = destination
+        .dx(Rand.nextInt(-x, x + 1))
+        .dy(Rand.nextInt(-y, y + 1));
+
+    Movement.walk(destination);
+  }
 
   public static void walkTo(WorldPoint destination) {
     walkTo(destination, 0);
@@ -161,37 +174,66 @@ public class ChaosMovement {
       return false;
     }
 
-    return Time.sleepTicksUntil(() -> TileObjects.getNearest(ObjectID.PORTAL_4525) != null, 10);
+    return Time.sleepTicksUntil(() -> Static.getClient().isInInstancedRegion()
+        && TileObjects.getNearest(ObjectID.PORTAL_4525) != null, 10);
   }
 
   public static boolean teleportThroughHouse(PortalTeleport portalTeleport) {
     return teleportThroughHouse(portalTeleport, false);
   }
 
+  public static boolean teleportThroughHouse(PortalTeleport portalTeleport, int energyThreshold) {
+    return teleportThroughHouse(portalTeleport, false, energyThreshold);
+  }
+
   public static boolean teleportThroughHouse(PortalTeleport portalTeleport, boolean forceNexus) {
+    return teleportThroughHouse(portalTeleport, forceNexus, 30);
+  }
+
+  public static boolean teleportThroughHouse(PortalTeleport portalTeleport,
+      boolean forceNexus, int energyThreshold) {
     if (!Static.getClient().isInInstancedRegion()) {
       if (!teleportToHouse()) {
         return false;
       }
+      Time.sleepTicks(2);
     }
+
+    drinkFromPool(energyThreshold);
 
     if (forceNexus) {
-      if (!Time.sleepTicksUntil(() ->
-          TileObjects.getNearest(Predicates.ids(Constants.PORTAL_NEXUS_IDS)) != null, 5)) {
-        return false;
-      }
-
-      Time.sleepTick();
-      teleportThroughPortalNexus(portalTeleport);
+      return teleportThroughPortalNexus(portalTeleport);
     }
 
-    if (Time.sleepTicksUntil(() ->
-        TileObjects.getNearest(portalTeleport.getPortalId()) != null, 5)) {
-      Time.sleepTick();
-      return teleportThroughPortal(portalTeleport);
-    } else {
-      Time.sleepTick();
-      return teleportThroughPortalNexus(portalTeleport);
+    switch (portalTeleport) {
+      case FOSSIL_ISLAND:
+        return teleportThroughDigsitePendant(portalTeleport);
+      default:
+        if (Time.sleepTicksUntil(() ->
+            TileObjects.getNearest(portalTeleport.getPortalId()) != null, 5)) {
+          return teleportThroughPortal(portalTeleport);
+        } else {
+          return teleportThroughPortalNexus(portalTeleport);
+        }
+    }
+  }
+
+  public static void drinkFromPool(final int energyThreshold) {
+    if (Movement.getRunEnergy() < energyThreshold) {
+      final TileObject pool =
+          TileObjects.getNearest(Predicates.ids(Constants.REJUVENATION_POOL_IDS));
+
+      if (pool != null) {
+        GameThread.invoke(() -> pool.interact(0));
+
+        Time.sleepTicksUntil(() -> Movement.getRunEnergy() == 100
+            && Combat.getMissingHealth() == 0, 10);
+        Time.sleepTick();
+
+        if (!Movement.isRunEnabled()) {
+          Movement.toggleRun();
+        }
+      }
     }
   }
 
@@ -242,6 +284,60 @@ public class ChaosMovement {
     }
 
     final Widget destinationWidget = Widgets.get(17, 13, i);
+
+    if (destinationWidget == null) {
+      return false;
+    }
+
+    destinationWidget.interact(
+        0,
+        MenuAction.WIDGET_CONTINUE.getId(),
+        destinationWidget.getIndex(),
+        destinationWidget.getId()
+    );
+
+    return Time.sleepTicksUntil(() -> !Static.getClient().isInInstancedRegion(), 10);
+  }
+
+  public static boolean teleportThroughDigsitePendant(PortalTeleport portalTeleport) {
+    final TileObject digsitePendant = TileObjects.getNearest("Digsite Pendant");
+
+    if (digsitePendant == null) {
+      System.out.println("pendant is null");
+      return false;
+    }
+
+    final String destination = portalTeleport.getName().toLowerCase();
+
+    for (String action : digsitePendant.getActions()) {
+      if (action != null && action.toLowerCase().contains(destination)) {
+        GameThread.invoke(() -> digsitePendant.interact(action));
+
+        return Time.sleepTicksUntil(() -> !Static.getClient().isInInstancedRegion(), 30);
+      }
+    }
+
+    GameThread.invoke(() -> digsitePendant.interact("Teleport menu"));
+
+    if (!Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(187, 3)), 30)) {
+      return false;
+    }
+
+    final Widget[] children = Widgets.get(187, 3).getChildren();
+
+    if (children == null) {
+      return false;
+    }
+
+    int i;
+
+    for (i = 0; i < children.length; i++) {
+      if (children[i].getText().toLowerCase().contains(destination)) {
+        break;
+      }
+    }
+
+    final Widget destinationWidget = Widgets.get(187, 3, i);
 
     if (destinationWidget == null) {
       return false;
