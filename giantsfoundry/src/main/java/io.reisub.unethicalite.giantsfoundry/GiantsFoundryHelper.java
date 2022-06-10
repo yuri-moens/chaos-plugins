@@ -43,6 +43,9 @@ public class GiantsFoundryHelper
 
 	public int[] getCurrentHeatRange()
 	{
+		if (state.getCurrentStage() == null) {
+			return new int[]{0, 0};
+		}
 		switch (state.getCurrentStage())
 		{
 			case POLISHING_WHEEL:

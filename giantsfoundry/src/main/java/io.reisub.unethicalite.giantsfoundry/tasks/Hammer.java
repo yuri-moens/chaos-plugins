@@ -7,13 +7,14 @@ import io.reisub.unethicalite.giantsfoundry.GiantsFoundryState;
 import io.reisub.unethicalite.giantsfoundry.enums.Stage;
 import io.reisub.unethicalite.utils.tasks.Task;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.TileObject;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.TileObjects;
 
 import javax.inject.Inject;
 
-@RequiredArgsConstructor
+@Slf4j
 public class Hammer extends Task {
     @Inject private GiantsFoundry plugin;
 
@@ -41,7 +42,7 @@ public class Hammer extends Task {
         }
 
         th.interact("Use");
-        Time.sleepTicksUntil(() -> !giantsFoundryState.getCurrentStage().equals(Stage.TRIP_HAMMER) || giantsFoundryState.getHeatAmount() < giantsFoundryHelper.getCurrentHeatRange()[0], 30);
+        Time.sleepTicksUntil(() -> !giantsFoundryState.getCurrentStage().equals(Stage.TRIP_HAMMER) || giantsFoundryState.getHeatAmount() < giantsFoundryHelper.getCurrentHeatRange()[0], 100);
 
     }
 }

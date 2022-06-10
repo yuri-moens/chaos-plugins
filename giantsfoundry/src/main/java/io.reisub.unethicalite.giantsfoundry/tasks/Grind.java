@@ -12,7 +12,6 @@ import net.unethicalite.api.entities.TileObjects;
 
 import javax.inject.Inject;
 
-@RequiredArgsConstructor
 public class Grind extends Task {
     @Inject private GiantsFoundry plugin;
 
@@ -40,7 +39,7 @@ public class Grind extends Task {
         }
 
         gs.interact("Use");
-        Time.sleepTicksUntil(() -> !giantsFoundryState.getCurrentStage().equals(Stage.GRINDSTONE) || giantsFoundryState.getHeatAmount() > giantsFoundryHelper.getCurrentHeatRange()[1], 30);
+        Time.sleepTicksUntil(() -> !giantsFoundryState.getCurrentStage().equals(Stage.GRINDSTONE) || giantsFoundryState.getHeatAmount() > giantsFoundryHelper.getCurrentHeatRange()[1], 100);
 
     }
 }

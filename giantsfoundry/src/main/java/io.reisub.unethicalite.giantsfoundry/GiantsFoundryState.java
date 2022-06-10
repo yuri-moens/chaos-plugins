@@ -2,10 +2,10 @@ package io.reisub.unethicalite.giantsfoundry;
 
 import io.reisub.unethicalite.giantsfoundry.enums.Heat;
 import io.reisub.unethicalite.giantsfoundry.enums.Stage;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.widgets.Widget;
+import net.unethicalite.api.game.Vars;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
+@Slf4j
 public class GiantsFoundryState
 {
 	// heat and progress are from 0-1000
@@ -39,6 +40,10 @@ public class GiantsFoundryState
 	private static final int WIDGET_HIGH_HEAT_PARENT = 49414165;
 
 	private static final int WIDGET_PROGRESS_PARENT = 49414219;
+	private static final int WIDGET_BONUS_PARENT = 49414148;
+
+
+
 	// children with type 3 are stage boxes
 	// every 11th child is a sprite
 
@@ -48,10 +53,6 @@ public class GiantsFoundryState
 
 	@Inject
 	private Client client;
-
-	@Setter
-	@Getter
-	private boolean enabled;
 
 	private final List<Stage> stages = new ArrayList<>();
 	private double heatRangeRatio = 0;
@@ -64,22 +65,32 @@ public class GiantsFoundryState
 
 	public int getHeatAmount()
 	{
-		return client.getVarbitValue(VARBIT_HEAT);
+		return Vars.getBit(VARBIT_HEAT);
 	}
 
 	public int getProgressAmount()
 	{
-		return client.getVarbitValue(VARBIT_PROGRESS);
+		return Vars.getBit(VARBIT_PROGRESS);
+	}
+
+	public int getGameStage()
+	{
+		return Vars.getBit(VARBIT_GAME_STAGE);
+	}
+
+	public int getOreCount()
+	{
+		return Vars.getBit(VARBIT_ORE_COUNT);
 	}
 
 	public int getFirstPartCommission()
 	{
-		return client.getVarbitValue(VARBIT_COMMISSION_1);
+		return Vars.getBit(VARBIT_COMMISSION_1);
 	}
 
 	public int getSecondPartCommission()
 	{
-		return client.getVarbitValue(VARBIT_COMMISSION_2);
+		return Vars.getBit(VARBIT_COMMISSION_2);
 	}
 
 	public double getHeatRangeRatio()
@@ -188,5 +199,4 @@ public class GiantsFoundryState
 
 		return Heat.NONE;
 	}
-
 }

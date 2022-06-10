@@ -1,43 +1,41 @@
 package io.reisub.unethicalite.giantsfoundry.tasks;
 
-import io.reisub.unethicalite.giantsfoundry.Config;
 import io.reisub.unethicalite.giantsfoundry.GiantsFoundry;
 import io.reisub.unethicalite.giantsfoundry.GiantsFoundryState;
 import io.reisub.unethicalite.utils.tasks.Task;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.NPC;
 import net.runelite.api.widgets.Widget;
+import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.NPCs;
+import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.widgets.Dialog;
 
 import javax.inject.Inject;
 import java.util.List;
 
-@Slf4j
-public class GetCommission extends Task {
+public class HandIn extends Task {
     @Inject private GiantsFoundry plugin;
 
-    @Inject
-    private GiantsFoundryState giantsFoundryState;
+    @Inject private GiantsFoundryState giantsFoundryState;
 
     @Override
     public String getStatus() {
-        return "Getting a commission";
+        return "Handing in the sword";
     }
 
     @Override
     public boolean validate() {
-        return giantsFoundryState.getCurrentStage() == null && giantsFoundryState.getFirstPartCommission() == 0;
+        return giantsFoundryState.getProgressAmount() == 1000;
     }
 
     @Override
     public void execute() {
+        Time.sleepTicksUntil(() -> Players.getLocal().isIdle(), 10);
         NPC kovac = NPCs.getNearest("Kovac");
         if (kovac == null) {
             return;
         }
-        kovac.interact("Commission");
+        kovac.interact("Hand-in");
         while (Dialog.isViewingOptions() || Dialog.canContinue()) {
             if (Dialog.isViewingOptions()) {
                 List<Widget> options = Dialog.getOptions();

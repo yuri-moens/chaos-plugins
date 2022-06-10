@@ -6,14 +6,14 @@ import io.reisub.unethicalite.giantsfoundry.GiantsFoundryHelper;
 import io.reisub.unethicalite.giantsfoundry.GiantsFoundryState;
 import io.reisub.unethicalite.giantsfoundry.enums.Stage;
 import io.reisub.unethicalite.utils.tasks.Task;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.TileObject;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.TileObjects;
 
 import javax.inject.Inject;
 
-@RequiredArgsConstructor
+@Slf4j
 public class CoolDown extends Task {
     @Inject private GiantsFoundry plugin;
 
@@ -46,7 +46,7 @@ public class CoolDown extends Task {
                 TileObject lp = TileObjects.getNearest("Waterfall");
                 if (lp != null) {
                     lp.interact("Quench-preform");
-                    Time.sleepTicksUntil(() -> giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.QUENCH_WATERFALL_HEAT < giantsFoundryHelper.getCurrentHeatRange()[0], 20);
+                    Time.sleepTicksUntil(() -> giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.QUENCH_WATERFALL_HEAT*2 < giantsFoundryHelper.getCurrentHeatRange()[0], 20);
                 }
             }
 
@@ -54,7 +54,7 @@ public class CoolDown extends Task {
                 TileObject lp = TileObjects.getNearest("Waterfall");
                 if (lp != null) {
                     lp.interact("Cool-preform");
-                    Time.sleepTicksUntil(() -> giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.COOL_WATERFALL_HEAT < giantsFoundryHelper.getCurrentHeatRange()[0], 20);
+                    Time.sleepTicksUntil(() -> giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.COOL_WATERFALL_HEAT*2 < giantsFoundryHelper.getCurrentHeatRange()[0], 20);
                 }
             }
         } else {
@@ -62,7 +62,7 @@ public class CoolDown extends Task {
                 TileObject lp = TileObjects.getNearest("Waterfall");
                 if (lp != null) {
                     lp.interact("Quench-preform");
-                    Time.sleepTicksUntil(() -> giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.QUENCH_WATERFALL_HEAT < giantsFoundryHelper.getCurrentHeatRange()[1], 20);
+                    Time.sleepTicksUntil(() -> giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.QUENCH_WATERFALL_HEAT*2 < giantsFoundryHelper.getCurrentHeatRange()[1], 20);
                 }
             }
 
@@ -70,7 +70,7 @@ public class CoolDown extends Task {
                 TileObject lp = TileObjects.getNearest("Waterfall");
                 if (lp != null) {
                     lp.interact("Cool-preform");
-                    Time.sleepTicksUntil(() -> giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.COOL_WATERFALL_HEAT < giantsFoundryHelper.getCurrentHeatRange()[1], 20);
+                    Time.sleepTicksUntil(() -> giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.COOL_WATERFALL_HEAT*2 < giantsFoundryHelper.getCurrentHeatRange()[1], 20);
                 }
             } else {
                 Time.sleepTicksUntil(() -> giantsFoundryState.getHeatAmount() < giantsFoundryHelper.getCurrentHeatRange()[0], 15);

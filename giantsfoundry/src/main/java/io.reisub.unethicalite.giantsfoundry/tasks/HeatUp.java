@@ -6,22 +6,21 @@ import io.reisub.unethicalite.giantsfoundry.GiantsFoundryHelper;
 import io.reisub.unethicalite.giantsfoundry.GiantsFoundryState;
 import io.reisub.unethicalite.giantsfoundry.enums.Stage;
 import io.reisub.unethicalite.utils.tasks.Task;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.Client;
 import net.runelite.api.TileObject;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.TileObjects;
 
 import javax.inject.Inject;
 
-@RequiredArgsConstructor
+@Slf4j
 public class HeatUp extends Task {
     @Inject private GiantsFoundry plugin;
-
-    @Inject
-    GiantsFoundryState giantsFoundryState;
-
-    @Inject
-    GiantsFoundryHelper giantsFoundryHelper;
+    @Inject private GiantsFoundryState state;
+    @Inject private GiantsFoundryHelper helper;
+    @Inject private Config config;
+    @Inject private Client client;
 
     @Override
     public String getStatus() {
@@ -30,47 +29,47 @@ public class HeatUp extends Task {
 
     @Override
     public boolean validate() {
-        Stage currentStage = giantsFoundryState.getCurrentStage();
+        Stage currentStage = state.getCurrentStage();
         if (currentStage == null) {
             return false;
         }
 
-        return giantsFoundryState.getHeatAmount() < giantsFoundryHelper.getCurrentHeatRange()[0];
+        return state.getHeatAmount() < helper.getCurrentHeatRange()[0];
 
     }
 
     @Override
     public void execute() {
-        if (giantsFoundryState.getCurrentStage().getHeatChange() < 0) {
-            if (giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.DUNK_LAVA_HEAT < giantsFoundryHelper.getCurrentHeatRange()[1]) {
+        if (state.getCurrentStage().getHeatChange() < 0) {
+            if (state.getHeatAmount() + GiantsFoundryHelper.DUNK_LAVA_HEAT < helper.getCurrentHeatRange()[1]) {
                 TileObject lp = TileObjects.getNearest("Lava pool");
                 if (lp != null) {
                     lp.interact("Dunk-preform");
-                    Time.sleepTicksUntil(() -> giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.DUNK_LAVA_HEAT > giantsFoundryHelper.getCurrentHeatRange()[1], 20);
+                    Time.sleepTicksUntil(() -> state.getHeatAmount() + GiantsFoundryHelper.DUNK_LAVA_HEAT*2 > helper.getCurrentHeatRange()[1], 20);
                 }
             }
 
-            if (giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.HEAT_LAVA_HEAT < giantsFoundryHelper.getCurrentHeatRange()[1]) {
+            if (state.getHeatAmount() + GiantsFoundryHelper.HEAT_LAVA_HEAT < helper.getCurrentHeatRange()[1]) {
                 TileObject lp = TileObjects.getNearest("Lava pool");
                 if (lp != null) {
                     lp.interact("Heat-preform");
-                    Time.sleepTicksUntil(() -> giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.HEAT_LAVA_HEAT > giantsFoundryHelper.getCurrentHeatRange()[1], 20);
+                    Time.sleepTicksUntil(() -> state.getHeatAmount() + GiantsFoundryHelper.HEAT_LAVA_HEAT*2 > helper.getCurrentHeatRange()[1], 20);
                 }
             }
         } else {
-            if (giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.DUNK_LAVA_HEAT < giantsFoundryHelper.getCurrentHeatRange()[0]) {
+            if (state.getHeatAmount() + GiantsFoundryHelper.DUNK_LAVA_HEAT < helper.getCurrentHeatRange()[0]) {
                 TileObject lp = TileObjects.getNearest("Lava pool");
                 if (lp != null) {
                     lp.interact("Dunk-preform");
-                    Time.sleepTicksUntil(() -> giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.DUNK_LAVA_HEAT > giantsFoundryHelper.getCurrentHeatRange()[0], 20);
+                    Time.sleepTicksUntil(() -> state.getHeatAmount() + GiantsFoundryHelper.DUNK_LAVA_HEAT*2 > helper.getCurrentHeatRange()[0], 20);
                 }
             }
 
-            if (giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.HEAT_LAVA_HEAT < giantsFoundryHelper.getCurrentHeatRange()[0]) {
+            if (state.getHeatAmount() + GiantsFoundryHelper.HEAT_LAVA_HEAT < helper.getCurrentHeatRange()[0]) {
                 TileObject lp = TileObjects.getNearest("Lava pool");
                 if (lp != null) {
                     lp.interact("Heat-preform");
-                    Time.sleepTicksUntil(() -> giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.HEAT_LAVA_HEAT > giantsFoundryHelper.getCurrentHeatRange()[0], 20);
+                    Time.sleepTicksUntil(() -> state.getHeatAmount() + GiantsFoundryHelper.HEAT_LAVA_HEAT*2 > helper.getCurrentHeatRange()[0], 20);
                 }
             }
         }
