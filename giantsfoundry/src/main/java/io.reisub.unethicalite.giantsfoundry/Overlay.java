@@ -2,59 +2,62 @@ package io.reisub.unethicalite.giantsfoundry;
 
 import com.openosrs.client.ui.overlay.components.table.TableAlignment;
 import com.openosrs.client.ui.overlay.components.table.TableComponent;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.client.ui.overlay.OverlayPanel;
 import net.runelite.client.ui.overlay.components.TitleComponent;
 import net.runelite.client.util.ColorUtil;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.awt.*;
-import java.time.Duration;
-import java.time.Instant;
-
-import static org.apache.commons.lang3.time.DurationFormatUtils.formatDuration;
-
 
 @Slf4j
 @Singleton
 public class Overlay extends OverlayPanel {
-    @Inject private GiantsFoundry plugin;
-    @Inject private GiantsFoundryState state;
-    @Inject private GiantsFoundryHelper helper;
-    @Inject private Config config;
-    @Inject private Client client;
+  @Inject
+  private GiantsFoundry plugin;
+  @Inject
+  private GiantsFoundryState state;
+  @Inject
+  private GiantsFoundryHelper helper;
+  @Inject
+  private Config config;
+  @Inject
+  private Client client;
 
 
-    @Override
-    public Dimension render(Graphics2D graphics) {
-        TableComponent tableComponent = new TableComponent();
-        tableComponent.setColumnAlignments(TableAlignment.LEFT, TableAlignment.RIGHT);
+  @Override
+  public Dimension render(Graphics2D graphics) {
+    TableComponent tableComponent = new TableComponent();
+    tableComponent.setColumnAlignments(TableAlignment.LEFT, TableAlignment.RIGHT);
 
 
-        if (state.getCurrentStage() != null) {
-            tableComponent.addRow("Stage", state.getCurrentStage().getName());
-        }
-        tableComponent.addRow("Heat:", String.valueOf(state.getHeatAmount()));
-        tableComponent.addRow("Heat range:", String.valueOf(helper.getCurrentHeatRange()[0] + " - " + String.valueOf(helper.getCurrentHeatRange()[1])));
-        tableComponent.addRow("Bars in crucible:", String.valueOf(state.getOreCount()));
-        tableComponent.addRow("GameStage", String.valueOf(state.getGameStage()));
-        tableComponent.addRow("Progress", String.valueOf(state.getProgressAmount()));
-
-
-        if (!tableComponent.isEmpty()) {
-            panelComponent.setBackgroundColor(ColorUtil.fromHex("#121212")); //Material Dark default
-            panelComponent.setPreferredSize(new Dimension(200, 200));
-            panelComponent.setBorder(new Rectangle(5, 5, 5, 5));
-            panelComponent.getChildren().add(TitleComponent.builder()
-                    .text("Chaos Giants Foundry")
-                    .color(ColorUtil.fromHex("#40C4FF"))
-                    .build());
-            panelComponent.getChildren().add(tableComponent);
-
-        }
-
-        return super.render(graphics);
+    if (state.getCurrentStage() != null) {
+      tableComponent.addRow("Stage", state.getCurrentStage().getName());
     }
+    tableComponent.addRow("Heat:", String.valueOf(state.getHeatAmount()));
+    tableComponent.addRow("Heat range:", String.valueOf(
+        helper.getCurrentHeatRange()[0] + " - " + String.valueOf(helper.getCurrentHeatRange()[1])));
+    tableComponent.addRow("Bars in crucible:", String.valueOf(state.getOreCount()));
+    tableComponent.addRow("GameStage", String.valueOf(state.getGameStage()));
+    tableComponent.addRow("Progress", String.valueOf(state.getProgressAmount()));
+
+
+    if (!tableComponent.isEmpty()) {
+      panelComponent.setBackgroundColor(ColorUtil.fromHex("#121212")); //Material Dark default
+      panelComponent.setPreferredSize(new Dimension(200, 200));
+      panelComponent.setBorder(new Rectangle(5, 5, 5, 5));
+      panelComponent.getChildren().add(TitleComponent.builder()
+          .text("Chaos Giants Foundry")
+          .color(ColorUtil.fromHex("#40C4FF"))
+          .build());
+      panelComponent.getChildren().add(tableComponent);
+
+    }
+
+    return super.render(graphics);
+  }
 }
