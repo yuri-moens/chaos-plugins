@@ -1,5 +1,6 @@
 package io.reisub.unethicalite.giantsfoundry;
 
+import io.reisub.unethicalite.giantsfoundry.enums.Alloy;
 import io.reisub.unethicalite.giantsfoundry.enums.Heat;
 import io.reisub.unethicalite.giantsfoundry.enums.Stage;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class GiantsFoundryState {
   private static final int VARBIT_COMMISSION_1 = 13907;
   private static final int VARBIT_COMMISSION_2 = 13908;
 
-  private static final int VARBIT_ORE_COUNT = 13932;
+  private static final int VARBIT_ORE_COUNT_START = 13931;
   private static final int VARBIT_FORTE_SELECTED = 13910;
   private static final int VARBIT_BLADE_SELECTED = 13911;
   private static final int VARBIT_TIP_SELECTED = 13912;
@@ -70,7 +71,11 @@ public class GiantsFoundryState {
   }
 
   public int getOreCount() {
-    return Vars.getBit(VARBIT_ORE_COUNT);
+    int barAmount = 0;
+    for (int i = 0; i < Alloy.values().length; i++) {
+      barAmount += Vars.getBit(VARBIT_ORE_COUNT_START + i);
+    }
+    return barAmount;
   }
 
   public int getFirstPartCommission() {

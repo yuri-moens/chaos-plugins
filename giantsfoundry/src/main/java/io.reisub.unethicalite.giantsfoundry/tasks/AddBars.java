@@ -42,7 +42,7 @@ public class AddBars extends Task {
 
   @Override
   public void execute() {
-    TileObject crucible = TileObjects.getNearest("Crucible (empty)");
+    TileObject crucible = TileObjects.getNearest("Crucible (empty)", "Crucible (partially full)");
     if (crucible == null) {
       return;
     }
