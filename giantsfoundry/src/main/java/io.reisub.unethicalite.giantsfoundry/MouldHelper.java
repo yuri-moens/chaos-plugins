@@ -51,6 +51,7 @@ public class MouldHelper {
 
       if (score > bestScore) {
         best = mould;
+        bestScore = score;
       }
     }
 
