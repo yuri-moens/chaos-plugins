@@ -56,7 +56,8 @@ public class HandleBank extends BankTask {
     final int emptySlots = Inventory.contains(ItemID.HAMMER, ItemID.IMCANDO_HAMMER) ? 27 : 28;
 
     if (Bank.getCount(true, config.metal().getBarId()) >= config.product().getRequiredBars()) {
-      if ((config.amount() - plugin.getItemsMade()) * config.product().getRequiredBars()
+      if (config.amount() > 0
+          && (config.amount() - plugin.getItemsMade()) * config.product().getRequiredBars()
           < emptySlots) {
         Bank.withdraw(config.metal().getBarId(),
             (config.amount() - plugin.getItemsMade()) * config.product().getRequiredBars(),
