@@ -19,7 +19,7 @@ public interface Config extends net.runelite.client.config.Config {
 
   @ConfigItem(
       keyName = "amount",
-      name = "amount",
+      name = "Amount",
       description = "Amount to make (0 means go until out of materials)",
       position = 2
   )
