@@ -6,8 +6,10 @@ import io.reisub.unethicalite.giantsfoundry.GiantsFoundryHelper;
 import io.reisub.unethicalite.giantsfoundry.GiantsFoundryState;
 import io.reisub.unethicalite.giantsfoundry.enums.Alloy;
 import io.reisub.unethicalite.utils.tasks.Task;
+import java.util.Map;
 import javax.inject.Inject;
 import net.runelite.api.TileObject;
+import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
@@ -15,7 +17,8 @@ import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.widgets.Dialog;
 import net.unethicalite.api.widgets.Production;
 
-public class AddBars extends Task {
+public class AddToCrucible extends Task {
+
   @Inject
   GiantsFoundryState giantsFoundryState;
   @Inject
@@ -27,16 +30,14 @@ public class AddBars extends Task {
 
   @Override
   public String getStatus() {
-    return "Adding bars";
+    return "Adding to crucible";
   }
 
   @Override
   public boolean validate() {
-    return giantsFoundryState.getGameStage() == 1 && giantsFoundryState.getOreCount() < 28
-        &&
-        (Inventory.contains(config.alloy1().getBarId())
-            ||
-            Inventory.contains(config.alloy2().getBarId()));
+    return giantsFoundryState.getGameStage() == 1
+        && giantsFoundryState.getOreCount() < 28
+        && haveIngredients();
 
   }
 
@@ -59,5 +60,14 @@ public class AddBars extends Task {
     System.out.println(Dialog.getOptions());
     Production.chooseOption(bar.getDialogIndex());
     Time.sleepTicksUntil(() -> Players.getLocal().isIdle(), 10);
+  }
+
+  private boolean haveIngredients() {    final Map<String, Integer> ingredients = plugin.getIngredients();
+
+    if (ingredients == null) {
+      return Inventory.contains(config.alloy1().getBarId(), config.alloy2().getBarId());
+    } else {
+      return Inventory.contains(Predicates.names(ingredients.keySet()));
+    }
   }
 }

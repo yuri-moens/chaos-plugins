@@ -6,10 +6,17 @@ import io.reisub.unethicalite.giantsfoundry.GiantsFoundryHelper;
 import io.reisub.unethicalite.giantsfoundry.GiantsFoundryState;
 import io.reisub.unethicalite.giantsfoundry.enums.Alloy;
 import io.reisub.unethicalite.utils.tasks.BankTask;
+import java.util.Map;
 import javax.inject.Inject;
+import net.unethicalite.api.commons.Predicates;
+import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Bank.WithdrawMode;
 import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.widgets.Dialog;
 
-public class Bank extends BankTask {
+public class HandleBank extends BankTask {
+
   @Inject
   GiantsFoundryState giantsFoundryState;
   @Inject
@@ -26,30 +33,50 @@ public class Bank extends BankTask {
 
   @Override
   public boolean validate() {
-    return !Inventory.isFull() && giantsFoundryState.getGameStage() == 1
-        &&
-        giantsFoundryState.getOreCount() == 0;
-
+    return giantsFoundryState.getGameStage() == 1
+        && giantsFoundryState.getOreCount() == 0
+        && needIngredients();
   }
 
   @Override
   public void execute() {
     open(15, 10);
-    net.unethicalite.api.items.Bank.depositInventory();
+    Bank.depositInventory();
 
-    Alloy alloy1 = config.alloy1();
-    Alloy alloy2 = config.alloy2();
+    final Map<String, Integer> ingredients = plugin.getIngredients();
 
-    if (alloy1.equals(alloy2)) {
-      net.unethicalite.api.items.Bank.withdrawAll(alloy1.getBarId(),
-          net.unethicalite.api.items.Bank.WithdrawMode.ITEM);
+    if (ingredients == null) {
+      Alloy alloy1 = config.alloy1();
+      Alloy alloy2 = config.alloy2();
+
+      if (alloy1.equals(alloy2)) {
+        Bank.withdrawAll(alloy1.getBarId(), Bank.WithdrawMode.ITEM);
+      } else {
+        Bank.withdraw(alloy1.getBarId(), 14, Bank.WithdrawMode.ITEM);
+        Bank.withdraw(alloy2.getBarId(), 14, Bank.WithdrawMode.ITEM);
+      }
     } else {
-      net.unethicalite.api.items.Bank.withdraw(alloy1.getBarId(), 14,
-          net.unethicalite.api.items.Bank.WithdrawMode.ITEM);
-      net.unethicalite.api.items.Bank.withdraw(alloy2.getBarId(), 14,
-          net.unethicalite.api.items.Bank.WithdrawMode.ITEM);
+      for (Map.Entry<String, Integer> ingredient : ingredients.entrySet()) {
+        Bank.withdraw(ingredient.getKey(), ingredient.getValue(), WithdrawMode.ITEM);
+      }
+
+      Time.sleepTick();
+    }
+
+    if (Dialog.isOpen()) {
+      Dialog.close();
     }
 
     close();
+  }
+
+  private boolean needIngredients() {
+    final Map<String, Integer> ingredients = plugin.getIngredients();
+
+    if (ingredients == null) {
+      return !Inventory.contains(config.alloy1().getBarId(), config.alloy2().getBarId());
+    } else {
+      return !Inventory.contains(Predicates.names(ingredients.keySet()));
+    }
   }
 }

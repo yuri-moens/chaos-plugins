@@ -1,13 +1,13 @@
 package io.reisub.unethicalite.giantsfoundry;
 
 import com.google.inject.Provides;
-import io.reisub.unethicalite.giantsfoundry.tasks.AddBars;
-import io.reisub.unethicalite.giantsfoundry.tasks.Bank;
+import io.reisub.unethicalite.giantsfoundry.tasks.AddToCrucible;
 import io.reisub.unethicalite.giantsfoundry.tasks.CoolDown;
 import io.reisub.unethicalite.giantsfoundry.tasks.GetCommission;
 import io.reisub.unethicalite.giantsfoundry.tasks.Grind;
 import io.reisub.unethicalite.giantsfoundry.tasks.Hammer;
 import io.reisub.unethicalite.giantsfoundry.tasks.HandIn;
+import io.reisub.unethicalite.giantsfoundry.tasks.HandleBank;
 import io.reisub.unethicalite.giantsfoundry.tasks.HeatUp;
 import io.reisub.unethicalite.giantsfoundry.tasks.PickUpPreform;
 import io.reisub.unethicalite.giantsfoundry.tasks.Polish;
@@ -15,6 +15,8 @@ import io.reisub.unethicalite.giantsfoundry.tasks.Pour;
 import io.reisub.unethicalite.giantsfoundry.tasks.SetMoulds;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
+import java.util.HashMap;
+import java.util.Map;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +49,8 @@ public class GiantsFoundry extends TickScript {
   private OverlayManager overlayManager;
   @Getter
   private boolean hasCommission;
+  @Getter
+  private Map<String, Integer> ingredients;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
@@ -62,8 +66,8 @@ public class GiantsFoundry extends TickScript {
     addTask(GetCommission.class);
     addTask(HandIn.class);
     addTask(SetMoulds.class);
-    addTask(Bank.class);
-    addTask(AddBars.class);
+    addTask(HandleBank.class);
+    addTask(AddToCrucible.class);
     addTask(Pour.class);
     addTask(PickUpPreform.class);
     addTask(HeatUp.class);
@@ -74,6 +78,7 @@ public class GiantsFoundry extends TickScript {
 
     log.info(String.valueOf(tasks.size()));
 
+    ingredients = parseIngredients();
   }
 
   @Override
@@ -94,5 +99,28 @@ public class GiantsFoundry extends TickScript {
         && event.getItemContainer().count(PREFORM) == 0) {
       reset();
     }
+  }
+
+  private Map<String, Integer> parseIngredients() {
+    if (config.ingredients().equals("")) {
+      return null;
+    }
+
+    final Map<String, Integer> ingredients = new HashMap<>();
+
+    for (String line : config.ingredients().split("\n")) {
+      final String[] splitLine = line.split(" ", 1);
+
+      if (splitLine.length != 2) {
+        return null;
+      }
+
+      final int amount = Integer.parseInt(splitLine[0]);
+      final String name = splitLine[1];
+
+      ingredients.put(name, amount);
+    }
+
+    return ingredients;
   }
 }

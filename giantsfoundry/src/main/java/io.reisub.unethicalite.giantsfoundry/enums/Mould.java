@@ -9,6 +9,7 @@ import static io.reisub.unethicalite.giantsfoundry.enums.CommissionType.SPIKED;
 import static io.reisub.unethicalite.giantsfoundry.enums.MouldType.BLADE;
 import static io.reisub.unethicalite.giantsfoundry.enums.MouldType.FORTE;
 import static io.reisub.unethicalite.giantsfoundry.enums.MouldType.TIP;
+
 import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
 import java.util.List;

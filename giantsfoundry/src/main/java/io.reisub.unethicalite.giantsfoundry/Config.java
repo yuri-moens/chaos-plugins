@@ -20,6 +20,17 @@ public interface Config extends net.runelite.client.config.Config {
   }
 
   @ConfigItem(
+      keyName = "ingredients",
+      name = "Ingredients",
+      description = "Leave empty if using bars. 1 line per ingredient. Example:\n"
+          + "3 Mithril platebody\n1 Mithril platelegs\n3 Steel platebody\n1Steel platelegs",
+      position = 2
+  )
+  default String ingredients() {
+    return "3 Mithril platebody\n1 Mithril platelegs\n3 Steel platebody\n1 Steel platelegs";
+  }
+
+  @ConfigItem(
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
