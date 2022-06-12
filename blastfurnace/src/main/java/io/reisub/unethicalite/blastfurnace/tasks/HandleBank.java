@@ -54,7 +54,7 @@ public class HandleBank extends BankTask {
 
     switch (metal) {
       case STEEL:
-        ChaosBank.bankInventoryInteract(coalBag, "Fill");
+        coalBag.interact("Fill");
         Bank.withdrawAll(ItemID.IRON_ORE, Bank.WithdrawMode.ITEM);
 
         plugin.setExpectingBars(true);
@@ -65,7 +65,7 @@ public class HandleBank extends BankTask {
         plugin.setExpectingBars(true);
         break;
       case MITHRIL:
-        ChaosBank.bankInventoryInteract(coalBag, "Fill");
+        coalBag.interact("Fill");
 
         if (getCoalInPot() == 0) {
           Bank.withdrawAll(ItemID.COAL, Bank.WithdrawMode.ITEM);
@@ -75,7 +75,7 @@ public class HandleBank extends BankTask {
         }
         break;
       case ADAMANTITE:
-        ChaosBank.bankInventoryInteract(coalBag, "Fill");
+        coalBag.interact("Fill");
 
         if (getCoalInPot() == 0) {
           Bank.withdrawAll(ItemID.COAL, Bank.WithdrawMode.ITEM);
@@ -85,6 +85,8 @@ public class HandleBank extends BankTask {
         }
         break;
       case RUNITE:
+        coalBag.interact("Fill");
+
         final int coalInPot = getCoalInPot();
 
         if (coalInPot == 0 || coalInPot == 54 || coalInPot == 108) {
