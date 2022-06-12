@@ -1,9 +1,11 @@
 package io.reisub.unethicalite.giantsfoundry;
 
 
+import com.google.common.collect.ImmutableList;
 import io.reisub.unethicalite.giantsfoundry.enums.CommissionType;
 import io.reisub.unethicalite.giantsfoundry.enums.Mould;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
 import net.runelite.api.Client;
@@ -25,6 +27,36 @@ public class MouldHelper {
   @Inject
   private Client client;
 
+  public List<Mould> getBestMoulds() {
+    final CommissionType type1 = CommissionType.forVarbit(Vars.getBit(SWORD_TYPE_1_VARBIT));
+    final CommissionType type2 = CommissionType.forVarbit(Vars.getBit(SWORD_TYPE_2_VARBIT));
+
+    return ImmutableList.of(
+        getBestMould(type1, type2, Mould.getFortes()),
+        getBestMould(type1, type2, Mould.getBlades()),
+        getBestMould(type1, type2, Mould.getTips())
+    );
+  }
+
+  private Mould getBestMould(CommissionType type1, CommissionType type2, List<Mould> moulds) {
+    int bestScore = 0;
+    Mould best = null;
+
+    for (Mould mould : moulds) {
+      if (!mould.isUnlocked()) {
+        continue;
+      }
+
+      final int score = mould.getScore(type1, type2);
+
+      if (score > bestScore) {
+        best = mould;
+      }
+    }
+
+    return best;
+  }
+
   public Widget getBestMould() {
     Widget parent = Widgets.fromId(MOULD_LIST_PARENT);
     if (parent == null || parent.getChildren() == null) {
@@ -39,12 +71,18 @@ public class MouldHelper {
     CommissionType type2 = CommissionType.forVarbit(Vars.getBit(SWORD_TYPE_2_VARBIT));
     for (Map.Entry<Mould, Widget> entry : mouldToChild.entrySet()) {
       Mould mould = entry.getKey();
+
+      if (!mould.isUnlocked()) {
+        continue;
+      }
+
       int score = mould.getScore(type1, type2);
       if (score > bestScore) {
         bestScore = score;
         bestWidget = entry.getValue();
       }
     }
+
     return bestWidget;
   }
 

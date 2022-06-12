@@ -27,8 +27,7 @@ public class GetCommission extends Task {
   @Override
   public boolean validate() {
     return giantsFoundryState.getCurrentStage() == null
-        &&
-        giantsFoundryState.getFirstPartCommission() == 0;
+        && giantsFoundryState.getFirstPartCommission() == 0;
   }
 
   @Override
