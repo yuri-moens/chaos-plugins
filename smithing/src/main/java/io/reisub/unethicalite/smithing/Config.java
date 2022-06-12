@@ -18,6 +18,16 @@ public interface Config extends net.runelite.client.config.Config {
   }
 
   @ConfigItem(
+      keyName = "amount",
+      name = "amount",
+      description = "Amount to make (0 means go until out of materials)",
+      position = 2
+  )
+  default int amount() {
+    return 0;
+  }
+
+  @ConfigItem(
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",

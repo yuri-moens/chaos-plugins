@@ -8,12 +8,16 @@ import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.time.Duration;
 import lombok.AllArgsConstructor;
 import net.runelite.api.ItemID;
+import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Bank.WithdrawMode;
 import net.unethicalite.api.items.Equipment;
 import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.widgets.Dialog;
 
 @AllArgsConstructor
 public class HandleBank extends BankTask {
+
   private final Smithing plugin;
   private final Config config;
 
@@ -45,8 +49,28 @@ public class HandleBank extends BankTask {
     ChaosBank.depositAllExcept(
         false, ItemID.HAMMER, ItemID.IMCANDO_HAMMER, config.metal().getBarId());
 
+    if (config.amount() > 0 && plugin.getItemsMade() >= config.amount()) {
+      plugin.stop("Made " + config.amount() + " items. Stopping plugin.");
+    }
+
+    final int emptySlots = Inventory.contains(ItemID.HAMMER, ItemID.IMCANDO_HAMMER) ? 27 : 28;
+
     if (Bank.getCount(true, config.metal().getBarId()) >= config.product().getRequiredBars()) {
-      Bank.withdrawAll(config.metal().getBarId(), Bank.WithdrawMode.ITEM);
+      if ((config.amount() - plugin.getItemsMade()) * config.product().getRequiredBars()
+          < emptySlots) {
+        Bank.withdraw(config.metal().getBarId(),
+            (config.amount() - plugin.getItemsMade()) * config.product().getRequiredBars(),
+            WithdrawMode.ITEM);
+
+        Time.sleepTick();
+
+        if (Dialog.isOpen()) {
+          Dialog.close();
+        }
+      } else {
+        Bank.withdrawAll(config.metal().getBarId(), Bank.WithdrawMode.ITEM);
+      }
+
       plugin.setActivity(Activity.IDLE);
     } else {
       plugin.stop("Out of bars. Stopping plugin.");

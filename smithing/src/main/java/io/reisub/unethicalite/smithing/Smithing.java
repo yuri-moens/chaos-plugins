@@ -9,6 +9,7 @@ import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Run;
 import java.time.Duration;
 import javax.inject.Inject;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.AnimationID;
 import net.runelite.api.InventoryID;
@@ -30,7 +31,12 @@ import org.pf4j.Extension;
 @Slf4j
 @Extension
 public class Smithing extends TickScript {
-  @Inject private Config config;
+
+  @Inject
+  private Config config;
+  private int lastBarCount;
+  @Getter
+  private int itemsMade;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
@@ -42,6 +48,8 @@ public class Smithing extends TickScript {
     super.onStart();
 
     lastActionTimeout = Duration.ofSeconds(5);
+    itemsMade = 0;
+    lastBarCount = Inventory.getCount(config.metal().getBarId());
 
     addTask(Run.class);
     tasks.add(new HandleBank(this, config));
@@ -54,7 +62,15 @@ public class Smithing extends TickScript {
       return;
     }
 
-    if (Inventory.getCount(config.metal().getBarId()) < config.product().getRequiredBars()
+    final int count = Inventory.getCount(config.metal().getBarId());
+
+    if (count < lastBarCount) {
+      itemsMade++;
+    }
+
+    lastBarCount = count;
+
+    if (count < config.product().getRequiredBars()
         && currentActivity == Activity.SMITHING) {
       setActivity(Activity.IDLE);
     }
