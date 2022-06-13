@@ -899,6 +899,16 @@ public class Constants {
       ObjectID.FROZEN_ORNATE_POOL_OF_REJUVENATION
   );
 
+  public static final Set<Integer> LIZARDMAN_SHAMAN_IDS = ImmutableSet.of(
+      NpcID.LIZARDMAN_SHAMAN,
+      NpcID.LIZARDMAN_SHAMAN_6767,
+      NpcID.LIZARDMAN_SHAMAN_7573,
+      NpcID.LIZARDMAN_SHAMAN_7574,
+      NpcID.LIZARDMAN_SHAMAN_7745,
+      NpcID.LIZARDMAN_SHAMAN_7744,
+      NpcID.LIZARDMAN_SHAMAN_8565
+  );
+
   public static final Set<Integer> PHARAOHS_SCEPTRE_IDS = ImmutableSet.of(
       ItemID.PHARAOHS_SCEPTRE,
       ItemID.PHARAOHS_SCEPTRE_9045,
@@ -1172,7 +1182,8 @@ public class Constants {
       ObjectID.BANK_CHEST_41315,
       ObjectID.BANK_CHEST_41493,
       ObjectID.BANK_CHEST_43697,
-      NullObjectID.NULL_12308
+      NullObjectID.NULL_12308,
+      ObjectID.BANK_CHEST_44630
   );
 
   public static final Set<Integer> BANK_NPC_IDS = ImmutableSet.of(
