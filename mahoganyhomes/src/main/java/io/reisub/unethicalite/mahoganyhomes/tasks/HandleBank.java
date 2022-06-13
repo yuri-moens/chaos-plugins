@@ -21,7 +21,7 @@ import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.items.Bank;
 import net.unethicalite.api.items.Bank.WithdrawMode;
 import net.unethicalite.api.items.Inventory;
-import net.unethicalite.api.movement.pathfinder.BankLocation;
+import net.unethicalite.api.movement.pathfinder.model.BankLocation;
 
 public class HandleBank extends BankTask {
 

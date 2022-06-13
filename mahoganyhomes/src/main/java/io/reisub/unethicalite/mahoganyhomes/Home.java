@@ -8,7 +8,7 @@ import net.runelite.api.Locatable;
 import net.runelite.api.NpcID;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
-import net.unethicalite.api.movement.pathfinder.BankLocation;
+import net.unethicalite.api.movement.pathfinder.model.BankLocation;
 import org.apache.commons.text.WordUtils;
 
 @Getter

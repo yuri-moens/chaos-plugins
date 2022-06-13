@@ -42,7 +42,7 @@ public class LeaveGame extends Task {
       Time.sleepUntil(() -> plugin.isInDesert(), 20000);
     }
 
-    TileObject buckets = TileObjects.getNearest(ObjectID.BUCKETS_40966);
+    TileObject buckets = TileObjects.getNearest(ObjectID.BUCKETS);
     if (buckets == null) {
       return;
     }
