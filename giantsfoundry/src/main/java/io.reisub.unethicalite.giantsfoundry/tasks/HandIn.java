@@ -3,10 +3,9 @@ package io.reisub.unethicalite.giantsfoundry.tasks;
 import io.reisub.unethicalite.giantsfoundry.GiantsFoundry;
 import io.reisub.unethicalite.giantsfoundry.GiantsFoundryState;
 import io.reisub.unethicalite.utils.tasks.Task;
-import java.util.List;
 import javax.inject.Inject;
+import net.runelite.api.DialogOption;
 import net.runelite.api.NPC;
-import net.runelite.api.widgets.Widget;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.NPCs;
 import net.unethicalite.api.entities.Players;
@@ -36,22 +35,32 @@ public class HandIn extends Task {
     if (kovac == null) {
       return;
     }
+
     kovac.interact("Hand-in");
-    while (Dialog.isViewingOptions() || Dialog.canContinue()) {
-      if (Dialog.isViewingOptions()) {
-        List<Widget> options = Dialog.getOptions();
+    Time.sleepTicksUntil(Dialog::isOpen, 20);
 
-        for (Widget opt : options) {
-          if (opt.getText().startsWith("Yes")) {
-            Dialog.chooseOption(opt.getIndex());
-            return;
-          }
-        }
-      }
+    Dialog.invokeDialog(
+        DialogOption.NPC_CONTINUE,
+        DialogOption.PLAIN_CONTINUE,
+        DialogOption.CHAT_OPTION_ONE,
+        DialogOption.PLAYER_CONTINUE
+    );
 
-      if (Dialog.canContinue()) {
-        Dialog.continueSpace();
-      }
-    }
+//    while (Dialog.isViewingOptions() || Dialog.canContinue()) {
+//      if (Dialog.isViewingOptions()) {
+//        List<Widget> options = Dialog.getOptions();
+//
+//        for (Widget opt : options) {
+//          if (opt.getText().startsWith("Yes")) {
+//            Dialog.chooseOption(opt.getIndex());
+//            return;
+//          }
+//        }
+//      }
+//
+//      if (Dialog.canContinue()) {
+//        Dialog.continueSpace();
+//      }
+//    }
   }
 }
