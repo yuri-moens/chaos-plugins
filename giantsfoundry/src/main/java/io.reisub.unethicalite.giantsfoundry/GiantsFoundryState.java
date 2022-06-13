@@ -40,6 +40,7 @@ public class GiantsFoundryState {
 
   private static final int WIDGET_PROGRESS_PARENT = 49414219;
   private static final int WIDGET_BONUS_PARENT = 49414148;
+  private static final int BONUS_COLOR = 0xfcd703;
 
 
   // children with type 3 are stage boxes
@@ -176,5 +177,16 @@ public class GiantsFoundryState {
     }
 
     return Heat.NONE;
+  }
+
+  public boolean bonusActive() {
+    Widget bonusWidget = client.getWidget(WIDGET_BONUS_PARENT);
+    if (bonusWidget != null
+        && bonusWidget.getChildren() != null
+        && bonusWidget.getChildren().length != 0
+        && bonusWidget.getChild(0).getTextColor() == BONUS_COLOR) {
+      return true;
+    }
+    return false;
   }
 }
