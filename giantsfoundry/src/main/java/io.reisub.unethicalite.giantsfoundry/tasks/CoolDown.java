@@ -10,17 +10,19 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.TileObject;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.GameThread;
+import net.unethicalite.client.Static;
 
 @Slf4j
 public class CoolDown extends Task {
+
   @Inject
   private GiantsFoundry plugin;
-
   @Inject
-  private GiantsFoundryState giantsFoundryState;
-
+  private GiantsFoundryState state;
   @Inject
-  private GiantsFoundryHelper giantsFoundryHelper;
+  private GiantsFoundryHelper helper;
+  private int last;
 
   @Override
   public String getStatus() {
@@ -29,75 +31,61 @@ public class CoolDown extends Task {
 
   @Override
   public boolean validate() {
-    Stage currentStage = giantsFoundryState.getCurrentStage();
+    Stage currentStage = state.getCurrentStage();
     if (currentStage == null) {
       return false;
     }
 
-    return giantsFoundryState.getHeatAmount() + 4 > giantsFoundryHelper.getCurrentHeatRange()[1];
+    if (Static.getClient().getTickCount() - last < 5) {
+      return false;
+    }
 
+    return state.getHeatAmount()
+        > helper.getCurrentHeatRange()[1];
   }
 
   @Override
   public void execute() {
-    if (giantsFoundryState.getCurrentStage().getHeatChange() > 0) {
-      if (giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.QUENCH_WATERFALL_HEAT
-          >
-          giantsFoundryHelper.getCurrentHeatRange()[0]) {
-        TileObject lp = TileObjects.getNearest("Waterfall");
-        if (lp != null) {
-          lp.interact("Quench-preform");
-          Time.sleepTicksUntil(() ->
-              giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.QUENCH_WATERFALL_HEAT * 2
-                  <
-                  giantsFoundryHelper.getCurrentHeatRange()[0], 20);
-        }
-      }
+    final int target = getTargetHeat();
 
-      if (giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.COOL_WATERFALL_HEAT
-          >
-          giantsFoundryHelper.getCurrentHeatRange()[0]) {
-        TileObject lp = TileObjects.getNearest("Waterfall");
-        if (lp != null) {
-          lp.interact("Cool-preform");
-          Time.sleepTicksUntil(() ->
-              giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.COOL_WATERFALL_HEAT * 3
-                  <
-                  giantsFoundryHelper.getCurrentHeatRange()[0], 20);
-        }
-      }
-    } else {
-      if (giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.QUENCH_WATERFALL_HEAT
-          >
-          giantsFoundryHelper.getCurrentHeatRange()[1]) {
-        TileObject lp = TileObjects.getNearest("Waterfall");
-        if (lp != null) {
-          lp.interact("Quench-preform");
-          Time.sleepTicksUntil(() ->
-              giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.QUENCH_WATERFALL_HEAT
-                  <
-                  giantsFoundryHelper.getCurrentHeatRange()[1], 20);
-        }
-      }
+    final TileObject waterfall = TileObjects.getNearest("Waterfall");
 
-      if (giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.COOL_WATERFALL_HEAT
-          >
-          giantsFoundryHelper.getCurrentHeatRange()[1]) {
-        TileObject lp = TileObjects.getNearest("Waterfall");
-        if (lp != null) {
-          lp.interact("Cool-preform");
-          Time.sleepTicksUntil(() ->
-              giantsFoundryState.getHeatAmount()
-                  <
-                  giantsFoundryHelper.getCurrentHeatRange()[1], 20);
-        }
-      } else {
-        Time.sleepTicksUntil(() ->
-            giantsFoundryState.getHeatAmount()
-                <
-                giantsFoundryHelper.getCurrentHeatRange()[1], 20);
-      }
+    if (waterfall == null) {
+      return;
     }
 
+    if (state.getHeatAmount() - Math.abs(GiantsFoundryHelper.QUENCH_WATERFALL_HEAT) > target) {
+      GameThread.invoke(() -> waterfall.interact("Quench-preform"));
+
+      Time.sleepTicksUntil(
+          () -> state.getHeatAmount() - Math.abs(GiantsFoundryHelper.QUENCH_WATERFALL_HEAT)
+              < target, 30);
+    }
+
+    if (state.getHeatAmount() - Math.abs(GiantsFoundryHelper.COOL_WATERFALL_HEAT) > target) {
+      GameThread.invoke(() -> waterfall.interact("Cool-preform"));
+
+      Time.sleepTicksUntil(() -> state.getHeatAmount() < target, 30);
+    }
+
+    last = Static.getClient().getTickCount();
+  }
+
+  private int getTargetHeat() {
+    final Stage currentStage = state.getCurrentStage();
+
+    if (currentStage.getHeatChange() > 0) {
+      final int targetForRemainingActions =
+          helper.getCurrentHeatRange()[1]
+              - (helper.getActionsLeftInStage() + 2) * currentStage.getHeatChange();
+
+      return Math.max(
+          targetForRemainingActions,
+          helper.getCurrentHeatRange()[0] + Math.abs(GiantsFoundryHelper.COOL_WATERFALL_HEAT) * 2
+      );
+    } else {
+      return helper.getCurrentHeatRange()[1]
+          - Math.abs(GiantsFoundryHelper.COOL_WATERFALL_HEAT);
+    }
   }
 }
