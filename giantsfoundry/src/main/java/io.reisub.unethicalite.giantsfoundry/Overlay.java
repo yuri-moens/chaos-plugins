@@ -11,7 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.client.ui.overlay.OverlayPanel;
 import net.runelite.client.ui.overlay.components.TitleComponent;
+import net.runelite.client.ui.overlay.tooltip.Tooltip;
 import net.runelite.client.util.ColorUtil;
+import net.unethicalite.api.game.Vars;
 
 
 @Slf4j
@@ -44,6 +46,11 @@ public class Overlay extends OverlayPanel {
     tableComponent.addRow("Bars in crucible:", String.valueOf(state.getOreCount()));
     tableComponent.addRow("GameStage", String.valueOf(state.getGameStage()));
     tableComponent.addRow("Progress", String.valueOf(state.getProgressAmount()));
+    tableComponent.addRow("Points", String.valueOf(Vars.getVarp(3436)));
+    tableComponent.getRows().get(tableComponent.getRows().size() - 1)
+        .setRowColor(ColorUtil.fromHex("#03fc49"));
+
+
 
 
     if (!tableComponent.isEmpty()) {

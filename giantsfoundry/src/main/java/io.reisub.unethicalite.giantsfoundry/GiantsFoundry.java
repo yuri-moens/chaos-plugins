@@ -65,7 +65,9 @@ public class GiantsFoundry extends TickScript {
   protected void onStart() {
     super.onStart();
 
-    overlayManager.add(overlay);
+    if (config.showOverlay()) {
+      overlayManager.add(overlay);
+    }
 
     ingredients = parseIngredients();
 
