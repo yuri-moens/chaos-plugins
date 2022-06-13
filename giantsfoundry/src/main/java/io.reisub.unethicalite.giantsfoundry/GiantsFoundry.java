@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.InventoryID;
 import net.runelite.api.events.ItemContainerChanged;
@@ -51,6 +52,9 @@ public class GiantsFoundry extends TickScript {
   private boolean hasCommission;
   @Getter
   private Map<String, Integer> ingredients;
+  @Getter
+  @Setter
+  private int lastSetMoulds = 0;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {

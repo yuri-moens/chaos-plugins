@@ -26,6 +26,8 @@ public class SetMoulds extends Task {
   private static final int FORTE_CHILD_INDEX = 0;
   private static final int BLADES_CHILD_INDEX = 9;
   private static final int TIPS_CHILD_INDEX = 18;
+  private static final int NUMBER_OF_MOULDS = 11;
+  private static final int MOULD_OFFSET = 17;
 
   @Inject
   private GiantsFoundry plugin;
@@ -35,7 +37,6 @@ public class SetMoulds extends Task {
   private GiantsFoundryHelper giantsFoundryHelper;
   @Inject
   private MouldHelper mouldHelper;
-  private int last;
 
   @Override
   public String getStatus() {
@@ -45,7 +46,7 @@ public class SetMoulds extends Task {
   @Override
   public boolean validate() {
     return giantsFoundryState.getGameStage() == 0
-        && Static.getClient().getTickCount() - last > 5
+        && Static.getClient().getTickCount() - plugin.getLastSetMoulds() > 5
         && giantsFoundryState.getCurrentStage() == null
         && giantsFoundryState.getFirstPartCommission() != 0;
   }
@@ -64,40 +65,36 @@ public class SetMoulds extends Task {
     final Widget tabWidget = Widgets.fromId(MOULD_TABS_WIDGET);
     final Widget mouldWidget = Widgets.fromId(MOULDS_WIDGET);
     final Widget setMouldWidget = Widgets.fromId(MOULD_SET_WIDGET);
-
-    final Widget forteWidget = tabWidget.getChild(FORTE_CHILD_INDEX);
-    final Widget bladesWidget = tabWidget.getChild(BLADES_CHILD_INDEX);
-    final Widget tipsWidget = tabWidget.getChild(TIPS_CHILD_INDEX);
     final Widget optionWidget = mouldWidget.getChild(0);
 
     final List<Mould> bestMoulds = mouldHelper.getBestMoulds();
 
-    forteWidget.interact(1, MenuAction.CC_OP.getId(), FORTE_CHILD_INDEX, MOULD_TABS_WIDGET);
+    tabWidget.interact(1, MenuAction.CC_OP.getId(), FORTE_CHILD_INDEX, MOULD_TABS_WIDGET);
     optionWidget.interact(
         1,
         MenuAction.CC_OP.getId(),
-        (bestMoulds.get(0).ordinal() % 11) * 17
-        , MOULDS_WIDGET
+        (bestMoulds.get(0).ordinal() % NUMBER_OF_MOULDS) * MOULD_OFFSET,
+        MOULDS_WIDGET
     );
 
-    bladesWidget.interact(1, MenuAction.CC_OP.getId(), BLADES_CHILD_INDEX, MOULD_TABS_WIDGET);
+    tabWidget.interact(1, MenuAction.CC_OP.getId(), BLADES_CHILD_INDEX, MOULD_TABS_WIDGET);
     optionWidget.interact(
         1,
         MenuAction.CC_OP.getId(),
-        (bestMoulds.get(1).ordinal() % 11) * 17
-        , MOULDS_WIDGET
+        (bestMoulds.get(1).ordinal() % NUMBER_OF_MOULDS) * MOULD_OFFSET,
+        MOULDS_WIDGET
     );
 
-    tipsWidget.interact(1, MenuAction.CC_OP.getId(), TIPS_CHILD_INDEX, MOULD_TABS_WIDGET);
+    tabWidget.interact(1, MenuAction.CC_OP.getId(), TIPS_CHILD_INDEX, MOULD_TABS_WIDGET);
     optionWidget.interact(
         1,
         MenuAction.CC_OP.getId(),
-        (bestMoulds.get(2).ordinal() % 11) * 17
-        , MOULDS_WIDGET
+        (bestMoulds.get(2).ordinal() % NUMBER_OF_MOULDS) * MOULD_OFFSET,
+        MOULDS_WIDGET
     );
 
     setMouldWidget.interact(1, MenuAction.CC_OP.getId(), -1, MOULD_SET_WIDGET);
 
-    last = Static.getClient().getTickCount();
+    plugin.setLastSetMoulds(Static.getClient().getTickCount());
   }
 }

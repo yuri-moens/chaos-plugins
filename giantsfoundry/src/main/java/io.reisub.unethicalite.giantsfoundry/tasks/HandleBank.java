@@ -14,6 +14,7 @@ import net.unethicalite.api.items.Bank;
 import net.unethicalite.api.items.Bank.WithdrawMode;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.widgets.Dialog;
+import net.unethicalite.client.Static;
 
 public class HandleBank extends BankTask {
 
@@ -33,7 +34,8 @@ public class HandleBank extends BankTask {
 
   @Override
   public boolean validate() {
-    return giantsFoundryState.getGameStage() == 1
+    return (giantsFoundryState.getGameStage() == 1
+        || Static.getClient().getTickCount() - plugin.getLastSetMoulds() < 3)
         && giantsFoundryState.getOreCount() == 0
         && needIngredients();
   }
