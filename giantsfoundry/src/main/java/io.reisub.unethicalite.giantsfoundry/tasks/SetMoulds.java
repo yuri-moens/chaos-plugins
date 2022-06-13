@@ -55,7 +55,6 @@ public class SetMoulds extends Task {
     final TileObject mj = TileObjects.getNearest("Mould jig (Empty)");
 
     if (mj == null) {
-      System.out.println("mj is null");
       return;
     }
 
@@ -69,20 +68,33 @@ public class SetMoulds extends Task {
     final Widget forteWidget = tabWidget.getChild(FORTE_CHILD_INDEX);
     final Widget bladesWidget = tabWidget.getChild(BLADES_CHILD_INDEX);
     final Widget tipsWidget = tabWidget.getChild(TIPS_CHILD_INDEX);
+    final Widget optionWidget = mouldWidget.getChild(0);
 
     final List<Mould> bestMoulds = mouldHelper.getBestMoulds();
 
     forteWidget.interact(1, MenuAction.CC_OP.getId(), FORTE_CHILD_INDEX, MOULD_TABS_WIDGET);
-    Widget option = mouldWidget.getChild((bestMoulds.get(0).ordinal() % 11) * 17);
-    option.interact("Select");
+    optionWidget.interact(
+        1,
+        MenuAction.CC_OP.getId(),
+        (bestMoulds.get(0).ordinal() % 11) * 17
+        , MOULDS_WIDGET
+    );
 
     bladesWidget.interact(1, MenuAction.CC_OP.getId(), BLADES_CHILD_INDEX, MOULD_TABS_WIDGET);
-    option = mouldWidget.getChild((bestMoulds.get(1).ordinal() % 11) * 17);
-    option.interact("Select");
+    optionWidget.interact(
+        1,
+        MenuAction.CC_OP.getId(),
+        (bestMoulds.get(1).ordinal() % 11) * 17
+        , MOULDS_WIDGET
+    );
 
     tipsWidget.interact(1, MenuAction.CC_OP.getId(), TIPS_CHILD_INDEX, MOULD_TABS_WIDGET);
-    option = mouldWidget.getChild((bestMoulds.get(2).ordinal() % 11) * 17);
-    option.interact("Select");
+    optionWidget.interact(
+        1,
+        MenuAction.CC_OP.getId(),
+        (bestMoulds.get(2).ordinal() % 11) * 17
+        , MOULDS_WIDGET
+    );
 
     setMouldWidget.interact(1, MenuAction.CC_OP.getId(), -1, MOULD_SET_WIDGET);
 
