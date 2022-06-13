@@ -40,7 +40,8 @@ public class Hammer extends Task {
     }
 
     th.interact("Use");
-    Time.sleepTicksUntil(() -> !giantsFoundryState.getCurrentStage().equals(Stage.TRIP_HAMMER)
+    Time.sleepTicksUntil(() -> !giantsFoundryState.bonusActive(), 5);
+    Time.sleepTicksUntil(() -> giantsFoundryState.bonusActive() || !giantsFoundryState.getCurrentStage().equals(Stage.TRIP_HAMMER)
         ||
         giantsFoundryState.getHeatAmount() < giantsFoundryHelper.getCurrentHeatRange()[0], 100);
 

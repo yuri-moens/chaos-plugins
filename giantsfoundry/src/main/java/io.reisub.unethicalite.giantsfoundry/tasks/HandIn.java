@@ -45,22 +45,5 @@ public class HandIn extends Task {
         DialogOption.CHAT_OPTION_ONE,
         DialogOption.PLAYER_CONTINUE
     );
-
-//    while (Dialog.isViewingOptions() || Dialog.canContinue()) {
-//      if (Dialog.isViewingOptions()) {
-//        List<Widget> options = Dialog.getOptions();
-//
-//        for (Widget opt : options) {
-//          if (opt.getText().startsWith("Yes")) {
-//            Dialog.chooseOption(opt.getIndex());
-//            return;
-//          }
-//        }
-//      }
-//
-//      if (Dialog.canContinue()) {
-//        Dialog.continueSpace();
-//      }
-//    }
   }
 }

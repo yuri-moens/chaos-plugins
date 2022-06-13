@@ -38,7 +38,8 @@ public class Grind extends Task {
     }
 
     gs.interact("Use");
-    Time.sleepTicksUntil(() -> !giantsFoundryState.getCurrentStage().equals(Stage.GRINDSTONE)
+    Time.sleepTicksUntil(() -> !giantsFoundryState.bonusActive(), 5);
+    Time.sleepTicksUntil(() -> giantsFoundryState.bonusActive() || !giantsFoundryState.getCurrentStage().equals(Stage.GRINDSTONE)
         ||
         giantsFoundryState.getHeatAmount() > giantsFoundryHelper.getCurrentHeatRange()[1], 100);
 
