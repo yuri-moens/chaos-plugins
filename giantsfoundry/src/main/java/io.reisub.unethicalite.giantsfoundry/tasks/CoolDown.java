@@ -34,7 +34,7 @@ public class CoolDown extends Task {
       return false;
     }
 
-    return giantsFoundryState.getHeatAmount() > giantsFoundryHelper.getCurrentHeatRange()[1];
+    return giantsFoundryState.getHeatAmount() + 4 > giantsFoundryHelper.getCurrentHeatRange()[1];
 
   }
 
@@ -61,7 +61,7 @@ public class CoolDown extends Task {
         if (lp != null) {
           lp.interact("Cool-preform");
           Time.sleepTicksUntil(() ->
-              giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.COOL_WATERFALL_HEAT * 2
+              giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.COOL_WATERFALL_HEAT * 3
                   <
                   giantsFoundryHelper.getCurrentHeatRange()[0], 20);
         }
@@ -74,7 +74,7 @@ public class CoolDown extends Task {
         if (lp != null) {
           lp.interact("Quench-preform");
           Time.sleepTicksUntil(() ->
-              giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.QUENCH_WATERFALL_HEAT * 2
+              giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.QUENCH_WATERFALL_HEAT
                   <
                   giantsFoundryHelper.getCurrentHeatRange()[1], 20);
         }
@@ -87,14 +87,15 @@ public class CoolDown extends Task {
         if (lp != null) {
           lp.interact("Cool-preform");
           Time.sleepTicksUntil(() ->
-              giantsFoundryState.getHeatAmount() + GiantsFoundryHelper.COOL_WATERFALL_HEAT * 2
+              giantsFoundryState.getHeatAmount()
                   <
                   giantsFoundryHelper.getCurrentHeatRange()[1], 20);
         }
       } else {
-        Time.sleepTicksUntil(
-            () -> giantsFoundryState.getHeatAmount() < giantsFoundryHelper.getCurrentHeatRange()[0],
-            15);
+        Time.sleepTicksUntil(() ->
+            giantsFoundryState.getHeatAmount()
+                <
+                giantsFoundryHelper.getCurrentHeatRange()[1], 20);
       }
     }
 
