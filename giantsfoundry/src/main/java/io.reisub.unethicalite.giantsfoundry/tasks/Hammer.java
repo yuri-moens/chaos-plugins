@@ -13,6 +13,7 @@ import net.unethicalite.api.entities.TileObjects;
 
 @Slf4j
 public class Hammer extends Task {
+
   @Inject
   private GiantsFoundry plugin;
 
@@ -41,9 +42,11 @@ public class Hammer extends Task {
 
     th.interact("Use");
     Time.sleepTicksUntil(() -> !giantsFoundryState.bonusActive(), 5);
-    Time.sleepTicksUntil(() -> giantsFoundryState.bonusActive() || !giantsFoundryState.getCurrentStage().equals(Stage.TRIP_HAMMER)
-        ||
-        giantsFoundryState.getHeatAmount() < giantsFoundryHelper.getCurrentHeatRange()[0], 100);
+    Time.sleepTicksUntil(
+        () -> giantsFoundryState.bonusActive() || !giantsFoundryState.getCurrentStage()
+            .equals(Stage.TRIP_HAMMER)
+            ||
+            giantsFoundryState.getHeatAmount() < giantsFoundryHelper.getCurrentHeatRange()[0], 100);
 
   }
 }

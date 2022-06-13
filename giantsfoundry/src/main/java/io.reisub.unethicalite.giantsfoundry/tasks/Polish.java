@@ -11,6 +11,7 @@ import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.TileObjects;
 
 public class Polish extends Task {
+
   @Inject
   private GiantsFoundry plugin;
 
@@ -40,7 +41,8 @@ public class Polish extends Task {
     pw.interact("Use");
     Time.sleepTicksUntil(() -> !giantsFoundryState.bonusActive(), 5);
     Time.sleepTicksUntil(
-        () -> giantsFoundryState.bonusActive() || !giantsFoundryState.getCurrentStage().equals(Stage.POLISHING_WHEEL)
+        () -> giantsFoundryState.bonusActive() || !giantsFoundryState.getCurrentStage()
+            .equals(Stage.POLISHING_WHEEL)
             ||
             giantsFoundryState.getHeatAmount() < giantsFoundryHelper.getCurrentHeatRange()[0], 100);
 
