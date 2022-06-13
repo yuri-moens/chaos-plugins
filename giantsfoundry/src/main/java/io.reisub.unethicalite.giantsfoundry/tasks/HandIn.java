@@ -37,6 +37,7 @@ public class HandIn extends Task {
       return;
     }
     kovac.interact("Hand-in");
+    Time.sleepTicksUntil(Dialog::isOpen, 10);
     while (Dialog.isViewingOptions() || Dialog.canContinue()) {
       if (Dialog.isViewingOptions()) {
         List<Widget> options = Dialog.getOptions();
@@ -53,5 +54,6 @@ public class HandIn extends Task {
         Dialog.continueSpace();
       }
     }
+
   }
 }
