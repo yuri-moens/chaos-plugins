@@ -14,6 +14,7 @@ import net.runelite.api.widgets.Widget;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.widgets.Widgets;
+import net.unethicalite.client.Static;
 
 @Slf4j
 public class SetMoulds extends Task {
@@ -25,15 +26,13 @@ public class SetMoulds extends Task {
 
   @Inject
   private GiantsFoundry plugin;
-
   @Inject
   private GiantsFoundryState giantsFoundryState;
-
   @Inject
   private GiantsFoundryHelper giantsFoundryHelper;
-
   @Inject
   private MouldHelper mouldHelper;
+  private int last;
 
   @Override
   public String getStatus() {
@@ -43,6 +42,7 @@ public class SetMoulds extends Task {
   @Override
   public boolean validate() {
     return giantsFoundryState.getGameStage() == 0
+        && Static.getClient().getTickCount() - last > 5
         && giantsFoundryState.getCurrentStage() == null
         && giantsFoundryState.getFirstPartCommission() != 0;
   }
@@ -80,5 +80,7 @@ public class SetMoulds extends Task {
     option.interact("Select");
 
     setMouldWidget.interact(1, 57, -1, 47054854);
+
+    last = Static.getClient().getTickCount();
   }
 }

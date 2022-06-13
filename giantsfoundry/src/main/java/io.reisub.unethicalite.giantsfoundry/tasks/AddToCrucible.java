@@ -8,11 +8,13 @@ import io.reisub.unethicalite.giantsfoundry.enums.Alloy;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.Map;
 import javax.inject.Inject;
+import net.runelite.api.Item;
 import net.runelite.api.TileObject;
 import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.GameThread;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.widgets.Dialog;
 import net.unethicalite.api.widgets.Production;
@@ -43,26 +45,43 @@ public class AddToCrucible extends Task {
 
   @Override
   public void execute() {
-    TileObject crucible = TileObjects.getNearest("Crucible (empty)", "Crucible (partially full)");
+    final TileObject crucible =
+        TileObjects.getNearest("Crucible (empty)", "Crucible (partially full)");
     if (crucible == null) {
       return;
     }
 
-    Alloy bar;
+    final Map<String, Integer> ingredientsMap = plugin.getIngredients();
 
-    if (Inventory.contains(config.alloy1().getBarId())) {
-      bar = config.alloy1();
+    if (ingredientsMap == null) {
+      Alloy bar;
+
+      if (Inventory.contains(config.alloy1().getBarId())) {
+        bar = config.alloy1();
+      } else {
+        bar = config.alloy2();
+      }
+      crucible.interact("Fill");
+      Time.sleepTicksUntil(Production::isOpen, 10);
+      Production.chooseOption(bar.getDialogIndex());
     } else {
-      bar = config.alloy2();
+      final Item ingredient = Inventory.getFirst(Predicates.names(ingredientsMap.keySet()));
+
+      if (ingredient == null) {
+        return;
+      }
+
+      GameThread.invoke(() -> ingredient.useOn(crucible));
+      Time.sleepTicksUntil(Dialog::isOpen, 15);
+      Dialog.chooseOption(3);
+      Time.sleepTicks(3);
     }
-    crucible.interact("Fill");
-    Time.sleepTicksUntil(Production::isOpen, 10);
-    System.out.println(Dialog.getOptions());
-    Production.chooseOption(bar.getDialogIndex());
+
     Time.sleepTicksUntil(() -> Players.getLocal().isIdle(), 10);
   }
 
-  private boolean haveIngredients() {    final Map<String, Integer> ingredients = plugin.getIngredients();
+  private boolean haveIngredients() {
+    final Map<String, Integer> ingredients = plugin.getIngredients();
 
     if (ingredients == null) {
       return Inventory.contains(config.alloy1().getBarId(), config.alloy2().getBarId());

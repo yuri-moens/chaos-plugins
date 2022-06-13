@@ -63,6 +63,8 @@ public class GiantsFoundry extends TickScript {
 
     overlayManager.add(overlay);
 
+    ingredients = parseIngredients();
+
     addTask(GetCommission.class);
     addTask(HandIn.class);
     addTask(SetMoulds.class);
@@ -77,8 +79,6 @@ public class GiantsFoundry extends TickScript {
     addTask(Polish.class);
 
     log.info(String.valueOf(tasks.size()));
-
-    ingredients = parseIngredients();
   }
 
   @Override
@@ -109,7 +109,7 @@ public class GiantsFoundry extends TickScript {
     final Map<String, Integer> ingredients = new HashMap<>();
 
     for (String line : config.ingredients().split("\n")) {
-      final String[] splitLine = line.split(" ", 1);
+      final String[] splitLine = line.split(" ", 2);
 
       if (splitLine.length != 2) {
         return null;
