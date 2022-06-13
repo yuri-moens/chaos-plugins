@@ -47,7 +47,8 @@ public class Overlay extends OverlayPanel {
     tableComponent.addRow("GameStage", String.valueOf(state.getGameStage()));
     tableComponent.addRow("Progress", String.valueOf(state.getProgressAmount()));
     tableComponent.addRow("Points", String.valueOf(Vars.getVarp(3436)));
-    tableComponent.getRows().get(tableComponent.getRows().size() -1).setRowColor(ColorUtil.fromHex("#03fc49"));
+    tableComponent.getRows().get(tableComponent.getRows().size() - 1)
+        .setRowColor(ColorUtil.fromHex("#03fc49"));
 
 
 
