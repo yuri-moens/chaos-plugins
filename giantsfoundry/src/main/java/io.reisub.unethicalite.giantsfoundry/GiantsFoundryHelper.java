@@ -11,12 +11,12 @@ public class GiantsFoundryHelper {
   // heat lowers every 2 ticks
 
   // seems to be between 7-11 per
-  public static final int HEAT_LAVA_HEAT = 8;
-  public static final int COOL_WATERFALL_HEAT = -8;
+  public static final int HEAT_LAVA_HEAT = 10;
+  public static final int COOL_WATERFALL_HEAT = -10;
 
   // 27-37
-  public static final int DUNK_LAVA_HEAT = 32;
-  public static final int QUENCH_WATERFALL_HEAT = -32;
+  public static final int DUNK_LAVA_HEAT = 34;
+  public static final int QUENCH_WATERFALL_HEAT = -34;
 
   @Inject
   private GiantsFoundryState state;
