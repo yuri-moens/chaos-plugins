@@ -38,7 +38,7 @@ public class HeatUp extends Task {
       return false;
     }
 
-    return state.getHeatAmount() < helper.getCurrentHeatRange()[0];
+    return state.getHeatAmount() - 4  < helper.getCurrentHeatRange()[0];
 
   }
 
@@ -65,7 +65,7 @@ public class HeatUp extends Task {
         if (lp != null) {
           lp.interact("Heat-preform");
           Time.sleepTicksUntil(
-              () -> state.getHeatAmount() + GiantsFoundryHelper.HEAT_LAVA_HEAT * 2
+              () -> state.getHeatAmount() + GiantsFoundryHelper.HEAT_LAVA_HEAT * 3
                   >
                   helper.getCurrentHeatRange()[1], 20);
         }
@@ -78,7 +78,7 @@ public class HeatUp extends Task {
         if (lp != null) {
           lp.interact("Dunk-preform");
           Time.sleepTicksUntil(
-              () -> state.getHeatAmount() + GiantsFoundryHelper.DUNK_LAVA_HEAT * 2
+              () -> state.getHeatAmount()
                   >
                   helper.getCurrentHeatRange()[0], 20);
         }
@@ -91,7 +91,7 @@ public class HeatUp extends Task {
         if (lp != null) {
           lp.interact("Heat-preform");
           Time.sleepTicksUntil(
-              () -> state.getHeatAmount() + GiantsFoundryHelper.HEAT_LAVA_HEAT * 2
+              () -> state.getHeatAmount()
                   >
                   helper.getCurrentHeatRange()[0], 20);
         }
