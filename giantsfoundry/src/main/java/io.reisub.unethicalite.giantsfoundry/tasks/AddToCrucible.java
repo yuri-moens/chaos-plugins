@@ -72,9 +72,12 @@ public class AddToCrucible extends Task {
       }
 
       GameThread.invoke(() -> ingredient.useOn(crucible));
-      Time.sleepTicksUntil(Dialog::isOpen, 15);
-      Dialog.chooseOption(3);
-      Time.sleepTicks(3);
+      if (Inventory.getCount(ingredient.getId()) > 1) {
+        Time.sleepTicksUntil(Dialog::isViewingOptions, 15);
+        Dialog.chooseOption(3);
+      }
+
+      Time.sleepTicks(2);
     }
 
     Time.sleepTicksUntil(() -> Players.getLocal().isIdle(), 10);
