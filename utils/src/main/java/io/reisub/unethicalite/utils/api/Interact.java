@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.function.Predicate;
 import net.runelite.api.Item;
 import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.items.Equipment;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.widgets.Dialog;
@@ -56,5 +57,14 @@ public class Interact {
     }
 
     return true;
+  }
+
+  public static boolean waitUntilActive() {
+    return waitUntilInactive(3);
+  }
+
+  public static boolean waitUntilInactive(final int ticks) {
+    return Time.sleepTicksUntil(() -> Players.getLocal().isMoving()
+        || Players.getLocal().isAnimating(), ticks);
   }
 }
