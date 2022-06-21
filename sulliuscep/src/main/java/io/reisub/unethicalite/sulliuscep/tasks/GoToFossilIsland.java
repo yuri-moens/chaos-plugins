@@ -23,6 +23,5 @@ public class GoToFossilIsland extends Task {
   @Override
   public void execute() {
     ChaosMovement.teleportThroughHouse(PortalTeleport.FOSSIL_ISLAND, 101);
-    System.out.println("9");
   }
 }

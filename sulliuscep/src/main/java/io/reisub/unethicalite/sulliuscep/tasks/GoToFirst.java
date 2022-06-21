@@ -62,7 +62,7 @@ public class GoToFirst extends Task {
           final TileItem droppedMushroom = droppedMushrooms.get(i);
 
           if (Reachable.isInteractable(droppedMushroom)) {
-            droppedMushroom.interact("Take");
+            GameThread.invoke(() -> droppedMushroom.interact("Take"));
             Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation()
                 .equals(droppedMushroom.getWorldLocation()), 20);
             Time.sleepTick();

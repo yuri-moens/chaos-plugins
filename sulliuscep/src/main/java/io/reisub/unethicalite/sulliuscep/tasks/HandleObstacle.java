@@ -3,6 +3,7 @@ package io.reisub.unethicalite.sulliuscep.tasks;
 import com.google.common.collect.ImmutableSet;
 import io.reisub.unethicalite.sulliuscep.Sulliuscep;
 import io.reisub.unethicalite.sulliuscep.SulliuscepObject;
+import io.reisub.unethicalite.utils.api.Interact;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
@@ -65,7 +66,9 @@ public class HandleObstacle extends Task {
     final WorldPoint worldPoint = obstacle.getWorldLocation();
 
     GameThread.invoke(() -> obstacle.interact(0));
-    Time.sleepTick();
+    if (!Interact.waitUntilActive()) {
+      return;
+    }
 
     switch (plugin.getCurrentSulliuscep()) {
       case SULLIUSCEP_2:

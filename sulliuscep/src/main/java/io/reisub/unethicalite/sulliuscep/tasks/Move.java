@@ -4,12 +4,17 @@ import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.api.events.HitsplatApplied;
+import net.runelite.client.eventbus.Subscribe;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.NPCs;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.movement.Movement;
+import net.unethicalite.client.Static;
 
 public class Move extends Task {
+
+  private int lastHit;
 
   @Override
   public String getStatus() {
@@ -25,9 +30,9 @@ public class Move extends Task {
     }
 
     return Players.getLocal().getWorldLocation().equals(new WorldPoint(3684, 3774, 0))
+        && Static.getClient().getTickCount() - lastHit <= 2
         && tarMonster.getInteracting() != null
-        && tarMonster.getInteracting().equals(Players.getLocal())
-        && tarMonster.getWorldLocation().equals(new WorldPoint(3681, 3764, 0));
+        && tarMonster.getInteracting().equals(Players.getLocal());
   }
 
   @Override
@@ -37,5 +42,12 @@ public class Move extends Task {
     Movement.walk(destination);
 
     Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(destination), 10);
+  }
+
+  @Subscribe
+  private void onHitsplatApplied(HitsplatApplied event) {
+    if (event.getActor().equals(Players.getLocal())) {
+      lastHit = Static.getClient().getTickCount();
+    }
   }
 }

@@ -74,9 +74,9 @@ public class Sulliuscep extends TickScript {
     addTask(Eat.class);
     addTask(CurePoison.class);
     addTask(FillPit.class);
-    addTask(Drop.class);
     addTask(GoToBank.class);
     addTask(GoToFirst.class);
+    addTask(Drop.class);
     addTask(HandleObstacle.class);
     addTask(Cut.class);
   }
