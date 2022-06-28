@@ -30,7 +30,7 @@ public class Move extends Task {
     }
 
     return Players.getLocal().getWorldLocation().equals(new WorldPoint(3684, 3774, 0))
-        && Static.getClient().getTickCount() - lastHit <= 2
+        && Static.getClient().getTickCount() - lastHit <= 3
         && tarMonster.getInteracting() != null
         && tarMonster.getInteracting().equals(Players.getLocal());
   }
