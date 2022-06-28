@@ -2,6 +2,7 @@ package io.reisub.unethicalite.mining;
 
 import com.google.inject.Provides;
 import io.reisub.unethicalite.mining.tasks.CastHumidify;
+import io.reisub.unethicalite.mining.tasks.ChiselAmethyst;
 import io.reisub.unethicalite.mining.tasks.Deposit;
 import io.reisub.unethicalite.mining.tasks.GoToBank;
 import io.reisub.unethicalite.mining.tasks.GoToMiningArea;
@@ -44,6 +45,7 @@ public class Mining extends TickScript {
     addTask(CastHumidify.class);
     addTask(Deposit.class);
     addTask(GoToMiningArea.class);
+    addTask(ChiselAmethyst.class);
     addTask(Mine.class);
     addTask(MoveToRespawning.class);
   }

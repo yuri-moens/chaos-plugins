@@ -21,6 +21,15 @@ public interface Config extends net.runelite.client.config.Config {
   }
 
   @ConfigItem(
+      keyName = "chiselProduct",
+      name = "Chisel product",
+      description = "Choose what to chisel amethyst into",
+      position = 2)
+  default ChiselProduct chiselProduct() {
+    return ChiselProduct.DART_TIPS;
+  }
+
+  @ConfigItem(
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",

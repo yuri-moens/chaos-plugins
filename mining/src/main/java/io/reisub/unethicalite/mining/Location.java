@@ -98,22 +98,29 @@ public enum Location {
       },
       false),
   GEM_ROCK(
-            new WorldPoint(2825, 2997, 0),
-            20,
-            new WorldPoint(2852, 2955, 0),
-            ImmutableSet.of(ObjectID.ROCKS_11381, ObjectID.ROCKS_11380),
-            new ArrayDeque<>() {
-                {
-                    add(new RockPosition(new WorldPoint(2820, 2998, 0), new WorldPoint(2820, 2999, 0)));
-                    add(new RockPosition(new WorldPoint(2821, 2998, 0), new WorldPoint(2821, 2999, 0)));
-                    add(new RockPosition(new WorldPoint(2821, 3000, 0), new WorldPoint(2821, 2999, 0)));
-                    add(new RockPosition(new WorldPoint(2823, 2999, 0), new WorldPoint(2822, 2999, 0)));
-                    add(new RockPosition(new WorldPoint(2823, 3002, 0), new WorldPoint(2823, 3001, 0)));
-                    add(new RockPosition(new WorldPoint(2825, 3001, 0), new WorldPoint(2824, 3001, 0)));
-                    add(new RockPosition(new WorldPoint(2825, 3003, 0), new WorldPoint(2824, 3003, 0)));
-                }
-            },
-            false);
+      new WorldPoint(2825, 2997, 0),
+      20,
+      new WorldPoint(2852, 2955, 0),
+      ImmutableSet.of(ObjectID.ROCKS_11381, ObjectID.ROCKS_11380),
+      new ArrayDeque<>() {
+        {
+          add(new RockPosition(new WorldPoint(2820, 2998, 0), new WorldPoint(2820, 2999, 0)));
+          add(new RockPosition(new WorldPoint(2821, 2998, 0), new WorldPoint(2821, 2999, 0)));
+          add(new RockPosition(new WorldPoint(2821, 3000, 0), new WorldPoint(2821, 2999, 0)));
+          add(new RockPosition(new WorldPoint(2823, 2999, 0), new WorldPoint(2822, 2999, 0)));
+          add(new RockPosition(new WorldPoint(2823, 3002, 0), new WorldPoint(2823, 3001, 0)));
+          add(new RockPosition(new WorldPoint(2825, 3001, 0), new WorldPoint(2824, 3001, 0)));
+          add(new RockPosition(new WorldPoint(2825, 3003, 0), new WorldPoint(2824, 3003, 0)));
+        }
+      },
+      false),
+  AMETHYST_EAST(
+      new WorldPoint(3027, 9707, 0),
+      25,
+      null,
+      ImmutableSet.of(ObjectID.CRYSTALS, ObjectID.CRYSTALS_11389),
+      null,
+      false);
 
   private final WorldPoint miningAreaPoint;
   private final int miningAreaDistance;
