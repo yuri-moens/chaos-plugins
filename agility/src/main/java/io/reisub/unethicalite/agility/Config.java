@@ -34,6 +34,15 @@ public interface Config extends net.runelite.client.config.Config {
   }
 
   @ConfigItem(
+      position = 20,
+      keyName = "fletch",
+      name = "Fletch",
+      description = "Enable to fletch between obstacles")
+  default boolean fletch() {
+    return false;
+  }
+
+  @ConfigItem(
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",

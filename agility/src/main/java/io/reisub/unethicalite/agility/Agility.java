@@ -3,6 +3,7 @@ package io.reisub.unethicalite.agility;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
 import io.reisub.unethicalite.agility.tasks.Alch;
+import io.reisub.unethicalite.agility.tasks.Fletch;
 import io.reisub.unethicalite.agility.tasks.HandleObstacle;
 import io.reisub.unethicalite.agility.tasks.PickupMark;
 import io.reisub.unethicalite.utils.TickScript;
@@ -40,5 +41,6 @@ public class Agility extends TickScript {
     addTask(PickupMark.class);
     addTask(HandleObstacle.class);
     addTask(Alch.class);
+    addTask(Fletch.class);
   }
 }

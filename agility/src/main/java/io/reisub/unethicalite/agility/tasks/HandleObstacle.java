@@ -7,6 +7,7 @@ import io.reisub.unethicalite.agility.Course;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.Set;
 import javax.inject.Inject;
+import net.runelite.api.AnimationID;
 import net.runelite.api.DynamicObject;
 import net.runelite.api.GameObject;
 import net.runelite.api.Skill;
@@ -19,6 +20,7 @@ import net.runelite.client.eventbus.Subscribe;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.GameThread;
 import net.unethicalite.api.movement.Movement;
 
 public class HandleObstacle extends Task {
@@ -36,7 +38,7 @@ public class HandleObstacle extends Task {
 
   @Override
   public boolean validate() {
-    if (config.highAlch()
+    if ((config.highAlch() || config.fletch())
         && Movement.getDestination() != null
         && Players.getLocal().distanceTo(Movement.getDestination()) > 5) {
       return false;
@@ -82,12 +84,12 @@ public class HandleObstacle extends Task {
       return;
     }
 
-    TileObject obstacle = TileObjects.getNearest(id);
+    final TileObject obstacle = TileObjects.getNearest(id);
     if (obstacle == null) {
       return;
     }
 
-    obstacle.interact(0);
+    GameThread.invoke(() -> obstacle.interact(0));
     ready = false;
   }
 
@@ -107,6 +109,20 @@ public class HandleObstacle extends Task {
 
   @Subscribe
   private void onGameTick(GameTick event) {
+    final int id = config.courseSelection().getNextObstacleId();
+
+    final TileObject obstacle = TileObjects.getNearest(id);
+    final int animationId = Players.getLocal().getAnimation();
+
+    if (obstacle != null
+        && config.fletch()
+        && !Players.getLocal().isMoving()
+        && (animationId == AnimationID.FLETCHING_ATTACH_FEATHERS_TO_ARROWSHAFT
+        || animationId == AnimationID.FLETCHING_ATTACH_HEADS)
+        && Players.getLocal().distanceTo(obstacle) <= 1) {
+      ready = true;
+    }
+
     if (Players.getLocal().isIdle()) {
       idleTicks++;
       if (idleTicks >= timeout) {
