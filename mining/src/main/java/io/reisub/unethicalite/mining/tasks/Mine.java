@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.inject.Inject;
+import javax.inject.Singleton;
+import lombok.Setter;
 import net.runelite.api.GameState;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
@@ -26,7 +28,9 @@ import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.movement.Movement;
 import net.unethicalite.client.Static;
 
+@Singleton
 public class Mine extends Task {
+
   private static final Set<Integer> DROP_IDS =
       ImmutableSet.of(
           ItemID.SANDSTONE_1KG,
@@ -42,6 +46,7 @@ public class Mine extends Task {
   @Inject private Mining plugin;
   @Inject private Config config;
   private ArrayDeque<RockPosition> rockPositions;
+  @Setter
   private RockPosition currentRockPosition;
 
   @Override

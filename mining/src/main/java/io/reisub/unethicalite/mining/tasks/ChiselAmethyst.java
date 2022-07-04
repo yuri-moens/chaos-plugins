@@ -14,6 +14,8 @@ public class ChiselAmethyst extends Task {
 
   @Inject
   private Config config;
+  @Inject
+  private Mine mineTask;
 
   @Override
   public String getStatus() {
@@ -29,6 +31,8 @@ public class ChiselAmethyst extends Task {
 
   @Override
   public void execute() {
+    mineTask.setCurrentRockPosition(null);
+
     final Item chisel = Inventory.getFirst(ItemID.CHISEL);
     final Item amethyst = Inventory.getFirst(ItemID.AMETHYST);
 
