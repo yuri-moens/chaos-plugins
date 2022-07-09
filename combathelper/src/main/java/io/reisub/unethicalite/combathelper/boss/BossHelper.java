@@ -1,6 +1,8 @@
 package io.reisub.unethicalite.combathelper.boss;
 
 import com.openosrs.client.util.WeaponStyle;
+import io.reisub.unethicalite.alchemicalhydra.ChaosAlchemicalHydra;
+import io.reisub.unethicalite.alchemicalhydra.entity.Hydra;
 import io.reisub.unethicalite.cerberus.ChaosCerberus;
 import io.reisub.unethicalite.cerberus.domain.Cerberus;
 import io.reisub.unethicalite.cerberus.domain.CerberusAttack;
@@ -23,13 +25,21 @@ import net.unethicalite.api.game.Combat;
 
 @Singleton
 public class BossHelper extends Helper {
-  @Inject private CombatHelper plugin;
 
-  @Inject private ChaosCerberus cerberusPlugin;
+  @Inject
+  private CombatHelper plugin;
 
-  @Inject private ChaosZulrah zulrahPlugin;
+  @Inject
+  private ChaosAlchemicalHydra alchemicalHydraPlugin;
 
-  @Inject private ChaosGrotesqueGuardians grotesqueGuardiansPlugin;
+  @Inject
+  private ChaosCerberus cerberusPlugin;
+
+  @Inject
+  private ChaosZulrah zulrahPlugin;
+
+  @Inject
+  private ChaosGrotesqueGuardians grotesqueGuardiansPlugin;
 
   private static final int ZULRAH_RANGED_ANIMATION = 1044;
 
@@ -38,6 +48,10 @@ public class BossHelper extends Helper {
   @Subscribe(priority = 95)
   private void onGameTick(GameTick event) {
     currentStyle = Combat.getCurrentWeaponStyle();
+
+    if (config.alchemicalHydraPrayerFlick() && alchemicalHydraPlugin.getHydra() != null) {
+      alchemicalHydraFlick();
+    }
 
     if (config.cerberusPrayerFlick() && cerberusPlugin.getCerberus() != null) {
       cerberusFlick();
@@ -74,6 +88,29 @@ public class BossHelper extends Helper {
                               plugin.getMiscHelper().castVengeance();
                             }
                           }));
+    }
+  }
+
+  private void alchemicalHydraFlick() {
+    final Hydra hydra = alchemicalHydraPlugin.getHydra();
+
+    if (hydra == null || hydra.getNextAttack() == null
+        || hydra.getNextAttack().getPrayer() == null) {
+      return;
+    }
+
+    switch (hydra.getNextAttack().getPrayer()) {
+      case PROTECT_FROM_MAGIC:
+        plugin.getPrayerHelper().setPrayer(ChaosPrayer.PROTECT_FROM_MAGIC, false);
+        break;
+      case PROTECT_FROM_MISSILES:
+        plugin.getPrayerHelper().setPrayer(ChaosPrayer.PROTECT_FROM_MISSILES, false);
+        break;
+      case PROTECT_FROM_MELEE:
+        plugin.getPrayerHelper().setPrayer(ChaosPrayer.PROTECT_FROM_MELEE, false);
+        break;
+      default:
+        break;
     }
   }
 

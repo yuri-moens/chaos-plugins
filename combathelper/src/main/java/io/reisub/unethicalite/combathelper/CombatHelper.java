@@ -1,6 +1,7 @@
 package io.reisub.unethicalite.combathelper;
 
 import com.google.inject.Provides;
+import io.reisub.unethicalite.alchemicalhydra.ChaosAlchemicalHydra;
 import io.reisub.unethicalite.cerberus.ChaosCerberus;
 import io.reisub.unethicalite.combathelper.alch.AlchHelper;
 import io.reisub.unethicalite.combathelper.bones.BonesHelper;
@@ -40,24 +41,30 @@ import org.pf4j.Extension;
 @Singleton
 @PluginDescriptor(
     name = "Chaos Combat Helper",
-    description = "Various utilities to make combat easier",
-    enabledByDefault = true)
+    description = "Various utilities to make combat easier")
 @PluginDependency(ItemStatPlugin.class)
 @PluginDependency(UnethicalitePlugin.class)
+@PluginDependency(ChaosAlchemicalHydra.class)
 @PluginDependency(ChaosCerberus.class)
 @PluginDependency(ChaosZulrah.class)
 @PluginDependency(ChaosGrotesqueGuardians.class)
 @Slf4j
 @Extension
 public class CombatHelper extends Plugin {
+
   @Inject private Config config;
   @Getter private Actor lastTarget;
   private ScheduledExecutorService executor;
   private List<Helper> helpers;
-  @Inject @Getter private PrayerHelper prayerHelper;
-  @Inject @Getter private SwapHelper swapHelper;
-
-  @Inject @Getter private MiscHelper miscHelper;
+  @Inject
+  @Getter
+  private PrayerHelper prayerHelper;
+  @Inject
+  @Getter
+  private SwapHelper swapHelper;
+  @Inject
+  @Getter
+  private MiscHelper miscHelper;
 
   @Provides
   Config provideConfig(ConfigManager configManager) {

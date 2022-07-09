@@ -692,6 +692,16 @@ public interface Config extends net.runelite.client.config.Config {
   }
 
   @ConfigItem(
+      keyName = "alchemicalHydraPrayerFlick",
+      name = "Alchemical Hydra Auto Prayer Flick",
+      description = "Automatically swap prayers against Alchemical Hydra",
+      section = "prayerConfig",
+      position = 317)
+  default boolean alchemicalHydraPrayerFlick() {
+    return true;
+  }
+
+  @ConfigItem(
       keyName = "bones",
       name = "Bones",
       description = "Choose which bones to auto-bury.",
