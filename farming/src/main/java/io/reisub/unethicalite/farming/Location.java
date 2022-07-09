@@ -133,7 +133,7 @@ public enum Location {
       11325,
       Varbits.FARMING_4771,
       0,
-      () -> ChaosMovement.teleportThroughHouse(PortalTeleport.WEISS));
+      () -> ChaosMovement.teleportThroughHouse(PortalTeleport.WEISS, 70));
 
   private final String name;
   private final WorldPoint patchPoint;
