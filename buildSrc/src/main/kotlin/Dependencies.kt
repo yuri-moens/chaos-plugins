@@ -38,6 +38,7 @@ object Libraries {
         const val lombok = "1.18.20"
         const val okhttp3 = "4.9.0"
         const val pf4j = "3.6.0"
+        const val rxjava = "3.0.7"
         const val slf4j = "1.7.32"
     }
 
@@ -48,5 +49,6 @@ object Libraries {
     const val lombok = "org.projectlombok:lombok:${Versions.lombok}"
     const val okhttp3 = "com.squareup.okhttp3:okhttp:${Versions.okhttp3}"
     const val pf4j = "org.pf4j:pf4j:${Versions.pf4j}"
+    const val rxjava = "io.reactivex.rxjava3:rxjava:${Versions.rxjava}"
     const val slf4j = "org.slf4j:slf4j-api:${Versions.slf4j}"
 }
