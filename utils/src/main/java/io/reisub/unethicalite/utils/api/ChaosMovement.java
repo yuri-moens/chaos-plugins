@@ -209,8 +209,7 @@ public class ChaosMovement {
       case FOSSIL_ISLAND:
         return teleportThroughDigsitePendant(portalTeleport);
       default:
-        if (Time.sleepTicksUntil(() ->
-            TileObjects.getNearest(portalTeleport.getPortalId()) != null, 5)) {
+        if (TileObjects.getNearest(portalTeleport.getPortalId()) != null) {
           return teleportThroughPortal(portalTeleport);
         } else {
           return teleportThroughPortalNexus(portalTeleport);
