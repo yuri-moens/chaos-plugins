@@ -44,13 +44,16 @@ public class Mining extends TickScript {
   protected void onStart() {
     super.onStart();
 
+    final Mine mine = injector.getInstance(Mine.class);
+    mine.setCurrentRockPosition(null);
+
     addTask(HandleBank.class);
     addTask(GoToBank.class);
     addTask(CastHumidify.class);
     addTask(Deposit.class);
     addTask(GoToMiningArea.class);
     addTask(ChiselAmethyst.class);
-    addTask(Mine.class);
+    addTask(mine);
     addTask(MoveToRespawning.class);
   }
 }
