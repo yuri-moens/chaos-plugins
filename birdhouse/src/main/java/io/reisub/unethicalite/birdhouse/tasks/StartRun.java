@@ -38,6 +38,7 @@ public class StartRun extends BankTask {
 
     if (!Inventory.isEmpty()) {
       Bank.depositInventory();
+      Time.sleepTick();
     }
 
     Bank.withdraw(
