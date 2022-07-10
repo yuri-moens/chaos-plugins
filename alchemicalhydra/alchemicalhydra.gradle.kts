@@ -31,16 +31,7 @@ project.extra["PluginName"] = "Chaos Alchemical Hydra"
 project.extra["PluginDescription"] = "Copy of Alchemical Hydra plugin from xKyle's repo"
 
 dependencies {
-    annotationProcessor(Libraries.lombok)
-    annotationProcessor(Libraries.pf4j)
-
-    compileOnly("com.openosrs:runelite-api:$rlVersion")
-    compileOnly("com.openosrs:runelite-client:$rlVersion")
-
-    compileOnly(Libraries.guice)
-    compileOnly(Libraries.lombok)
-    compileOnly(Libraries.pf4j)
-    compileOnly(Libraries.rxjava)
+    compileOnly(project(":utils"))
 }
 
 tasks {

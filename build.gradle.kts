@@ -1,4 +1,4 @@
-import ProjectVersions.openosrsVersion
+import ProjectVersions.unethicaliteVersion
 
 buildscript {
     repositories {
@@ -21,7 +21,7 @@ apply<UpdateVersionsPlugin>()
 
 allprojects {
     group = "io.reisub"
-    version = openosrsVersion
+    version = unethicaliteVersion
     apply<MavenPublishPlugin>()
 
     repositories {
@@ -70,9 +70,9 @@ subprojects {
         annotationProcessor(Libraries.lombok)
         annotationProcessor(Libraries.pf4j)
 
-        compileOnly("com.openosrs:runelite-api:$openosrsVersion+")
-        compileOnly("com.openosrs:runelite-client:$openosrsVersion+")
-        compileOnly("com.openosrs:http-api:$openosrsVersion+")
+        compileOnly("net.unethicalite:runelite-api:$unethicaliteVersion+")
+        compileOnly("net.unethicalite:runelite-client:$unethicaliteVersion+")
+        compileOnly("net.unethicalite:http-api:$unethicaliteVersion+")
 
         compileOnly(Libraries.guice)
         compileOnly(Libraries.javax)
@@ -81,6 +81,7 @@ subprojects {
         compileOnly(Libraries.apacheCommonsText)
         compileOnly(Libraries.okhttp3)
         compileOnly(Libraries.gson)
+        compileOnly(Libraries.rxjava)
     }
 
     configure<JavaPluginConvention> {
