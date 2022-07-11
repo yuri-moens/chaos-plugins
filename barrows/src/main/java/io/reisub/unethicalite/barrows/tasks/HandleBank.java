@@ -145,7 +145,7 @@ public class HandleBank extends BankTask {
         .useOn(Inventory.getFirst(Predicates.ids(Constants.TRIDENT_IDS)));
     Time.sleepTicksUntil(Dialog::isEnterInputOpen, 3);
 
-    Dialog.enterInput(99999);
+    Dialog.enterAmount(99999);
     Time.sleepTicksUntil(Dialog::canContinue, 10);
 
     Inventory.getFirst(Predicates.ids(Constants.TRIDENT_IDS)).interact("Wield");
