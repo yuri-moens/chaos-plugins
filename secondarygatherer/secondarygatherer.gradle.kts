@@ -1,11 +1,12 @@
+import ProjectVersions.combatHelperVersion
+
 version = "1.0.0"
 
 project.extra["PluginName"] = "Chaos Secondary Gatherer"
 project.extra["PluginDescription"] = "Gathers herblore secondaries for you"
 
 dependencies {
-    compileOnly(project(":combathelper"))
-    compileOnly(project(":utils"))
+    compileOnly(group = "io.reisub.unethicalite", name = "combathelper", version = combatHelperVersion)
 }
 
 tasks {

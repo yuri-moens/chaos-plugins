@@ -3,10 +3,6 @@ version = "1.0.0"
 project.extra["PluginName"] = "Chaos Fletching"
 project.extra["PluginDescription"] = "Y fletch?"
 
-dependencies {
-    compileOnly(project(":utils"))
-}
-
 tasks {
     jar {
         manifest {

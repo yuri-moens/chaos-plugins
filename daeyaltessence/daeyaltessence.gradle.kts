@@ -3,10 +3,6 @@ version = "1.0.2"
 project.extra["PluginName"] = "Chaos Daeyalt Essence"
 project.extra["PluginDescription"] = "For people too lazy to click a rock every 30 seconds"
 
-dependencies {
-    compileOnly(project(":utils"))
-}
-
 tasks {
     jar {
         manifest {

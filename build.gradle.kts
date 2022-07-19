@@ -1,4 +1,5 @@
 import ProjectVersions.unethicaliteVersion
+import ProjectVersions.utilsVersion
 
 buildscript {
     repositories {
@@ -73,6 +74,7 @@ subprojects {
         compileOnly("net.unethicalite:runelite-api:$unethicaliteVersion+")
         compileOnly("net.unethicalite:runelite-client:$unethicaliteVersion+")
         compileOnly("net.unethicalite:http-api:$unethicaliteVersion+")
+        compileOnly("io.reisub.unethicalite:utils:$utilsVersion")
 
         compileOnly(Libraries.guice)
         compileOnly(Libraries.javax)

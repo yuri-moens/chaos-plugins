@@ -4,7 +4,7 @@ project.extra["PluginName"] = "Chaos Fighter"
 project.extra["PluginDescription"] = "Don't talk about this one"
 
 dependencies {
-    compileOnly(project(":utils"))
+    compileOnly(group = "io.reisub.unethicalite", name = "utils", version = utilsVersion)
 }
 
 tasks {

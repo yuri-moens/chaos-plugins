@@ -3,10 +3,6 @@ version = "1.0.4"
 project.extra["PluginName"] = "Chaos MTA"
 project.extra["PluginDescription"] = "Like Hogwarts, but in RuneScape"
 
-dependencies {
-    compileOnly(project(":utils"))
-}
-
 tasks {
     jar {
         manifest {

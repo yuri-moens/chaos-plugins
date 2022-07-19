@@ -18,7 +18,9 @@ import org.pf4j.Extension;
 @Slf4j
 @Extension
 public class Chinchompas extends TickScript {
-  @Inject private Config config;
+
+  @Inject
+  private Config config;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {

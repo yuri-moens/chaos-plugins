@@ -1,7 +1,6 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
 import io.reisub.unethicalite.tempoross.Tempoross;
-import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
@@ -14,6 +13,7 @@ import net.unethicalite.api.entities.NPCs;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.movement.Movement;
 
 public class Stock extends Task {
   @Inject private Tempoross plugin;
@@ -113,8 +113,7 @@ public class Stock extends Task {
   @Override
   public void execute() {
     if (Players.getLocal().distanceTo(plugin.getDudiPos()) > 8) {
-      ChaosMovement.sendMovementPacket(
-          plugin.getDudiPos().dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
+      Movement.walk(plugin.getDudiPos().dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
 
       Time.sleepUntil(() -> Players.getLocal().distanceTo(plugin.getDudiPos()) <= 8, 15000);
     }

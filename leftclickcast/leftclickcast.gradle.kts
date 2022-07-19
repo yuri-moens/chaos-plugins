@@ -3,10 +3,6 @@ version = "1.0.0"
 project.extra["PluginName"] = "Chaos Left Click Cast"
 project.extra["PluginDescription"] = "Manually cast spells with a single click"
 
-dependencies {
-    compileOnly(project(":utils"))
-}
-
 tasks {
     jar {
         manifest {

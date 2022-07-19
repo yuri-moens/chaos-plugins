@@ -1,7 +1,6 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
 import io.reisub.unethicalite.tempoross.Tempoross;
-import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
@@ -18,6 +17,7 @@ import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.game.Game;
 import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.movement.Movement;
 
 public class Cook extends Task {
   @Inject private Tempoross plugin;
@@ -93,7 +93,7 @@ public class Cook extends Task {
     WorldPoint target = plugin.getDudiPos().dx(7).dy(16);
 
     if (Players.getLocal().getWorldLocation().getY() < target.getY() - 5) {
-      ChaosMovement.sendMovementPacket(target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
+      Movement.walk(target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
 
       if (!Time.sleepUntil(() -> Players.getLocal().isMoving(), 1500)) {
         return;
