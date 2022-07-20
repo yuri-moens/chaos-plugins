@@ -196,7 +196,7 @@ public class HandleBank extends BankTask {
 
       for (Item seed : seeds) {
         int quantity =
-            seedsToKeepList.getStrings().contains(seed.getName())
+            seedsToKeepList.getStrings().containsKey(seed.getName())
                 ? seed.getQuantity() - config.amountToKeep()
                 : seed.getQuantity();
 

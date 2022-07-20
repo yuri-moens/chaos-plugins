@@ -167,7 +167,7 @@ public class Farming extends TickScript implements KeyListener {
     } else {
       String name = Text.removeTags(event.getTarget());
 
-      if (!compostProduceConfigList.getStrings().contains(name)
+      if (!compostProduceConfigList.getStrings().containsKey(name)
           || compostBinState == null
           || compostBinState == CropState.GROWING
           || compostBinState == CropState.HARVESTABLE) {
@@ -231,7 +231,7 @@ public class Farming extends TickScript implements KeyListener {
       }
 
       GameThread.invoke(() -> item.useOn(bin));
-    } else if (compostProduceConfigList.getStrings().contains(item.getName())
+    } else if (compostProduceConfigList.getStrings().containsKey(item.getName())
         && (compostBinState == CropState.EMPTY || compostBinState == CropState.FILLING)) {
       final TileObject bin = TileObjects.getNearest(Predicates.ids(Constants.COMPOST_BIN_IDS));
       if (bin == null) {
@@ -341,7 +341,7 @@ public class Farming extends TickScript implements KeyListener {
   private void buildLocationQueue() {
     ConfigList herbOrder = ConfigList.parseList(config.herbOrder());
 
-    for (String name : herbOrder.getStrings()) {
+    for (String name : herbOrder.getStrings().keySet()) {
       for (Location location : Location.values()) {
         if (location.isEnabled(config) && name.equalsIgnoreCase(location.getName())) {
           locationQueue.add(location);

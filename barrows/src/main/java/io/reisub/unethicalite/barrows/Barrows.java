@@ -169,7 +169,7 @@ public class Barrows extends TickScript {
   private void buildKillOrder() {
     ConfigList killOrderConfigList = ConfigList.parseList(config.killOrder());
 
-    for (String name : killOrderConfigList.getStrings()) {
+    for (String name : killOrderConfigList.getStrings().keySet()) {
       for (Brother brother : Brother.values()) {
         if (brother.getName().equalsIgnoreCase(name)) {
           killOrder.add(brother);
