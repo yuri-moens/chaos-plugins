@@ -119,22 +119,32 @@ public enum Location {
       25,
       null,
       ImmutableSet.of(ObjectID.CRYSTALS, ObjectID.CRYSTALS_11389),
-      null,
+      new ArrayDeque<>() {
+        {
+          add(new RockPosition(new WorldPoint(3029, 9704, 0), new WorldPoint(3028, 9704, 0)));
+          add(new RockPosition(new WorldPoint(3029, 9703, 0), new WorldPoint(3028, 9703, 0)));
+          add(new RockPosition(new WorldPoint(3029, 9702, 0), new WorldPoint(3028, 9702, 0)));
+          add(new RockPosition(new WorldPoint(3029, 9701, 0), new WorldPoint(3028, 9701, 0)));
+          add(new RockPosition(new WorldPoint(3026, 9702, 0), new WorldPoint(3027, 9702, 0)));
+          add(new RockPosition(new WorldPoint(3026, 9703, 0), new WorldPoint(3027, 9703, 0)));
+          add(new RockPosition(new WorldPoint(3026, 9704, 0), new WorldPoint(3027, 9704, 0)));
+        }
+      },
       false),
-	BARRONITE(
-		new WorldPoint(2936, 5807, 0),
-		30,
-		null,
-		ImmutableSet.of(ObjectID.ROCKS_41547, ObjectID.ROCKS_41548),
-		new ArrayDeque<>() {
-			{
-        add(new RockPosition(new WorldPoint(2936, 5806, 0), new WorldPoint(2936, 5807, 0)));
-        add(new RockPosition(new WorldPoint(2937, 5806, 0), new WorldPoint(2937, 5807, 0)));
-        add(new RockPosition(new WorldPoint(2941, 5809, 0), new WorldPoint(2940, 5809, 0)));
-        add(new RockPosition(new WorldPoint(2941, 5810, 0), new WorldPoint(2940, 5810, 0)));
-			}
-		},
-		false);
+  BARRONITE(
+      new WorldPoint(2936, 5807, 0),
+      30,
+      null,
+      ImmutableSet.of(ObjectID.ROCKS_41547, ObjectID.ROCKS_41548),
+      new ArrayDeque<>() {
+        {
+          add(new RockPosition(new WorldPoint(2936, 5806, 0), new WorldPoint(2936, 5807, 0)));
+          add(new RockPosition(new WorldPoint(2937, 5806, 0), new WorldPoint(2937, 5807, 0)));
+          add(new RockPosition(new WorldPoint(2941, 5809, 0), new WorldPoint(2940, 5809, 0)));
+          add(new RockPosition(new WorldPoint(2941, 5810, 0), new WorldPoint(2940, 5810, 0)));
+        }
+      },
+      false);
 
   private final WorldPoint miningAreaPoint;
   private final int miningAreaDistance;
