@@ -2,13 +2,13 @@ package io.reisub.unethicalite.guardiansoftherift.tasks;
 
 import io.reisub.unethicalite.guardiansoftherift.Config;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
-import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.coords.WorldPoint;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.movement.Movement;
 
 
 public class MoveToFirstCell extends Task {
@@ -32,7 +32,7 @@ public class MoveToFirstCell extends Task {
 
   @Override
   public void execute() {
-    ChaosMovement.sendMovementPacket(new WorldPoint(3622, 9503, 0));
+    Movement.walk(new WorldPoint(3622, 9503, 0));
     Time.sleepTicksUntil(() -> Players.getLocal().isIdle(), 10);
   }
 }
