@@ -29,11 +29,11 @@ public class GuardianInfo {
   public static final GuardianInfo NATURE =
       new GuardianInfo(44, ItemID.NATURE_RUNE, 26897, 4361, 43711, true, CellType.Strong);
   public static final GuardianInfo LAW =
-      new GuardianInfo(54, ItemID.LAW_RUNE, 26898, 4362, 43712, true, CellType.Strong);
+      new GuardianInfo(99, ItemID.LAW_RUNE, 26898, 4362, 43712, true, CellType.Strong);
   public static final GuardianInfo DEATH =
-      new GuardianInfo(65, ItemID.DEATH_RUNE, 26893, 4363, 43707, true, CellType.Overcharged);
+      new GuardianInfo(99, ItemID.DEATH_RUNE, 26893, 4363, 43707, true, CellType.Overcharged);
   public static final GuardianInfo BLOOD =
-      new GuardianInfo(77, ItemID.BLOOD_RUNE, 26894, 4364, 43708, true, CellType.Overcharged);
+      new GuardianInfo(99, ItemID.BLOOD_RUNE, 26894, 4364, 43708, true, CellType.Overcharged);
 
   public static final Set<GuardianInfo> ALL =
       ImmutableSet.of(AIR, MIND, WATER, EARTH, FIRE, BODY, COSMIC, CHAOS, NATURE, LAW, DEATH,
