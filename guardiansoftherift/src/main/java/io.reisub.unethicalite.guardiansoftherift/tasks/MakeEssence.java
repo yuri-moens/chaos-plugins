@@ -30,7 +30,7 @@ public class MakeEssence extends Task {
   @Override
   public void execute() {
     TileObjects.getNearest("Workbench").interact("Work-at");
-    Time.sleepTicksUntil(Inventory::isFull, 20);
+    Time.sleepTicksUntil(() -> Inventory.isFull() || !Inventory.contains("Guardian fragments"), 20);
     for (int id : GuardiansOfTheRift.POUCH_IDS) {
       if (Inventory.contains(id)) {
         Inventory.getFirst(id).interact("Fill");
@@ -38,7 +38,7 @@ public class MakeEssence extends Task {
     }
     TileObjects.getNearest("Workbench").interact("Work-at");
     Time.sleepTicksUntil(
-        () -> (plugin.isPortalActive() && Inventory.getFreeSlots() >= 10) || Inventory.isFull()
+        () -> (plugin.isPortalActive() && Inventory.getFreeSlots() >= 10) || !Inventory.contains("Guardian fragments") || Inventory.isFull()
             ||
             !Inventory.contains("Guardian fragments"), 20);
   }
