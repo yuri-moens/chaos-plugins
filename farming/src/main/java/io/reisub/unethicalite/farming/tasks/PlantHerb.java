@@ -6,8 +6,8 @@ import io.reisub.unethicalite.farming.Location;
 import io.reisub.unethicalite.farming.PatchImplementation;
 import io.reisub.unethicalite.farming.PatchState;
 import io.reisub.unethicalite.utils.Constants;
+import io.reisub.unethicalite.utils.api.ChaosPredicates;
 import io.reisub.unethicalite.utils.api.ConfigList;
-import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.List;
 import javax.inject.Inject;
@@ -15,6 +15,7 @@ import net.runelite.api.Item;
 import net.runelite.api.TileObject;
 import net.runelite.client.plugins.timetracking.farming.CropState;
 import net.runelite.client.plugins.timetracking.farming.Produce;
+import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
@@ -66,7 +67,7 @@ public class PlantHerb extends Task {
 
     final ConfigList diseaseFreeSeedsList = ConfigList.parseList(config.diseaseFreeSeeds());
     final List<Item> diseaseFreeSeeds =
-        Inventory.getAll(Predicates.itemConfigList(diseaseFreeSeedsList));
+        Inventory.getAll(ChaosPredicates.itemConfigList(diseaseFreeSeedsList));
     final Location currentLocation = plugin.getCurrentLocation();
 
     Item seed = null;

@@ -2,7 +2,6 @@ package io.reisub.unethicalite.nmz.tasks;
 
 import io.reisub.unethicalite.nmz.Config;
 import io.reisub.unethicalite.utils.Utils;
-import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.Collection;
 import java.util.HashSet;
@@ -10,6 +9,7 @@ import java.util.Set;
 import javax.inject.Inject;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
+import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.game.GameThread;

@@ -1,12 +1,12 @@
 package io.reisub.unethicalite.thermyflicker.tasks;
 
 import io.reisub.unethicalite.utils.Constants;
-import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.Item;
 import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 import net.runelite.api.coords.WorldPoint;
+import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.coords.RectangularArea;
 import net.unethicalite.api.entities.NPCs;

@@ -1,6 +1,6 @@
 import ProjectVersions.combatHelperVersion
 
-version = "1.0.13"
+version = "1.0.14"
 
 project.extra["PluginName"] = "Chaos Barrows"
 project.extra["PluginDescription"] = "Automated fratricide"

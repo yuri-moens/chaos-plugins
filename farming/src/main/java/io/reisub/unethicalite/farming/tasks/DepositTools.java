@@ -2,12 +2,12 @@ package io.reisub.unethicalite.farming.tasks;
 
 import io.reisub.unethicalite.farming.Farming;
 import io.reisub.unethicalite.utils.Constants;
-import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 import net.runelite.api.NPC;
+import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.NPCs;
 import net.unethicalite.api.game.GameThread;

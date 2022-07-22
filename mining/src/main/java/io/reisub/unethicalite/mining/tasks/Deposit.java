@@ -1,7 +1,6 @@
 package io.reisub.unethicalite.mining.tasks;
 
 import com.google.common.collect.ImmutableSet;
-import io.reisub.unethicalite.utils.api.Predicates;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.Set;
 import net.runelite.api.ItemID;
@@ -9,6 +8,7 @@ import net.runelite.api.NPC;
 import net.runelite.api.NpcID;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.client.eventbus.Subscribe;
+import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.NPCs;
 import net.unethicalite.api.game.GameThread;

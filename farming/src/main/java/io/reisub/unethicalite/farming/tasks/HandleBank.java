@@ -5,6 +5,7 @@ import io.reisub.unethicalite.farming.Farming;
 import io.reisub.unethicalite.farming.Location;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.ChaosBank;
+import io.reisub.unethicalite.utils.api.ChaosPredicates;
 import io.reisub.unethicalite.utils.api.ConfigList;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.util.Comparator;
@@ -164,7 +165,7 @@ public class HandleBank extends BankTask {
       if (config.manualMode()) {
         ConfigList manualSeedsList = ConfigList.parseList(config.manualSeeds());
         seeds = Bank.getAll(
-            io.reisub.unethicalite.utils.api.Predicates.itemConfigList(manualSeedsList));
+            ChaosPredicates.itemConfigList(manualSeedsList));
 
         wantedPerSeed =
             config.manualSeedsSplit()
