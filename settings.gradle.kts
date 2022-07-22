@@ -25,6 +25,7 @@
 
 rootProject.name = "Chaos Plugins"
 
+//include("alchemicalhydrafighter")
 include("barrows")
 include("blastfurnace")
 include("chinchompas")
@@ -35,6 +36,7 @@ include("farming")
 include("fletching")
 include("funguspicker")
 include("giantsfoundry")
+include("guardiansoftherift")
 include("herblore")
 include("leftclickcast")
 //include("lizardmanshamankiller")
