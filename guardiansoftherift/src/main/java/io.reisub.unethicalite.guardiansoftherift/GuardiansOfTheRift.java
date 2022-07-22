@@ -194,6 +194,8 @@ public class GuardiansOfTheRift extends TickScript {
       reset();
     } else if (msg.contains("The Portal Guardians close their rifts.")) {
       reset();
+    } else if (msg.contains("The Great Guardian was defeated!")) {
+      reset();
     } else if (msg.contains(
         "The Portal Guardians will keep their rifts open for another 30 seconds.")) {
       if (getGamePhase() == 0) {
