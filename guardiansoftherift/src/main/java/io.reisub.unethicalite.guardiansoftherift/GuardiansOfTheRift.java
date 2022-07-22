@@ -46,7 +46,6 @@ import net.runelite.client.ui.overlay.OverlayManager;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
-import net.unethicalite.api.game.GameThread;
 import net.unethicalite.api.game.Skills;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.widgets.Widgets;
@@ -54,7 +53,7 @@ import org.pf4j.Extension;
 
 @PluginDescriptor(
     name = "Chaos GuardiansOfTheRift",
-    description = "",
+    description = "GOTR",
     enabledByDefault = false
 )
 @PluginDependency(Utils.class)
@@ -62,12 +61,14 @@ import org.pf4j.Extension;
 @Extension
 public class GuardiansOfTheRift extends TickScript {
   public static final int TIMER_WIDGET_ID = 48889861;
+  public static final Set<Integer> POUCH_IDS =
+      ImmutableSet.of(ItemID.SMALL_POUCH, ItemID.MEDIUM_POUCH, ItemID.MEDIUM_POUCH_5511,
+          ItemID.LARGE_POUCH, ItemID.LARGE_POUCH_5513, ItemID.GIANT_POUCH, ItemID.GIANT_POUCH_5515,
+          ItemID.COLOSSAL_POUCH);
   private static final int GUARDIAN_ACTIVE_ANIM = 9363;
   private static final Set<Integer> GUARDIAN_IDS =
       ImmutableSet.of(43705, 43701, 43710, 43702, 43703, 43711, 43704, 43708, 43712, 43707, 43706,
           43709, 43702);
-
-  public static final Set<Integer> POUCH_IDS = ImmutableSet.of(ItemID.SMALL_POUCH, ItemID.MEDIUM_POUCH, ItemID.MEDIUM_POUCH_5511, ItemID.LARGE_POUCH, ItemID.LARGE_POUCH_5513, ItemID.GIANT_POUCH, ItemID.GIANT_POUCH_5515, ItemID.COLOSSAL_POUCH);
   private static final int MINIGAME_MAIN_REGION = 14484;
   private static final int PORTAL_WIDGET_ID = 48889883;
   @Getter
@@ -223,6 +224,10 @@ public class GuardiansOfTheRift extends TickScript {
         activeGuardiansInfo.add(gii);
       }
     }
-    return activeGuardiansInfo.stream().max(Comparator.comparingInt(GuardianInfo::getLevelRequired)).get();
+    return activeGuardiansInfo.stream().max(Comparator.comparingInt(GuardianInfo::getLevelRequired))
+        .isPresent()
+        ?
+        activeGuardiansInfo.stream().max(Comparator.comparingInt(GuardianInfo::getLevelRequired))
+            .get() : null;
   }
 }

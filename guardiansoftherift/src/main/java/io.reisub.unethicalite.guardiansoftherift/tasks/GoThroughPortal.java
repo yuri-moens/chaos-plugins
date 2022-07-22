@@ -1,11 +1,9 @@
 package io.reisub.unethicalite.guardiansoftherift.tasks;
 
 import io.reisub.unethicalite.guardiansoftherift.Config;
-import io.reisub.unethicalite.guardiansoftherift.GuardianInfo;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
-import net.runelite.api.TileObject;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
@@ -25,7 +23,9 @@ public class GoThroughPortal extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getGamePhase() == 10 && !Inventory.isFull() && TileObjects.getNearest(43729) != null;
+    return plugin.getGamePhase() == 10 && !Inventory.isFull()
+        &&
+        TileObjects.getNearest(43729) != null;
   }
 
   @Override

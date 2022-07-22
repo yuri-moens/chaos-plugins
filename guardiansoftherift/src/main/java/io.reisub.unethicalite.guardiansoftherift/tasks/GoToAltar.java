@@ -4,9 +4,7 @@ import io.reisub.unethicalite.guardiansoftherift.Config;
 import io.reisub.unethicalite.guardiansoftherift.GuardianInfo;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
 import io.reisub.unethicalite.utils.tasks.Task;
-import java.security.Guard;
 import javax.inject.Inject;
-import net.runelite.api.GameObject;
 import net.runelite.api.TileObject;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.TileObjects;
@@ -26,7 +24,9 @@ public class GoToAltar extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getGamePhase() == 10 && Inventory.isFull() && Inventory.contains("Guardian essence");
+    return plugin.getGamePhase() == 10 && Inventory.isFull()
+        &&
+        Inventory.contains("Guardian essence");
   }
 
   @Override

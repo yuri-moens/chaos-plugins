@@ -25,7 +25,8 @@ public class MoveToFirstCell extends Task {
   @Override
   public boolean validate() {
 
-    return plugin.getGamePhase() == 2 &&
+    return plugin.getGamePhase() == 2
+        &&
         TileObjects.getNearest("Inactive cell tile").distanceTo(Players.getLocal()) > 2;
   }
 
