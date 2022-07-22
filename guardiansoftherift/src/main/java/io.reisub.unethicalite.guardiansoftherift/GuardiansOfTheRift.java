@@ -33,7 +33,6 @@ import net.runelite.api.Client;
 import net.runelite.api.DynamicObject;
 import net.runelite.api.GameObject;
 import net.runelite.api.ItemID;
-import net.runelite.api.Skill;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameObjectSpawned;
 import net.runelite.api.events.GameTick;
@@ -46,7 +45,6 @@ import net.runelite.client.ui.overlay.OverlayManager;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
-import net.unethicalite.api.game.Skills;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.widgets.Widgets;
 import org.pf4j.Extension;
@@ -222,18 +220,21 @@ public class GuardiansOfTheRift extends TickScript {
     Set<GuardianInfo> activeGuardiansInfo = new HashSet<>();
     for (GameObject ag : activeGuardians) {
       GuardianInfo gii = GuardianInfo.getForObjectId(ag.getId());
-      if (gii != null && gii.levelRequired <= Skills.getLevel(Skill.RUNECRAFT)) {
+      if (gii != null && gii.haveRequirements()) {
         activeGuardiansInfo.add(gii);
       }
     }
     if (config.focusPoints() && activeGuardiansInfo.size() > 1) {
-      activeGuardiansInfo.removeIf(gf -> config.elementalFocus() && !gf.isCatalytic);
-      activeGuardiansInfo.removeIf(gf -> !config.elementalFocus() && gf.isCatalytic);
+      activeGuardiansInfo.removeIf(gf -> config.elementalFocus() && !gf.isCatalytic());
+      activeGuardiansInfo.removeIf(gf -> !config.elementalFocus() && gf.isCatalytic());
     }
-    return activeGuardiansInfo.stream().max(Comparator.comparingInt(GuardianInfo::getLevelRequired))
+    return activeGuardiansInfo
+        .stream()
+        .max(Comparator.comparingInt(GuardianInfo::getLevelRequired))
         .isPresent()
-        ?
-        activeGuardiansInfo.stream().max(Comparator.comparingInt(GuardianInfo::getLevelRequired))
-            .get() : null;
+        ? activeGuardiansInfo
+        .stream()
+        .max(Comparator.comparingInt(GuardianInfo::getLevelRequired))
+        .get() : null;
   }
 }

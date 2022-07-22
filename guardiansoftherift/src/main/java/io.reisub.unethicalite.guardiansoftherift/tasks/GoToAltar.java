@@ -33,7 +33,7 @@ public class GoToAltar extends Task {
   public void execute() {
     GuardianInfo bestGuardian = plugin.getBestGuardian();
     if (bestGuardian != null) {
-      TileObject guardian = TileObjects.getNearest(bestGuardian.objectId);
+      TileObject guardian = TileObjects.getNearest(bestGuardian.getObjectId());
       if (guardian != null) {
         guardian.interact("Enter");
         Time.sleepTicksUntil(() -> TileObjects.getNearest("Altar") != null, 16);
