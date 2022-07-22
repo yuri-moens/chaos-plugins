@@ -29,6 +29,7 @@ public class MineGuardianParts extends Task {
   @Override
   public void execute() {
     TileObjects.getNearest("Guardian parts").interact("Mine");
-    Time.sleepTicksUntil(() -> plugin.isPortalActive() || Inventory.getCount("Guardian fragments") >= 27, 50);
+    Time.sleepTicksUntil(
+        () -> plugin.isPortalActive() || Inventory.getCount("Guardian fragments") >= 27, 50);
   }
 }

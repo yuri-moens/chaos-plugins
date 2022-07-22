@@ -38,8 +38,8 @@ public class MakeEssence extends Task {
     }
     TileObjects.getNearest("Workbench").interact("Work-at");
     Time.sleepTicksUntil(
-        () -> (plugin.isPortalActive() && Inventory.getFreeSlots() >= 10) || !Inventory.contains("Guardian fragments") || Inventory.isFull()
-            ||
-            !Inventory.contains("Guardian fragments"), 20);
+        () -> (plugin.isPortalActive() && Inventory.getFreeSlots() >= 10)
+            || !Inventory.contains("Guardian fragments")
+            || Inventory.isFull(), 20);
   }
 }
