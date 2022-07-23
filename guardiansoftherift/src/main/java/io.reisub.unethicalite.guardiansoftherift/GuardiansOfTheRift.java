@@ -230,11 +230,11 @@ public class GuardiansOfTheRift extends TickScript {
     }
     return activeGuardiansInfo
         .stream()
-        .max(Comparator.comparingInt(GuardianInfo::getLevelRequired))
+        .max(Comparator.comparing(GuardianInfo::getCellType))
         .isPresent()
         ? activeGuardiansInfo
         .stream()
-        .max(Comparator.comparingInt(GuardianInfo::getLevelRequired))
+        .max(Comparator.comparing(GuardianInfo::getCellType))
         .get() : null;
   }
 }
