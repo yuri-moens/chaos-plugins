@@ -3,7 +3,7 @@ package io.reisub.unethicalite.farming;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.api.Interact;
-import io.reisub.unethicalite.utils.enums.PortalTeleport;
+import io.reisub.unethicalite.utils.enums.HouseTeleport;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -81,7 +81,7 @@ public enum Location {
       15148,
       Varbits.FARMING_4772,
       0,
-      () -> ChaosMovement.teleportThroughHouse(PortalTeleport.HARMONY_ISLAND)),
+      () -> ChaosMovement.teleportThroughHouse(HouseTeleport.HARMONY_ISLAND)),
   HOSIDIUS(
       "Hosidius",
       new WorldPoint(1740, 3550, 0),
@@ -126,14 +126,14 @@ public enum Location {
       11321,
       Varbits.FARMING_4771,
       0,
-      () -> ChaosMovement.teleportThroughHouse(PortalTeleport.TROLL_STRONGHOLD)),
+      () -> ChaosMovement.teleportThroughHouse(HouseTeleport.TROLL_STRONGHOLD)),
   WEISS(
       "Weiss",
       new WorldPoint(2847, 3935, 0),
       11325,
       Varbits.FARMING_4771,
       0,
-      () -> ChaosMovement.teleportThroughHouse(PortalTeleport.WEISS, 70));
+      () -> ChaosMovement.teleportThroughHouse(HouseTeleport.WEISS, 70));
 
   private final String name;
   private final WorldPoint patchPoint;

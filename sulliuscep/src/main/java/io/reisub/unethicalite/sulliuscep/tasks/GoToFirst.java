@@ -5,7 +5,7 @@ import io.reisub.unethicalite.sulliuscep.SulliuscepObject;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
-import io.reisub.unethicalite.utils.enums.PortalTeleport;
+import io.reisub.unethicalite.utils.enums.HouseTeleport;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.Comparator;
 import java.util.List;
@@ -86,7 +86,7 @@ public class GoToFirst extends Task {
     }
 
     if (Utils.isInRegion(Sulliuscep.SWAMP_UPPER_REGION_ID)) {
-      ChaosMovement.teleportThroughHouse(PortalTeleport.FOSSIL_ISLAND, 101);
+      ChaosMovement.teleportThroughHouse(HouseTeleport.FOSSIL_ISLAND, 101);
     }
 
     final TileObject tree =
