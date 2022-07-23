@@ -27,8 +27,8 @@ object ProjectVersions {
     const val unethicaliteVersion = "1.0.6-SNAPSHOT"
     const val rlVersion = "1.8.21"
     const val apiVersion = "^1.0.0"
-    const val utilsVersion = "1.6.0"
-    const val combatHelperVersion = "1.9.2"
+    const val utilsVersion = "1.6.1"
+    const val combatHelperVersion = "1.9.3"
 }
 
 object Libraries {
