@@ -3,6 +3,7 @@ package io.reisub.unethicalite.guardiansoftherift;
 import com.google.common.collect.ImmutableSet;
 import java.awt.image.BufferedImage;
 import java.util.Set;
+import lombok.Getter;
 import lombok.Value;
 import net.runelite.api.ItemID;
 import net.runelite.api.Quest;
@@ -52,6 +53,7 @@ public class GuardianInfo {
   int spriteId;
   int objectId;
   boolean isCatalytic;
+  @Getter
   CellType cellType;
   Quest requiredQuest;
 
