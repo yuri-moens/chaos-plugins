@@ -5,12 +5,13 @@ import io.reisub.unethicalite.guardiansoftherift.GuardianInfo;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.TileObject;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 
-
+@Slf4j
 public class GoToAltar extends Task {
   @Inject
   private GuardiansOfTheRift plugin;
@@ -34,9 +35,11 @@ public class GoToAltar extends Task {
     GuardianInfo bestGuardian = plugin.getBestGuardian();
     if (bestGuardian != null) {
       TileObject guardian = TileObjects.getNearest(bestGuardian.getObjectId());
+      log.info(guardian.getName());
       if (guardian != null) {
         guardian.interact("Enter");
-        Time.sleepTicksUntil(() -> TileObjects.getNearest("Altar") != null, 16);
+        Time.sleepTicksUntil(() -> TileObjects.getNearest("Altar") != null
+            || !plugin.getBestGuardian().equals(bestGuardian), 16);
       }
     }
 

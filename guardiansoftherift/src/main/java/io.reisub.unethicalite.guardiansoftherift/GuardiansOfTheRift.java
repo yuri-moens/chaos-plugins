@@ -105,6 +105,10 @@ public class GuardiansOfTheRift extends TickScript {
 
     overlayManager.add(overlay);
 
+    for (GuardianInfo gi : GuardianInfo.ALL) {
+      log.info(String.valueOf(gi.haveRequirements()));
+    }
+
 
     addTask(StartItems.class);
     addTask(MoveToFirstCell.class);
@@ -199,6 +203,8 @@ public class GuardiansOfTheRift extends TickScript {
       reset();
     } else if (msg.contains("The Great Guardian was defeated!")) {
       reset();
+    } else if (msg.contains("Creatures from the Abyss begin their attack!")) {
+      setGamePhase(10);
     } else if (msg.contains(
         "The Portal Guardians will keep their rifts open for another 30 seconds.")) {
       reset();
@@ -209,7 +215,7 @@ public class GuardiansOfTheRift extends TickScript {
   private void reset() {
     setGamePhase(0);
     if (Players.getLocal().getWorldLocation().getWorldX() < 3597) {
-      TileObjects.getNearest("Portal").interact("Use");
+      TileObjects.getNearest("Portal").interact("Enter");
       Time.sleepTicksUntil(this::checkInMainRegion, 20);
       Time.sleepTick();
     }

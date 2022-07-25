@@ -10,6 +10,7 @@ import net.runelite.api.Quest;
 import net.runelite.api.QuestState;
 import net.runelite.api.Skill;
 import net.runelite.client.game.ItemManager;
+import net.unethicalite.api.game.GameThread;
 import net.unethicalite.api.game.Skills;
 import net.unethicalite.client.Static;
 
@@ -55,6 +56,7 @@ public class GuardianInfo {
   boolean isCatalytic;
   @Getter
   CellType cellType;
+  @Getter
   Quest requiredQuest;
 
   public static GuardianInfo getForObjectId(int objectId) {
@@ -69,7 +71,8 @@ public class GuardianInfo {
   public boolean haveRequirements() {
     return Skills.getLevel(Skill.RUNECRAFT) >= levelRequired
         && (requiredQuest == null
-        || requiredQuest.getState(Static.getClient()) == QuestState.FINISHED);
+        || GameThread.invokeLater(() -> requiredQuest.getState(Static.getClient()))
+        == QuestState.FINISHED);
   }
 
   public BufferedImage getRuneImage(ItemManager itemManager) {
