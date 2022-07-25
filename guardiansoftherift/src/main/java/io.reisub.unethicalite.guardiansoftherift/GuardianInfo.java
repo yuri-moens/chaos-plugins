@@ -56,7 +56,6 @@ public class GuardianInfo {
   boolean isCatalytic;
   @Getter
   CellType cellType;
-  @Getter
   Quest requiredQuest;
 
   public static GuardianInfo getForObjectId(int objectId) {
