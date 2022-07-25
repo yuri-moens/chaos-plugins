@@ -10,7 +10,6 @@ import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 
-
 public class GoToAltar extends Task {
   @Inject
   private GuardiansOfTheRift plugin;
@@ -36,7 +35,8 @@ public class GoToAltar extends Task {
       TileObject guardian = TileObjects.getNearest(bestGuardian.getObjectId());
       if (guardian != null) {
         guardian.interact("Enter");
-        Time.sleepTicksUntil(() -> TileObjects.getNearest("Altar") != null, 16);
+        Time.sleepTicksUntil(() -> TileObjects.getNearest("Altar") != null
+            || !plugin.getBestGuardian().equals(bestGuardian), 16);
       }
     }
 

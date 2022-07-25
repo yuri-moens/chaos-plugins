@@ -69,6 +69,7 @@ public class GuardiansOfTheRift extends TickScript {
           43709, 43702);
   private static final int MINIGAME_MAIN_REGION = 14484;
   private static final int PORTAL_WIDGET_ID = 48889883;
+  private static final int PARENT_WIDGET_ID = 48889857;
   @Getter
   private final Set<GameObject> activeGuardians = new HashSet<>();
   @Getter
@@ -103,6 +104,10 @@ public class GuardiansOfTheRift extends TickScript {
     super.onStart();
 
     overlayManager.add(overlay);
+
+    for (GuardianInfo gi : GuardianInfo.ALL) {
+      log.info(String.valueOf(gi.haveRequirements()));
+    }
 
 
     addTask(StartItems.class);
@@ -159,6 +164,10 @@ public class GuardiansOfTheRift extends TickScript {
     Widget portalWidget = Widgets.fromId(PORTAL_WIDGET_ID);
 
     portalActive = portalWidget != null && !portalWidget.isHidden();
+
+    if (gamePhase == 0 && Widgets.fromId(PARENT_WIDGET_ID) != null) {
+      setGamePhase(10);
+    }
   }
 
   @Subscribe
@@ -194,11 +203,10 @@ public class GuardiansOfTheRift extends TickScript {
       reset();
     } else if (msg.contains("The Great Guardian was defeated!")) {
       reset();
+    } else if (msg.contains("Creatures from the Abyss begin their attack!")) {
+      setGamePhase(10);
     } else if (msg.contains(
         "The Portal Guardians will keep their rifts open for another 30 seconds.")) {
-      if (getGamePhase() == 0) {
-        setGamePhase(100);
-      }
       reset();
     }
 
@@ -207,7 +215,7 @@ public class GuardiansOfTheRift extends TickScript {
   private void reset() {
     setGamePhase(0);
     if (Players.getLocal().getWorldLocation().getWorldX() < 3597) {
-      TileObjects.getNearest("Portal").interact("Use");
+      TileObjects.getNearest("Portal").interact("Enter");
       Time.sleepTicksUntil(this::checkInMainRegion, 20);
       Time.sleepTick();
     }
