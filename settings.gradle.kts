@@ -54,6 +54,7 @@ include("tempoross")
 include("thermyflicker")
 include("twotickteaks")
 //include("wintertodt")
+include("woodcutting")
 
 if (File("./test").exists()) {
     include("test")
