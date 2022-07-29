@@ -38,7 +38,8 @@ public class Chop extends Task {
   public boolean validate() {
     final boolean isReady = currentTreePosition == null
         || TileObjects.getFirstAt(
-            currentTreePosition, Predicates.ids(config.location().getTreeIds())) == null;
+        currentTreePosition.dx(config.location().getXoffset()).dy(config.location().getYoffset()),
+        Predicates.ids(config.location().getTreeIds())) == null;
 
     return !Inventory.isFull()
         && isReady;
