@@ -2,6 +2,7 @@ package io.reisub.unethicalite.woodcutting.tasks;
 
 import io.reisub.unethicalite.utils.tasks.Task;
 import io.reisub.unethicalite.woodcutting.Config;
+import io.reisub.unethicalite.woodcutting.Woodcutting;
 import java.util.ArrayDeque;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -13,10 +14,12 @@ import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.game.GameThread;
 import net.unethicalite.api.items.Inventory;
+import net.unethicalite.client.Static;
 
 @Singleton
 public class Chop extends Task {
 
+  private final Woodcutting plugin;
   private final Config config;
   private ArrayDeque<WorldPoint> treePositions;
   @Getter
@@ -24,7 +27,8 @@ public class Chop extends Task {
   private WorldPoint currentTreePosition;
 
   @Inject
-  public Chop(Config config) {
+  public Chop(Woodcutting plugin, Config config) {
+    this.plugin = plugin;
     this.config = config;
     resetQueue();
   }
@@ -41,7 +45,8 @@ public class Chop extends Task {
         currentTreePosition.dx(config.location().getXoffset()).dy(config.location().getYoffset()),
         Predicates.ids(config.location().getTreeIds())) == null;
 
-    return !Inventory.isFull()
+    return
+        (!Inventory.isFull() || Static.getClient().getTickCount() - plugin.getLastBankTick() <= 2)
         && isReady;
   }
 

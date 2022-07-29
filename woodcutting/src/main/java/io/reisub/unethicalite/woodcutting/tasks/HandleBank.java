@@ -3,14 +3,18 @@ package io.reisub.unethicalite.woodcutting.tasks;
 import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import io.reisub.unethicalite.woodcutting.Config;
+import io.reisub.unethicalite.woodcutting.Woodcutting;
 import java.time.Duration;
 import javax.inject.Inject;
 import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.items.Inventory;
+import net.unethicalite.client.Static;
 
 public class HandleBank extends BankTask {
 
+  @Inject
+  private Woodcutting plugin;
   @Inject
   private Config config;
   @Inject
@@ -32,5 +36,7 @@ public class HandleBank extends BankTask {
     open();
 
     ChaosBank.depositAllExcept(false, Predicates.nameContains("axe"));
+
+    plugin.setLastBankTick(Static.getClient().getTickCount());
   }
 }

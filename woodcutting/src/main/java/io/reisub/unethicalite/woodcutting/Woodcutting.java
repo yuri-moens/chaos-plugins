@@ -12,6 +12,8 @@ import io.reisub.unethicalite.woodcutting.tasks.MoveToRespawning;
 import io.reisub.unethicalite.woodcutting.tasks.PickupNest;
 import io.reisub.unethicalite.woodcutting.tasks.UseSpecial;
 import javax.inject.Inject;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.plugins.PluginDependency;
@@ -30,6 +32,9 @@ public class Woodcutting extends TickScript {
 
   @Inject
   private Config config;
+  @Getter
+  @Setter
+  private int lastBankTick;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
