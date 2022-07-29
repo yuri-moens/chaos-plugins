@@ -25,6 +25,15 @@ public interface Config extends net.runelite.client.config.Config {
   }
 
   @ConfigItem(
+      keyName = "birdNests",
+      name = "Pick up bird nests",
+      description = "Pick up bird nests",
+      position = 2)
+  default boolean birdNests() {
+    return true;
+  }
+
+  @ConfigItem(
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",

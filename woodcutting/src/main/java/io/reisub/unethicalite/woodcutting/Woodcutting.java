@@ -9,6 +9,8 @@ import io.reisub.unethicalite.woodcutting.tasks.GoToBank;
 import io.reisub.unethicalite.woodcutting.tasks.GoToChoppingArea;
 import io.reisub.unethicalite.woodcutting.tasks.HandleBank;
 import io.reisub.unethicalite.woodcutting.tasks.MoveToRespawning;
+import io.reisub.unethicalite.woodcutting.tasks.PickupNest;
+import io.reisub.unethicalite.woodcutting.tasks.UseSpecial;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.client.config.ConfigManager;
@@ -45,7 +47,9 @@ public class Woodcutting extends TickScript {
     addTask(HandleBank.class);
     addTask(GoToBank.class);
     addTask(GoToChoppingArea.class);
+    addTask(PickupNest.class);
     addTask(chop);
+    addTask(UseSpecial.class);
     addTask(MoveToRespawning.class);
   }
 }
