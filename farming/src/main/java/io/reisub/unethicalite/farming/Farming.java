@@ -339,7 +339,7 @@ public class Farming extends TickScript implements KeyListener {
     boolean flowerReady;
     boolean flowerDiseased = false;
 
-    if (currentLocation.hasFlowerPatch()) {
+    if (currentLocation.hasFlowerPatch() && config.limpwurt()) {
       final int flowerVarbitValue = Vars.getBit(currentLocation.getFlowerVarbit());
       final PatchState flowerPatchState =
           PatchImplementation.FLOWER.forVarbitValue(flowerVarbitValue);
