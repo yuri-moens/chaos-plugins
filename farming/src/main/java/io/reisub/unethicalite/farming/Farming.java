@@ -16,6 +16,7 @@ import io.reisub.unethicalite.farming.tasks.WithdrawTools;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
+import io.reisub.unethicalite.utils.api.ChaosPredicates;
 import io.reisub.unethicalite.utils.api.ConfigList;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
@@ -44,6 +45,7 @@ import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.timetracking.farming.CropState;
 import net.runelite.client.plugins.timetracking.farming.Produce;
 import net.unethicalite.api.commons.Predicates;
+import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.NPCs;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.game.GameThread;
@@ -60,12 +62,16 @@ import org.pf4j.Extension;
 @Slf4j
 @Extension
 public class Farming extends TickScript implements KeyListener {
+
   private static final Set<Integer> ITEM_OPCODES = ImmutableSet.of(1007, 25, 57);
   private static final int INVENTORY_WIDGET_ID = 9764864;
   private static final int FARMING_GUILD_REGION = 4922;
-  @Getter private final Queue<Location> locationQueue = new LinkedList<>();
-  @Inject private Config config;
-  @Getter private Location currentLocation;
+  @Getter
+  private final Queue<Location> locationQueue = new LinkedList<>();
+  @Inject
+  private Config config;
+  @Getter
+  private Location currentLocation;
   private ConfigList compostProduceConfigList;
 
   @Provides
@@ -261,18 +267,38 @@ public class Farming extends TickScript implements KeyListener {
   }
 
   @Override
-  public void keyTyped(KeyEvent e) {}
+  public void keyTyped(KeyEvent e) {
+  }
 
   @Override
   public void keyPressed(KeyEvent e) {
     if (config.farmingHotkey().matches(e)) {
       e.consume();
       start();
+    } else if (config.harvestAndCompostHotkey().matches(e)) {
+      e.consume();
+      schedule(this::harvestAndCompost);
     }
   }
 
   @Override
-  public void keyReleased(KeyEvent e) {}
+  public void keyReleased(KeyEvent e) {
+  }
+
+  private void harvestAndCompost() {
+    final TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.ALLOTMENT_PATCH_IDS));
+    final TileObject compostBin = TileObjects.getNearest(Predicates.ids(Constants.COMPOST_BIN_IDS));
+    final Item compostable =
+        Inventory.getFirst(ChaosPredicates.itemConfigList(compostProduceConfigList));
+
+    if (patch == null || compostBin == null || compostable == null) {
+      return;
+    }
+
+    GameThread.invoke(() -> patch.interact("Harvest"));
+    Time.sleepTick();
+    GameThread.invoke(() -> compostable.useOn(compostBin));
+  }
 
   private CropState getCompostBinState() {
     PatchState patchState;

@@ -306,11 +306,22 @@ public interface Config extends net.runelite.client.config.Config {
 
   @ConfigItem(
       keyName = "farmingHotkey",
-      name = "Hotkey",
+      name = "Start hotkey",
       description = "Choose the hotkey to start a farm run",
-      position = Integer.MAX_VALUE - 1)
+      position = Integer.MAX_VALUE - 2)
   default Keybind farmingHotkey() {
     return new Keybind(KeyEvent.VK_F6, InputEvent.CTRL_DOWN_MASK);
+  }
+
+  @ConfigItem(
+      keyName = "harvestAndCompostHotkey",
+      name = "Harvest and compost hotkey",
+      description = "Pressing this hotkey will harvest the nearest allotment patch and put the "
+          + "produce in the compost bin at the same time. Requires at least 1 of the produce "
+          + "in the inventory already",
+      position = Integer.MAX_VALUE - 1)
+  default Keybind harvestAndCompostHotkey() {
+    return new Keybind(KeyEvent.VK_F7, InputEvent.CTRL_DOWN_MASK);
   }
 
   @ConfigItem(
