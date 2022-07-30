@@ -34,6 +34,17 @@ public interface Config extends net.runelite.client.config.Config {
   }
 
   @ConfigItem(
+      keyName = "onlyPickUpOurs",
+      name = "Only pick up our nests",
+      description = "Don't pick up other people's nests, useful for ironmen",
+      hidden = true,
+      unhide = "birdNests",
+      position = 3)
+  default boolean onlyPickUpOurs() {
+    return false;
+  }
+
+  @ConfigItem(
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
