@@ -1,7 +1,6 @@
 package io.reisub.unethicalite.guardiansoftherift.tasks;
 
 import io.reisub.unethicalite.guardiansoftherift.Config;
-import io.reisub.unethicalite.guardiansoftherift.GuardianInfo;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;

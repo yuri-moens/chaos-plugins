@@ -15,9 +15,9 @@ import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.NPCs;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
-import net.unethicalite.api.game.Game;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.movement.Movement;
+import net.unethicalite.client.Static;
 
 public class Cook extends Task {
   @Inject private Tempoross plugin;
@@ -132,7 +132,7 @@ public class Cook extends Task {
         () ->
             plugin.getCurrentActivity() == Activity.COOKING
                 || plugin.isWaveIncoming()
-                || plugin.getLastDoubleSpawn() + 3 >= Game.getClient().getTickCount(),
+                || plugin.getLastDoubleSpawn() + 3 >= Static.getClient().getTickCount(),
         10000);
   }
 }

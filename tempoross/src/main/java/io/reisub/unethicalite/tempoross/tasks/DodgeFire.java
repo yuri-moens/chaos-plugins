@@ -13,7 +13,7 @@ import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.NPCs;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
-import net.unethicalite.api.game.Game;
+import net.unethicalite.client.Static;
 
 public class DodgeFire extends Task {
   @Inject private Tempoross plugin;
@@ -29,7 +29,7 @@ public class DodgeFire extends Task {
   public boolean validate() {
     if (!plugin.isInTemporossArea()
         || Players.getLocal().isMoving()
-        || Game.getClient().getTickCount() <= last + 3) {
+        || Static.getClient().getTickCount() <= last + 3) {
       return false;
     }
 
@@ -59,6 +59,6 @@ public class DodgeFire extends Task {
       plugin.setActivity(Activity.IDLE);
     }
 
-    last = Game.getClient().getTickCount();
+    last = Static.getClient().getTickCount();
   }
 }

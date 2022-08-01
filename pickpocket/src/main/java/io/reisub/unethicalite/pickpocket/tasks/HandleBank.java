@@ -27,13 +27,13 @@ import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.game.Combat;
-import net.unethicalite.api.game.Game;
 import net.unethicalite.api.game.Skills;
 import net.unethicalite.api.items.Bank;
 import net.unethicalite.api.items.Equipment;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.magic.Rune;
 import net.unethicalite.api.movement.Movement;
+import net.unethicalite.client.Static;
 
 public class HandleBank extends BankTask {
   @Inject private ItemStatChanges statChanges;
@@ -130,7 +130,7 @@ public class HandleBank extends BankTask {
   private int heals(int itemId) {
     Effect effect = statChanges.get(itemId);
     if (effect != null) {
-      StatsChanges statsChanges = effect.calculate(Game.getClient());
+      StatsChanges statsChanges = effect.calculate(Static.getClient());
       for (StatChange statChange : statsChanges.getStatChanges()) {
         if (statChange.getStat().getName().equals(Stats.HITPOINTS.getName())) {
           return statChange.getTheoretical();

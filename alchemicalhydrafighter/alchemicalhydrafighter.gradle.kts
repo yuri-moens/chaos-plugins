@@ -1,7 +1,14 @@
-version = "1.1.4"
+import ProjectVersions.combatHelperVersion
 
-project.extra["PluginName"] = "Chaos Pickpocket"
-project.extra["PluginDescription"] = "Cor blimey mate, what are ye doing in me pockets?"
+version = "1.0.0"
+
+project.extra["PluginName"] = "Chaos Alchemical Hydra Fighter"
+project.extra["PluginDescription"] = "Fights the Alchemical Hydra"
+
+dependencies {
+    compileOnly(group = "io.reisub.unethicalite", name = "alchemicalhydra", version = "5.1.0")
+    compileOnly(group = "io.reisub.unethicalite", name = "combathelper", version = combatHelperVersion)
+}
 
 tasks {
     jar {
@@ -14,6 +21,8 @@ tasks {
                     "Plugin-Description" to project.extra["PluginDescription"],
                     "Plugin-Dependencies" to
                             arrayOf(
+                                nameToId("Chaos Alchemical Hydra"),
+                                nameToId("Chaos Combat Helper"),
                                 nameToId("Chaos Utils")
                             ).joinToString(),
                     "Plugin-License" to project.extra["PluginLicense"]

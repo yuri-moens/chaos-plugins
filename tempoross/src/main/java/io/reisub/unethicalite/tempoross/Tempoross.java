@@ -53,10 +53,10 @@ import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.unethicalite.api.entities.TileObjects;
-import net.unethicalite.api.game.Game;
 import net.unethicalite.api.game.Vars;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.widgets.Widgets;
+import net.unethicalite.client.Static;
 import org.pf4j.Extension;
 
 @PluginDescriptor(
@@ -278,7 +278,7 @@ public class Tempoross extends TickScript {
     if (id == NpcID.CAPTAIN_DUDI_10587 && dudiPos == null) {
       dudiPos = npcSpawned.getNpc().getWorldLocation();
     } else if (id == NpcID.FISHING_SPOT_10569) {
-      lastDoubleSpawn = Game.getClient().getTickCount();
+      lastDoubleSpawn = Static.getClient().getTickCount();
     }
   }
 

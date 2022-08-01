@@ -21,8 +21,8 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
-import net.unethicalite.api.game.Game;
 import net.unethicalite.api.items.Inventory;
+import net.unethicalite.client.Static;
 import org.pf4j.Extension;
 
 @PluginDescriptor(
@@ -61,7 +61,7 @@ public class Herblore extends TickScript {
   @Subscribe
   private void onItemContainerChanged(ItemContainerChanged event) {
     if (!Utils.isLoggedIn()
-        || event.getItemContainer() != Game.getClient().getItemContainer(InventoryID.INVENTORY)) {
+        || event.getItemContainer() != Static.getClient().getItemContainer(InventoryID.INVENTORY)) {
       return;
     }
 
