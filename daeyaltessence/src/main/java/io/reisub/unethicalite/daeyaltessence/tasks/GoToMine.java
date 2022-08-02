@@ -26,12 +26,12 @@ public class GoToMine extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     ChaosMovement.walkTo(ESSENCE_MINE_LADDER, 1);
 
     TileObject ladder = TileObjects.getNearest(ObjectID.STAIRCASE_39092);
     if (ladder == null) {
-      return;
+      return 1;
     }
 
     ladder.interact(0);
@@ -44,5 +44,7 @@ public class GoToMine extends Task {
     Time.sleepTicks(2);
 
     Inventory.getAll((i) -> i.getName().contains("Graceful")).forEach((i) -> i.interact("Wear"));
+
+    return 1;
   }
 }

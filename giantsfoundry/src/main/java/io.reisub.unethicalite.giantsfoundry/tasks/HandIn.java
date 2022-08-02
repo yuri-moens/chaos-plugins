@@ -29,11 +29,11 @@ public class HandIn extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Time.sleepTicksUntil(() -> Players.getLocal().isIdle(), 10);
     NPC kovac = NPCs.getNearest("Kovac");
     if (kovac == null) {
-      return;
+      return 1;
     }
 
     kovac.interact("Hand-in");
@@ -45,5 +45,7 @@ public class HandIn extends Task {
         DialogOption.CHAT_OPTION_ONE,
         DialogOption.PLAYER_CONTINUE
     );
+
+    return 1;
   }
 }

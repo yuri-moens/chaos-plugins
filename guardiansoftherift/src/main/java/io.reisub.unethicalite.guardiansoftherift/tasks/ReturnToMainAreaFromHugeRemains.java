@@ -27,10 +27,10 @@ public class ReturnToMainAreaFromHugeRemains extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObjects.getNearest("Portal").interact("Enter");
     Time.sleepTicksUntil(plugin::checkInMainRegion, 20);
-    Time.sleepTick();
 
+    return 2;
   }
 }

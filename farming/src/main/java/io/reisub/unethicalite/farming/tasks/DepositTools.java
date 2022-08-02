@@ -34,7 +34,7 @@ public class DepositTools extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (Equipment.contains(ItemID.MAGIC_SECATEURS)) {
       Equipment.getFirst(ItemID.MAGIC_SECATEURS).interact(0);
     }
@@ -65,5 +65,7 @@ public class DepositTools extends Task {
     }
 
     plugin.stop("Finished farm run. Stopping plugin.");
+
+    return 1;
   }
 }

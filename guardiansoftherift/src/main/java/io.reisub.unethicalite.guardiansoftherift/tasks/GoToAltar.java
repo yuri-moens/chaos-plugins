@@ -29,7 +29,7 @@ public class GoToAltar extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     GuardianInfo bestGuardian = plugin.getBestGuardian();
     if (bestGuardian != null) {
       TileObject guardian = TileObjects.getNearest(bestGuardian.getObjectId());
@@ -40,5 +40,6 @@ public class GoToAltar extends Task {
       }
     }
 
+    return 1;
   }
 }

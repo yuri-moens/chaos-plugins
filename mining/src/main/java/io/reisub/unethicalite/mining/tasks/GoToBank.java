@@ -34,13 +34,13 @@ public class GoToBank extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     switch (config.location()) {
       case SOFT_CLAY:
         final TileObject steps = TileObjects.getNearest(ObjectID.STEPS_36215);
 
         if (steps == null) {
-          return;
+          return 1;
         }
 
         steps.interact("Exit");
@@ -54,7 +54,7 @@ public class GoToBank extends Task {
         final TileObject steps2 = TileObjects.getNearest(ObjectID.STEPS_33261);
 
         if (steps2 == null) {
-          return;
+          return 1;
         }
 
         steps2.interact("Climb");
@@ -66,5 +66,7 @@ public class GoToBank extends Task {
         ChaosMovement.walkTo(config.location().getBankPoint());
         break;
     }
+
+    return 1;
   }
 }

@@ -42,11 +42,11 @@ public class PickupNest extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final TileItem nest = getNestToPickUp();
 
     if (nest == null) {
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> nest.interact("Take"));
@@ -66,11 +66,11 @@ public class PickupNest extends Task {
 
     if (tree == null) {
       chopTask.setCurrentTreePosition(null);
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> tree.interact("Chop down"));
-    Time.sleepTick();
+    return 2;
   }
 
   private TileItem getNestToPickUp() {

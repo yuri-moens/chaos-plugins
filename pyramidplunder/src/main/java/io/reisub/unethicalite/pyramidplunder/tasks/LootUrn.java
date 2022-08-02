@@ -67,7 +67,7 @@ public class LootUrn extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     finished = false;
     delay = false;
 
@@ -86,6 +86,8 @@ public class LootUrn extends Task {
     if (delay) {
       Time.sleepTicks(3);
     }
+
+    return 1;
   }
 
   @Subscribe

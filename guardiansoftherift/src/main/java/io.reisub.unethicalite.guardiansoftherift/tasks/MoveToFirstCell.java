@@ -31,8 +31,10 @@ public class MoveToFirstCell extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Movement.walk(new WorldPoint(3622, 9503, 0));
     Time.sleepTicksUntil(() -> Players.getLocal().isIdle(), 10);
+
+    return 1;
   }
 }

@@ -38,13 +38,13 @@ public class Cure extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final List<TileObject> diseasedPatches = getDiseasedPatches();
 
     if (!Inventory.contains(ItemID.PLANT_CURE)) {
       NPC leprechaun = NPCs.getNearest("Tool Leprechaun");
       if (leprechaun == null) {
-        return;
+        return 1;
       }
 
       GameThread.invoke(() -> leprechaun.interact("Exchange"));
@@ -59,7 +59,7 @@ public class Cure extends Task {
       if (!Time.sleepTicksUntil(() -> Inventory.contains(ItemID.PLANT_CURE), 5)) {
         MessageUtils.addMessage("No plant cure found, can't cure diseased plant.");
         plugin.getCurrentLocation().setSkip(true);
-        return;
+        return 1;
       }
     }
 
@@ -71,6 +71,8 @@ public class Cure extends Task {
           GameThread.invoke(() -> plantCure.useOn(o));
           Time.sleepTicksUntil(() -> Inventory.getCount(ItemID.PLANT_CURE) < plantCureCount, 30);
         });
+
+    return 1;
   }
 
   private List<TileObject> getDiseasedPatches() {

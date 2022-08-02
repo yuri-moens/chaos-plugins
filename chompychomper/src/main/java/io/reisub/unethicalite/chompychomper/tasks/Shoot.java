@@ -28,16 +28,18 @@ public class Shoot extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     NPC chompy = chompies.poll();
     if (chompy == null || chompy.isDead()) {
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> chompy.interact("Attack"));
     if (!Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.ATTACKING, 3)) {
       chompies.addFirst(chompy);
     }
+
+    return 1;
   }
 
   @Subscribe

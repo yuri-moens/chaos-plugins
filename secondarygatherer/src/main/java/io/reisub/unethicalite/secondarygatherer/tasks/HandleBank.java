@@ -28,7 +28,7 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     open(true);
 
     Bank.depositAll(ItemID.BLUE_DRAGON_SCALE);
@@ -36,5 +36,7 @@ public class HandleBank extends BankTask {
     if (Combat.getMissingHealth() > 25) {
       Bank.withdraw(config.food(), 2, WithdrawMode.ITEM);
     }
+
+    return 1;
   }
 }

@@ -43,14 +43,14 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (ibanStaffAlmostEmpty) {
       ibanStaffAlmostEmpty = false;
       plugin.stop("Iban staff is almost empty. Stopping plugin.");
     }
 
     if (!open(true)) {
-      return;
+      return 1;
     }
 
     if (shouldRechargeStaff) {
@@ -104,6 +104,8 @@ public class HandleBank extends BankTask {
         }
       }
     }
+
+    return 1;
   }
 
   @Subscribe

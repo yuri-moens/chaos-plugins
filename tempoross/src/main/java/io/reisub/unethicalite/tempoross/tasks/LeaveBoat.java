@@ -22,13 +22,14 @@ public class LeaveBoat extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject ladder = TileObjects.getNearest(ObjectID.ROPE_LADDER_41305);
     if (ladder == null) {
-      return;
+      return 1;
     }
 
     ladder.interact("Quick-climb");
     Time.sleepUntil(() -> plugin.isInDesert(), 10000);
+    return 1;
   }
 }

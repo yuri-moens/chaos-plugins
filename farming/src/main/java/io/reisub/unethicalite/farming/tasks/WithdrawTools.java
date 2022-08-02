@@ -30,7 +30,7 @@ public class WithdrawTools extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     NPC leprechaun = NPCs.getNearest("Tool Leprechaun");
 
     GameThread.invoke(() -> leprechaun.interact("Exchange"));
@@ -49,5 +49,7 @@ public class WithdrawTools extends Task {
     if (Inventory.contains(ItemID.MAGIC_SECATEURS)) {
       Inventory.getFirst(ItemID.MAGIC_SECATEURS).interact("Wield");
     }
+
+    return 1;
   }
 }

@@ -23,13 +23,14 @@ public class EatPeach extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final Item peach = Inventory.getFirst(ItemID.PEACH);
     if (peach == null) {
-      return;
+      return 1;
     }
 
     peach.interact(1);
     last = Static.getClient().getTickCount();
+    return 1;
   }
 }

@@ -22,7 +22,7 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     open(true);
 
     if (!Bank.isOpen()) {

@@ -26,7 +26,7 @@ public class MineHugeRemains extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObjects.getNearest("Huge guardian remains").interact("Mine");
     Time.sleepTicksUntil(Inventory::isFull, 20);
     for (int id : GuardiansOfTheRift.POUCH_IDS) {
@@ -34,6 +34,7 @@ public class MineHugeRemains extends Task {
         Inventory.getFirst(id).interact("Fill");
       }
     }
-    Time.sleepTick();
+
+    return 2;
   }
 }

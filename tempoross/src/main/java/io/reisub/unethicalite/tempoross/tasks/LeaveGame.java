@@ -35,7 +35,7 @@ public class LeaveGame extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (!plugin.isFinished()) {
       NPC pudi = NPCs.getNearest(NpcID.CAPTAIN_PUDI_10585, NpcID.CAPTAIN_PUDI_10586);
       pudi.interact("Forfeit");
@@ -44,7 +44,7 @@ public class LeaveGame extends Task {
 
     TileObject buckets = TileObjects.getNearest(ObjectID.BUCKETS);
     if (buckets == null) {
-      return;
+      return 1;
     }
 
     buckets.interact("Take-5");
@@ -52,12 +52,13 @@ public class LeaveGame extends Task {
 
     NPC deri = NPCs.getNearest(NpcID.FIRST_MATE_DERI_10595);
     if (deri == null) {
-      return;
+      return 1;
     }
 
     deri.interact("Leave");
     Time.sleepUntil(() -> plugin.isInDesert(), 20000);
 
     Time.sleepUntil(Dialog::canContinueNPC, 100, 30000);
+    return 1;
   }
 }

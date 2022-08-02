@@ -45,7 +45,7 @@ public class SearchChest extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (combatHelper.getPrayerHelper().isFlicking()) {
       combatHelper.getPrayerHelper().toggleFlicking();
     }
@@ -53,5 +53,7 @@ public class SearchChest extends Task {
     GameThread.invoke(() -> chest.interact("Search"));
     Time.sleepTicksUntil(
         () -> Widgets.isVisible(Widgets.get(WidgetID.BARROWS_REWARD_GROUP_ID, 0)), 10);
+
+    return 1;
   }
 }

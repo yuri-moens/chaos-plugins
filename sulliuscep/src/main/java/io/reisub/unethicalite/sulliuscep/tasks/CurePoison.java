@@ -21,14 +21,16 @@ public class CurePoison extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final Item prayerBook = Inventory.getFirst(ItemID.PRAYER_BOOK_10890);
 
     if (prayerBook != null && Prayers.getPoints() >= 2) {
       prayerBook.interact("Recite-prayer");
 
       Time.sleepTicksUntil(() -> !Combat.isPoisoned(), 3);
-      return;
+      return 1;
     }
+
+    return 1;
   }
 }

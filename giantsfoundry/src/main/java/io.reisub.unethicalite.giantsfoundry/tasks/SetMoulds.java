@@ -52,11 +52,11 @@ public class SetMoulds extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final TileObject mj = TileObjects.getNearest("Mould jig (Empty)");
 
     if (mj == null) {
-      return;
+      return 1;
     }
 
     mj.interact("Setup");
@@ -96,5 +96,7 @@ public class SetMoulds extends Task {
     setMouldWidget.interact(1, MenuAction.CC_OP.getId(), -1, MOULD_SET_WIDGET);
 
     plugin.setLastSetMoulds(Static.getClient().getTickCount());
+
+    return 1;
   }
 }

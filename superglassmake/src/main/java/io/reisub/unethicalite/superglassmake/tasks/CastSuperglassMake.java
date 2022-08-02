@@ -31,7 +31,7 @@ public class CastSuperglassMake extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Magic.cast(SpellBook.Lunar.SUPERGLASS_MAKE);
     Time.sleepTicksUntil((() -> Inventory.contains(ItemID.MOLTEN_GLASS)), 5);
     Time.sleepTicks(3);
@@ -44,5 +44,7 @@ public class CastSuperglassMake extends Task {
         Time.sleepTick();
       }
     }
+
+    return 1;
   }
 }

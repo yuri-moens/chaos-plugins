@@ -30,7 +30,7 @@ public class ClearInventory extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Item coinPouch = Inventory.getFirst("Coin pouch");
 
     if (coinPouch != null) {
@@ -60,5 +60,7 @@ public class ClearInventory extends Task {
 
     Inventory.getAll(ItemID.BLOOD_PINT).forEach(Item::drop);
     Inventory.getAll(ItemID.JUG).forEach(Item::drop);
+
+    return 1;
   }
 }

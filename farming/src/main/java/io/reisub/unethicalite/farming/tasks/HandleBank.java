@@ -36,7 +36,7 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     open(true);
 
     Time.sleepTicksUntil(Bank::isMainTabOpen, 3);
@@ -67,6 +67,8 @@ public class HandleBank extends BankTask {
     if (Dialog.isOpen()) {
       Dialog.close();
     }
+
+    return 1;
   }
 
   private void withdrawTeleportItems() {

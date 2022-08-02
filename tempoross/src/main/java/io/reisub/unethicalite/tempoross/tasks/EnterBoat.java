@@ -26,10 +26,10 @@ public class EnterBoat extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject ladder = TileObjects.getNearest(ObjectID.ROPE_LADDER_41305);
     if (ladder == null) {
-      return;
+      return 1;
     }
 
     ladder.interact(0);
@@ -40,5 +40,6 @@ public class EnterBoat extends Task {
       Movement.walk(new WorldPoint(3137, 2840, 0));
       Time.sleep(400, 700);
     }
+    return 1;
   }
 }

@@ -54,12 +54,13 @@ public class Repair extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     brokenObject.interact(0);
     if (!Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 3)) {
-      return;
+      return 1;
     }
 
     Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.REPAIRING, 15000);
+    return 1;
   }
 }

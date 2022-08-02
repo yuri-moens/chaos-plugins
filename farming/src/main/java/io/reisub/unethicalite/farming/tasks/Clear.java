@@ -31,7 +31,7 @@ public class Clear extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     getDeadPatches()
         .forEach(
             o -> {
@@ -45,6 +45,8 @@ public class Clear extends Task {
                     () -> Vars.getBit(plugin.getCurrentLocation().getFlowerVarbit()) <= 3, 20);
               }
             });
+
+    return 1;
   }
 
   private List<TileObject> getDeadPatches() {

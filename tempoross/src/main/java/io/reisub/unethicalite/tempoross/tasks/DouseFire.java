@@ -50,13 +50,14 @@ public class DouseFire extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     fire.interact(0);
 
     if (!Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.DOUSING_FIRE, 2500)) {
-      return;
+      return 1;
     }
 
     Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 15000);
+    return 1;
   }
 }

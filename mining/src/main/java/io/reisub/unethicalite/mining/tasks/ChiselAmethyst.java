@@ -30,14 +30,14 @@ public class ChiselAmethyst extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     mineTask.setCurrentRockPosition(null);
 
     final Item chisel = Inventory.getFirst(ItemID.CHISEL);
     final Item amethyst = Inventory.getFirst(ItemID.AMETHYST);
 
     if (chisel == null || amethyst == null) {
-      return;
+      return 1;
     }
 
     chisel.useOn(amethyst);
@@ -47,5 +47,6 @@ public class ChiselAmethyst extends Task {
     Production.chooseOption(config.chiselProduct().getProductionIndex());
 
     Time.sleepTicksUntil(() -> !Inventory.contains(ItemID.AMETHYST), 60);
+    return 1;
   }
 }

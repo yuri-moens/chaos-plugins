@@ -27,7 +27,7 @@ public class TeleportToFeroxEnclave extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Interact.interactWithInventoryOrEquipment(
         Constants.DUELING_RING_IDS, "Rub", "Ferox Enclave", 3);
 
@@ -35,6 +35,8 @@ public class TeleportToFeroxEnclave extends Task {
       finished = false;
       plugin.reset();
     }
+
+    return 1;
   }
 
   @Subscribe

@@ -29,7 +29,7 @@ public class GoToFungus extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     int regionId = Players.getLocal().getWorldLocation().getRegionID();
 
     if (!FungusPicker.VER_SINHAZA_REGION_IDS.contains(regionId)) {
@@ -39,7 +39,7 @@ public class GoToFungus extends Task {
 
       if (!interacted) {
         plugin.stop("Couldn't find Drakan's medallion. Stopping plugin.");
-        return;
+        return 1;
       }
 
       Time.sleepTicksUntil(
@@ -63,5 +63,7 @@ public class GoToFungus extends Task {
                     Tabs.openInterface(Tab.EQUIPMENT);
                   });
         });
+
+    return 1;
   }
 }

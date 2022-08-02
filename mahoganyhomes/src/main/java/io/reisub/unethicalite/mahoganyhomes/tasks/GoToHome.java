@@ -30,11 +30,11 @@ public class GoToHome extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     plugin.teleport();
 
     if (!Utils.isInRegion(plugin.getCurrentHome().getRegions())) {
-      return;
+      return 1;
     }
 
     if (Players.getLocal().getWorldLocation().getPlane() > 0) {
@@ -52,5 +52,7 @@ public class GoToHome extends Task {
     }
 
     Time.sleepTicksUntil(() -> plugin.getCurrentHome().isInHome(Players.getLocal()), 30);
+
+    return 1;
   }
 }

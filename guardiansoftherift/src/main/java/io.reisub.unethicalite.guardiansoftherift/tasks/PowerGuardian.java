@@ -28,9 +28,11 @@ public class PowerGuardian extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     NPCs.getNearest("The Great Guardian").interact("Power-up");
     Time.sleepTicksUntil(
         () -> !Inventory.contains("Elemental guardian stone", "Catalytic guardian stone"), 10);
+
+    return 1;
   }
 }

@@ -32,15 +32,16 @@ public class FillPit extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final TileObject pit = TileObjects.getNearest(NullObjectID.NULL_31426);
 
     if (pit == null) {
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> pit.interact("Fill"));
 
     Time.sleepTicksUntil(() -> plugin.isPitFilled(), 20);
+    return 1;
   }
 }

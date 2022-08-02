@@ -37,7 +37,7 @@ public class Deposit extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     plugin.setActivity(Activity.DEPOSITING);
 
     if (Players.getLocal().getWorldLocation().getY() >= 5680) {
@@ -55,6 +55,6 @@ public class Deposit extends Task {
 
     GameThread.invoke(() -> hopper.interact("Deposit"));
     Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 15);
-    Time.sleepTicks(2);
+    return 3;
   }
 }

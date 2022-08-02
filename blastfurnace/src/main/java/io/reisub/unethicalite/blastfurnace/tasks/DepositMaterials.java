@@ -36,7 +36,7 @@ public class DepositMaterials extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     plugin.setActivity(Activity.DEPOSITING);
 
     if (!config.useStamina() && Movement.isRunEnabled()) {
@@ -45,7 +45,7 @@ public class DepositMaterials extends Task {
 
     final TileObject conveyorBelt = TileObjects.getNearest(ObjectID.CONVEYOR_BELT);
     if (conveyorBelt == null) {
-      return;
+      return 1;
     }
 
     final Item coalBag = Inventory.getFirst(ItemID.COAL_BAG_12019);
@@ -87,5 +87,7 @@ public class DepositMaterials extends Task {
     if (plugin.isExpectingBars()) {
       Movement.walk(new WorldPoint(1940, 4962, 0));
     }
+
+    return 1;
   }
 }

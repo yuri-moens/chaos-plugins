@@ -30,7 +30,7 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     chopTask.setCurrentTreePosition(null);
 
     open();
@@ -38,5 +38,6 @@ public class HandleBank extends BankTask {
     ChaosBank.depositAllExcept(false, Predicates.nameContains("axe"));
 
     plugin.setLastBankTick(Static.getClient().getTickCount());
+    return 1;
   }
 }

@@ -35,7 +35,7 @@ public class CrushBarronite extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     mineTask.setCurrentRockPosition(null);
     TileObject crusher = TileObjects.getNearest(ObjectID.BARRONITE_CRUSHER);
 
@@ -48,15 +48,16 @@ public class CrushBarronite extends Task {
     }
 
     if (crusher == null) {
-      return;
+      return 1;
     }
 
     final TileObject finalCrusher = crusher;
     GameThread.invoke(() -> finalCrusher.interact("Smith"));
     if (!Time.sleepTicksUntil(() -> Players.getLocal().isAnimating(), 60)) {
-      return;
+      return 1;
     }
 
     Time.sleepTicksUntil(() -> !Inventory.contains(ItemID.BARRONITE_DEPOSIT), 200);
+    return 1;
   }
 }

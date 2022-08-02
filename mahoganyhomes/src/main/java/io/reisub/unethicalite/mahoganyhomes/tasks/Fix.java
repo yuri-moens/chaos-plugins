@@ -40,7 +40,7 @@ public class Fix extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final List<Hotspot> brokenHotspots = Hotspot.getBrokenHotspots();
     final Home home = plugin.getCurrentHome();
 
@@ -72,7 +72,7 @@ public class Fix extends Task {
       );
 
       if (nearest == null) {
-        return;
+        return 1;
       }
     }
 
@@ -86,7 +86,7 @@ public class Fix extends Task {
       if (plugin.getCurrentHome() == Home.NOELLA
           && Players.getLocal().getWorldLocation().getPlane() == 1) {
         plugin.useStairs(true);
-        return;
+        return 1;
       }
 
       Set<WorldPoint> ignoreLocations = Sets.newHashSet(
@@ -96,7 +96,7 @@ public class Fix extends Task {
 
       if (!ChaosMovement.openDoor(finalNearest, ignoreLocations)) {
         plugin.useStairs(true);
-        return;
+        return 1;
       }
     }
 
@@ -113,7 +113,7 @@ public class Fix extends Task {
       final TileObject buildObject = TileObjects.getNearest(o -> o.hasAction("Build"));
 
       if (buildObject == null) {
-        return;
+        return 1;
       }
 
       buildObject.interact("Build");
@@ -130,12 +130,13 @@ public class Fix extends Task {
     }
 
     if (hotspot == null) {
-      return;
+      return 1;
     }
 
     plugin.setFixed(true);
 
     Time.sleepTicksUntil(hotspot::isFixed, 15);
-    Time.sleepTick();
+
+    return 2;
   }
 }

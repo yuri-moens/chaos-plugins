@@ -73,7 +73,7 @@ public class Fish extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     WorldPoint target = plugin.getDudiPos().dx(7).dy(16);
 
     if (Players.getLocal().getWorldLocation().getY() < target.getY() - 5) {
@@ -84,7 +84,7 @@ public class Fish extends Task {
       ChaosMovement.walk(target, 2);
 
       if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 3)) {
-        return;
+        return 1;
       }
 
       Time.sleepTicksUntil(
@@ -113,11 +113,12 @@ public class Fish extends Task {
     }
 
     if (spot == null) {
-      return;
+      return 1;
     }
 
     spot.interact(0);
     Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.FISHING, 3);
+    return 1;
   }
 
   private NPC getNearestSafeSpot(int id) {

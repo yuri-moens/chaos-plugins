@@ -25,7 +25,7 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (Players.getLocal().getWorldLocation().getRegionID() == FungusPicker.MONASTERY_REGION) {
       boolean interacted =
           Interact.interactWithInventoryOrEquipment(
@@ -33,7 +33,7 @@ public class HandleBank extends BankTask {
 
       if (!interacted) {
         plugin.stop("Couldn't find Drakan's medallion. Stopping plugin.");
-        return;
+        return 1;
       }
 
       Time.sleepTicksUntil(
@@ -54,5 +54,7 @@ public class HandleBank extends BankTask {
         && !Equipment.contains(Predicates.ids(Constants.ARDOUGNE_CLOAK_IDS))) {
       Bank.withdraw(Predicates.ids(Constants.DUELING_RING_IDS), 1, Bank.WithdrawMode.ITEM);
     }
+
+    return 1;
   }
 }

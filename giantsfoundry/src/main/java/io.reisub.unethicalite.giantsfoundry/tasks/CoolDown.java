@@ -45,13 +45,13 @@ public class CoolDown extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final int target = getTargetHeat();
 
     final TileObject waterfall = TileObjects.getNearest("Waterfall");
 
     if (waterfall == null) {
-      return;
+      return 1;
     }
 
     if (state.getHeatAmount() - Math.abs(GiantsFoundryHelper.QUENCH_WATERFALL_HEAT) > target) {
@@ -69,6 +69,8 @@ public class CoolDown extends Task {
     }
 
     last = Static.getClient().getTickCount();
+
+    return 1;
   }
 
   private int getTargetHeat() {

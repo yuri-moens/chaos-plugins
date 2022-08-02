@@ -34,7 +34,7 @@ public class GoToBarrows extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (!Movement.isRunEnabled()) {
       Movement.toggleRun();
     }
@@ -62,11 +62,13 @@ public class GoToBarrows extends Task {
     if (Static.getClient().isInInstancedRegion()) {
       TileObject portal = TileObjects.getNearest(Predicates.ids(Constants.PORTAL_NEXUS_IDS));
       if (portal == null) {
-        return;
+        return 1;
       }
 
       portal.interact("Barrows");
       Time.sleepTicksUntil(() -> Utils.isInRegion(Barrows.BARROWS_REGION), 20);
     }
+
+    return 1;
   }
 }

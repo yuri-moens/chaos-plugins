@@ -30,7 +30,7 @@ public class TarHerbs extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     plugin.setActivity(Activity.TARRING_HERBS);
 
     List<Item> herbs = Inventory.getAll(plugin.getCleanTarHerbIds());
@@ -40,5 +40,7 @@ public class TarHerbs extends Task {
     Time.sleepTicksUntil(Production::isOpen, 5);
 
     Production.chooseOption(1);
+
+    return 1;
   }
 }

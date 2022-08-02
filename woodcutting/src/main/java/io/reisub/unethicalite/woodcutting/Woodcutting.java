@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.woodcutting;
 
 import com.google.inject.Provides;
-import io.reisub.unethicalite.utils.TickScript;
+import io.reisub.unethicalite.utils.TickPlugin;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.woodcutting.tasks.Chop;
 import io.reisub.unethicalite.woodcutting.tasks.Drop;
@@ -28,7 +28,7 @@ import org.pf4j.Extension;
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
-public class Woodcutting extends TickScript {
+public class Woodcutting extends TickPlugin {
 
   @Inject
   private Config config;
@@ -42,7 +42,7 @@ public class Woodcutting extends TickScript {
   }
 
   @Override
-  protected void onStart() {
+  public void onStart() {
     super.onStart();
 
     final Chop chop = injector.getInstance(Chop.class);

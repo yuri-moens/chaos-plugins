@@ -35,7 +35,7 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     open();
 
     final Item gemBag = Bank.Inventory.getFirst(ItemID.OPEN_GEM_BAG);
@@ -68,5 +68,7 @@ public class HandleBank extends BankTask {
                 ItemID.UNCUT_DIAMOND,
                 ItemID.UNCUT_DRAGONSTONE),
         3);
+
+    return 1;
   }
 }

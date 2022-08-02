@@ -33,7 +33,7 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Inventory.getAll((i) -> i.getName().contains("Vyre noble")).forEach((i) -> i.interact("Wear"));
 
     Inventory.getFirst(ItemID.DRAKANS_MEDALLION).interact("Darkmeyer");
@@ -55,5 +55,7 @@ public class HandleBank extends BankTask {
     open();
 
     ChaosBank.depositAll(false, Predicates.ids(Constants.MINEABLE_GEM_IDS));
+
+    return 1;
   }
 }

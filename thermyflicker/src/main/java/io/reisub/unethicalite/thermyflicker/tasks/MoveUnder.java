@@ -34,7 +34,7 @@ public class MoveUnder extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final RectangularArea area = new RectangularArea(thermy.getWorldLocation().dx(1).dy(1), 1, 1);
     final WorldPoint nearest = area.getNearest();
 
@@ -51,5 +51,6 @@ public class MoveUnder extends Task {
     }
 
     Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(nearest), 3);
+    return 1;
   }
 }

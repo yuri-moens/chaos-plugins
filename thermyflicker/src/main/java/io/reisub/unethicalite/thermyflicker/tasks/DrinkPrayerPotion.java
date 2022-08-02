@@ -26,8 +26,9 @@ public class DrinkPrayerPotion extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Inventory.getFirst(Predicates.ids(Constants.PRAYER_RESTORE_POTION_IDS)).interact("Drink");
     Time.sleepTicksUntil(() -> Prayers.getPoints() != 0, 5);
+    return 1;
   }
 }

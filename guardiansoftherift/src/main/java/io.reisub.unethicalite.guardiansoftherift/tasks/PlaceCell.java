@@ -29,7 +29,7 @@ public class PlaceCell extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObjects.getNearest(43740, 43741, 43742, 43743).interact("Place-cell");
     Time.sleepTicksUntil(
         () -> !Inventory.contains("Weak cell", "Medium cell", "Strong cell", "Overcharged cell"),
@@ -37,5 +37,7 @@ public class PlaceCell extends Task {
     TileObjects.getNearest("Deposit Pool").interact("Deposit-runes");
     Time.sleepTicks(2);
     Time.sleepTicksUntil(() -> Players.getLocal().isIdle(), 10);
+
+    return 1;
   }
 }

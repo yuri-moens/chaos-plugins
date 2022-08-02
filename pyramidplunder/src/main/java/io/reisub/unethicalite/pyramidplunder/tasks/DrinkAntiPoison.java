@@ -22,8 +22,10 @@ public class DrinkAntiPoison extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Inventory.getFirst(Predicates.ids(Constants.ANTI_POISON_POTION_IDS)).interact("Drink");
     Time.sleepTicksUntil(() -> Vars.getVarp(VarPlayer.POISON.getId()) == 0, 3);
+
+    return 1;
   }
 }

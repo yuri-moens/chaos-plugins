@@ -41,11 +41,13 @@ public class Attack extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     GameThread.invoke(() -> thermy.interact("Attack"));
 
     Time.sleepTicksUntil(() -> Static.getClient().getTickCount() - ThermyFlicker.lastAttack <= 1,
         3);
+
+    return 1;
   }
 
   @Subscribe

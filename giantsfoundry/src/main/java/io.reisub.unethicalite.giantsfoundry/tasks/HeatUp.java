@@ -45,13 +45,13 @@ public class HeatUp extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final int target = getTargetHeat();
 
     final TileObject lavaPool = TileObjects.getNearest("Lava pool");
 
     if (lavaPool == null) {
-      return;
+      return 1;
     }
 
     if (state.getHeatAmount() + GiantsFoundryHelper.DUNK_LAVA_HEAT < target) {
@@ -68,6 +68,8 @@ public class HeatUp extends Task {
     }
 
     last = Static.getClient().getTickCount();
+
+    return 1;
   }
 
   private int getTargetHeat() {

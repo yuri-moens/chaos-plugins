@@ -25,14 +25,16 @@ public class Eat extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final Item brew = Inventory.getFirst(Predicates.ids(Constants.BREW_POTION_IDS));
 
     if (brew == null) {
-      return;
+      return 1;
     }
 
     brew.interact("Drink");
     last = Static.getClient().getTickCount();
+
+    return 1;
   }
 }

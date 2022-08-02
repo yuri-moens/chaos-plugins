@@ -43,15 +43,15 @@ public class GoToBank extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final Item cape = Inventory.getFirst(Predicates.ids(Constants.CRAFTING_CAPE_IDS));
 
     if (cape == null) {
-      return;
+      return 1;
     }
 
     cape.interact("Teleport");
     Time.sleepTicksUntil(() -> Utils.isInRegion(Constants.CRAFTING_GUILD_REGION), 10);
-    Time.sleepTicks(2);
+    return 3;
   }
 }

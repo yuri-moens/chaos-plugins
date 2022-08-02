@@ -34,15 +34,15 @@ public class GoUp extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final TileObject ladder = TileObjects.getNearest(NullObjectID.NULL_19044);
 
     if (ladder == null) {
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> ladder.interact("Climb"));
     Time.sleepTicksUntil(() -> plugin.isUpstairs(), 20);
-    Time.sleepTick();
+    return 2;
   }
 }

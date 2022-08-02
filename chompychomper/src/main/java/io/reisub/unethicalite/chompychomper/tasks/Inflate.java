@@ -29,15 +29,17 @@ public class Inflate extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     NPC toad = NPCs.getNearest(NpcID.SWAMP_TOAD);
     if (toad == null) {
-      return;
+      return 1;
     }
 
     int toadCount = Inventory.getCount(ItemID.BLOATED_TOAD);
 
     GameThread.invoke(() -> toad.interact(1));
     Time.sleepTicksUntil(() -> Inventory.getCount(ItemID.BLOATED_TOAD) > toadCount, 20);
+
+    return 1;
   }
 }

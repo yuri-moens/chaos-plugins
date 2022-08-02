@@ -1,5 +1,6 @@
 package io.reisub.unethicalite.woodcutting;
 
+import io.reisub.unethicalite.woodcutting.data.Location;
 import net.runelite.client.config.Button;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;

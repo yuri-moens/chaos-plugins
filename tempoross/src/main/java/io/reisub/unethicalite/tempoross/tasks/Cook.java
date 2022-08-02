@@ -89,14 +89,14 @@ public class Cook extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     WorldPoint target = plugin.getDudiPos().dx(7).dy(16);
 
     if (Players.getLocal().getWorldLocation().getY() < target.getY() - 5) {
       Movement.walk(target.dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
 
       if (!Time.sleepUntil(() -> Players.getLocal().isMoving(), 1500)) {
-        return;
+        return 1;
       }
 
       Time.sleepUntil(
@@ -115,16 +115,16 @@ public class Cook extends Task {
         && !(plugin.getPhase() == 1
             && plugin.getCookedFishRequired() == 19
             && plugin.getRawFish() + plugin.getCookedFish() >= 19)) {
-      return;
+      return 1;
     }
 
     if (plugin.isWaveIncoming()) {
-      return;
+      return 1;
     }
 
     TileObject shrine = TileObjects.getNearest(ObjectID.SHRINE_41236);
     if (shrine == null) {
-      return;
+      return 1;
     }
 
     shrine.interact(0);
@@ -134,5 +134,7 @@ public class Cook extends Task {
                 || plugin.isWaveIncoming()
                 || plugin.getLastDoubleSpawn() + 3 >= Static.getClient().getTickCount(),
         10000);
+
+    return 1;
   }
 }

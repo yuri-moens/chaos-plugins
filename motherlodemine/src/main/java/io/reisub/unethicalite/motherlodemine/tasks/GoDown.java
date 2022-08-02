@@ -31,7 +31,7 @@ public class GoDown extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final TileObject ladder = TileObjects.getNearest(NullObjectID.NULL_19045);
 
     if (ladder == null || !ladder.hasAction("Climb")) {
@@ -43,11 +43,11 @@ public class GoDown extends Task {
         return ladder2 != null && ladder2.hasAction("Climb");
       }, 10);
 
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> ladder.interact("Climb"));
     Time.sleepTicksUntil(() -> !plugin.isUpstairs(), 20);
-    Time.sleepTick();
+    return 2;
   }
 }

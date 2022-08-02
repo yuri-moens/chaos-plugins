@@ -60,7 +60,7 @@ public class Mine extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (!Movement.isRunEnabled()) {
       Movement.toggleRun();
     }
@@ -72,7 +72,7 @@ public class Mine extends Task {
       final Item logs = Inventory.getFirst(ItemID.TEAK_LOGS, ItemID.MAHOGANY_LOGS);
 
       if (knife == null || logs == null) {
-        return;
+        return 1;
       }
 
       knife.useOn(logs);
@@ -91,7 +91,7 @@ public class Mine extends Task {
     }
 
     if (rock == null || (Inventory.isFull() && config.location() != Location.VOLCANIC_ASH)) {
-      return;
+      return 1;
     }
 
     rock.interact(0);
@@ -105,6 +105,8 @@ public class Mine extends Task {
     if (!config.location().isThreeTick()) {
       Time.sleepTicksUntil(() -> !Players.getLocal().isIdle(), 10);
     }
+
+    return 1;
   }
 
   @Subscribe

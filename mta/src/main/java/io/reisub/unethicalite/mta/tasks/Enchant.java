@@ -40,14 +40,16 @@ public class Enchant extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final Item item = Inventory.getFirst(Predicates.ids(ENCHANT_ITEM_IDS));
     if (item == null) {
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> Magic.cast(SpellBook.Standard.LVL_6_ENCHANT, item));
 
     last = Static.getClient().getTickCount();
+
+    return 1;
   }
 }

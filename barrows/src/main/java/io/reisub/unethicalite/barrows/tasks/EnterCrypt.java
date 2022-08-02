@@ -32,7 +32,7 @@ public class EnterCrypt extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     WorldPoint digAreaPoint = plugin.getCurrentBrother().getLocation().dx(-1).dy(-1);
 
     RectangularArea digArea = new RectangularArea(digAreaPoint, 2, 2);
@@ -41,7 +41,7 @@ public class EnterCrypt extends Task {
       Inventory.getFirst(ItemID.SPADE).interact(1);
 
       Time.sleepTicksUntil(() -> Utils.isInRegion(Barrows.CRYPT_REGION), 10);
-      return;
+      return 1;
     }
 
     ChaosMovement.walkTo(plugin.getCurrentBrother().getLocation(), 1);
@@ -51,7 +51,7 @@ public class EnterCrypt extends Task {
         Movement.walk(plugin.getCurrentBrother().getLocation());
       }
 
-      return;
+      return 1;
     }
 
     switch (plugin.getCurrentBrother()) {
@@ -76,11 +76,13 @@ public class EnterCrypt extends Task {
         () -> digArea.contains(Players.getLocal()) || !Players.getLocal().isMoving(), 30);
 
     if (!digArea.contains(Players.getLocal())) {
-      return;
+      return 1;
     }
 
     Inventory.getFirst(ItemID.SPADE).interact(1);
 
     Time.sleepTicksUntil(() -> Utils.isInRegion(Barrows.CRYPT_REGION), 10);
+
+    return 1;
   }
 }

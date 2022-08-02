@@ -30,16 +30,17 @@ public class PassTrap extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     failed = false;
 
     final TileObject spearTrap = TileObjects.getNearest(ObjectID.SPEARTRAP);
     if (spearTrap == null) {
-      return;
+      return 1;
     }
 
     spearTrap.interact(0);
     Time.sleepTicksUntil(() -> PyramidPlunder.isPastTraps() || failed, 15);
+    return 1;
   }
 
   @Subscribe

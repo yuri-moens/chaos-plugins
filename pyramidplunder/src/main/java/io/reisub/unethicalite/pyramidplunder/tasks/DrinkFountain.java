@@ -42,7 +42,7 @@ public class DrinkFountain extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (PyramidPlunder.isInPyramidPlunder() || Utils.isInRegion(PyramidPlunder.SOPHANEM_REGION)) {
       Standard.TELEPORT_TO_HOUSE.cast();
 
@@ -56,11 +56,13 @@ public class DrinkFountain extends Task {
     final TileObject pool = TileObjects.getNearest(Predicates.ids(Constants.REJUVENATION_POOL_IDS));
 
     if (pool == null) {
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> pool.interact(0));
 
     Time.sleepTicksUntil(() -> Combat.getMissingHealth() == 0 && !Combat.isPoisoned(), 15);
+
+    return 1;
   }
 }

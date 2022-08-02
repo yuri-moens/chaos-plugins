@@ -49,7 +49,7 @@ public class DodgeFire extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (plugin.getBoatArea().contains(Players.getLocal())) {
       NPC southAmmoCrate = NPCs.getNearest(NpcID.AMMUNITION_CRATE_10577);
       southAmmoCrate.interact(0);
@@ -60,5 +60,7 @@ public class DodgeFire extends Task {
     }
 
     last = Static.getClient().getTickCount();
+
+    return 1;
   }
 }

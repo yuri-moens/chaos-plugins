@@ -38,10 +38,10 @@ public class HighAlch extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final Item item = Inventory.getFirst(best.getId());
     if (item == null) {
-      return;
+      return 1;
     }
 
     Magic.cast(SpellBook.Standard.HIGH_LEVEL_ALCHEMY, item);
@@ -49,6 +49,7 @@ public class HighAlch extends Task {
     Tabs.openInterface(Tab.INVENTORY);
 
     last = Static.getClient().getTickCount();
+    return 1;
   }
 
   private AlchemyItem getBest() {

@@ -27,13 +27,15 @@ public class EquipDodgyNecklace extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Item necklace = Inventory.getFirst(ItemID.DODGY_NECKLACE);
     if (necklace == null) {
-      return;
+      return 1;
     }
 
     necklace.interact("Wear");
     Time.sleepTicksUntil(() -> Equipment.contains(ItemID.DODGY_NECKLACE), 3);
+
+    return 1;
   }
 }

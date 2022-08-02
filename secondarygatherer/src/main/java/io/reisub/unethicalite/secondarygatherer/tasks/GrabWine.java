@@ -39,8 +39,9 @@ public class GrabWine extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Standard.TELEKINETIC_GRAB.castOn(wine);
     last = Static.getClient().getTickCount();
+    return 1;
   }
 }

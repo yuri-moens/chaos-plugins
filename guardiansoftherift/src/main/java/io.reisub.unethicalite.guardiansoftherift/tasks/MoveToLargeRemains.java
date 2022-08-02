@@ -28,9 +28,10 @@ public class MoveToLargeRemains extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObjects.getNearest("Rubble").interact("Climb");
     Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(endOfRubble), 30);
-    Time.sleepTicks(4);
+
+    return 5;
   }
 }

@@ -31,10 +31,10 @@ public class GetCommission extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     NPC kovac = NPCs.getNearest("Kovac");
     if (kovac == null) {
-      return;
+      return 1;
     }
     kovac.interact("Commission");
     while (Dialog.isViewingOptions() || Dialog.canContinue()) {
@@ -44,7 +44,7 @@ public class GetCommission extends Task {
         for (Widget opt : options) {
           if (opt.getText().startsWith("Yes")) {
             Dialog.chooseOption(opt.getIndex());
-            return;
+            return 1;
           }
         }
       }
@@ -53,5 +53,7 @@ public class GetCommission extends Task {
         Dialog.continueSpace();
       }
     }
+
+    return 1;
   }
 }

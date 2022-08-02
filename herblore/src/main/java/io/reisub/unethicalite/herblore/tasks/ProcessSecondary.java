@@ -27,12 +27,14 @@ public class ProcessSecondary extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     plugin.setActivity(Activity.PROCESSING_SECONDARIES);
 
     List<Item> secondaries = Inventory.getAll(plugin.getBaseSecondaryIds());
     Item pestleAndMortar = Inventory.getFirst(ItemID.PESTLE_AND_MORTAR);
 
     secondaries.forEach(pestleAndMortar::useOn);
+
+    return 1;
   }
 }

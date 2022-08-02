@@ -28,8 +28,10 @@ public class Clean extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     plugin.setActivity(Activity.CLEANING_HERBS);
     Inventory.getAll(plugin.getGrimyHerbIds()).forEach((i) -> i.interact("Clean"));
+
+    return 1;
   }
 }

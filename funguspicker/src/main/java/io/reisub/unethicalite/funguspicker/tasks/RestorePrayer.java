@@ -30,7 +30,7 @@ public class RestorePrayer extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     WorldPoint current = Players.getLocal().getWorldLocation();
 
     boolean interacted =
@@ -47,7 +47,7 @@ public class RestorePrayer extends Task {
 
       if (!interacted) {
         plugin.stop("No dueling ring or Ardougne cloak found. Stopping script.");
-        return;
+        return 1;
       }
     }
 
@@ -62,6 +62,7 @@ public class RestorePrayer extends Task {
 
     Time.sleepTicksUntil(
         () -> Skills.getBoostedLevel(Skill.PRAYER) == Skills.getLevel(Skill.PRAYER), 30);
-    Time.sleepTicks(3);
+
+    return 4;
   }
 }

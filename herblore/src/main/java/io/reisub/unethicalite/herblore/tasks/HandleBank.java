@@ -31,7 +31,7 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     open(3);
 
     deposit();
@@ -86,6 +86,8 @@ public class HandleBank extends BankTask {
 
     close();
     Time.sleepTicksUntil(() -> !Bank.isOpen(), 5);
+
+    return 1;
   }
 
   private void deposit() {

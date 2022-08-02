@@ -30,7 +30,8 @@ public class GoToChoppingArea extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     ChaosMovement.walkTo(config.location().getWoodcuttingAreaPoint(), 2);
+    return 1;
   }
 }

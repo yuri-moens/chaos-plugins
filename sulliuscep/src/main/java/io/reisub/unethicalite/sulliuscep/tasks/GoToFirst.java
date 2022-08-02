@@ -44,7 +44,7 @@ public class GoToFirst extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (Utils.isInRegion(Sulliuscep.SWAMP_UPPER_REGION_ID)
         && plugin.isPitFilled()) {
       final int requiredMushrooms = 9 - Inventory.getCount(ItemID.MUSHROOM);
@@ -75,14 +75,14 @@ public class GoToFirst extends Task {
       final TileObject jumpPad = TileObjects.getNearest(ObjectID.RUBBER_CAP_MUSHROOM);
 
       if (jumpPad == null) {
-        return;
+        return 1;
       }
 
       jumpPad.interact("Jump on");
       Time.sleepTicksUntil(
           () -> Players.getLocal().getWorldLocation().equals(new WorldPoint(3685, 3756, 0)), 30);
       Time.sleepTick();
-      return;
+      return 1;
     }
 
     if (Utils.isInRegion(Sulliuscep.SWAMP_UPPER_REGION_ID)) {
@@ -93,7 +93,7 @@ public class GoToFirst extends Task {
         TileObjects.getNearest(i -> Constants.MAGIC_MUSHTREE_IDS.contains(i.getId()));
 
     if (tree == null) {
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> tree.interact(0));
@@ -103,7 +103,7 @@ public class GoToFirst extends Task {
     final Widget mushroomSwampWidget = Widgets.get(WidgetInfo.FOSSIL_MUSHROOM_SWAMP);
 
     if (!Widgets.isVisible(mushroomSwampWidget)) {
-      return;
+      return 1;
     }
 
     mushroomSwampWidget.interact(
@@ -114,6 +114,6 @@ public class GoToFirst extends Task {
     );
 
     Time.sleepTicksUntil(() -> Utils.isInRegion(Sulliuscep.SWAMP_LOWER_REGION_ID), 5);
-    Time.sleepTicks(2);
+    return 3;
   }
 }

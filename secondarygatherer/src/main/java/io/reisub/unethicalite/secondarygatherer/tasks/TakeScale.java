@@ -37,7 +37,7 @@ public class TakeScale extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (!Inventory.contains(ItemID.BLUE_DRAGON_SCALE) || scaleLocations.isEmpty()) {
       resetQueue();
     }
@@ -64,13 +64,14 @@ public class TakeScale extends Task {
     }
 
     if (scale == null) {
-      return;
+      return 1;
     }
 
     final int scaleCount = Inventory.getCount(ItemID.BLUE_DRAGON_SCALE);
     scale.interact("Take");
 
     Time.sleepTicksUntil(() -> Inventory.getCount(ItemID.BLUE_DRAGON_SCALE) > scaleCount, 15);
+    return 1;
   }
 
   private void resetQueue() {

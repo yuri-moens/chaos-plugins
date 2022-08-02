@@ -7,7 +7,6 @@ import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
-import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.items.Inventory;
 
 public class TeleportMythsGuild extends Task {
@@ -30,8 +29,8 @@ public class TeleportMythsGuild extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Inventory.getFirst(ItemID.MYTHICAL_CAPE_22114).interact("Teleport");
-    Time.sleepTicks(6);
+    return 7;
   }
 }

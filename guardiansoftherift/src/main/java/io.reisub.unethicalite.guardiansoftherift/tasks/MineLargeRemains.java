@@ -28,9 +28,11 @@ public class MineLargeRemains extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObjects.getNearest("Large guardian remains").interact("Mine");
     Time.sleepTicksUntil(() -> Inventory.getCount(true, "Guardian fragments") >= 160, 200);
     plugin.setGamePhase(5);
+
+    return 1;
   }
 }

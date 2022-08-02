@@ -23,7 +23,8 @@ public class BaseTask extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
 
+    return 1;
   }
 }

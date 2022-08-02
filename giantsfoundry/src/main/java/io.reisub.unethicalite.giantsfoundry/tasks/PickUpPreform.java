@@ -30,12 +30,14 @@ public class PickUpPreform extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject jig = TileObjects.getNearest("Mould jig (Poured metal)");
     if (jig == null) {
-      return;
+      return 1;
     }
     jig.interact("Pick-up");
     Time.sleepTicksUntil(() -> Equipment.contains("Preform"), 20);
+
+    return 1;
   }
 }

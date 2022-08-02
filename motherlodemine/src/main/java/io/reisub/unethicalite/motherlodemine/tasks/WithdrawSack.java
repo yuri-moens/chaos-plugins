@@ -39,16 +39,17 @@ public class WithdrawSack extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject sack =
         TileObjects.getNearest(o -> o.getName().equals("Sack") && o.hasAction("Search"));
     if (sack == null) {
-      return;
+      return 1;
     }
 
     plugin.setActivity(Activity.WITHDRAWING);
 
     GameThread.invoke(() -> sack.interact("Search"));
     Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 30);
+    return 1;
   }
 }

@@ -27,13 +27,15 @@ public class Mine extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject rock = TileObjects.getNearest(ObjectID.DAEYALT_ESSENCE_39095);
     if (rock == null) {
-      return;
+      return 1;
     }
 
     rock.interact("Mine");
     Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.MINING, 20);
+
+    return 1;
   }
 }

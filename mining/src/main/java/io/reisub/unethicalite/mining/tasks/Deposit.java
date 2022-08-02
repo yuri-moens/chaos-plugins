@@ -38,7 +38,7 @@ public class Deposit extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     interrupted = false;
 
     if (Movement.isRunEnabled()) {
@@ -47,11 +47,12 @@ public class Deposit extends Task {
 
     NPC drew = NPCs.getNearest(NpcID.DREW);
     if (drew == null) {
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> Inventory.getFirst(Predicates.ids(SANDSTONE_IDS)).useOn(drew));
     Time.sleepTicksUntil(() -> !Inventory.isFull() || interrupted, 30);
+    return 1;
   }
 
   @Subscribe

@@ -31,11 +31,13 @@ public class PickUp extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     GameThread.invoke(() -> powerUp.interact(0));
     Time.sleepTicksUntil(() -> TileObjects.getNearest(Predicates.ids(getIds())) == null, 15);
 
     powerUp = null;
+
+    return 1;
   }
 
   private Collection<Integer> getIds() {

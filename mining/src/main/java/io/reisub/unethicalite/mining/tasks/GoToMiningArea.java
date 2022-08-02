@@ -37,7 +37,7 @@ public class GoToMiningArea extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (!Movement.isRunEnabled()) {
       if (!config.location().isThreeTick()
           || (config.location().isThreeTick() && Movement.getRunEnergy() > 70)) {
@@ -97,5 +97,7 @@ public class GoToMiningArea extends Task {
           break;
       }
     }
+
+    return 1;
   }
 }

@@ -47,10 +47,10 @@ public class PickLimpwurt extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.FLOWER_PATCH_IDS));
     if (patch == null) {
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> patch.interact("Pick"));
@@ -58,5 +58,7 @@ public class PickLimpwurt extends Task {
     Time.sleepTicksUntil(
         () -> Inventory.isFull() || Vars.getBit(plugin.getCurrentLocation().getFlowerVarbit()) <= 3,
         100);
+
+    return 1;
   }
 }

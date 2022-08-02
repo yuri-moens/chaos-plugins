@@ -49,30 +49,30 @@ public class PlantLimpwurt extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.FLOWER_PATCH_IDS));
     if (patch == null) {
-      return;
+      return 1;
     }
 
     final Item seed = Inventory.getFirst(ItemID.LIMPWURT_SEED);
     if (seed == null) {
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> seed.useOn(patch));
 
     if (!Time.sleepTicksUntil(
         () -> Vars.getBit(plugin.getCurrentLocation().getFlowerVarbit()) > 3, 20)) {
-      return;
+      return 1;
     }
 
     final Item compost = Inventory.getFirst(Predicates.ids(Constants.COMPOST_IDS));
     if (compost == null) {
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> compost.useOn(patch));
-    Time.sleepTicks(3);
+    return 4;
   }
 }

@@ -33,7 +33,7 @@ public class TalkToNpc extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     NPC npc = NPCs.getNearest(plugin.getCurrentHome().getNpcId());
 
     if (npc == null) {
@@ -42,7 +42,7 @@ public class TalkToNpc extends Task {
       npc = NPCs.getNearest(plugin.getCurrentHome().getNpcId());
 
       if (npc == null) {
-        return;
+        return 1;
       }
     }
 
@@ -51,7 +51,7 @@ public class TalkToNpc extends Task {
 
     while (!Reachable.isInteractable(npc) && tries++ < maxTries) {
       if (!ChaosMovement.openDoor(npc)) {
-        return;
+        return 1;
       }
     }
 
@@ -71,5 +71,7 @@ public class TalkToNpc extends Task {
 
     plugin.setPreviousHome(plugin.getCurrentHome());
     plugin.setCurrentHome(null);
+
+    return 1;
   }
 }

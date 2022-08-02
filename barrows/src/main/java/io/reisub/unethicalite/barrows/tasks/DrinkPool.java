@@ -28,10 +28,11 @@ public class DrinkPool extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     GameThread.invoke(() -> pool.interact("Drink"));
     Time.sleepTicksUntil(
         () -> Skills.getBoostedLevel(Skill.PRAYER) == Skills.getLevel(Skill.PRAYER), 20);
-    Time.sleepTicks(3);
+
+    return 4;
   }
 }

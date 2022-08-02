@@ -27,7 +27,7 @@ public class GoToPatch extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     WorldPoint current = Players.getLocal().getWorldLocation();
 
     if (plugin.getCurrentLocation().getTeleportable().teleport()) {
@@ -41,5 +41,7 @@ public class GoToPatch extends Task {
     if (Players.getLocal().distanceTo(plugin.getCurrentLocation().getPatchPoint()) > 10) {
       ChaosMovement.walkTo(plugin.getCurrentLocation().getPatchPoint());
     }
+
+    return 1;
   }
 }

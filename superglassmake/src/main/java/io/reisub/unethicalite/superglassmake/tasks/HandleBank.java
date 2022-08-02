@@ -25,7 +25,7 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     open();
 
     ChaosBank.depositAllExcept(
@@ -33,7 +33,7 @@ public class HandleBank extends BankTask {
 
     if (TileItems.getAt(Players.getLocal().getWorldLocation(), ItemID.MOLTEN_GLASS).size() >= 27) {
       close();
-      return;
+      return 1;
     }
 
     if (!Bank.contains(ItemID.BUCKET_OF_SAND)
@@ -53,5 +53,6 @@ public class HandleBank extends BankTask {
     }
 
     close();
+    return 1;
   }
 }

@@ -32,10 +32,10 @@ public class Grind extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject gs = TileObjects.getNearest("Grindstone");
     if (gs == null) {
-      return;
+      return 1;
     }
 
     gs.interact("Use");
@@ -46,5 +46,6 @@ public class Grind extends Task {
             ||
             giantsFoundryState.getHeatAmount() > giantsFoundryHelper.getCurrentHeatRange()[1], 100);
 
+    return 1;
   }
 }

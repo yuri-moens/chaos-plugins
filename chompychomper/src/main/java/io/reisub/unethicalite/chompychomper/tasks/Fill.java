@@ -40,10 +40,10 @@ public class Fill extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject bubbles = TileObjects.getNearest(Predicates.ids(SWAMP_BUBBLES_IDS));
     if (bubbles == null) {
-      return;
+      return 1;
     }
 
     List<Item> bellows = Inventory.getAll(ItemID.OGRE_BELLOWS);
@@ -59,5 +59,7 @@ public class Fill extends Task {
               GameThread.invoke(() -> i.useOn(bubbles));
               Time.sleepTicks(1);
             });
+
+    return 1;
   }
 }

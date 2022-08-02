@@ -29,13 +29,14 @@ public class Pour extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject crucible = TileObjects.getNearest("Crucible (full)");
     if (crucible == null) {
-      return;
+      return 1;
     }
     crucible.interact("Pour");
     Time.sleepTicksUntil(() -> giantsFoundryState.getOreCount() == 0, 20);
-    Time.sleepTick();
+
+    return 2;
   }
 }

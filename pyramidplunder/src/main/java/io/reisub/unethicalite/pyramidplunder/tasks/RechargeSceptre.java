@@ -37,7 +37,7 @@ public class RechargeSceptre extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     GameThread.invoke(() -> mummy.interact("Talk-to"));
     Time.sleepTicksUntil(Dialog::isOpen, 10);
 
@@ -62,6 +62,6 @@ public class RechargeSceptre extends Task {
         -1
     );
 
-    Time.sleepTicks(2);
+    return 3;
   }
 }

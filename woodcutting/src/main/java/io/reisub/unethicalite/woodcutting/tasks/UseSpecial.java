@@ -47,7 +47,7 @@ public class UseSpecial extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Combat.toggleSpec();
 
     final TileObject tree = TileObjects.getFirstAt(
@@ -59,9 +59,10 @@ public class UseSpecial extends Task {
 
     if (tree == null) {
       chopTask.setCurrentTreePosition(null);
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> tree.interact("Chop down"));
+    return 1;
   }
 }

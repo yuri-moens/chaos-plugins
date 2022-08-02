@@ -42,7 +42,7 @@ public class MoveToRespawning extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final WorldPoint treePosition = despawnedTreeLocations.getFirst();
     final List<WorldPoint> neighbours = new ArrayList<>();
     neighbours.add(Reachable.getNeighbour(Direction.NORTH, treePosition));
@@ -68,11 +68,12 @@ public class MoveToRespawning extends Task {
     }
 
     if (nearest == null) {
-      return;
+      return 1;
     }
 
     Movement.walk(nearest);
     Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 5);
+    return 1;
   }
 
   @Subscribe

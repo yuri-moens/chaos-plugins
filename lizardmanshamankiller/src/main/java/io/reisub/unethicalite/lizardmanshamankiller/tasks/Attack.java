@@ -24,7 +24,7 @@ public class Attack extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final List<NPC> shamans = NPCs.getAll(Predicates.ids(Constants.LIZARDMAN_SHAMAN_IDS));
 
     if (shamans == null || shamans.isEmpty()) {

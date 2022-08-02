@@ -26,7 +26,7 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     open(true);
 
     ChaosBank.depositAll(false, Predicates.nameContains("Unidentified"));
@@ -46,5 +46,7 @@ public class HandleBank extends BankTask {
     if (brewsToWithdraw > 0) {
       Bank.withdraw(ItemID.SARADOMIN_BREW4, brewsToWithdraw, WithdrawMode.ITEM);
     }
+
+    return 1;
   }
 }

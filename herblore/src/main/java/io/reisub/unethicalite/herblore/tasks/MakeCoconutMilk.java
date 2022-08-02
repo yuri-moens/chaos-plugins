@@ -29,7 +29,7 @@ public class MakeCoconutMilk extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     plugin.setActivity(Activity.MAKING_COCONUT_MILK);
 
     final List<Item> coconuts = Inventory.getAll(ItemID.COCONUT);
@@ -49,5 +49,7 @@ public class MakeCoconutMilk extends Task {
       halfCoconuts.get(i).useOn(vials.get(i));
       Time.sleepTick();
     }
+
+    return 1;
   }
 }

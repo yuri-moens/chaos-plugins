@@ -44,11 +44,11 @@ public class AddToCrucible extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final TileObject crucible =
         TileObjects.getNearest("Crucible (empty)", "Crucible (partially full)");
     if (crucible == null) {
-      return;
+      return 1;
     }
 
     final Map<String, Integer> ingredientsMap = plugin.getIngredients();
@@ -68,7 +68,7 @@ public class AddToCrucible extends Task {
       final Item ingredient = Inventory.getFirst(Predicates.names(ingredientsMap.keySet()));
 
       if (ingredient == null) {
-        return;
+        return 1;
       }
 
       GameThread.invoke(() -> ingredient.useOn(crucible));
@@ -81,6 +81,8 @@ public class AddToCrucible extends Task {
     }
 
     Time.sleepTicksUntil(() -> Players.getLocal().isIdle(), 10);
+
+    return 1;
   }
 
   private boolean haveIngredients() {

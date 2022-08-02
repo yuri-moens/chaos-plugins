@@ -62,12 +62,12 @@ public class HandleObstacle extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final WorldPoint worldPoint = obstacle.getWorldLocation();
 
     GameThread.invoke(() -> obstacle.interact(0));
     if (!Interact.waitUntilActive()) {
-      return;
+      return 1;
     }
 
     switch (plugin.getCurrentSulliuscep()) {
@@ -106,5 +106,7 @@ public class HandleObstacle extends Task {
       Time.sleepTicksUntil(
           () -> TileObjects.getFirstAt(worldPoint, Predicates.ids(OBSTACLE_IDS)) == null, 30);
     }
+
+    return 1;
   }
 }

@@ -21,7 +21,7 @@ public class Move extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final WorldPoint destination = getSafeTile();
 
     Movement.walk(destination);

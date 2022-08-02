@@ -36,12 +36,13 @@ public class Move extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final WorldPoint destination = new WorldPoint(3682, 3775, 0);
 
     Movement.walk(destination);
 
     Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(destination), 10);
+    return 1;
   }
 
   @Subscribe

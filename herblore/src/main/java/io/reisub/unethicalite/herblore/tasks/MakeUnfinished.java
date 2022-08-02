@@ -31,7 +31,7 @@ public class MakeUnfinished extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     plugin.setActivity(Activity.CREATING_UNFINISHED_POTIONS);
 
     List<Item> herbs = Inventory.getAll(plugin.getCleanHerbIds());
@@ -39,12 +39,14 @@ public class MakeUnfinished extends Task {
         Inventory.getAll(ItemID.VIAL_OF_WATER, ItemID.VIAL_OF_BLOOD, ItemID.COCONUT_MILK);
 
     if (herbs.size() == 0 || bases.size() == 0) {
-      return;
+      return 1;
     }
 
     herbs.get(0).useOn(bases.get(0));
     Time.sleepTicksUntil(Production::isOpen, 5);
 
     Production.chooseOption(1);
+
+    return 1;
   }
 }

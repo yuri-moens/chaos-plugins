@@ -74,14 +74,14 @@ public class NavigateTunnel extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (combatHelper.getPrayerHelper().isFlicking()) {
       combatHelper.getPrayerHelper().toggleFlicking();
     }
 
     TileObject door = getDoor();
     if (door == null) {
-      return;
+      return 1;
     }
 
     if (stuck) {
@@ -94,7 +94,7 @@ public class NavigateTunnel extends Task {
     GameThread.invoke(() -> finalDoor.interact("Open"));
 
     if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 3)) {
-      return;
+      return 1;
     }
 
     if (Room.isInCorridor()) {
@@ -111,6 +111,8 @@ public class NavigateTunnel extends Task {
         Time.sleepTicksUntil(() -> Room.isInCorridor() || !Players.getLocal().isMoving(), 30);
       }
     }
+
+    return 1;
   }
 
   public TileObject getDoor() {

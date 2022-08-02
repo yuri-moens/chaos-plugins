@@ -33,11 +33,13 @@ public class Pluck extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     int featherCount = Inventory.getCount(true, ItemID.FEATHER);
 
     GameThread.invoke(() -> deadChompy.interact(0));
 
     Time.sleepTicksUntil(() -> Inventory.getCount(true, ItemID.FEATHER) > featherCount, 15);
+
+    return 1;
   }
 }

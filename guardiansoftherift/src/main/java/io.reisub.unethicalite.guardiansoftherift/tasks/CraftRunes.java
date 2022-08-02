@@ -26,7 +26,7 @@ public class CraftRunes extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Time.sleepTick();
     TileObjects.getNearest("Altar").interact("Craft-rune");
     Time.sleepTicksUntil(() -> !Inventory.contains("Guardian essence"), 15);
@@ -38,5 +38,7 @@ public class CraftRunes extends Task {
     Time.sleepTick();
     TileObjects.getNearest("Altar").interact("Craft-rune");
     Time.sleepTicksUntil(() -> !Inventory.contains("Guardian essence"), 15);
+
+    return 1;
   }
 }

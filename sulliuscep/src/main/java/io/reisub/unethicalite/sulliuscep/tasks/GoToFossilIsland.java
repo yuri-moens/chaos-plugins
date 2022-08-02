@@ -21,7 +21,8 @@ public class GoToFossilIsland extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     ChaosMovement.teleportThroughHouse(HouseTeleport.FOSSIL_ISLAND, 101);
+    return 1;
   }
 }

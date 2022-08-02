@@ -30,7 +30,7 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     plugin.setActivity(Activity.BANKING);
     plugin.setExpectingBars(false);
 
@@ -47,6 +47,8 @@ public class HandleBank extends BankTask {
     withdraw(config.metal());
 
     plugin.setActivity(Activity.IDLE);
+
+    return 1;
   }
 
   private void withdraw(Metal metal) {

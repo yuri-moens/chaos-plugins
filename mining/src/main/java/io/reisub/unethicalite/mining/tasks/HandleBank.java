@@ -34,19 +34,19 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (config.location() == Location.BASALT) {
       final Item basalt = Inventory.getFirst(ItemID.BASALT);
       final NPC snowflake = NPCs.getNearest(NpcID.SNOWFLAKE);
 
       if (basalt == null || snowflake == null) {
-        return;
+        return 1;
       }
 
       GameThread.invoke(() -> basalt.useOn(snowflake));
 
       Time.sleepTicksUntil(() -> !Inventory.contains(ItemID.BASALT), 20);
-      return;
+      return 1;
     }
 
     open(true);
@@ -66,5 +66,7 @@ public class HandleBank extends BankTask {
       Time.sleepTick();
       Bank.withdraw(ItemID.BRACELET_OF_CLAY, 1, WithdrawMode.ITEM);
     }
+
+    return 1;
   }
 }

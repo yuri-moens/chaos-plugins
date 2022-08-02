@@ -53,7 +53,7 @@ public class Pickpocket extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final NPC target = NPCs.getNearest(Predicates.ids(config.target().getIds()));
     if (target == null) {
       if (config.target() == Target.VALLESSIA_VON_PITT) {
@@ -62,18 +62,20 @@ public class Pickpocket extends Task {
         ChaosMovement.walkTo(plugin.getNearestLocation().getPickpocketLocation(), 2);
       }
 
-      return;
+      return 1;
     }
 
     if (!Reachable.isInteractable(target)) {
       ChaosMovement.walkTo(target.getWorldLocation());
 
       if (!Time.sleepTicksUntil(() -> Reachable.isInteractable(target), 20)) {
-        return;
+        return 1;
       }
     }
 
     GameThread.invoke(() -> target.interact("Pickpocket"));
+
+    return 1;
   }
 
   @Subscribe

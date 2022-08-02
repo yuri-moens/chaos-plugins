@@ -43,8 +43,9 @@ public class Attack extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     pool.interact(0);
     Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.FISHING, 50, 5000);
+    return 1;
   }
 }

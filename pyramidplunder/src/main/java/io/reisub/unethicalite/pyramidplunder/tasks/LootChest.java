@@ -33,7 +33,7 @@ public class LootChest extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (Inventory.isFull()) {
       final Item stoneItem = Inventory.getFirst(Predicates.nameContains("Stone"));
       if (stoneItem != null) {
@@ -45,5 +45,7 @@ public class LootChest extends Task {
     GameThread.invoke(() -> chest.interact(0));
     Time.sleepTicksUntil(() -> TileObjects.getNearest(
         o -> o.getName().equals("Grand Gold Chest") && o.hasAction("Search")) == null, 15);
+
+    return 1;
   }
 }

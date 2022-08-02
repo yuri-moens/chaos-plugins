@@ -31,7 +31,7 @@ public class Note extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (config.cleanHerbs() && Inventory.contains(Predicates.ids(Constants.GRIMY_HERB_IDS))) {
       Inventory.getAll(Predicates.ids(Constants.GRIMY_HERB_IDS)).forEach(i -> i.interact("Clean"));
       Time.sleepTicksUntil(() -> Inventory.contains(Predicates.ids(Constants.CLEAN_HERB_IDS)), 3);
@@ -48,10 +48,12 @@ public class Note extends Task {
 
     final NPC leprechaun = NPCs.getNearest("Tool Leprechaun");
     if (product == null || leprechaun == null) {
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> product.useOn(leprechaun));
     Time.sleepTicksUntil(() -> !Inventory.contains(product.getId()), 30);
+
+    return 1;
   }
 }

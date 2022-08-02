@@ -40,7 +40,7 @@ public class OpenDoor extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     finished = false;
 
     final String action = PyramidPlunder.isLastRoom() ? "Quick-leave" : "Pick-lock";
@@ -50,12 +50,13 @@ public class OpenDoor extends Task {
     );
 
     if (door == null) {
-      return;
+      return 1;
     }
 
     door.interact(action);
 
     Time.sleepTicksUntil(() -> finished || !PyramidPlunder.isPastTraps(), 40);
+    return 1;
   }
 
   @Subscribe

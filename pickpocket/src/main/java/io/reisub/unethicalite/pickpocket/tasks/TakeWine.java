@@ -25,11 +25,13 @@ public class TakeWine extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     int count = Inventory.getCount(ItemID.JUG_OF_WINE);
 
     Time.sleepTick();
     wine.interact("Take");
     Time.sleepTicksUntil(() -> Inventory.getCount(ItemID.JUG_OF_WINE) > count, 10);
+
+    return 1;
   }
 }

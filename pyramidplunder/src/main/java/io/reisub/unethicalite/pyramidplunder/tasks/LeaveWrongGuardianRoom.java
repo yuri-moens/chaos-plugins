@@ -30,14 +30,14 @@ public class LeaveWrongGuardianRoom extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final TileObject exit = TileObjects.getNearest("Tomb Door");
     if (exit == null) {
-      return;
+      return 1;
     }
 
     exit.interact(0);
     Time.sleepTicksUntil(() -> Utils.isInRegion(PyramidPlunder.SOPHANEM_REGION), 10);
-    Time.sleepTick();
+    return 2;
   }
 }

@@ -30,7 +30,7 @@ public class Tether extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject tetherObject =
         TileObjects.getNearest(
             NullObjectID.NULL_41352,
@@ -38,7 +38,7 @@ public class Tether extends Task {
             NullObjectID.NULL_41354,
             NullObjectID.NULL_41355);
     if (tetherObject == null) {
-      return;
+      return 1;
     }
 
     if (plugin.getCurrentActivity() != Activity.IDLE
@@ -51,5 +51,6 @@ public class Tether extends Task {
 
     Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.TETHERING_MAST, 10000);
     Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 20000);
+    return 1;
   }
 }

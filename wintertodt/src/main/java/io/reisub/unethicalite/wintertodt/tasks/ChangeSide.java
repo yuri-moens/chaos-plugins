@@ -56,7 +56,7 @@ public class ChangeSide extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     lastIncap = null;
 
     Movement.walk(Side.getFurthest().getPositionNearBrazier());

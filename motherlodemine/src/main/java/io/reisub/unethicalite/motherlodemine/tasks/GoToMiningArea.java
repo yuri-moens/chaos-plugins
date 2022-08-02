@@ -45,7 +45,7 @@ public class GoToMiningArea extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     switch (plugin.getMiningArea()) {
       case BEHIND_SHORTCUT:
         plugin.mineRockfall(3766, 5670);
@@ -63,5 +63,7 @@ public class GoToMiningArea extends Task {
       default:
         break;
     }
+
+    return 1;
   }
 }

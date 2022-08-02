@@ -27,15 +27,16 @@ public class FixWheel extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject strut = TileObjects.getNearest(ObjectID.BROKEN_STRUT);
     if (strut == null) {
-      return;
+      return 1;
     }
 
     plugin.setActivity(Activity.REPAIRING);
 
     GameThread.invoke(() -> strut.interact("Hammer"));
     Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 30);
+    return 1;
   }
 }

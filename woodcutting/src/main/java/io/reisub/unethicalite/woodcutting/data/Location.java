@@ -1,4 +1,4 @@
-package io.reisub.unethicalite.woodcutting;
+package io.reisub.unethicalite.woodcutting.data;
 
 import com.google.common.collect.ImmutableSet;
 import java.util.ArrayDeque;

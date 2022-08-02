@@ -36,7 +36,7 @@ public class FightBrother extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (!combatHelper.getPrayerHelper().isFlicking()) {
       switch (plugin.getCurrentBrother()) {
         case DHAROK:
@@ -59,13 +59,13 @@ public class FightBrother extends Task {
 
       if (brother == null) {
         System.out.println("failed to attack and interacting with us is null");
-        return;
+        return 1;
       }
 
       GameThread.invoke(() -> brother.interact("Attack"));
       if (!Time.sleepTicksUntil(() -> Players.getLocal().getInteracting() != null, 3)) {
         System.out.println("failed to attack");
-        return;
+        return 1;
       }
     }
 
@@ -75,6 +75,8 @@ public class FightBrother extends Task {
     walkNextToStairs(currentBrother, currentLocation);
 
     safespotInTunnels(currentBrother, currentLocation);
+
+    return 1;
   }
 
   private void walkNextToStairs(Brother currentBrother, WorldPoint currentLocation) {

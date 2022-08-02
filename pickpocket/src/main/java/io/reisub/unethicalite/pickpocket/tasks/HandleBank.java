@@ -52,7 +52,7 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (!open()) {
       if (config.target() == Target.VALLESSIA_VON_PITT) {
         goToSepulchreBank();
@@ -60,7 +60,7 @@ public class HandleBank extends BankTask {
         ChaosMovement.walkTo(plugin.getNearestLocation().getBankLocation(), 1);
       }
 
-      return;
+      return 1;
     }
 
     if (config.target() == Target.VALLESSIA_VON_PITT) {
@@ -96,7 +96,7 @@ public class HandleBank extends BankTask {
 
     Item food = Bank.getFirst(config.food());
     if (food == null) {
-      return;
+      return 1;
     }
 
     int quantity = Math.floorDiv(Combat.getMissingHealth(), heals(food.getId()));
@@ -125,6 +125,8 @@ public class HandleBank extends BankTask {
 
       Bank.withdraw(config.food(), config.foodQuantity(), Bank.WithdrawMode.ITEM);
     }
+
+    return 1;
   }
 
   private int heals(int itemId) {

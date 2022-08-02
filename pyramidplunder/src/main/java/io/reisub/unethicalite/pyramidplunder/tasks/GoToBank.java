@@ -28,12 +28,12 @@ public class GoToBank extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (Static.getClient().isInInstancedRegion()) {
       final Item cape = Inventory.getFirst(Predicates.ids(Constants.CRAFTING_CAPE_IDS));
 
       if (cape == null) {
-        return;
+        return 1;
       }
 
       cape.interact("Teleport");
@@ -41,12 +41,12 @@ public class GoToBank extends Task {
       Time.sleepTicksUntil(() -> Utils.isInRegion(Constants.CRAFTING_GUILD_REGION), 10);
       Time.sleepTick();
 
-      return;
+      return 1;
     }
 
     final TileObject ladder = TileObjects.getFirstAt(3315, 2797, 0, "Ladder");
     if (ladder == null) {
-      return;
+      return 1;
     }
 
     ladder.interact(0);
@@ -60,7 +60,7 @@ public class GoToBank extends Task {
     }
 
     Time.sleepTicksUntil(() -> Utils.isInRegion(PyramidPlunder.SOPHANEM_BANK_REGION), 25);
-    Time.sleepTick();
+    return 2;
   }
 
   private boolean hasTwoSceptres() {

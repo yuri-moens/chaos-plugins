@@ -29,9 +29,9 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (!open()) {
-      return;
+      return 1;
     }
 
     if (bucketCount < 4) {
@@ -47,5 +47,6 @@ public class HandleBank extends BankTask {
     }
 
     Bank.close();
+    return 1;
   }
 }

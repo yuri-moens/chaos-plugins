@@ -43,7 +43,7 @@ public class GoToPyramid extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (Inventory.contains(Predicates.ids(Constants.PHARAOHS_SCEPTRE_IDS))
         || Equipment.contains(Predicates.ids(Constants.PHARAOHS_SCEPTRE_IDS))) {
       Interact.interactWithInventoryOrEquipment(
@@ -56,13 +56,13 @@ public class GoToPyramid extends Task {
       plugin.setSceptreCharges(plugin.getSceptreCharges() - 1);
 
       Time.sleepTicksUntil(() -> Utils.isInRegion(PyramidPlunder.PYRAMID_PLUNDER_REGION), 15);
-      return;
+      return 1;
     }
 
     if (Utils.isInRegion(PyramidPlunder.SOPHANEM_BANK_REGION)) {
       final TileObject ladder = TileObjects.getNearest(ObjectID.LADDER_20277);
       if (ladder == null) {
-        return;
+        return 1;
       }
 
       ladder.interact(0);
@@ -87,7 +87,7 @@ public class GoToPyramid extends Task {
 
     final TileObject door = getDoor();
     if (door == null) {
-      return;
+      return 1;
     }
 
     door.interact(0);
@@ -122,6 +122,8 @@ public class GoToPyramid extends Task {
       lastCorrectDoor = 0;
       DOOR_IDS.remove(door.getId());
     }
+
+    return 1;
   }
 
   private TileObject getDoor() {

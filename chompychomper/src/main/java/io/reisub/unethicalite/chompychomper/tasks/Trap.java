@@ -43,10 +43,10 @@ public class Trap extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     WorldPoint nearest = findNearestEmptyTrapLocation();
     if (nearest == null) {
-      return;
+      return 1;
     }
 
     Movement.walk(nearest);
@@ -58,6 +58,8 @@ public class Trap extends Task {
               i.interact(1);
               Time.sleepTicks(4);
             });
+
+    return 1;
   }
 
   private WorldPoint findNearestEmptyTrapLocation() {

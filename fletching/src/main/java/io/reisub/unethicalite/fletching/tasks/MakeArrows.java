@@ -38,7 +38,7 @@ public class MakeArrows extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final Item feathers = Inventory.getFirst(ItemID.FEATHER);
     final Item shafts = Inventory.getFirst(ItemID.ARROW_SHAFT);
     final Item heads = Inventory.getFirst(ItemID.BROAD_ARROWHEADS);
@@ -51,12 +51,12 @@ public class MakeArrows extends Task {
     }
 
     if (!Time.sleepTicksUntil(Production::isOpen, 5)) {
-      return;
+      return 1;
     }
 
     Production.chooseOption(1);
 
-    Time.sleepTicks(3);
+    return 4;
   }
 
   @Subscribe

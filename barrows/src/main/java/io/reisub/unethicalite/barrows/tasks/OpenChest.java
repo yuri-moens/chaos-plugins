@@ -30,7 +30,7 @@ public class OpenChest extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     GameThread.invoke(() -> chest.interact("Open"));
 
     Time.sleepTicksUntil(
@@ -39,5 +39,7 @@ public class OpenChest extends Task {
                     o -> o.getId() == NullObjectID.NULL_20973 && o.hasAction("Search"))
                 != null,
         20);
+
+    return 1;
   }
 }

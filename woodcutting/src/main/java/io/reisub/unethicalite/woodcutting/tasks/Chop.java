@@ -51,15 +51,16 @@ public class Chop extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final TileObject tree = getTree();
 
     if (tree == null) {
-      return;
+      return 1;
     }
 
     currentTreePosition = tree.getWorldLocation();
     GameThread.invoke(() -> tree.interact("Chop down"));
+    return 1;
   }
 
   private TileObject getTree() {

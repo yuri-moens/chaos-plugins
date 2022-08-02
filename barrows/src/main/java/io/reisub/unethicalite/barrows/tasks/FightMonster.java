@@ -69,12 +69,14 @@ public class FightMonster extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (!combatHelper.getPrayerHelper().isFlicking() && Prayers.getPoints() > 0) {
       combatHelper.getPrayerHelper().toggleFlicking();
     }
 
     GameThread.invoke(() -> target.interact("Attack"));
     Time.sleepTicksUntil(() -> Players.getLocal().getInteracting() != null, 3);
+
+    return 1;
   }
 }

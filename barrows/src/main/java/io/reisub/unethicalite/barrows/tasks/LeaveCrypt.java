@@ -29,10 +29,10 @@ public class LeaveCrypt extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject stairs = TileObjects.getNearest(Predicates.ids(Barrows.STAIRCASE_IDS));
     if (stairs == null) {
-      return;
+      return 1;
     }
 
     if (combatHelper.getPrayerHelper().isFlicking()) {
@@ -41,5 +41,7 @@ public class LeaveCrypt extends Task {
 
     stairs.interact(0);
     Time.sleepTicksUntil(() -> Utils.isInRegion(Barrows.BARROWS_REGION), 10);
+
+    return 1;
   }
 }

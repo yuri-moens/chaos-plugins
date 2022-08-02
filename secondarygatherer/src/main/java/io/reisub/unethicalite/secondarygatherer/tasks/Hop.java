@@ -28,7 +28,7 @@ public class Hop extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Worlds.hopTo(Worlds.getRandom(w -> {
       if (w.isSkillTotal()) {
         try {
@@ -47,6 +47,8 @@ public class Hop extends Task {
     if (Time.sleepTicksUntil(() -> Static.getClient().getGameState() != GameState.LOGGED_IN, 3)) {
       shouldHop = false;
     }
+
+    return 1;
   }
 
   @Subscribe(priority = 100)

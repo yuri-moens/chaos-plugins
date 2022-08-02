@@ -31,12 +31,12 @@ public class OpenTomb extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     plugin.setNewRun(false);
 
     TileObject sarcophagus = TileObjects.getNearest(Predicates.ids(Barrows.SARCOPHAGUS_IDS));
     if (sarcophagus == null) {
-      return;
+      return 1;
     }
 
     sarcophagus.interact(0);
@@ -61,7 +61,7 @@ public class OpenTomb extends Task {
       } else {
         TileObject stairs = TileObjects.getNearest(Predicates.ids(Barrows.STAIRCASE_IDS));
         if (stairs == null) {
-          return;
+          return 1;
         }
 
         stairs.interact(0);
@@ -72,5 +72,7 @@ public class OpenTomb extends Task {
         Movement.walk(plugin.getCurrentBrother().getPointNextToStairs());
       }
     }
+
+    return 1;
   }
 }

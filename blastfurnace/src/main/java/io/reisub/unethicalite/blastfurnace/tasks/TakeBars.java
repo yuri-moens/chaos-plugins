@@ -56,7 +56,7 @@ public class TakeBars extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     plugin.setActivity(Activity.WITHDRAWING);
 
     TileObject barDispenser =
@@ -66,7 +66,7 @@ public class TakeBars extends Task {
       if (!Equipment.contains(ItemID.ICE_GLOVES)) {
         Item gloves = Inventory.getFirst(ItemID.ICE_GLOVES);
         if (gloves == null) {
-          return;
+          return 1;
         }
 
         gloves.interact("Wear");
@@ -82,6 +82,8 @@ public class TakeBars extends Task {
     }
 
     Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 5);
+
+    return 1;
   }
 
   @Subscribe

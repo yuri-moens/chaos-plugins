@@ -26,11 +26,11 @@ public class Drop extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final List<Item> logs = Inventory.getAll(Predicates.nameContains("logs", false));
 
     if (logs.isEmpty()) {
-      return;
+      return 1;
     }
 
     final int ticks = -Math.floorDiv(-logs.size(), 10);
@@ -38,5 +38,6 @@ public class Drop extends Task {
     logs.forEach(Item::drop);
 
     Time.sleepTicks(ticks);
+    return 1;
   }
 }

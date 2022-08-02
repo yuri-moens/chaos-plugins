@@ -44,9 +44,11 @@ public class Mine extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     plugin.setActivity(Activity.MINING);
     GameThread.invoke(() -> oreVein.interact("Mine"));
+
+    return 1;
   }
 
   @Subscribe

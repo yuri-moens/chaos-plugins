@@ -41,7 +41,7 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     open(15, 10);
     Bank.depositInventory();
 
@@ -70,6 +70,8 @@ public class HandleBank extends BankTask {
     }
 
     close();
+
+    return 1;
   }
 
   private boolean needIngredients() {

@@ -34,10 +34,10 @@ public class Hammer extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject th = TileObjects.getNearest("Trip hammer");
     if (th == null) {
-      return;
+      return 1;
     }
 
     th.interact("Use");
@@ -48,5 +48,6 @@ public class Hammer extends Task {
             ||
             giantsFoundryState.getHeatAmount() < giantsFoundryHelper.getCurrentHeatRange()[0], 100);
 
+    return 1;
   }
 }

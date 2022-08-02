@@ -44,7 +44,7 @@ public class Burn extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (Side.getNearest() == Side.WEST
         && Players.getLocal().getWorldLocation().equals(Side.WEST.getPositionNearBrazier())) {
       Movement.walk(Side.WEST.getPositionNearBrazier());

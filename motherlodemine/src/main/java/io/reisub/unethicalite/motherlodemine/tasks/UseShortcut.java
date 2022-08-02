@@ -45,11 +45,11 @@ public class UseShortcut extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final TileObject tunnel = TileObjects.getNearest(ObjectID.DARK_TUNNEL_10047);
 
     if (tunnel == null) {
-      return;
+      return 1;
     }
 
     final WorldPoint destination =
@@ -63,6 +63,6 @@ public class UseShortcut extends Task {
 
     GameThread.invoke(() -> tunnel.interact("Enter"));
     Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(destination), 20);
-    Time.sleepTick();
+    return 2;
   }
 }

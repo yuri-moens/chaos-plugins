@@ -31,18 +31,19 @@ public class BonesTo extends Task implements KeyListener {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     cast = false;
 
     final TileObject foodChute = TileObjects.getNearest(ObjectID.FOOD_CHUTE);
     if (foodChute == null) {
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> foodChute.interact("Deposit"));
     Time.sleepTick();
 
     GameThread.invoke(() -> Magic.cast(SpellBook.Standard.BONES_TO_BANANAS));
+    return 1;
   }
 
   @Override

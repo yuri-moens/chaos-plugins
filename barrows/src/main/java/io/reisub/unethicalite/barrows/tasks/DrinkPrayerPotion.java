@@ -40,8 +40,10 @@ public class DrinkPrayerPotion extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Inventory.getFirst(Predicates.ids(Constants.PRAYER_RESTORE_POTION_IDS)).interact(1);
+
+    return 1;
   }
 
   @Subscribe

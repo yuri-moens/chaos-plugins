@@ -29,15 +29,16 @@ public class TelekineticGrab extends Task implements KeyListener {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     cast = false;
 
     final NPC mazeGuardian = NPCs.getNearest(n -> n.getName().contains("Maze Guardian"));
     if (mazeGuardian == null) {
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> Magic.cast(SpellBook.Standard.TELEKINETIC_GRAB, mazeGuardian));
+    return 1;
   }
 
   @Override

@@ -24,11 +24,13 @@ public class Drop extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     Inventory.getAll(ItemID.MORT_MYRE_FUNGUS, ItemID.MUSHROOM)
         .forEach(i -> i.interact("Drop"));
 
     Time.sleepTicksUntil(() -> !Inventory.isFull(), 3);
     plugin.setLastDrop(Static.getClient().getTickCount());
+
+    return 1;
   }
 }

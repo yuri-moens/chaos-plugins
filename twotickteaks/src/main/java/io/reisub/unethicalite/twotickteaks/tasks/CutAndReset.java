@@ -23,7 +23,7 @@ public class CutAndReset extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject tree = TileObjects.getNearest("Teak");
     if (cut) {
       if (tree != null && tree.distanceTo(Players.getLocal()) < 2) {
@@ -40,5 +40,7 @@ public class CutAndReset extends Task {
       }
       cut = true;
     }
+
+    return 1;
   }
 }

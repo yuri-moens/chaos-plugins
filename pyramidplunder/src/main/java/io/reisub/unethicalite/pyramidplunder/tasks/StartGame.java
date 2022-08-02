@@ -32,8 +32,9 @@ public class StartGame extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     GameThread.invoke(() -> mummy.interact("Start-minigame"));
     Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getPlane() == 0, 20);
+    return 1;
   }
 }

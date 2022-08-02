@@ -34,7 +34,7 @@ public class SolvePuzzle extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     GameThread.invoke(() -> puzzleAnswer.interact("Select"));
     Time.sleepTick();
 
@@ -42,6 +42,8 @@ public class SolvePuzzle extends Task {
     Time.sleepTicksUntil(Room::isInCorridor, 5);
 
     puzzleAnswer = null;
+
+    return 1;
   }
 
   @Subscribe

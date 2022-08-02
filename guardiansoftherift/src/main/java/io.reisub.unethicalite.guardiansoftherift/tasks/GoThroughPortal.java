@@ -29,9 +29,10 @@ public class GoThroughPortal extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObjects.getNearest(43729).interact("Enter");
     Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getWorldX() < 3597, 10);
-    Time.sleepTick();
+
+    return 2;
   }
 }

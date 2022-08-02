@@ -47,18 +47,19 @@ public class FillBuckets extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject pump = TileObjects.getNearest(ObjectID.WATER_PUMP_41000, ObjectID.WATER_PUMP_41004);
     if (pump == null) {
-      return;
+      return 1;
     }
 
     pump.interact(0);
 
     if (!Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.FILLING_BUCKETS, 15000)) {
-      return;
+      return 1;
     }
 
     Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 5000);
+    return 1;
   }
 }

@@ -41,14 +41,16 @@ public class CastShadowVeil extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final Widget w = Widgets.get(WidgetInfo.SPELL_SHADOW_VEIL);
     if (w == null) {
-      return;
+      return 1;
     }
 
     w.interact(1, MenuAction.CC_OP.getId(), -1,
         SpellBook.Necromancy.SHADOW_VEIL.getWidget().getId());
     last = Static.getClient().getTickCount();
+
+    return 1;
   }
 }

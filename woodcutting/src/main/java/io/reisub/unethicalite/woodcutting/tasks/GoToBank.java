@@ -26,7 +26,8 @@ public class GoToBank extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     ChaosMovement.walkTo(config.location().getBankPoint());
+    return 1;
   }
 }

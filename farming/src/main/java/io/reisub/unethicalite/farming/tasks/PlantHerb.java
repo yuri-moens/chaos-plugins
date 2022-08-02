@@ -54,15 +54,15 @@ public class PlantHerb extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
     if (patch == null) {
-      return;
+      return 1;
     }
 
     final List<Item> seeds = Inventory.getAll(Predicates.ids(Constants.HERB_SEED_IDS));
     if (seeds == null || seeds.isEmpty()) {
-      return;
+      return 1;
     }
 
     final ConfigList diseaseFreeSeedsList = ConfigList.parseList(config.diseaseFreeSeeds());
@@ -92,7 +92,7 @@ public class PlantHerb extends Task {
     }
 
     if (seed == null) {
-      return;
+      return 1;
     }
 
     final Item finalSeed = seed;
@@ -101,15 +101,16 @@ public class PlantHerb extends Task {
     GameThread.invoke(() -> finalSeed.useOn(patch));
 
     if (!Time.sleepTicksUntil(() -> Vars.getBit(currentLocation.getHerbVarbit()) > 3, 20)) {
-      return;
+      return 1;
     }
 
     final Item compost = Inventory.getFirst(Predicates.ids(Constants.COMPOST_IDS));
     if (compost == null) {
-      return;
+      return 1;
     }
 
     GameThread.invoke(() -> compost.useOn(patch));
-    Time.sleepTicks(3);
+
+    return 4;
   }
 }

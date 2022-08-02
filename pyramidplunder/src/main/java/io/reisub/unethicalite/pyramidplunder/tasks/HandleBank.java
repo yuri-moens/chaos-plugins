@@ -40,9 +40,9 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (!open(true)) {
-      return;
+      return 1;
     }
 
     ChaosBank.depositAll(false, Predicates.ids(TREASURE_IDS));
@@ -72,6 +72,8 @@ public class HandleBank extends BankTask {
     for (int i = 0; i < amountOfFood; i++) {
       Bank.withdraw(ItemID.LOBSTER, 1, WithdrawMode.ITEM);
     }
+
+    return 1;
   }
 
   private void withdrawTreasure() {

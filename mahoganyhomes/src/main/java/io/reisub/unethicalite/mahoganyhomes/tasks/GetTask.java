@@ -38,13 +38,13 @@ public class GetTask extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     plugin.setLastStairsUsed(0);
     plugin.setFixed(false);
 
     final Widget npcContact = Widgets.get(SpellBook.Lunar.NPC_CONTACT.getWidget());
     if (npcContact == null) {
-      return;
+      return 1;
     }
 
     if (npcContact.hasAction("Amy")) {
@@ -90,6 +90,8 @@ public class GetTask extends Task {
     if (home != null) {
       plugin.setCurrentHome(home);
     }
+
+    return 1;
   }
 
   private Home getHome() {

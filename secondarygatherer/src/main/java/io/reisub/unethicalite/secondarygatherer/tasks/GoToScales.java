@@ -37,11 +37,11 @@ public class GoToScales extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (Utils.isInRegion(SecondaryGatherer.MYTHS_GUILD_REGION)) {
       final TileObject statue = TileObjects.getNearest(ObjectID.MYTHIC_STATUE);
       if (statue == null) {
-        return;
+        return 1;
       }
 
       statue.interact("Enter");
@@ -54,8 +54,7 @@ public class GoToScales extends Task {
       plugin.getCombatHelper().getPrayerHelper().toggleFlicking();
     }
 
-    int last = 0;
-
     ChaosMovement.walkTo(SCALES_WORLDPOINT);
+    return 1;
   }
 }

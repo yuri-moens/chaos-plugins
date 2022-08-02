@@ -25,7 +25,7 @@ public class StartItems extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObjects.getNearest("Weak cells").interact("Take");
     Time.sleepTicksUntil(() -> Inventory.contains("Weak cell"), 20);
 
@@ -33,5 +33,6 @@ public class StartItems extends Task {
     Time.sleepTicksUntil(() -> Inventory.getCount(true, "Uncharged cell") == 10, 20);
 
     plugin.setGamePhase(2);
+    return 1;
   }
 }

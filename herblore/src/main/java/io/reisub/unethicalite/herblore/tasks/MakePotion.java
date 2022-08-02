@@ -31,7 +31,7 @@ public class MakePotion extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     plugin.setActivity(Activity.CREATING_POTIONS);
 
     final List<Item> secondaries = Inventory.getAll(plugin.getSecondaryIds());
@@ -39,13 +39,15 @@ public class MakePotion extends Task {
         : Inventory.getAll(plugin.getBaseIds());
 
     if (secondaries.size() == 0 || bases.size() == 0) {
-      return;
+      return 1;
     }
 
     secondaries.get(0).useOn(bases.get(0));
     Time.sleepTicksUntil(Production::isOpen, 5);
 
     Production.chooseOption(1);
+
+    return 1;
   }
 
   private boolean hasSuperCombatIngredients() {

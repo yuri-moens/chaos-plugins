@@ -19,11 +19,13 @@ public class Pick extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     int count = Inventory.getCount(ItemID.MORT_MYRE_FUNGUS);
 
     TileObjects.getNearest(ObjectID.FUNGI_ON_LOG).interact("Pick");
 
     Time.sleepTicksUntil(() -> count < Inventory.getCount(ItemID.MORT_MYRE_FUNGUS), 5);
+
+    return 1;
   }
 }

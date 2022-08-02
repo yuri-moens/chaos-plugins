@@ -29,7 +29,7 @@ public class PickupGlass extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileItems.getAt(Players.getLocal().getWorldLocation(), ItemID.MOLTEN_GLASS)
         .subList(0, 27)
         .forEach(
@@ -39,5 +39,6 @@ public class PickupGlass extends Task {
             });
 
     last = Static.getClient().getTickCount();
+    return 1;
   }
 }

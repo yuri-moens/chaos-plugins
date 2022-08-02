@@ -55,11 +55,11 @@ public class Cut extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     final TileObject sulliuscep = plugin.getCurrentSulliuscep().getObject();
 
     if (sulliuscep == null) {
-      return;
+      return 1;
     }
 
     if (Combat.getSpecEnergy() == 100 && Equipment.contains(ItemID.DRAGON_AXE)) {
@@ -70,7 +70,7 @@ public class Cut extends Task {
 
     if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving()
         || isWoodcutting(), 3)) {
-      return;
+      return 1;
     }
 
     Time.sleepTicksUntil(() -> isWoodcutting()
@@ -97,7 +97,7 @@ public class Cut extends Task {
       Time.sleepTicksUntil(this::isWoodcutting, 35);
     }
 
-    Time.sleepTicks(3);
+    return 4;
   }
 
   private boolean isWoodcutting() {

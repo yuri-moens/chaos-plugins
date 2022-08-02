@@ -32,7 +32,7 @@ public class TeleportCraftingGuild extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (plugin.getCombatHelper().getPrayerHelper().isFlicking()) {
       plugin.getCombatHelper().getPrayerHelper().toggleFlicking();
       Time.sleepTick();
@@ -40,6 +40,6 @@ public class TeleportCraftingGuild extends Task {
 
     Inventory.getFirst(Predicates.ids(ItemID.CRAFTING_CAPE, ItemID.CRAFTING_CAPET))
         .interact("Teleport");
-    Time.sleepTicks(6);
+    return 7;
   }
 }

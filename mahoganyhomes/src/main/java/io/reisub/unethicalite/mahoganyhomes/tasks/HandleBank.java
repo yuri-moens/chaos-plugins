@@ -52,7 +52,7 @@ public class HandleBank extends BankTask {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     plugin.teleport();
 
     if (Players.getLocal().getWorldLocation().getPlane() > 0) {
@@ -76,14 +76,14 @@ public class HandleBank extends BankTask {
     ChaosMovement.walkTo(bankAreaPoints.get(Rand.nextInt(0, bankAreaPoints.size())));
 
     if (!open(40, true)) {
-      return;
+      return 1;
     }
 
     final int requiredSteelBars = MAX_STEEL_BARS - Inventory.getCount(ItemID.STEEL_BAR);
 
     if (!Bank.contains(ItemID.STEEL_BAR) || !Bank.contains(config.plank().getPlankId())) {
       plugin.stop("Out of materials. Stopping plugin.");
-      return;
+      return 1;
     }
 
     for (int i = 0; i < requiredSteelBars; i++) {
@@ -108,6 +108,8 @@ public class HandleBank extends BankTask {
     }
 
     last = Instant.now();
+
+    return 1;
   }
 
   private boolean isPassingBank() {

@@ -29,7 +29,7 @@ public class CastBloom extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (!Players.getLocal().getWorldLocation().equals(FungusPicker.FUNGUS_LOCATION)) {
       Movement.walk(FungusPicker.FUNGUS_LOCATION);
 
@@ -41,9 +41,9 @@ public class CastBloom extends Task {
         Interact.interactWithInventoryOrEquipment((i) -> i.hasAction("Bloom"), "Bloom", null, 0);
     if (!interacted) {
       plugin.stop("Couldn't find an item to cast Bloom with. Stopping plugin.");
-      return;
+      return 1;
     }
 
-    Time.sleepTicks(3);
+    return 4;
   }
 }

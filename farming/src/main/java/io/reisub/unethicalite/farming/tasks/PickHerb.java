@@ -47,10 +47,10 @@ public class PickHerb extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject patch = TileObjects.getNearest(Predicates.ids(Constants.HERB_PATCH_IDS));
     if (patch == null) {
-      return;
+      return 1;
     }
 
     experienceReceived = false;
@@ -64,6 +64,8 @@ public class PickHerb extends Task {
     Time.sleepTicksUntil(
         () -> Inventory.isFull() || Vars.getBit(plugin.getCurrentLocation().getHerbVarbit()) <= 3,
         100);
+
+    return 1;
   }
 
   @Subscribe

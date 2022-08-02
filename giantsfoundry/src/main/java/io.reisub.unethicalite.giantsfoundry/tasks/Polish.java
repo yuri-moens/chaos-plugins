@@ -32,10 +32,10 @@ public class Polish extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     TileObject pw = TileObjects.getNearest("Polishing wheel");
     if (pw == null) {
-      return;
+      return 1;
     }
 
     pw.interact("Use");
@@ -46,5 +46,6 @@ public class Polish extends Task {
             ||
             giantsFoundryState.getHeatAmount() < giantsFoundryHelper.getCurrentHeatRange()[0], 100);
 
+    return 1;
   }
 }

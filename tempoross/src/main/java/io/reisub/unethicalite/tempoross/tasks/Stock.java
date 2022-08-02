@@ -111,7 +111,7 @@ public class Stock extends Task {
   }
 
   @Override
-  public void execute() {
+  public int execute() {
     if (Players.getLocal().distanceTo(plugin.getDudiPos()) > 8) {
       Movement.walk(plugin.getDudiPos().dx(Rand.nextInt(-2, 3)).dy(Rand.nextInt(-2, 3)));
 
@@ -124,7 +124,7 @@ public class Stock extends Task {
                 n.getId() == NpcID.FIRE_8643
                     && (plugin.getIslandArea().contains(n) || plugin.getBoatArea().contains(n)));
     if (fire != null) {
-      return;
+      return 1;
     }
 
     NPC crate;
@@ -141,11 +141,12 @@ public class Stock extends Task {
     }
 
     if (crate == null) {
-      return;
+      return 1;
     }
 
     crate.interact(0);
 
     Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.STOCKING_CANNON, 3);
+    return 1;
   }
 }
