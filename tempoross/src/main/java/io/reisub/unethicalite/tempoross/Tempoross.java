@@ -179,7 +179,7 @@ public class Tempoross extends TickScript {
         setActivity(PluginActivity.REPAIRING);
         break;
       case AnimationID.LOOKING_INTO:
-        if (getPreviousActivity() != PluginActivity.TETHERING_MAST) {
+        if (!wasPreviousActivity(PluginActivity.TETHERING_MAST)) {
           setActivity(PluginActivity.FILLING_BUCKETS);
         }
         break;

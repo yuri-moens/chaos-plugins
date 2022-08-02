@@ -23,7 +23,7 @@ public class FixWheel extends Task {
   public boolean validate() {
     return plugin.isCurrentActivity(Activity.IDLE)
         && !plugin.isUpstairs()
-        && plugin.getPreviousActivity() == Activity.DEPOSITING
+        && plugin.wasPreviousActivity(Activity.DEPOSITING)
         && TileObjects.getAll(ObjectID.BROKEN_STRUT).size() == 2;
   }
 
