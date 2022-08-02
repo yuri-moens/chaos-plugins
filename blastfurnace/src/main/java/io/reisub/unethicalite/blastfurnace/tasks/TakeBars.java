@@ -2,7 +2,7 @@ package io.reisub.unethicalite.blastfurnace.tasks;
 
 import io.reisub.unethicalite.blastfurnace.BlastFurnace;
 import io.reisub.unethicalite.blastfurnace.Config;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.enums.Metal;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
@@ -35,9 +35,9 @@ public class TakeBars extends Task {
 
   @Override
   public boolean validate() {
-    if (plugin.getCurrentActivity() != Activity.IDLE
-        || (plugin.getPreviousActivity() != Activity.DEPOSITING
-            && plugin.getPreviousActivity() != Activity.WITHDRAWING)) {
+    if (plugin.isCurrentActivity(Activity.IDLE)
+        || (plugin.wasPreviousActivity(Activity.DEPOSITING)
+            && !plugin.wasPreviousActivity(Activity.WITHDRAWING))) {
       return false;
     }
 
@@ -81,7 +81,7 @@ public class TakeBars extends Task {
       experienceReceived = false;
     }
 
-    Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 5);
+    Time.sleepTicksUntil(() -> plugin.isCurrentActivity(Activity.IDLE), 5);
   }
 
   @Subscribe

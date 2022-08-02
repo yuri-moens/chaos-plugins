@@ -2,7 +2,8 @@ package io.reisub.unethicalite.herblore.tasks;
 
 import io.reisub.unethicalite.herblore.Herblore;
 import io.reisub.unethicalite.herblore.HerbloreTask;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.herblore.data.PluginActivity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.List;
 import javax.inject.Inject;
@@ -25,14 +26,14 @@ public class MakePotion extends Task {
   @Override
   public boolean validate() {
     return plugin.getConfig().task() == HerbloreTask.MAKE_POTION
-        && plugin.getCurrentActivity() == Activity.IDLE
+        && plugin.isCurrentActivity(Activity.IDLE)
         && Inventory.contains(plugin.getSecondaryIds())
         && (Inventory.contains(plugin.getBaseIds()) || hasSuperCombatIngredients());
   }
 
   @Override
   public void execute() {
-    plugin.setActivity(Activity.CREATING_POTIONS);
+    plugin.setActivity(PluginActivity.CREATING_POTIONS);
 
     final List<Item> secondaries = Inventory.getAll(plugin.getSecondaryIds());
     final List<Item> bases = plugin.getBaseIds()[0] == -1 ? Inventory.getAll(ItemID.SUPER_ATTACK4)

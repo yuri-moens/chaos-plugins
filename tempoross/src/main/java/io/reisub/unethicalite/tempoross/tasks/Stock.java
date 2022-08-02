@@ -1,7 +1,8 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
 import io.reisub.unethicalite.tempoross.Tempoross;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.tempoross.data.PluginActivity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.NPC;
@@ -29,8 +30,8 @@ public class Stock extends Task {
       return false;
     }
 
-    if (plugin.getCurrentActivity() == Activity.REPAIRING
-        || plugin.getCurrentActivity() == Activity.TETHERING_MAST) {
+    if (plugin.isCurrentActivity(PluginActivity.REPAIRING)
+        || plugin.isCurrentActivity(PluginActivity.TETHERING_MAST)) {
       return false;
     }
 
@@ -47,7 +48,7 @@ public class Stock extends Task {
     if (plugin.getPhase() == 1
         && plugin.getCookedFish() >= plugin.getCookedFishRequired()
         && plugin.getEnergy() == 100
-        && plugin.getCurrentActivity() != Activity.STOCKING_CANNON) {
+        && plugin.isCurrentActivity(PluginActivity.STOCKING_CANNON)) {
       return true;
     }
 
@@ -58,7 +59,7 @@ public class Stock extends Task {
         && plugin.getEnergy() < 100
         && (plugin.getStormIntensity() >= 94
             || plugin.getCookedFish() >= plugin.getCookedFishRequired())
-        && plugin.getCurrentActivity() != Activity.STOCKING_CANNON) {
+        && plugin.isCurrentActivity(PluginActivity.STOCKING_CANNON)) {
       return true;
     }
 
@@ -69,7 +70,7 @@ public class Stock extends Task {
         && plugin.getCookedFishRequired() > 0
         && plugin.getCookedFishRequired() != 19
         && plugin.getCookedFish() >= plugin.getCookedFishRequired()
-        && plugin.getCurrentActivity() != Activity.STOCKING_CANNON) {
+        && plugin.isCurrentActivity(PluginActivity.STOCKING_CANNON)) {
       return true;
     }
 
@@ -78,7 +79,7 @@ public class Stock extends Task {
     // bring energy to 4%
     if (plugin.getPhase() == 2
         && plugin.getCookedFish() >= plugin.getCookedFishRequired()
-        && plugin.getCurrentActivity() != Activity.STOCKING_CANNON) {
+        && plugin.isCurrentActivity(PluginActivity.STOCKING_CANNON)) {
       return true;
     }
 
@@ -88,7 +89,7 @@ public class Stock extends Task {
         && plugin.getCookedFish() > 0
         && plugin.getRawFish() == 0
         && Inventory.isFull()
-        && plugin.getCurrentActivity() != Activity.STOCKING_CANNON) {
+        && plugin.isCurrentActivity(PluginActivity.STOCKING_CANNON)) {
       return true;
     }
 
@@ -98,7 +99,7 @@ public class Stock extends Task {
     if (northCrate != null && southCrate != null) {
       // swap ammunition box at phase 3
       if (plugin.getPhase() >= 4
-          && plugin.getCurrentActivity() == Activity.STOCKING_CANNON
+          && plugin.isCurrentActivity(PluginActivity.STOCKING_CANNON)
           && plugin.getCookedFish() > 0
           && plugin.getCookedFish() < 15
           && Players.getLocal().distanceTo(northCrate)
@@ -129,7 +130,7 @@ public class Stock extends Task {
 
     NPC crate;
 
-    if (plugin.getPhase() >= 4 && plugin.getCurrentActivity() == Activity.STOCKING_CANNON) {
+    if (plugin.getPhase() >= 4 && plugin.isCurrentActivity(PluginActivity.STOCKING_CANNON)) {
       plugin.setActivity(Activity.IDLE);
       crate = NPCs.getNearest(NpcID.AMMUNITION_CRATE_10577);
     } else {
@@ -146,6 +147,6 @@ public class Stock extends Task {
 
     crate.interact(0);
 
-    Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.STOCKING_CANNON, 3);
+    Time.sleepTicksUntil(() -> plugin.isCurrentActivity(PluginActivity.STOCKING_CANNON), 3);
   }
 }

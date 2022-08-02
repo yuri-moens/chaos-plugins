@@ -2,9 +2,10 @@ package io.reisub.unethicalite.pickpocket.tasks;
 
 import io.reisub.unethicalite.pickpocket.Config;
 import io.reisub.unethicalite.pickpocket.Target;
+import io.reisub.unethicalite.pickpocket.data.PluginActivity;
 import io.reisub.unethicalite.utils.Utils;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
-import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.NPC;
@@ -43,7 +44,7 @@ public class Pickpocket extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && lastStun + 3 < Static.getClient().getTickCount()
         && !Inventory.isFull()
         && Players.getLocal().getModelHeight() != 1000
@@ -83,7 +84,7 @@ public class Pickpocket extends Task {
     }
 
     if (event.getMessage().contains("You attempt to pick")) {
-      plugin.setActivity(Activity.THIEVING);
+      plugin.setActivity(PluginActivity.THIEVING);
     } else if (event.getMessage().contains("Your dodgy necklace")
         || event.getMessage().contains("Your attempt to steal goes unnoticed")) {
       plugin.setActivity(Activity.IDLE);

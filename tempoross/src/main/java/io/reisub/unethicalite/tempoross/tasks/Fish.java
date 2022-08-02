@@ -1,8 +1,9 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
 import io.reisub.unethicalite.tempoross.Tempoross;
+import io.reisub.unethicalite.tempoross.data.PluginActivity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
-import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -46,13 +47,13 @@ public class Fish extends Task {
 
     spot = getNearestSafeSpot(NpcID.FISHING_SPOT_10569);
 
-    if (plugin.getCurrentActivity() == Activity.FISHING) {
+    if (plugin.isCurrentActivity(PluginActivity.FISHING)) {
       if (spot != null && Players.getLocal().getInteracting() != spot) {
         return true;
       }
     }
 
-    if (plugin.getCurrentActivity() == Activity.COOKING && spot != null) {
+    if (plugin.isCurrentActivity(PluginActivity.COOKING) && spot != null) {
       if (plugin.getPhase() == 1
           && plugin.getEnergy() < 100
           && plugin.getRawFish() + plugin.getCookedFish() >= 19) {
@@ -69,7 +70,7 @@ public class Fish extends Task {
       return true;
     }
 
-    return plugin.getCurrentActivity() == Activity.IDLE;
+    return plugin.isCurrentActivity(Activity.IDLE);
   }
 
   @Override
@@ -117,7 +118,7 @@ public class Fish extends Task {
     }
 
     spot.interact(0);
-    Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.FISHING, 3);
+    Time.sleepTicksUntil(() -> plugin.isCurrentActivity(PluginActivity.FISHING), 3);
   }
 
   private NPC getNearestSafeSpot(int id) {

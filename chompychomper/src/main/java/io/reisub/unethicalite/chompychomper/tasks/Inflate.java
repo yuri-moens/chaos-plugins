@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.chompychomper.tasks;
 
 import io.reisub.unethicalite.chompychomper.ChompyChomper;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
@@ -23,7 +23,7 @@ public class Inflate extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && !Inventory.isFull()
         && Inventory.contains(Predicates.ids(ChompyChomper.FILLED_BELLOW_IDS));
   }

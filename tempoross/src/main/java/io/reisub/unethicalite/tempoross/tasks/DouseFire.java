@@ -1,7 +1,8 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
 import io.reisub.unethicalite.tempoross.Tempoross;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.tempoross.data.PluginActivity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
@@ -35,7 +36,7 @@ public class DouseFire extends Task {
       return false;
     }
 
-    if (plugin.getCurrentActivity() == Activity.STOCKING_CANNON
+    if (plugin.isCurrentActivity(PluginActivity.STOCKING_CANNON)
         && plugin.getCookedFishRequired() <= 10) {
       return false;
     }
@@ -53,10 +54,10 @@ public class DouseFire extends Task {
   public void execute() {
     fire.interact(0);
 
-    if (!Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.DOUSING_FIRE, 2500)) {
+    if (!Time.sleepUntil(() -> plugin.isCurrentActivity(PluginActivity.DOUSING_FIRE), 2500)) {
       return;
     }
 
-    Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 15000);
+    Time.sleepUntil(() -> plugin.isCurrentActivity(Activity.IDLE), 15000);
   }
 }

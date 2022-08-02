@@ -1,6 +1,7 @@
 package io.reisub.unethicalite.herblore;
 
 import com.google.inject.Provides;
+import io.reisub.unethicalite.herblore.data.PluginActivity;
 import io.reisub.unethicalite.herblore.tasks.Clean;
 import io.reisub.unethicalite.herblore.tasks.HandleBank;
 import io.reisub.unethicalite.herblore.tasks.MakeCoconutMilk;
@@ -10,7 +11,7 @@ import io.reisub.unethicalite.herblore.tasks.ProcessSecondary;
 import io.reisub.unethicalite.herblore.tasks.TarHerbs;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -72,17 +73,17 @@ public class Herblore extends TickScript {
     int secondaries = Inventory.getCount(config.secondary().getOriginalId());
     int vials = Inventory.getCount(ItemID.VIAL);
 
-    if (grimyHerbs == 0 && currentActivity == Activity.CLEANING_HERBS) {
+    if (grimyHerbs == 0 && isCurrentActivity(PluginActivity.CLEANING_HERBS)) {
       setActivity(Activity.IDLE);
     } else if (cleanHerbs == 0
-        && (currentActivity == Activity.CREATING_UNFINISHED_POTIONS
-        || currentActivity == Activity.TARRING_HERBS)) {
+        && (isCurrentActivity(PluginActivity.CREATING_UNFINISHED_POTIONS)
+        || isCurrentActivity(PluginActivity.TARRING_HERBS))) {
       setActivity(Activity.IDLE);
-    } else if (bases == 0 && currentActivity == Activity.CREATING_POTIONS) {
+    } else if (bases == 0 && isCurrentActivity(PluginActivity.CREATING_POTIONS)) {
       setActivity(Activity.IDLE);
-    } else if (secondaries == 0 && currentActivity == Activity.PROCESSING_SECONDARIES) {
+    } else if (secondaries == 0 && isCurrentActivity(PluginActivity.PROCESSING_SECONDARIES)) {
       setActivity(Activity.IDLE);
-    } else if (vials == 0 && currentActivity == Activity.MAKING_COCONUT_MILK) {
+    } else if (vials == 0 && isCurrentActivity(PluginActivity.MAKING_COCONUT_MILK)) {
       setActivity(Activity.IDLE);
     }
   }

@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.chompychomper.tasks;
 
 import io.reisub.unethicalite.chompychomper.ChompyChomper;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.LinkedList;
 import javax.inject.Inject;
@@ -24,7 +24,7 @@ public class Shoot extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE && !chompies.isEmpty();
+    return plugin.isCurrentActivity(Activity.IDLE) && !chompies.isEmpty();
   }
 
   @Override
@@ -35,7 +35,7 @@ public class Shoot extends Task {
     }
 
     GameThread.invoke(() -> chompy.interact("Attack"));
-    if (!Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.ATTACKING, 3)) {
+    if (!Time.sleepTicksUntil(() -> plugin.isCurrentActivity(Activity.ATTACKING), 3)) {
       chompies.addFirst(chompy);
     }
   }

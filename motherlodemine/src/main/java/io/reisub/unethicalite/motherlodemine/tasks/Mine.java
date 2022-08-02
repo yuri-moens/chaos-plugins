@@ -3,7 +3,8 @@ package io.reisub.unethicalite.motherlodemine.tasks;
 import io.reisub.unethicalite.motherlodemine.Config;
 import io.reisub.unethicalite.motherlodemine.MiningArea;
 import io.reisub.unethicalite.motherlodemine.MotherlodeMine;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.motherlodemine.data.PluginActivity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.TileObject;
@@ -36,7 +37,7 @@ public class Mine extends Task {
       }
     }
 
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && !Inventory.isFull()
         && (plugin.isUpstairs() || !config.upstairs())
         && (oreVein = plugin.getMiningArea().getNearestVein()) != null
@@ -45,13 +46,13 @@ public class Mine extends Task {
 
   @Override
   public void execute() {
-    plugin.setActivity(Activity.MINING);
+    plugin.setActivity(PluginActivity.MINING);
     GameThread.invoke(() -> oreVein.interact("Mine"));
   }
 
   @Subscribe
   private void onGameTick(GameTick event) {
-    if (plugin.isRunning() && plugin.getCurrentActivity() == Activity.MINING) {
+    if (plugin.isRunning() && plugin.isCurrentActivity(PluginActivity.MINING)) {
       if (oreVein == null) {
         plugin.setActivity(Activity.IDLE);
       } else {

@@ -3,8 +3,8 @@ package io.reisub.unethicalite.herblore.tasks;
 import io.reisub.unethicalite.herblore.Herblore;
 import io.reisub.unethicalite.herblore.Potion;
 import io.reisub.unethicalite.herblore.Secondary;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.api.ChaosBank;
-import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.time.Duration;
 import javax.inject.Inject;
@@ -26,7 +26,7 @@ public class HandleBank extends BankTask {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && isLastBankDurationAgo(Duration.ofSeconds(2));
   }
 

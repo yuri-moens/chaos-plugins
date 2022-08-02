@@ -1,7 +1,8 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
 import io.reisub.unethicalite.tempoross.Tempoross;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.tempoross.data.PluginActivity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
@@ -27,7 +28,7 @@ public class FillBuckets extends Task {
       return false;
     }
 
-    if (plugin.getCurrentActivity() == Activity.FILLING_BUCKETS) {
+    if (plugin.isCurrentActivity(PluginActivity.FILLING_BUCKETS)) {
       return false;
     }
 
@@ -55,10 +56,10 @@ public class FillBuckets extends Task {
 
     pump.interact(0);
 
-    if (!Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.FILLING_BUCKETS, 15000)) {
+    if (!Time.sleepUntil(() -> plugin.isCurrentActivity(PluginActivity.FILLING_BUCKETS), 15000)) {
       return;
     }
 
-    Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 5000);
+    Time.sleepUntil(() -> plugin.isCurrentActivity(Activity.IDLE), 5000);
   }
 }

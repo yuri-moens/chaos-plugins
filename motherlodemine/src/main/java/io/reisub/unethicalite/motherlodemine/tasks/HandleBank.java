@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.motherlodemine.tasks;
 
 import io.reisub.unethicalite.motherlodemine.MotherlodeMine;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.api.ChaosBank;
-import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import javax.inject.Inject;
 import net.runelite.api.Item;
@@ -19,7 +19,7 @@ public class HandleBank extends BankTask {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && !plugin.isUpstairs()
         && Inventory.contains(
             ItemID.RUNITE_ORE,

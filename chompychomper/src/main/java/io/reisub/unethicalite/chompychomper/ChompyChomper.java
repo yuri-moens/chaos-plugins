@@ -9,7 +9,7 @@ import io.reisub.unethicalite.chompychomper.tasks.Shoot;
 import io.reisub.unethicalite.chompychomper.tasks.Trap;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import java.util.Set;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
@@ -60,7 +60,7 @@ public class ChompyChomper extends TickScript {
     }
 
     if (event.getTarget() == null) {
-      if (currentActivity == Activity.ATTACKING) {
+      if (isCurrentActivity(Activity.ATTACKING)) {
         setActivity(Activity.IDLE);
       }
     } else if (event.getTarget().getId() == NpcID.CHOMPY_BIRD) {

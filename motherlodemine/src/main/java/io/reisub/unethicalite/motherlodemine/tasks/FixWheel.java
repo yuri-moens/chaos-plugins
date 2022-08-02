@@ -1,7 +1,8 @@
 package io.reisub.unethicalite.motherlodemine.tasks;
 
 import io.reisub.unethicalite.motherlodemine.MotherlodeMine;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.motherlodemine.data.PluginActivity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ObjectID;
@@ -20,7 +21,7 @@ public class FixWheel extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && !plugin.isUpstairs()
         && plugin.getPreviousActivity() == Activity.DEPOSITING
         && TileObjects.getAll(ObjectID.BROKEN_STRUT).size() == 2;
@@ -33,9 +34,9 @@ public class FixWheel extends Task {
       return;
     }
 
-    plugin.setActivity(Activity.REPAIRING);
+    plugin.setActivity(PluginActivity.REPAIRING);
 
     GameThread.invoke(() -> strut.interact("Hammer"));
-    Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 30);
+    Time.sleepTicksUntil(() -> plugin.isCurrentActivity(Activity.IDLE), 30);
   }
 }

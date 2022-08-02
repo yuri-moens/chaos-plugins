@@ -1,7 +1,8 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
 import io.reisub.unethicalite.tempoross.Tempoross;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.tempoross.data.PluginActivity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.NullObjectID;
@@ -25,8 +26,8 @@ public class Tether extends Task {
     }
 
     return plugin.isWaveIncoming()
-        && plugin.getCurrentActivity() != Activity.TETHERING_MAST
-        && plugin.getCurrentActivity() != Activity.REPAIRING;
+        && plugin.isCurrentActivity(PluginActivity.TETHERING_MAST)
+        && plugin.isCurrentActivity(PluginActivity.REPAIRING);
   }
 
   @Override
@@ -41,15 +42,15 @@ public class Tether extends Task {
       return;
     }
 
-    if (plugin.getCurrentActivity() != Activity.IDLE
-        && plugin.getPreviousActivity() != Activity.REPAIRING) {
+    if (plugin.isCurrentActivity(Activity.IDLE)
+        && !plugin.wasPreviousActivity(PluginActivity.REPAIRING)) {
       int waitTicks = 10 - (Players.getLocal().distanceTo(tetherObject) / 2);
-      Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, waitTicks);
+      Time.sleepTicksUntil(() -> plugin.isCurrentActivity(Activity.IDLE), waitTicks);
     }
 
     tetherObject.interact(0);
 
-    Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.TETHERING_MAST, 10000);
-    Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 20000);
+    Time.sleepUntil(() -> plugin.isCurrentActivity(PluginActivity.TETHERING_MAST), 10000);
+    Time.sleepUntil(() -> plugin.isCurrentActivity(Activity.IDLE), 20000);
   }
 }

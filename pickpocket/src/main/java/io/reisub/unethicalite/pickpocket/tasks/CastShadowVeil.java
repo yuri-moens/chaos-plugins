@@ -2,7 +2,7 @@ package io.reisub.unethicalite.pickpocket.tasks;
 
 import io.reisub.unethicalite.pickpocket.Config;
 import io.reisub.unethicalite.pickpocket.Pickpocket;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.MenuAction;
@@ -33,7 +33,7 @@ public class CastShadowVeil extends Task {
   @Override
   public boolean validate() {
     return config.castShadowVeil()
-        && plugin.getCurrentActivity() == Activity.IDLE
+        && plugin.isCurrentActivity(Activity.IDLE)
         && SpellBook.Necromancy.SHADOW_VEIL.canCast()
         && Players.getLocal().getModelHeight() != 1000
         && Players.getLocal().distanceTo(config.target().getNearest().getPickpocketLocation()) < 5

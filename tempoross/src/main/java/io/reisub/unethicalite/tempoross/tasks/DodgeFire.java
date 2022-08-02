@@ -1,7 +1,8 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
 import io.reisub.unethicalite.tempoross.Tempoross;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.tempoross.data.PluginActivity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.NPC;
@@ -54,7 +55,7 @@ public class DodgeFire extends Task {
       NPC southAmmoCrate = NPCs.getNearest(NpcID.AMMUNITION_CRATE_10577);
       southAmmoCrate.interact(0);
       Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 3);
-      Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.STOCKING_CANNON, 3);
+      Time.sleepTicksUntil(() -> plugin.isCurrentActivity(PluginActivity.STOCKING_CANNON), 3);
     } else {
       plugin.setActivity(Activity.IDLE);
     }

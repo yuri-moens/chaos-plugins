@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.motherlodemine.tasks;
 
 import io.reisub.unethicalite.motherlodemine.MotherlodeMine;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
@@ -21,7 +21,7 @@ public class WithdrawSack extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && !plugin.isUpstairs()
         && plugin.isSackFull()
         && !Inventory.contains(
@@ -49,6 +49,6 @@ public class WithdrawSack extends Task {
     plugin.setActivity(Activity.WITHDRAWING);
 
     GameThread.invoke(() -> sack.interact("Search"));
-    Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 30);
+    Time.sleepTicksUntil(() -> plugin.isCurrentActivity(Activity.IDLE), 30);
   }
 }

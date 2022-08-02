@@ -2,7 +2,8 @@ package io.reisub.unethicalite.herblore.tasks;
 
 import io.reisub.unethicalite.herblore.Herblore;
 import io.reisub.unethicalite.herblore.HerbloreTask;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.herblore.data.PluginActivity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.List;
 import javax.inject.Inject;
@@ -22,7 +23,7 @@ public class MakeCoconutMilk extends Task {
   @Override
   public boolean validate() {
     return plugin.getConfig().task() == HerbloreTask.MAKE_COCONUT_MILK
-        && plugin.getCurrentActivity() == Activity.IDLE
+        && plugin.isCurrentActivity(Activity.IDLE)
         && Inventory.contains(ItemID.HAMMER, ItemID.IMCANDO_HAMMER)
         && Inventory.contains(ItemID.COCONUT)
         && Inventory.contains(ItemID.VIAL);
@@ -30,7 +31,7 @@ public class MakeCoconutMilk extends Task {
 
   @Override
   public void execute() {
-    plugin.setActivity(Activity.MAKING_COCONUT_MILK);
+    plugin.setActivity(PluginActivity.MAKING_COCONUT_MILK);
 
     final List<Item> coconuts = Inventory.getAll(ItemID.COCONUT);
     final Item hammer = Inventory.getFirst(ItemID.HAMMER, ItemID.IMCANDO_HAMMER);

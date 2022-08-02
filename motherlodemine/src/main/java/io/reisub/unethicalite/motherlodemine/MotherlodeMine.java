@@ -2,6 +2,7 @@ package io.reisub.unethicalite.motherlodemine;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
+import io.reisub.unethicalite.motherlodemine.data.PluginActivity;
 import io.reisub.unethicalite.motherlodemine.tasks.Deposit;
 import io.reisub.unethicalite.motherlodemine.tasks.FixWheel;
 import io.reisub.unethicalite.motherlodemine.tasks.GoDown;
@@ -13,7 +14,7 @@ import io.reisub.unethicalite.motherlodemine.tasks.UseShortcut;
 import io.reisub.unethicalite.motherlodemine.tasks.WithdrawSack;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import java.util.Set;
 import javax.inject.Inject;
 import lombok.Getter;
@@ -106,7 +107,7 @@ public class MotherlodeMine extends TickScript {
       case AnimationID.MINING_MOTHERLODE_GILDED:
       case AnimationID.MINING_MOTHERLODE_INFERNAL:
       case AnimationID.MINING_MOTHERLODE_3A:
-        setActivity(Activity.MINING);
+        setActivity(PluginActivity.MINING);
         break;
       default:
     }
@@ -114,7 +115,7 @@ public class MotherlodeMine extends TickScript {
 
   @Subscribe
   private void onGameObjectDespawned(GameObjectDespawned event) {
-    if (currentActivity == Activity.REPAIRING
+    if (isCurrentActivity(PluginActivity.REPAIRING)
         && event.getGameObject().getName().equals("Broken strut")) {
       setActivity(Activity.IDLE);
     }
@@ -122,11 +123,11 @@ public class MotherlodeMine extends TickScript {
 
   @Subscribe
   private void onItemContainerChanged(ItemContainerChanged event) {
-    if (currentActivity == Activity.DEPOSITING) {
+    if (isCurrentActivity(Activity.DEPOSITING)) {
       if (!Inventory.contains(ItemID.PAYDIRT)) {
         setActivity(Activity.IDLE);
       }
-    } else if (currentActivity == Activity.WITHDRAWING) {
+    } else if (isCurrentActivity(Activity.WITHDRAWING)) {
       if (Inventory.contains(
           ItemID.RUNITE_ORE,
           ItemID.ADAMANTITE_ORE,
@@ -140,7 +141,7 @@ public class MotherlodeMine extends TickScript {
           ItemID.UNCUT_DRAGONSTONE)) {
         setActivity(Activity.IDLE);
       }
-    } else if (currentActivity == Activity.MINING) {
+    } else if (isCurrentActivity(PluginActivity.MINING)) {
       if (Inventory.isFull()) {
         setActivity(Activity.IDLE);
       }

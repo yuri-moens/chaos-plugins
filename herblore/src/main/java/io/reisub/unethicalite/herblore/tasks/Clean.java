@@ -2,7 +2,8 @@ package io.reisub.unethicalite.herblore.tasks;
 
 import io.reisub.unethicalite.herblore.Herblore;
 import io.reisub.unethicalite.herblore.HerbloreTask;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.herblore.data.PluginActivity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.unethicalite.api.items.Inventory;
@@ -23,13 +24,13 @@ public class Clean extends Task {
             || task == HerbloreTask.MAKE_UNFINISHED
             || task == HerbloreTask.MAKE_POTION
             || task == HerbloreTask.TAR_HERBS)
-        && plugin.getCurrentActivity() == Activity.IDLE
+        && plugin.isCurrentActivity(Activity.IDLE)
         && Inventory.contains(plugin.getGrimyHerbIds());
   }
 
   @Override
   public void execute() {
-    plugin.setActivity(Activity.CLEANING_HERBS);
+    plugin.setActivity(PluginActivity.CLEANING_HERBS);
     Inventory.getAll(plugin.getGrimyHerbIds()).forEach((i) -> i.interact("Clean"));
   }
 }

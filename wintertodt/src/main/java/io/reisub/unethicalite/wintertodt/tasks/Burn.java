@@ -39,7 +39,7 @@ public class Burn extends Task {
       return false;
     }
 
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && Inventory.contains(ItemID.BRUMA_ROOT, ItemID.BRUMA_KINDLING);
   }
 
@@ -59,7 +59,7 @@ public class Burn extends Task {
 
     GameThread.invoke(() -> brazier.interact("Feed"));
 
-    Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.FEEDING_BRAZIER
+    Time.sleepTicksUntil(() -> plugin.isCurrentActivity(Activity.FEEDING_BRAZIER
         || TileObjects.getNearest(
             o -> o.getName().equals("Burning brazier")
                 && Players.getLocal().distanceTo(o) < 15) == null, 10);

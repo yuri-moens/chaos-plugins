@@ -9,7 +9,7 @@ import io.reisub.unethicalite.pickpocket.tasks.HandleBank;
 import io.reisub.unethicalite.pickpocket.tasks.TakeWine;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

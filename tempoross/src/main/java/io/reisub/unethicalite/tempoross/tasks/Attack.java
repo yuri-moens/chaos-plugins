@@ -1,7 +1,8 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
 import io.reisub.unethicalite.tempoross.Tempoross;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.tempoross.data.PluginActivity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.NPC;
@@ -21,11 +22,11 @@ public class Attack extends Task {
 
   @Override
   public boolean validate() {
-    if (!plugin.isInTemporossArea() || plugin.getCurrentActivity() != Activity.IDLE) {
+    if (!plugin.isInTemporossArea() || plugin.isCurrentActivity(Activity.IDLE)) {
       return false;
     }
 
-    // don't attack when he's almost dead but we still have a phase to do
+    // don't attack when he's almost dead, but we still have a phase to do
     if (plugin.getPhase() == 3 && plugin.getEssence() <= 10) {
       return false;
     }
@@ -45,6 +46,6 @@ public class Attack extends Task {
   @Override
   public void execute() {
     pool.interact(0);
-    Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.FISHING, 50, 5000);
+    Time.sleepUntil(() -> plugin.isCurrentActivity(PluginActivity.FISHING), 50, 5000);
   }
 }

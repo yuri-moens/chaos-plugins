@@ -4,9 +4,9 @@ import com.google.common.collect.ImmutableSet;
 import io.reisub.unethicalite.pickpocket.Config;
 import io.reisub.unethicalite.pickpocket.Pickpocket;
 import io.reisub.unethicalite.pickpocket.Target;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
-import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.util.List;
 import javax.inject.Inject;
@@ -44,7 +44,7 @@ public class HandleBank extends BankTask {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && Players.getLocal().getModelHeight() != 1000
         && (Inventory.isFull()
             || (!Inventory.contains(config.food())

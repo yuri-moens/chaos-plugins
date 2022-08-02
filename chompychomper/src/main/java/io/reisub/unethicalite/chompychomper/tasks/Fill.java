@@ -2,7 +2,7 @@ package io.reisub.unethicalite.chompychomper.tasks;
 
 import com.google.common.collect.ImmutableSet;
 import io.reisub.unethicalite.chompychomper.ChompyChomper;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +34,7 @@ public class Fill extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && Inventory.contains(ItemID.OGRE_BELLOWS)
         && !Inventory.contains(Predicates.ids(ChompyChomper.FILLED_BELLOW_IDS));
   }

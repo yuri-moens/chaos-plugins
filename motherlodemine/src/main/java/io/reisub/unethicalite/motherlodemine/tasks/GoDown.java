@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.motherlodemine.tasks;
 
 import io.reisub.unethicalite.motherlodemine.MotherlodeMine;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.NullObjectID;
@@ -25,7 +25,7 @@ public class GoDown extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && plugin.isUpstairs()
         && Inventory.isFull();
   }

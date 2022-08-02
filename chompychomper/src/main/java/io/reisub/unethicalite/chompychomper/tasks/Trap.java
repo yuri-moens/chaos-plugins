@@ -2,7 +2,7 @@ package io.reisub.unethicalite.chompychomper.tasks;
 
 import com.google.common.collect.ImmutableSet;
 import io.reisub.unethicalite.chompychomper.ChompyChomper;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.List;
 import java.util.Set;
@@ -38,7 +38,7 @@ public class Trap extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && Inventory.getCount(ItemID.BLOATED_TOAD) == 3;
   }
 

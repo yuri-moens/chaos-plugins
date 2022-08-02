@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.daeyaltessence.tasks;
 
 import io.reisub.unethicalite.daeyaltessence.DaeyaltEssence;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.daeyaltessence.data.PluginActivity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import lombok.RequiredArgsConstructor;
 import net.runelite.api.ObjectID;
@@ -21,7 +21,7 @@ public class Mine extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() != Activity.MINING
+    return plugin.isCurrentActivity(PluginActivity.MINING)
         && Players.getLocal().getWorldLocation().getRegionID()
             == DaeyaltEssence.ESSENCE_MINE_REGION;
   }
@@ -34,6 +34,6 @@ public class Mine extends Task {
     }
 
     rock.interact("Mine");
-    Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.MINING, 20);
+    Time.sleepTicksUntil(() -> plugin.isCurrentActivity(PluginActivity.MINING), 20);
   }
 }

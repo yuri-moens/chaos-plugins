@@ -1,7 +1,8 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
 import io.reisub.unethicalite.tempoross.Tempoross;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.tempoross.data.PluginActivity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.NullObjectID;
@@ -24,7 +25,7 @@ public class Repair extends Task {
   public boolean validate() {
     if (!plugin.isInTemporossArea()
         || !plugin.isWaveIncoming()
-        || plugin.getCurrentActivity() == Activity.REPAIRING) {
+        || plugin.isCurrentActivity(PluginActivity.REPAIRING)) {
       return false;
     }
 
@@ -56,10 +57,10 @@ public class Repair extends Task {
   @Override
   public void execute() {
     brokenObject.interact(0);
-    if (!Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 3)) {
+    if (!Time.sleepTicksUntil(() -> plugin.isCurrentActivity(Activity.IDLE), 3)) {
       return;
     }
 
-    Time.sleepUntil(() -> plugin.getCurrentActivity() == Activity.REPAIRING, 15000);
+    Time.sleepUntil(() -> plugin.isCurrentActivity(PluginActivity.REPAIRING), 15000);
   }
 }

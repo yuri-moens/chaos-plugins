@@ -2,8 +2,8 @@ package io.reisub.unethicalite.blastfurnace.tasks;
 
 import io.reisub.unethicalite.blastfurnace.BlastFurnace;
 import io.reisub.unethicalite.blastfurnace.Config;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.api.ChaosBank;
-import io.reisub.unethicalite.utils.enums.Activity;
 import io.reisub.unethicalite.utils.enums.Metal;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.time.Duration;
@@ -24,7 +24,7 @@ public class HandleBank extends BankTask {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && (Inventory.contains(config.metal().getBarId())
             || (!plugin.isExpectingBars() && !Inventory.contains(ItemID.COAL)));
   }

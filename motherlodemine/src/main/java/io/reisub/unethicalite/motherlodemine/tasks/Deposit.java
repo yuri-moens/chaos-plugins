@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.motherlodemine.tasks;
 
 import io.reisub.unethicalite.motherlodemine.MotherlodeMine;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
@@ -29,7 +29,7 @@ public class Deposit extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && !plugin.isUpstairs()
         && Inventory.contains(ItemID.PAYDIRT)
         && Inventory.isFull()
@@ -54,7 +54,7 @@ public class Deposit extends Task {
     final TileObject hopper = TileObjects.getNearest("Hopper");
 
     GameThread.invoke(() -> hopper.interact("Deposit"));
-    Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 15);
+    Time.sleepTicksUntil(() -> plugin.isCurrentActivity(Activity.IDLE), 15);
     Time.sleepTicks(2);
   }
 }

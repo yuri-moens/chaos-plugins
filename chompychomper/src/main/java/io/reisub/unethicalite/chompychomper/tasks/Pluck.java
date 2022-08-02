@@ -2,7 +2,7 @@ package io.reisub.unethicalite.chompychomper.tasks;
 
 import io.reisub.unethicalite.chompychomper.ChompyChomper;
 import io.reisub.unethicalite.chompychomper.Config;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
@@ -27,7 +27,7 @@ public class Pluck extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && config.pluck()
         && (deadChompy = NPCs.getNearest(NpcID.CHOMPY_BIRD_1476)) != null;
   }

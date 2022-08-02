@@ -2,6 +2,7 @@ package io.reisub.unethicalite.tempoross;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
+import io.reisub.unethicalite.tempoross.data.PluginActivity;
 import io.reisub.unethicalite.tempoross.tasks.Attack;
 import io.reisub.unethicalite.tempoross.tasks.Cook;
 import io.reisub.unethicalite.tempoross.tasks.DodgeFire;
@@ -17,9 +18,8 @@ import io.reisub.unethicalite.tempoross.tasks.Stock;
 import io.reisub.unethicalite.tempoross.tasks.Tether;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Run;
-import java.time.Instant;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -79,18 +79,18 @@ public class Tempoross extends TickScript {
   private static final int UNKAH_BOAT_REGION = 12332;
   @Inject private Config config;
   @Inject private Client client;
-  @Getter private volatile boolean waveIncoming;
-  @Getter private volatile int phase = 1;
-  @Getter private volatile int playersReady;
-  @Getter private volatile int energy;
-  @Getter private volatile int essence;
-  @Getter private volatile int stormIntensity;
-  @Getter private volatile int rawFish;
-  @Getter private volatile int cookedFish;
-  @Getter private volatile WorldPoint dudiPos = null;
-  @Getter private volatile boolean finished;
-  @Getter @Setter private volatile int cookedFishRequired;
-  @Getter private volatile int lastDoubleSpawn;
+  @Getter private boolean waveIncoming;
+  @Getter private int phase = 1;
+  @Getter private int playersReady;
+  @Getter private int energy;
+  @Getter private int essence;
+  @Getter private int stormIntensity;
+  @Getter private int rawFish;
+  @Getter private int cookedFish;
+  @Getter private WorldPoint dudiPos = null;
+  @Getter private boolean finished;
+  @Getter @Setter private int cookedFishRequired;
+  @Getter private int lastDoubleSpawn;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
@@ -146,7 +146,7 @@ public class Tempoross extends TickScript {
     if (message.contains(WAVE_INCOMING_MESSAGE)) {
       waveIncoming = true;
     } else if (message.contains(TETHER_MESSAGE)) {
-      setActivity(Activity.TETHERING_MAST);
+      setActivity(PluginActivity.TETHERING_MAST);
     } else if (message.contains(UNTETHER_MESSAGE) || message.contains(WAVE_FAILED_MESSAGE)) {
       waveIncoming = false;
       setActivity(Activity.IDLE);
@@ -171,16 +171,16 @@ public class Tempoross extends TickScript {
       case AnimationID.COOKING_RANGE:
         TileObject shrine = TileObjects.getNearest(ObjectID.SHRINE_41236);
         if (shrine != null && shrine.distanceTo(client.getLocalPlayer()) <= 3) {
-          setActivity(Activity.COOKING);
+          setActivity(PluginActivity.COOKING);
         }
         break;
       case AnimationID.CONSTRUCTION:
       case AnimationID.CONSTRUCTION_IMCANDO:
-        setActivity(Activity.REPAIRING);
+        setActivity(PluginActivity.REPAIRING);
         break;
       case AnimationID.LOOKING_INTO:
-        if (previousActivity != Activity.TETHERING_MAST) {
-          setActivity(Activity.FILLING_BUCKETS);
+        if (getPreviousActivity() != PluginActivity.TETHERING_MAST) {
+          setActivity(PluginActivity.FILLING_BUCKETS);
         }
         break;
       default:
@@ -191,10 +191,10 @@ public class Tempoross extends TickScript {
   private void onInteractingChanged(InteractingChanged event) {
     if (event.getSource() == client.getLocalPlayer()) {
       if (event.getTarget() == null) {
-        if (currentActivity == Activity.FISHING
-            || currentActivity == Activity.DOUSING_FIRE
-            || currentActivity == Activity.ATTACKING
-            || currentActivity == Activity.STOCKING_CANNON) {
+        if (isCurrentActivity(PluginActivity.FISHING)
+            || isCurrentActivity(PluginActivity.DOUSING_FIRE)
+            || isCurrentActivity(Activity.ATTACKING)
+            || isCurrentActivity(PluginActivity.STOCKING_CANNON)) {
           setActivity(Activity.IDLE);
         }
       } else {
@@ -202,13 +202,13 @@ public class Tempoross extends TickScript {
 
         if (name != null) {
           if (name.equals("Fishing spot")) {
-            setActivity(Activity.FISHING);
+            setActivity(PluginActivity.FISHING);
           } else if (name.contains("Fire")) {
-            setActivity(Activity.DOUSING_FIRE);
+            setActivity(PluginActivity.DOUSING_FIRE);
           } else if (name.contains("Spirit pool")) {
             setActivity(Activity.ATTACKING);
           } else if (name.contains("Ammunition crate")) {
-            setActivity(Activity.STOCKING_CANNON);
+            setActivity(PluginActivity.STOCKING_CANNON);
           }
         }
       }
@@ -227,12 +227,12 @@ public class Tempoross extends TickScript {
     cookedFish = container.count(ItemID.HARPOONFISH);
     int emptyBuckets = container.count(ItemID.BUCKET);
 
-    if (rawFish == 0 && currentActivity == Activity.COOKING) {
+    if (rawFish == 0 && isCurrentActivity(PluginActivity.COOKING)) {
       setActivity(Activity.IDLE);
-    } else if (Inventory.isFull() && currentActivity == Activity.FISHING) {
+    } else if (Inventory.isFull() && isCurrentActivity(PluginActivity.FISHING)) {
       setActivity(Activity.IDLE);
     } else if ((cookedFish == 0 || cookedFishRequired == 0)
-        && currentActivity == Activity.STOCKING_CANNON) {
+        && isCurrentActivity(PluginActivity.STOCKING_CANNON)) {
       if (cookedFishRequired == 0) {
         if (phase == 1) {
           cookedFishRequired = 19;
@@ -244,7 +244,7 @@ public class Tempoross extends TickScript {
       }
 
       setActivity(Activity.IDLE);
-    } else if (emptyBuckets == 0 && currentActivity == Activity.FILLING_BUCKETS) {
+    } else if (emptyBuckets == 0 && isCurrentActivity(PluginActivity.FILLING_BUCKETS)) {
       setActivity(Activity.IDLE);
     }
   }
@@ -265,7 +265,7 @@ public class Tempoross extends TickScript {
             ObjectID.DAMAGED_TOTEM_POLE_41011);
 
     if (brokenMastsTotems.contains(id)) {
-      if (currentActivity == Activity.REPAIRING) {
+      if (isCurrentActivity(PluginActivity.REPAIRING)) {
         setActivity(Activity.IDLE);
       }
     }
@@ -286,7 +286,7 @@ public class Tempoross extends TickScript {
   private void onHitsplatApplied(HitsplatApplied event) {
     if (event.getActor().getName().contains("Spirit pool")
         && event.getHitsplat().getHitsplatType() == Hitsplat.HitsplatType.DAMAGE_ME) {
-      if (currentActivity == Activity.ATTACKING && phase <= 3 && essence <= 10) {
+      if (isCurrentActivity(Activity.ATTACKING) && phase <= 3 && essence <= 10) {
         setActivity(Activity.IDLE);
       }
     }
@@ -315,7 +315,7 @@ public class Tempoross extends TickScript {
   @Override
   protected void checkActionTimeout() {
     if (Vars.getBit(VARB_IS_TETHERED) > 0) {
-      lastActionTime = Instant.now();
+      lastActionTick = Static.getClient().getTickCount();
       return;
     }
 

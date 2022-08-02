@@ -6,7 +6,7 @@ import io.reisub.unethicalite.blastfurnace.tasks.HandleBank;
 import io.reisub.unethicalite.blastfurnace.tasks.TakeBars;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
@@ -49,9 +49,9 @@ public class BlastFurnace extends TickScript {
   private void onItemContainerChanged(ItemContainerChanged event) {
     final ItemContainer container = event.getItemContainer();
 
-    if (currentActivity == Activity.WITHDRAWING && container.contains(config.metal().getBarId())) {
+    if (isCurrentActivity(Activity.WITHDRAWING) && container.contains(config.metal().getBarId())) {
       setActivity(Activity.IDLE);
-    } else if (currentActivity == Activity.DEPOSITING && Inventory.getFreeSlots() >= 27) {
+    } else if (isCurrentActivity(Activity.DEPOSITING) && Inventory.getFreeSlots() >= 27) {
       setActivity(Activity.IDLE);
     }
   }

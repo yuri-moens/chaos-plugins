@@ -2,7 +2,7 @@ package io.reisub.unethicalite.motherlodemine.tasks;
 
 import io.reisub.unethicalite.motherlodemine.Config;
 import io.reisub.unethicalite.motherlodemine.MotherlodeMine;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
@@ -28,7 +28,7 @@ public class GoUp extends Task {
   @Override
   public boolean validate() {
     return config.upstairs()
-        && plugin.getCurrentActivity() == Activity.IDLE
+        && plugin.isCurrentActivity(Activity.IDLE)
         && !Inventory.contains(ItemID.PAYDIRT)
         && !plugin.isUpstairs();
   }

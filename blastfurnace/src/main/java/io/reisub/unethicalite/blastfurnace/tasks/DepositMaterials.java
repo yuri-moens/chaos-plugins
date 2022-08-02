@@ -2,7 +2,7 @@ package io.reisub.unethicalite.blastfurnace.tasks;
 
 import io.reisub.unethicalite.blastfurnace.BlastFurnace;
 import io.reisub.unethicalite.blastfurnace.Config;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.enums.Metal;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
@@ -30,7 +30,7 @@ public class DepositMaterials extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getCurrentActivity() == Activity.IDLE
+    return plugin.isCurrentActivity(Activity.IDLE)
         && Inventory.isFull()
         && !Inventory.contains(config.metal().getBarId());
   }
@@ -62,10 +62,10 @@ public class DepositMaterials extends Task {
       }
 
       conveyorBelt.interact(CONVEYER_BELT_ACTION);
-      Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 25);
+      Time.sleepTicksUntil(() -> plugin.isCurrentActivity(Activity.IDLE), 25);
     } else {
       conveyorBelt.interact(CONVEYER_BELT_ACTION);
-      Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 25);
+      Time.sleepTicksUntil(() -> plugin.isCurrentActivity(Activity.IDLE), 25);
 
       plugin.setActivity(Activity.DEPOSITING);
 
@@ -76,7 +76,7 @@ public class DepositMaterials extends Task {
 
       while (!successful) {
         conveyorBelt.interact(CONVEYER_BELT_ACTION);
-        successful = Time.sleepTicksUntil(() -> plugin.getCurrentActivity() == Activity.IDLE, 3);
+        successful = Time.sleepTicksUntil(() -> plugin.isCurrentActivity(Activity.IDLE), 3);
       }
     }
 

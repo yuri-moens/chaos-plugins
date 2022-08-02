@@ -52,7 +52,7 @@ public class ChangeSide extends Task {
 
     return lastIncap != null
         && Duration.between(lastIncap, Instant.now()).getSeconds() > config.sideTimeout()
-        && plugin.getCurrentActivity() == Activity.IDLE;
+        && plugin.isCurrentActivity(Activity.IDLE);
   }
 
   @Override

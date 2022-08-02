@@ -1,12 +1,13 @@
 package io.reisub.unethicalite.daeyaltessence;
 
 import com.google.inject.Provides;
+import io.reisub.unethicalite.daeyaltessence.data.PluginActivity;
 import io.reisub.unethicalite.daeyaltessence.tasks.GoToMine;
 import io.reisub.unethicalite.daeyaltessence.tasks.HandleBank;
 import io.reisub.unethicalite.daeyaltessence.tasks.Mine;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.utils.api.Activity;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.AnimationID;
@@ -65,7 +66,7 @@ public class DaeyaltEssence extends TickScript {
       case AnimationID.MINING_GILDED_PICKAXE:
       case AnimationID.MINING_INFERNAL_PICKAXE:
       case AnimationID.MINING_3A_PICKAXE:
-        setActivity(Activity.MINING);
+        setActivity(PluginActivity.MINING);
         break;
       case -1:
         setActivity(Activity.IDLE);

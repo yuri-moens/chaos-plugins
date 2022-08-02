@@ -1,7 +1,8 @@
 package io.reisub.unethicalite.tempoross.tasks;
 
 import io.reisub.unethicalite.tempoross.Tempoross;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.tempoross.data.PluginActivity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
@@ -37,14 +38,14 @@ public class Cook extends Task {
       return false;
     }
 
-    if (plugin.getCurrentActivity() == Activity.ATTACKING) {
+    if (plugin.isCurrentActivity(Activity.ATTACKING)) {
       return false;
     }
 
     if (plugin.getPhase() == 1
         && plugin.getEnergy() < 100
         && plugin.getRawFish() + plugin.getCookedFish() >= 19
-        && plugin.getCurrentActivity() == Activity.FISHING
+        && plugin.isCurrentActivity(PluginActivity.FISHING)
         && (93 - plugin.getStormIntensity())
             > plugin.getCookedFishRequired() - plugin.getCookedFish()) {
       return false;
@@ -53,8 +54,8 @@ public class Cook extends Task {
     if (plugin.getPhase() == 1
         && plugin.getEnergy() < 100
         && plugin.getRawFish() + plugin.getCookedFish() >= 19
-        && (plugin.getCurrentActivity() == Activity.FISHING
-            || plugin.getCurrentActivity() == Activity.IDLE)) {
+        && (plugin.isCurrentActivity(PluginActivity.FISHING)
+            || plugin.isCurrentActivity(Activity.IDLE))) {
       return true;
     }
 
@@ -62,8 +63,8 @@ public class Cook extends Task {
         && plugin.getCookedFishRequired() > 0
         && plugin.getCookedFishRequired() != 19
         && plugin.getRawFish() + plugin.getCookedFish() >= plugin.getCookedFishRequired()
-        && (plugin.getCurrentActivity() == Activity.FISHING
-            || plugin.getCurrentActivity() == Activity.IDLE)) {
+        && (plugin.isCurrentActivity(PluginActivity.FISHING)
+            || plugin.isCurrentActivity(Activity.IDLE))) {
       return true;
     }
 
@@ -79,13 +80,13 @@ public class Cook extends Task {
       return false;
     }
 
-    if (plugin.getCurrentActivity() == Activity.FISHING
+    if (plugin.isCurrentActivity(PluginActivity.FISHING)
         && Inventory.getCount(ItemID.RAW_HARPOONFISH) >= 9
         && doubleSpot == null) {
       return true;
     }
 
-    return plugin.getCurrentActivity() == Activity.IDLE;
+    return plugin.isCurrentActivity(Activity.IDLE);
   }
 
   @Override
@@ -130,7 +131,7 @@ public class Cook extends Task {
     shrine.interact(0);
     Time.sleepUntil(
         () ->
-            plugin.getCurrentActivity() == Activity.COOKING
+            plugin.isCurrentActivity(PluginActivity.COOKING)
                 || plugin.isWaveIncoming()
                 || plugin.getLastDoubleSpawn() + 3 >= Static.getClient().getTickCount(),
         10000);

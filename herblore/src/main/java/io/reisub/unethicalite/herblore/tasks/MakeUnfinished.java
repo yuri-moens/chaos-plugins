@@ -2,7 +2,8 @@ package io.reisub.unethicalite.herblore.tasks;
 
 import io.reisub.unethicalite.herblore.Herblore;
 import io.reisub.unethicalite.herblore.HerbloreTask;
-import io.reisub.unethicalite.utils.enums.Activity;
+import io.reisub.unethicalite.herblore.data.PluginActivity;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.List;
 import javax.inject.Inject;
@@ -25,14 +26,14 @@ public class MakeUnfinished extends Task {
     HerbloreTask task = plugin.getConfig().task();
 
     return (task == HerbloreTask.MAKE_UNFINISHED || task == HerbloreTask.MAKE_POTION)
-        && plugin.getCurrentActivity() == Activity.IDLE
+        && plugin.isCurrentActivity(Activity.IDLE)
         && Inventory.contains(plugin.getCleanHerbIds())
         && Inventory.contains(ItemID.VIAL_OF_WATER, ItemID.VIAL_OF_BLOOD, ItemID.COCONUT_MILK);
   }
 
   @Override
   public void execute() {
-    plugin.setActivity(Activity.CREATING_UNFINISHED_POTIONS);
+    plugin.setActivity(PluginActivity.CREATING_UNFINISHED_POTIONS);
 
     List<Item> herbs = Inventory.getAll(plugin.getCleanHerbIds());
     List<Item> bases =
