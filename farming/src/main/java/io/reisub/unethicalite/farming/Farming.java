@@ -73,6 +73,7 @@ public class Farming extends TickScript implements KeyListener {
   @Getter
   private Location currentLocation;
   private ConfigList compostProduceConfigList;
+  private boolean harvestAndCompost;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
@@ -112,6 +113,11 @@ public class Farming extends TickScript implements KeyListener {
 
   @Subscribe
   private void onGameTick(GameTick event) {
+    if (harvestAndCompost) {
+      harvestAndCompost = false;
+      schedule(this::harvestAndCompost);
+    }
+
     if (compostProduceConfigList == null) {
       compostProduceConfigList = ConfigList.parseList(config.oneClickCompostProduce());
     }
@@ -277,7 +283,7 @@ public class Farming extends TickScript implements KeyListener {
       start();
     } else if (config.harvestAndCompostHotkey().matches(e)) {
       e.consume();
-      schedule(this::harvestAndCompost);
+      harvestAndCompost = true;
     }
   }
 
