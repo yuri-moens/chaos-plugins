@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.Setter;
 import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
-import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.game.GameThread;
 import net.unethicalite.api.items.Inventory;
@@ -30,7 +29,10 @@ public class Chop extends Task {
   public Chop(Woodcutting plugin, Config config) {
     this.plugin = plugin;
     this.config = config;
-    resetQueue();
+
+    if (config.location().getTreePositions() != null) {
+      resetQueue();
+    }
   }
 
   @Override
@@ -43,11 +45,12 @@ public class Chop extends Task {
     final boolean isReady = currentTreePosition == null
         || TileObjects.getFirstAt(
         currentTreePosition.dx(config.location().getXoffset()).dy(config.location().getYoffset()),
-        Predicates.ids(config.location().getTreeIds())) == null;
+          o -> config.location().getTreeIds().contains(o.getId())
+            && o.hasAction("Chop down")) == null;
 
     return
         (!Inventory.isFull() || Static.getClient().getTickCount() - plugin.getLastBankTick() <= 2)
-        && isReady;
+            && isReady;
   }
 
   @Override
@@ -65,7 +68,8 @@ public class Chop extends Task {
   private TileObject getTree() {
     if (treePositions == null || treePositions.isEmpty()) {
       // return the nearest tree
-      return TileObjects.getNearest(Predicates.ids(config.location().getTreeIds()));
+      return TileObjects.getNearest(o -> config.location().getTreeIds().contains(o.getId())
+          && o.hasAction("Chop down"));
     } else {
       if (config.location().isOrdered()) {
         // return the first tree found according to the order of the tree positions
@@ -74,7 +78,8 @@ public class Chop extends Task {
 
           final TileObject tree = TileObjects.getFirstAt(
               point,
-              Predicates.ids(config.location().getTreeIds())
+              o -> config.location().getTreeIds().contains(o.getId())
+                  && o.hasAction("Chop down")
           );
 
           if (tree != null) {
@@ -91,7 +96,8 @@ public class Chop extends Task {
         // return the nearest tree with a position specified in tree positions
         return TileObjects.getNearest(
             o -> {
-              if (!config.location().getTreeIds().contains(o.getId())) {
+              if (!config.location().getTreeIds().contains(o.getId())
+                  || !o.hasAction("Chop down")) {
                 return false;
               }
 
