@@ -31,7 +31,6 @@ import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.game.ItemManager;
 import net.unethicalite.api.events.MenuAutomated;
-import net.unethicalite.api.items.Inventory;
 import net.unethicalite.client.Static;
 
 // Taken from https://github.com/TheStonedTurtle/Mahogany-Homes
@@ -101,21 +100,18 @@ public class PlankSack {
 
     if (event.getParam1() ==  WidgetInfo.INVENTORY.getPackedId()
         || event.getParam1() == WidgetInfo.BANK_ITEM_CONTAINER.getPackedId()) {
-      final Item item = Inventory.getItem(event.getParam0());
-
-      if (item != null && item.getId() == ItemID.PLANK_SACK
+      if (event.getItemId() == ItemID.PLANK_SACK
           && (opCode == MenuAction.CC_OP || opCode == MenuAction.CC_OP_LOW_PRIORITY)
           && (eventId == fillId || eventId == emptyId || eventId == bankUseId)) {
         inventorySnapshot = createSnapshot(
             Static.getClient().getItemContainer(InventoryID.INVENTORY));
         checkForUpdate = true;
-      } else if (item != null
-          && opCode == MenuAction.WIDGET_TARGET_ON_WIDGET
+      } else if (opCode == MenuAction.WIDGET_TARGET_ON_WIDGET
           && Static.getClient().getSelectedWidget() != null) {
         final int firstSelectedItemId = Static.getClient().getSelectedWidget().getItemId();
 
-        if ((firstSelectedItemId == ItemID.PLANK_SACK && PLANKS.contains(item.getId()))
-            || (PLANKS.contains(firstSelectedItemId) && item.getId() == ItemID.PLANK_SACK)) {
+        if ((firstSelectedItemId == ItemID.PLANK_SACK && PLANKS.contains(event.getItemId()))
+            || (PLANKS.contains(firstSelectedItemId) && event.getItemId() == ItemID.PLANK_SACK)) {
           inventorySnapshot = createSnapshot(
               Static.getClient().getItemContainer(InventoryID.INVENTORY));
           checkForUpdate = true;
