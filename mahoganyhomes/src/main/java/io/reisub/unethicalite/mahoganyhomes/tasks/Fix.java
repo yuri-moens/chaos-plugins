@@ -91,7 +91,11 @@ public class Fix extends Task {
 
       Set<WorldPoint> ignoreLocations = Sets.newHashSet(
           new WorldPoint(3231, 3387, 0),
-          new WorldPoint(1762, 3612, 0)
+          new WorldPoint(1762, 3612, 0),
+          new WorldPoint(1762, 3613, 0),
+          new WorldPoint(1765, 3619, 0),
+          new WorldPoint(1798, 3605, 0),
+          new WorldPoint(1798, 3611, 0)
       );
 
       if (!ChaosMovement.openDoor(finalNearest, ignoreLocations)) {
