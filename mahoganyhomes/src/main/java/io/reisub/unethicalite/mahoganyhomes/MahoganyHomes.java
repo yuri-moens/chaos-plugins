@@ -62,7 +62,13 @@ public class MahoganyHomes extends TickScript {
   protected void onStart() {
     super.onStart();
 
-    currentHome = null;
+    if (config.startingHome() != Home.NONE) {
+      log.info("Starting home is set: " + config.startingHome());
+      currentHome = config.startingHome();
+    } else {
+      currentHome = null;
+    }
+
     plankSack = injector.getInstance(PlankSack.class);
     Static.getEventBus().register(plankSack);
 

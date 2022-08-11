@@ -16,6 +16,15 @@ public interface Config extends net.runelite.client.config.Config {
   }
 
   @ConfigItem(
+      keyName = "startingHome",
+      name = "Starting home",
+      description = "Select a starting home if you already have a task, otherwise set to none",
+      position = 1)
+  default Home startingHome() {
+    return Home.NONE;
+  }
+
+  @ConfigItem(
       keyName = "startButton",
       name = "Start/Stop",
       description = "Start the script",
