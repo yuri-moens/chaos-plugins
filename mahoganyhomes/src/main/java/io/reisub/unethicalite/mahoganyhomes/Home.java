@@ -8,16 +8,25 @@ import net.runelite.api.Locatable;
 import net.runelite.api.NpcID;
 import net.runelite.api.coords.WorldArea;
 import net.runelite.api.coords.WorldPoint;
-import net.unethicalite.api.movement.pathfinder.model.BankLocation;
 import org.apache.commons.text.WordUtils;
 
 @Getter
 public enum Home {
   // area is based on bounds of house not area at which stuff loads in for the homes
+  NONE(
+      null,
+      null,
+      null,
+      0,
+      null,
+      null,
+      0,
+      null
+  ),
   // Ardy
   JESS(
       new WorldArea(2611, 3290, 14, 7, 0),
-      BankLocation.ARDOUGNE_SOUTH_BANK,
+      new WorldPoint(2655, 3283, 0),
       "Upstairs of the building south of the church in East Ardougne",
       NpcID.JESS,
       new WorldPoint(2621, 3292, 0),
@@ -28,7 +37,7 @@ public enum Home {
       16685),
   NOELLA(
       new WorldArea(2652, 3317, 15, 8, 0),
-      BankLocation.ARDOUGNE_SOUTH_BANK,
+      new WorldPoint(2655, 3283, 0),
       "North of East Ardougne market",
       NpcID.NOELLA,
       new WorldPoint(2659, 3321, 0),
@@ -41,7 +50,7 @@ public enum Home {
       15648),
   ROSS(
       new WorldArea(2609, 3313, 11, 9, 0),
-      BankLocation.ARDOUGNE_NORTH_BANK,
+      new WorldPoint(2615, 3332, 0),
       "North of the church in East Ardougne",
       NpcID.ROSS,
       new WorldPoint(2611, 3316, 0),
@@ -54,7 +63,7 @@ public enum Home {
   // Falador
   LARRY(
       new WorldArea(3033, 3360, 10, 9, 0),
-      BankLocation.FALADOR_EAST_BANK,
+      new WorldPoint(3012, 3355, 0),
       "North of the fountain in Falador",
       NpcID.LARRY_10418,
       new WorldPoint(3038, 3362, 0),
@@ -65,7 +74,7 @@ public enum Home {
       24076),
   NORMAN(
       new WorldArea(3034, 3341, 8, 8, 0),
-      BankLocation.FALADOR_EAST_BANK,
+      new WorldPoint(3012, 3355, 0),
       "South of the fountain in Falador",
       NpcID.NORMAN,
       new WorldPoint(3037, 3346, 0),
@@ -76,7 +85,7 @@ public enum Home {
       24085),
   TAU(
       new WorldArea(3043, 3340, 10, 11, 0),
-      BankLocation.FALADOR_EAST_BANK,
+      new WorldPoint(3012, 3355, 0),
       "South east of the fountain in Falador",
       NpcID.TAU,
       new WorldPoint(3047, 3347, 0),
@@ -87,19 +96,19 @@ public enum Home {
   // Hosidus
   BARBARA(
       new WorldArea(1746, 3531, 10, 11, 0),
-      BankLocation.HOSIDIUS_BANK,
+      new WorldPoint(1748, 3598, 0),
       "South of Hosidius, near the mill",
       NpcID.BARBARA,
-      new WorldPoint(1748, 3534, 0),
+      new WorldPoint(1747, 3534, 0),
       new RequiredMaterials(9, 10, 0, 1),
       ItemID.TELEPORT_TO_HOUSE,
       ImmutableSet.of(6966, 6967, 6968)),
   LEELA(
       new WorldArea(1781, 3589, 9, 8, 0),
-      BankLocation.HOSIDIUS_BANK,
+      new WorldPoint(1748, 3598, 0),
       "East of the town market in Hosidius",
       NpcID.LEELA_10423,
-      new WorldPoint(1785, 3592, 0),
+      new WorldPoint(1785, 3594, 0),
       new RequiredMaterials(9, 13, 0, 1),
       ItemID.TELEPORT_TO_HOUSE,
       ImmutableSet.of(6966, 6967, 6968),
@@ -107,7 +116,7 @@ public enum Home {
       11802),
   MARIAH(
       new WorldArea(1762, 3618, 10, 7, 0),
-      BankLocation.HOSIDIUS_BANK,
+      new WorldPoint(1748, 3598, 0),
       "West of the estate agents in Hosidius",
       NpcID.MARIAH,
       new WorldPoint(1765, 3623, 0),
@@ -120,10 +129,10 @@ public enum Home {
   // Varrock
   BOB(
       new WorldArea(3234, 3482, 10, 10, 0),
-      BankLocation.VARROCK_EAST_BANK,
+      new WorldPoint(3253, 3420, 0),
       "North-east Varrock, opposite the church",
       NpcID.BOB_10414,
-      new WorldPoint(3238, 3486, 0),
+      new WorldPoint(3241, 3485, 0),
       new RequiredMaterials(13, 17, 0, 0),
       ItemID.VARROCK_TELEPORT,
       ImmutableSet.of(12852, 12853, 12854),
@@ -131,7 +140,7 @@ public enum Home {
       11799),
   JEFF(
       new WorldArea(3235, 3445, 10, 12, 0),
-      BankLocation.VARROCK_EAST_BANK,
+      new WorldPoint(3253, 3420, 0),
       "Middle of Varrock, west of the museum",
       NpcID.JEFF_10415,
       new WorldPoint(3241, 3451, 0),
@@ -142,7 +151,7 @@ public enum Home {
       11793),
   SARAH(
       new WorldArea(3232, 3381, 8, 7, 0),
-      BankLocation.VARROCK_EAST_BANK,
+      new WorldPoint(3253, 3420, 0),
       "Along the south wall of Varrock",
       NpcID.SARAH_10416,
       new WorldPoint(3235, 3384, 0),
@@ -164,7 +173,7 @@ public enum Home {
 
   private final WorldPoint location;
   private final WorldArea area;
-  private final BankLocation bankLocation;
+  private final WorldPoint bankLocation;
   private final String hint;
   private final int npcId;
   private final RequiredMaterials requiredMaterials;
@@ -174,7 +183,7 @@ public enum Home {
 
   Home(
       final WorldArea area,
-      final BankLocation bankLocation,
+      final WorldPoint bankLocation,
       final String hint,
       final int npcId,
       final WorldPoint location,
