@@ -87,7 +87,6 @@ public class HandleBank extends BankTask {
     final Item plankSack = Bank.Inventory.getFirst(ItemID.PLANK_SACK);
 
     if (plankSack == null || plugin.getPlankSack().getPlankCount() == 28) {
-      System.out.println(plugin.getPlankSack().getPlankCount());
       Bank.withdrawAll(config.plank().getPlankId(), WithdrawMode.ITEM);
     } else {
       do {

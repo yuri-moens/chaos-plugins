@@ -1,6 +1,7 @@
 package io.reisub.unethicalite.mahoganyhomes;
 
 import com.google.common.collect.ImmutableSet;
+import java.util.ArrayDeque;
 import java.util.Set;
 import lombok.Getter;
 import net.runelite.api.ItemID;
@@ -21,6 +22,7 @@ public enum Home {
       null,
       null,
       0,
+      null,
       null
   ),
   // Ardy
@@ -33,6 +35,18 @@ public enum Home {
       new RequiredMaterials(12, 15, 0, 1),
       ItemID.ARDOUGNE_TELEPORT,
       ImmutableSet.of(10547, 10291),
+      new ArrayDeque<>() {
+        {
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_5);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_1);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_7);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_6);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_8);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_2);
+        }
+      },
       17026,
       16685),
   NOELLA(
@@ -44,6 +58,18 @@ public enum Home {
       new RequiredMaterials(11, 15, 0, 0),
       ItemID.ARDOUGNE_TELEPORT,
       ImmutableSet.of(10547, 10291),
+      new ArrayDeque<>() {
+        {
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_2);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_1);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_8);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_6);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_7);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_5);
+        }
+      },
       17026,
       16685,
       15645,
@@ -57,6 +83,17 @@ public enum Home {
       new RequiredMaterials(8, 11, 0, 1),
       ItemID.ARDOUGNE_TELEPORT,
       ImmutableSet.of(10547, 10291),
+      new ArrayDeque<>() {
+        {
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_2);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_1);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_7);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_6);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_5);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
+        }
+      },
       16683,
       16679),
 
@@ -70,6 +107,17 @@ public enum Home {
       new RequiredMaterials(9, 12, 0, 1),
       ItemID.FALADOR_TELEPORT,
       ImmutableSet.of(11828, 12084),
+      new ArrayDeque<>() {
+        {
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_5);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_2);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_1);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_7);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_6);
+        }
+      },
       24075,
       24076),
   NORMAN(
@@ -81,6 +129,17 @@ public enum Home {
       new RequiredMaterials(9, 13, 0, 1),
       ItemID.FALADOR_TELEPORT,
       ImmutableSet.of(11828, 12084),
+      new ArrayDeque<>() {
+        {
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_1);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_2);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_5);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_6);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_7);
+        }
+      },
       24082,
       24085),
   TAU(
@@ -91,7 +150,18 @@ public enum Home {
       new WorldPoint(3047, 3347, 0),
       new RequiredMaterials(9, 13, 0, 1),
       ItemID.FALADOR_TELEPORT,
-      ImmutableSet.of(11828, 12084)),
+      ImmutableSet.of(11828, 12084),
+      new ArrayDeque<>() {
+        {
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_1);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_2);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_7);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_5);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_6);
+        }
+      }),
 
   // Hosidus
   BARBARA(
@@ -102,7 +172,18 @@ public enum Home {
       new WorldPoint(1747, 3534, 0),
       new RequiredMaterials(9, 10, 0, 1),
       ItemID.TELEPORT_TO_HOUSE,
-      ImmutableSet.of(6966, 6967, 6968)),
+      ImmutableSet.of(6966, 6967, 6968),
+      new ArrayDeque<>() {
+        {
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_2);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_7);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_6);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_1);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_5);
+        }
+      }),
   LEELA(
       new WorldArea(1781, 3589, 9, 8, 0),
       new WorldPoint(1748, 3598, 0),
@@ -112,6 +193,17 @@ public enum Home {
       new RequiredMaterials(9, 13, 0, 1),
       ItemID.TELEPORT_TO_HOUSE,
       ImmutableSet.of(6966, 6967, 6968),
+      new ArrayDeque<>() {
+        {
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_1);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_2);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_7);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_6);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_5);
+        }
+      },
       11794,
       11802),
   MARIAH(
@@ -123,6 +215,18 @@ public enum Home {
       new RequiredMaterials(11, 14, 0, 1),
       ItemID.TELEPORT_TO_HOUSE,
       ImmutableSet.of(6966, 6967, 6968),
+      new ArrayDeque<>() {
+        {
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_1);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_8);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_2);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_7);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_5);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_6);
+        }
+      },
       11794,
       11802),
 
@@ -136,6 +240,18 @@ public enum Home {
       new RequiredMaterials(13, 17, 0, 0),
       ItemID.VARROCK_TELEPORT,
       ImmutableSet.of(12852, 12853, 12854),
+      new ArrayDeque<>() {
+        {
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_1);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_2);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_5);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_6);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_7);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_8);
+        }
+      },
       11797,
       11799),
   JEFF(
@@ -147,6 +263,18 @@ public enum Home {
       new RequiredMaterials(11, 16, 0, 0),
       ItemID.VARROCK_TELEPORT,
       ImmutableSet.of(12852, 12853, 12854),
+      new ArrayDeque<>() {
+        {
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_2);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_1);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_7);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_5);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_8);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_6);
+        }
+      },
       11789,
       11793),
   SARAH(
@@ -157,7 +285,17 @@ public enum Home {
       new WorldPoint(3235, 3384, 0),
       new RequiredMaterials(11, 11, 0, 1),
       ItemID.VARROCK_TELEPORT,
-      ImmutableSet.of(12852, 12853, 12854));
+      ImmutableSet.of(12852, 12853, 12854),
+      new ArrayDeque<>() {
+        {
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_2);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_6);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_5);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_1);
+        }
+      });
 
   private static final ImmutableSet<Integer> LADDERS;
 
@@ -179,6 +317,7 @@ public enum Home {
   private final RequiredMaterials requiredMaterials;
   private final int tabletId;
   private final Set<Integer> regions;
+  private final ArrayDeque<Hotspot> order;
   private final Integer[] ladders;
 
   Home(
@@ -190,6 +329,7 @@ public enum Home {
       final RequiredMaterials requiredMaterials,
       final int tabletId,
       final Set<Integer> regions,
+      final ArrayDeque<Hotspot> order,
       final Integer... ladders) {
     this.area = area;
     this.bankLocation = bankLocation;
@@ -199,11 +339,8 @@ public enum Home {
     this.requiredMaterials = requiredMaterials;
     this.tabletId = tabletId;
     this.regions = regions;
+    this.order = order;
     this.ladders = ladders;
-  }
-
-  public static boolean isLadder(final int objId) {
-    return LADDERS.contains(objId);
   }
 
   public String getName() {

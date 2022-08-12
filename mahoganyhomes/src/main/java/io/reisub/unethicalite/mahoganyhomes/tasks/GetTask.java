@@ -58,32 +58,39 @@ public class GetTask extends Task {
 
     Time.sleepTicksUntil(Dialog::canContinue, 20);
 
-    DialogOption chooseOption = null;
+    if (Dialog.getText().equals("What's my current construction contract?")) {
+      Dialog.invokeDialog(
+          DialogOption.PLAYER_CONTINUE
+      );
+    } else {
+      DialogOption chooseOption = null;
 
-    switch (config.plank()) {
-      case NORMAL:
-        chooseOption = DialogOption.CHAT_OPTION_ONE;
-        break;
-      case OAK:
-        chooseOption = DialogOption.CHAT_OPTION_TWO;
-        break;
-      case TEAK:
-        chooseOption = DialogOption.CHAT_OPTION_THREE;
-        break;
-      case MAHOGANY:
-        chooseOption = DialogOption.CHAT_OPTION_FOUR;
-        break;
-      default:
+      switch (config.plank()) {
+        case NORMAL:
+          chooseOption = DialogOption.CHAT_OPTION_ONE;
+          break;
+        case OAK:
+          chooseOption = DialogOption.CHAT_OPTION_TWO;
+          break;
+        case TEAK:
+          chooseOption = DialogOption.CHAT_OPTION_THREE;
+          break;
+        case MAHOGANY:
+          chooseOption = DialogOption.CHAT_OPTION_FOUR;
+          break;
+        default:
+      }
+
+      Dialog.invokeDialog(
+          DialogOption.PLAYER_CONTINUE,
+          DialogOption.NPC_CONTINUE,
+          chooseOption,
+          DialogOption.PLAYER_CONTINUE
+      );
     }
 
-    Dialog.invokeDialog(
-        DialogOption.PLAYER_CONTINUE,
-        DialogOption.NPC_CONTINUE,
-        chooseOption,
-        DialogOption.PLAYER_CONTINUE
-    );
-
-    Time.sleepTicks(2);
+    Time.sleepTicksUntil(() -> Dialog.getText().startsWith("Go see")
+        || Dialog.getText().startsWith("Please could you go see"), 2);
 
     final Home home = getHome();
 
