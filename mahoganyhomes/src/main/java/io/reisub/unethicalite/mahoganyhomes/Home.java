@@ -195,10 +195,10 @@ public enum Home {
       ImmutableSet.of(6966, 6967, 6968),
       new ArrayDeque<>() {
         {
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
           add(Hotspot.MAHOGANY_HOMES_HOTSPOT_1);
           add(Hotspot.MAHOGANY_HOMES_HOTSPOT_2);
           add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
-          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
           add(Hotspot.MAHOGANY_HOMES_HOTSPOT_7);
           add(Hotspot.MAHOGANY_HOMES_HOTSPOT_6);
           add(Hotspot.MAHOGANY_HOMES_HOTSPOT_5);

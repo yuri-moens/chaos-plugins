@@ -41,6 +41,11 @@ public class Fix extends Task {
 
   @Override
   public void execute() {
+    if (plugin.getCurrentHome() == Home.LARRY
+        && Players.getLocal().getWorldLocation().getPlane() == 0) {
+      plugin.useStairs(true);
+    }
+
     TileObject hotspotObject = getNext();
 
     if (hotspotObject == null) {
@@ -72,10 +77,14 @@ public class Fix extends Task {
           new WorldPoint(1762, 3613, 0),
           new WorldPoint(1765, 3619, 0),
           new WorldPoint(1798, 3605, 0),
-          new WorldPoint(1798, 3611, 0)
+          new WorldPoint(1798, 3611, 0),
+          new WorldPoint(1776, 3590, 0),
+          new WorldPoint(1777, 3590, 0),
+          new WorldPoint(1787, 3590, 0),
+          new WorldPoint(1787, 3589, 0)
       );
 
-      if (!ChaosMovement.openDoor(finalHotspotObject, 10, ignoreLocations)) {
+      if (!ChaosMovement.openDoor(finalHotspotObject, 7, ignoreLocations)) {
         plugin.useStairs(true);
         return;
       }
