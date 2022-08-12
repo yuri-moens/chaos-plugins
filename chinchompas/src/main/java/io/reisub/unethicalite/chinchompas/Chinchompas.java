@@ -9,6 +9,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import org.pf4j.Extension;
+import org.slf4j.Logger;
 
 @PluginDescriptor(
     name = "Chaos Chinchompas",
@@ -25,6 +26,11 @@ public class Chinchompas extends TickScript {
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
+  }
+
+  @Override
+  public Logger getLogger() {
+    return log;
   }
 
   @Override

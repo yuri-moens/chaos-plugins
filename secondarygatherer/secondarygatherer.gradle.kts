@@ -1,6 +1,6 @@
 import ProjectVersions.combatHelperVersion
 
-version = "1.0.0"
+version = "1.0.1"
 
 project.extra["PluginName"] = "Chaos Secondary Gatherer"
 project.extra["PluginDescription"] = "Gathers herblore secondaries for you"

@@ -1,4 +1,4 @@
-version = "1.0.0"
+version = "1.0.1"
 
 project.extra["PluginName"] = "Chaos Dialog Continue"
 project.extra["PluginDescription"] = ""

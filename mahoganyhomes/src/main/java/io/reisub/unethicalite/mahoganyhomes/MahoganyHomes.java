@@ -28,6 +28,7 @@ import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.movement.Reachable;
 import net.unethicalite.client.Static;
 import org.pf4j.Extension;
+import org.slf4j.Logger;
 
 @PluginDescriptor(
     name = "Chaos Mahogany Homes",
@@ -56,6 +57,11 @@ public class MahoganyHomes extends TickScript {
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
+  }
+
+  @Override
+  public Logger getLogger() {
+    return log;
   }
 
   @Override

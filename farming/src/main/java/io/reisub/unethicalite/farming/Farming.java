@@ -53,6 +53,7 @@ import net.unethicalite.api.game.Vars;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.client.Static;
 import org.pf4j.Extension;
+import org.slf4j.Logger;
 
 @PluginDescriptor(
     name = "Chaos Farming",
@@ -78,6 +79,11 @@ public class Farming extends TickScript implements KeyListener {
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
+  }
+
+  @Override
+  public Logger getLogger() {
+    return log;
   }
 
   @Override
