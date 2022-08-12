@@ -1,5 +1,7 @@
 package io.reisub.unethicalite.mahoganyhomes;
 
+import io.reisub.unethicalite.mahoganyhomes.data.Home;
+import io.reisub.unethicalite.mahoganyhomes.data.Plank;
 import net.runelite.client.config.Button;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;

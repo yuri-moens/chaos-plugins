@@ -2,8 +2,8 @@ package io.reisub.unethicalite.mahoganyhomes.tasks;
 
 import com.google.common.collect.Sets;
 import io.reisub.unethicalite.mahoganyhomes.Config;
-import io.reisub.unethicalite.mahoganyhomes.Home;
-import io.reisub.unethicalite.mahoganyhomes.Hotspot;
+import io.reisub.unethicalite.mahoganyhomes.data.Home;
+import io.reisub.unethicalite.mahoganyhomes.data.Hotspot;
 import io.reisub.unethicalite.mahoganyhomes.MahoganyHomes;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.Task;

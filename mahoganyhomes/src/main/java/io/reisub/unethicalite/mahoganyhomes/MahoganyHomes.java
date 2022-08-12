@@ -1,6 +1,8 @@
 package io.reisub.unethicalite.mahoganyhomes;
 
 import com.google.inject.Provides;
+import io.reisub.unethicalite.mahoganyhomes.data.Home;
+import io.reisub.unethicalite.mahoganyhomes.data.PlankSack;
 import io.reisub.unethicalite.mahoganyhomes.tasks.Fix;
 import io.reisub.unethicalite.mahoganyhomes.tasks.GetTask;
 import io.reisub.unethicalite.mahoganyhomes.tasks.GoToHome;

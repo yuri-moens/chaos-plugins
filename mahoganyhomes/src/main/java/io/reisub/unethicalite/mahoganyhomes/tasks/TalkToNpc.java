@@ -1,6 +1,6 @@
 package io.reisub.unethicalite.mahoganyhomes.tasks;
 
-import io.reisub.unethicalite.mahoganyhomes.Hotspot;
+import io.reisub.unethicalite.mahoganyhomes.data.Hotspot;
 import io.reisub.unethicalite.mahoganyhomes.MahoganyHomes;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.Task;

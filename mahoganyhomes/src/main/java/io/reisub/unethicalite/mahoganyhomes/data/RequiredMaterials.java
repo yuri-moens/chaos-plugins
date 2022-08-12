@@ -1,4 +1,4 @@
-package io.reisub.unethicalite.mahoganyhomes;
+package io.reisub.unethicalite.mahoganyhomes.data;
 
 import lombok.Value;
 

@@ -1,7 +1,7 @@
 package io.reisub.unethicalite.mahoganyhomes.tasks;
 
 import io.reisub.unethicalite.mahoganyhomes.Config;
-import io.reisub.unethicalite.mahoganyhomes.Home;
+import io.reisub.unethicalite.mahoganyhomes.data.Home;
 import io.reisub.unethicalite.mahoganyhomes.MahoganyHomes;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.regex.Matcher;

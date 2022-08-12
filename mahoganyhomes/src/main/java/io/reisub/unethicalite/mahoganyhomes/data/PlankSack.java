@@ -1,4 +1,4 @@
-package io.reisub.unethicalite.mahoganyhomes;
+package io.reisub.unethicalite.mahoganyhomes.data;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
