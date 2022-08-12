@@ -236,7 +236,7 @@ public enum Home {
       new WorldPoint(3253, 3420, 0),
       "North-east Varrock, opposite the church",
       NpcID.BOB_10414,
-      new WorldPoint(3241, 3485, 0),
+      new WorldPoint(3239, 3488, 0),
       new RequiredMaterials(13, 17, 0, 0),
       ItemID.VARROCK_TELEPORT,
       ImmutableSet.of(12852, 12853, 12854),
@@ -290,10 +290,10 @@ public enum Home {
         {
           add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
           add(Hotspot.MAHOGANY_HOMES_HOTSPOT_2);
-          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
-          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_6);
           add(Hotspot.MAHOGANY_HOMES_HOTSPOT_5);
           add(Hotspot.MAHOGANY_HOMES_HOTSPOT_1);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_6);
+          add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
         }
       });
 
