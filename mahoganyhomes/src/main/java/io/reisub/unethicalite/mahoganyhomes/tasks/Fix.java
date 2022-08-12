@@ -75,7 +75,7 @@ public class Fix extends Task {
           new WorldPoint(1798, 3611, 0)
       );
 
-      if (!ChaosMovement.openDoor(finalHotspotObject, ignoreLocations)) {
+      if (!ChaosMovement.openDoor(finalHotspotObject, 10, ignoreLocations)) {
         plugin.useStairs(true);
         return;
       }
