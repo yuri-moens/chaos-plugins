@@ -34,7 +34,7 @@ public enum Home {
       new WorldPoint(2621, 3292, 0),
       new RequiredMaterials(12, 15, 0, 1),
       ItemID.ARDOUGNE_TELEPORT,
-      ImmutableSet.of(10547, 10291),
+      ImmutableSet.of(10547, 10291, 10292),
       new ArrayDeque<>() {
         {
           add(Hotspot.MAHOGANY_HOMES_HOTSPOT_4);
@@ -57,7 +57,7 @@ public enum Home {
       new WorldPoint(2659, 3321, 0),
       new RequiredMaterials(11, 15, 0, 0),
       ItemID.ARDOUGNE_TELEPORT,
-      ImmutableSet.of(10547, 10291),
+      ImmutableSet.of(10547, 10291, 10292),
       new ArrayDeque<>() {
         {
           add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
@@ -82,7 +82,7 @@ public enum Home {
       new WorldPoint(2611, 3316, 0),
       new RequiredMaterials(8, 11, 0, 1),
       ItemID.ARDOUGNE_TELEPORT,
-      ImmutableSet.of(10547, 10291),
+      ImmutableSet.of(10547, 10291, 10292),
       new ArrayDeque<>() {
         {
           add(Hotspot.MAHOGANY_HOMES_HOTSPOT_3);
@@ -211,7 +211,7 @@ public enum Home {
       new WorldPoint(1748, 3598, 0),
       "West of the estate agents in Hosidius",
       NpcID.MARIAH,
-      new WorldPoint(1765, 3623, 0),
+      new WorldPoint(1767, 3622, 0),
       new RequiredMaterials(11, 14, 0, 1),
       ItemID.TELEPORT_TO_HOUSE,
       ImmutableSet.of(6966, 6967, 6968),
