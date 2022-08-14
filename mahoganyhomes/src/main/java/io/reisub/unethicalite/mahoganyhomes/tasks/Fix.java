@@ -2,9 +2,9 @@ package io.reisub.unethicalite.mahoganyhomes.tasks;
 
 import com.google.common.collect.Sets;
 import io.reisub.unethicalite.mahoganyhomes.Config;
+import io.reisub.unethicalite.mahoganyhomes.MahoganyHomes;
 import io.reisub.unethicalite.mahoganyhomes.data.Home;
 import io.reisub.unethicalite.mahoganyhomes.data.Hotspot;
-import io.reisub.unethicalite.mahoganyhomes.MahoganyHomes;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.List;
@@ -81,7 +81,9 @@ public class Fix extends Task {
           new WorldPoint(1776, 3590, 0),
           new WorldPoint(1777, 3590, 0),
           new WorldPoint(1787, 3590, 0),
-          new WorldPoint(1787, 3589, 0)
+          new WorldPoint(1787, 3589, 0),
+          new WorldPoint(2670, 3319, 0),
+          new WorldPoint(2670, 3320, 0)
       );
 
       if (!ChaosMovement.openDoor(finalHotspotObject, 7, ignoreLocations)) {

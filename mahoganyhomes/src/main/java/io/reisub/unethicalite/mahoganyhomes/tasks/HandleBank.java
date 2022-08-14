@@ -1,8 +1,8 @@
 package io.reisub.unethicalite.mahoganyhomes.tasks;
 
 import io.reisub.unethicalite.mahoganyhomes.Config;
-import io.reisub.unethicalite.mahoganyhomes.data.Home;
 import io.reisub.unethicalite.mahoganyhomes.MahoganyHomes;
+import io.reisub.unethicalite.mahoganyhomes.data.Home;
 import io.reisub.unethicalite.mahoganyhomes.data.RequiredMaterials;
 import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
