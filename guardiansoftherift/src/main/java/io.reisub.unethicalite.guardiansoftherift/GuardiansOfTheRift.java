@@ -15,6 +15,7 @@ import io.reisub.unethicalite.guardiansoftherift.tasks.MoveToMainArea;
 import io.reisub.unethicalite.guardiansoftherift.tasks.PlaceCell;
 import io.reisub.unethicalite.guardiansoftherift.tasks.PlaceFirstCell;
 import io.reisub.unethicalite.guardiansoftherift.tasks.PowerGuardian;
+import io.reisub.unethicalite.guardiansoftherift.tasks.RepairPouches;
 import io.reisub.unethicalite.guardiansoftherift.tasks.ReturnToMainArea;
 import io.reisub.unethicalite.guardiansoftherift.tasks.ReturnToMainAreaFromHugeRemains;
 import io.reisub.unethicalite.guardiansoftherift.tasks.StartItems;
@@ -51,8 +52,8 @@ import org.pf4j.Extension;
 import org.slf4j.Logger;
 
 @PluginDescriptor(
-    name = "Chaos GuardiansOfTheRift",
-    description = "GOTR",
+    name = "Chaos Guardians of the Rift",
+    description = "Plays the Guardians of the Rift minigame",
     enabledByDefault = false
 )
 @PluginDependency(Utils.class)
@@ -115,7 +116,7 @@ public class GuardiansOfTheRift extends TickScript {
       log.info(String.valueOf(gi.haveRequirements()));
     }
 
-
+    addTask(RepairPouches.class);
     addTask(StartItems.class);
     addTask(MoveToFirstCell.class);
     addTask(PlaceFirstCell.class);

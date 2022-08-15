@@ -1,7 +1,7 @@
-version = "1.0.1"
+version = "1.1.0"
 
-project.extra["PluginName"] = "Chaos GuardiansOfTheRift"
-project.extra["PluginDescription"] = ""
+project.extra["PluginName"] = "Chaos Guardians of the Rift"
+project.extra["PluginDescription"] = "Plays the Guardians of the Rift minigame"
 
 tasks {
     jar {

@@ -7,6 +7,7 @@ import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.TileObject;
 import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 
@@ -35,6 +36,11 @@ public class GoToAltar extends Task {
       TileObject guardian = TileObjects.getNearest(bestGuardian.getObjectId());
       if (guardian != null) {
         guardian.interact("Enter");
+
+        if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 3)) {
+          return;
+        }
+
         Time.sleepTicksUntil(() -> TileObjects.getNearest("Altar") != null
             || !plugin.getBestGuardian().equals(bestGuardian), 16);
       }

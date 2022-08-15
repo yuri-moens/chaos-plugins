@@ -5,6 +5,7 @@ import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 
@@ -28,6 +29,11 @@ public class PlaceFirstCell extends Task {
   @Override
   public void execute() {
     TileObjects.getNearest("Inactive cell tile").interact("Place-cell");
+
+    if (!Time.sleepTicksUntil(() -> Players.getLocal().isAnimating(), 2)) {
+      return;
+    }
+
     Time.sleepTicksUntil(() -> !Inventory.contains("Weak cell"), 10);
     plugin.setGamePhase(4);
   }
