@@ -37,7 +37,13 @@ public enum Location {
       11062,
       Varbits.FARMING_4774,
       Varbits.FARMING_4773,
-      () -> false),
+      () -> {
+        if (Farming.catherbyThroughHouse) {
+          return ChaosMovement.teleportThroughHouse(HouseTeleport.CATHERBY);
+        }
+
+        return false;
+      }),
   FALADOR(
       "Falador",
       new WorldPoint(3058, 3310, 0),
@@ -92,10 +98,23 @@ public enum Location {
         Item talisman = Inventory.getFirst(ItemID.XERICS_TALISMAN);
 
         if (talisman == null) {
-          Widget widget = Widgets.get(SpellBook.Standard.TELEPORT_TO_HOUSE.getWidget());
-          if (widget != null) {
-            widget.interact("Outside");
-            return true;
+          final Item cape = Inventory.getFirst(Predicates.ids(Constants.CONSTRUCTION_CAPE_IDS));
+
+          if (cape == null) {
+            Widget widget = Widgets.get(SpellBook.Standard.TELEPORT_TO_HOUSE.getWidget());
+            if (widget != null) {
+              widget.interact("Outside");
+              return true;
+            }
+          } else {
+            cape.interact("Teleport");
+            Time.sleepTicksUntil(() -> Widgets.isVisible(Widgets.get(187, 3)), 5);
+
+            final Widget hosidius = Widgets.get(187, 3, 4);
+
+            if (hosidius != null) {
+              hosidius.interact(0, MenuAction.WIDGET_CONTINUE.getId());
+            }
           }
         } else {
           // TODO

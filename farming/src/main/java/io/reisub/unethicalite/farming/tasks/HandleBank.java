@@ -18,6 +18,7 @@ import net.runelite.api.ItemID;
 import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.items.Bank.WithdrawMode;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.widgets.Dialog;
 
@@ -76,6 +77,8 @@ public class HandleBank extends BankTask {
     runes.put(ItemID.EARTH_RUNE, 0);
     runes.put(ItemID.LAW_RUNE, 0);
 
+    boolean withdrawnConstructionCape = false;
+
     for (Location location : Location.values()) {
       if (!location.isEnabled(config)) {
         continue;
@@ -91,8 +94,23 @@ public class HandleBank extends BankTask {
           }
           break;
         case CATHERBY:
-          runes.put(ItemID.AIR_RUNE, runes.get(ItemID.AIR_RUNE) + 5);
-          runes.put(ItemID.LAW_RUNE, runes.get(ItemID.LAW_RUNE) + 1);
+          if (config.catherbyThroughHouse()) {
+            if (!Inventory.contains(Predicates.ids(Constants.CONSTRUCTION_CAPE_IDS))) {
+              if (Bank.contains(Predicates.ids(Constants.CONSTRUCTION_CAPE_IDS))
+                  && !withdrawnConstructionCape) {
+                Bank.withdraw(
+                    Predicates.ids(Constants.CONSTRUCTION_CAPE_IDS), 1, WithdrawMode.ITEM);
+                withdrawnConstructionCape = true;
+              } else {
+                runes.put(ItemID.AIR_RUNE, runes.get(ItemID.AIR_RUNE) + 1);
+                runes.put(ItemID.EARTH_RUNE, runes.get(ItemID.EARTH_RUNE) + 1);
+                runes.put(ItemID.LAW_RUNE, runes.get(ItemID.LAW_RUNE) + 1);
+              }
+            }
+          } else {
+            runes.put(ItemID.AIR_RUNE, runes.get(ItemID.AIR_RUNE) + 5);
+            runes.put(ItemID.LAW_RUNE, runes.get(ItemID.LAW_RUNE) + 1);
+          }
           break;
         case FALADOR:
           if (config.useExplorersRing()) {
@@ -117,9 +135,18 @@ public class HandleBank extends BankTask {
         case TROLL_STRONGHOLD:
           // fall through
         case WEISS:
-          runes.put(ItemID.AIR_RUNE, runes.get(ItemID.AIR_RUNE) + 1);
-          runes.put(ItemID.EARTH_RUNE, runes.get(ItemID.EARTH_RUNE) + 1);
-          runes.put(ItemID.LAW_RUNE, runes.get(ItemID.LAW_RUNE) + 1);
+          if (!Inventory.contains(Predicates.ids(Constants.CONSTRUCTION_CAPE_IDS))) {
+            if (Bank.contains(Predicates.ids(Constants.CONSTRUCTION_CAPE_IDS))
+                && !withdrawnConstructionCape) {
+              Bank.withdraw(
+                  Predicates.ids(Constants.CONSTRUCTION_CAPE_IDS), 1, WithdrawMode.ITEM);
+              withdrawnConstructionCape = true;
+            } else {
+              runes.put(ItemID.AIR_RUNE, runes.get(ItemID.AIR_RUNE) + 1);
+              runes.put(ItemID.EARTH_RUNE, runes.get(ItemID.EARTH_RUNE) + 1);
+              runes.put(ItemID.LAW_RUNE, runes.get(ItemID.LAW_RUNE) + 1);
+            }
+          }
           break;
         case PORT_PHASMATYS:
           Bank.withdraw(ItemID.ECTOPHIAL, 1, Bank.WithdrawMode.ITEM);

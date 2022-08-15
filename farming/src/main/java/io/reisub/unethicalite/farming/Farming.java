@@ -64,6 +64,7 @@ import org.slf4j.Logger;
 @Extension
 public class Farming extends TickScript implements KeyListener {
 
+  public static boolean catherbyThroughHouse;
   private static final Set<Integer> ITEM_OPCODES = ImmutableSet.of(1007, 25, 57);
   private static final int INVENTORY_WIDGET_ID = 9764864;
   private static final int FARMING_GUILD_REGION = 4922;
@@ -89,6 +90,8 @@ public class Farming extends TickScript implements KeyListener {
   @Override
   protected void onStart() {
     super.onStart();
+
+    catherbyThroughHouse = config.catherbyThroughHouse();
 
     buildLocationQueue();
 
