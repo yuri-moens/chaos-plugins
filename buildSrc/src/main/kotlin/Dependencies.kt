@@ -27,7 +27,7 @@ object ProjectVersions {
     const val unethicaliteVersion = "1.0.10-SNAPSHOT"
     const val rlVersion = "1.8.29"
     const val apiVersion = "^1.0.0"
-    const val utilsVersion = "1.9.1"
+    const val utilsVersion = "1.9.2"
     const val combatHelperVersion = "1.9.6"
 }
 
