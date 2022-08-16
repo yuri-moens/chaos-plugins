@@ -16,6 +16,8 @@ public class PowerGuardian extends Task {
 
   @Inject
   private GuardiansOfTheRiftSolo plugin;
+  @Inject
+  private EnterAltar enterAltarTask;
 
   @Override
   public String getStatus() {
@@ -46,5 +48,9 @@ public class PowerGuardian extends Task {
         () -> !Inventory.contains(ItemID.ELEMENTAL_GUARDIAN_STONE, ItemID.CATALYTIC_GUARDIAN_STONE),
         20
     );
+
+    if (plugin.getGuardianPower() < 100) {
+      enterAltarTask.execute();
+    }
   }
 }

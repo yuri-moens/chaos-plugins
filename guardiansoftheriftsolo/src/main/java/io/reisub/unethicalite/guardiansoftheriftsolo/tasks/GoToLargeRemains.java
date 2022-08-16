@@ -39,6 +39,6 @@ public class GoToLargeRemains extends Task {
 
     rubble.interact("Climb");
     Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(END_OF_RUBBLE), 30);
-    Time.sleepTicks(4);
+    Time.sleepTicks(3);
   }
 }

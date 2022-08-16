@@ -23,7 +23,7 @@ public class TakeItems extends Task {
   @Override
   public boolean validate() {
     return !plugin.isGameActive()
-        && (Inventory.contains(ItemID.WEAK_CELL)
+        && (!Inventory.contains(ItemID.WEAK_CELL)
         || Inventory.getCount(true, ItemID.UNCHARGED_CELL) < 10);
   }
 
@@ -41,7 +41,7 @@ public class TakeItems extends Task {
     }
 
     if (Inventory.getCount(true, ItemID.UNCHARGED_CELL) < 10) {
-      final TileObject unchargedCells = TileObjects.getNearest(ObjectID.UNCHARGED_CELLS);
+      final TileObject unchargedCells = TileObjects.getNearest(ObjectID.UNCHARGED_CELLS_43732);
 
       if (unchargedCells == null) {
         return;

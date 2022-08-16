@@ -16,7 +16,7 @@ import net.unethicalite.api.items.Inventory;
 
 public class BuildBarrier extends Task {
 
-  private static final List<WorldPoint> cellTilePoints = new ArrayList<>(3){
+  private static final List<WorldPoint> cellTilePoints = new ArrayList<>(3) {
     {
       add(new WorldPoint(3619, 9509, 0));
       add(new WorldPoint(3615, 9510, 0));

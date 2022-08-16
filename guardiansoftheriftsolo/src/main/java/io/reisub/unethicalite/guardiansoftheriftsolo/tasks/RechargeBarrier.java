@@ -2,17 +2,19 @@ package io.reisub.unethicalite.guardiansoftheriftsolo.tasks;
 
 import io.reisub.unethicalite.guardiansoftheriftsolo.GuardiansOfTheRiftSolo;
 import io.reisub.unethicalite.guardiansoftheriftsolo.data.AreaType;
+import io.reisub.unethicalite.guardiansoftheriftsolo.data.CellTile;
+import io.reisub.unethicalite.guardiansoftheriftsolo.data.CellType;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
-import net.runelite.api.ItemID;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.TileObject;
-import net.runelite.api.coords.WorldPoint;
 import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
-import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.movement.Movement;
 
+@Slf4j
 public class RechargeBarrier extends Task {
 
   @Inject
@@ -25,28 +27,20 @@ public class RechargeBarrier extends Task {
 
   @Override
   public boolean validate() {
-    if (!plugin.isGameActive()
-        || AreaType.getCurrent() != AreaType.MAIN
-        || !Inventory.contains(Predicates.ids(Constants.CELL_IDS))) {
-      return false;
-    }
-
-    if (plugin.getElapsedTicks() >= 115 / 0.6 && plugin.getElapsedTicks() <= 119 / 0.6) {
-      return true;
-    }
-
-    if (Inventory.contains(ItemID.WEAK_CELL, ItemID.MEDIUM_CELL)
-        && plugin.getElapsedTicks() > 130 / 0.6
-        && plugin.getElapsedTicks() < 150 / 0.6) {
-      return true;
-    }
-
-    return false;
+    return plugin.isGameActive()
+        && plugin.getElapsedTicks() >= 115 / 0.6
+        && AreaType.getCurrent() == AreaType.MAIN
+        && Inventory.contains(Predicates.ids(Constants.CELL_IDS));
   }
 
   @Override
   public void execute() {
-    final TileObject cellTile = getCellTile();
+    if (plugin.isNearStart()) {
+      Movement.walk(CellTile.NORTH.getLocation().dy(-2));
+      Time.sleepTicks(4);
+    }
+
+    final TileObject cellTile = getCellTile().getObject();
 
     if (cellTile == null) {
       return;
@@ -56,14 +50,25 @@ public class RechargeBarrier extends Task {
     Time.sleepTicksUntil(() -> !Inventory.contains(Predicates.ids(Constants.CELL_IDS)), 20);
   }
 
-  private TileObject getCellTile() {
+  private CellTile getCellTile() {
     if (plugin.getElapsedTicks() >= 115 / 0.6 && plugin.getElapsedTicks() <= 119 / 0.6) {
-      return TileObjects.getFirstAt(
-          new WorldPoint(3615, 9510, 0),
-          Predicates.ids(Constants.ACTIVE_CELL_TILE_IDS)
-      );
+      return CellTile.NORTH;
     }
 
-    return null;
+    final CellTile lowestHp = CellTile.getLowestHealth();
+    final CellTile lowestType = CellTile.getLowestType();
+
+    if (lowestHp.getHealth() < 20) {
+      log.info("recharging lowest hp because almost dead: " + lowestHp.getHealth());
+      return lowestHp;
+    }
+
+    if (lowestType.getType().ordinal() < CellType.getTypeInInventory().ordinal()) {
+      log.info("recharging lowest type: " + lowestType.getType());
+      return lowestType;
+    }
+
+    log.info("recharging lowest hp: " + lowestHp.getHealth());
+    return lowestHp;
   }
 }

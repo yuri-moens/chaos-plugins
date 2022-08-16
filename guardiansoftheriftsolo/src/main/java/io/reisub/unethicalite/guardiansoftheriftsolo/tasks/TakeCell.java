@@ -25,13 +25,10 @@ public class TakeCell extends Task {
 
   @Override
   public boolean validate() {
-    if (plugin.isGameActive()
-        || AreaType.getCurrent() != AreaType.MAIN
-        || Inventory.contains(Predicates.ids(Constants.CELL_IDS))) {
-      return false;
-    }
-
-    return plugin.getElapsedTicks() < 110 / 0.6;
+    return plugin.isGameActive()
+        && AreaType.getCurrent() == AreaType.MAIN
+        && !Inventory.contains(Predicates.ids(Constants.CELL_IDS))
+        && plugin.getElapsedTicks() < 115 / 0.6;
   }
 
   @Override

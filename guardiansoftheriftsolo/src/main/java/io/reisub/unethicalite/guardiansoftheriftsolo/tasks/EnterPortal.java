@@ -5,6 +5,7 @@ import io.reisub.unethicalite.utils.tasks.Task;
 import net.runelite.api.ObjectID;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.items.Inventory;
 
 public class EnterPortal extends Task {
 
@@ -16,12 +17,14 @@ public class EnterPortal extends Task {
   @Override
   public boolean validate() {
     return AreaType.getCurrent() == AreaType.MAIN
-        && TileObjects.getNearest(ObjectID.PORTAL_43729) != null;
+        && TileObjects.getNearest(ObjectID.PORTAL_43729) != null
+        && !Inventory.isFull();
   }
 
   @Override
   public void execute() {
     TileObjects.getNearest(ObjectID.PORTAL_43729).interact("Enter");
     Time.sleepTicksUntil(() -> AreaType.getCurrent() == AreaType.HUGE_REMAINS, 20);
+    Time.sleepTick();
   }
 }

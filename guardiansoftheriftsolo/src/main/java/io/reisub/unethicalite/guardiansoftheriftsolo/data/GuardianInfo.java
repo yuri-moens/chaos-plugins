@@ -110,7 +110,8 @@ public class GuardianInfo {
       return false;
     }
 
-    final Animation animation = ((DynamicObject) ((GameObject) guardian).getRenderable()).getAnimation();
+    final Animation animation =
+        ((DynamicObject) ((GameObject) guardian).getRenderable()).getAnimation();
     return animation != null && animation.getId() == GUARDIAN_ACTIVE_ANIMATION;
   }
 

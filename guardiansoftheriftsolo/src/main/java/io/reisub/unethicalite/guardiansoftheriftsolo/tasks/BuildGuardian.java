@@ -28,7 +28,7 @@ public class BuildGuardian extends Task {
     if (!plugin.isGameActive()
         || AreaType.getCurrent() != AreaType.MAIN
         || !Inventory.contains(Predicates.ids(Constants.CELL_IDS))
-        || plugin.getGuardianCount() == 10) {
+        || plugin.getGuardianCount() == 2) {
       return false;
     }
 
@@ -37,7 +37,7 @@ public class BuildGuardian extends Task {
     }
 
     // build our first guardian
-    if (plugin.getElapsedTicks() > 70 / 0.6
+    if (plugin.getElapsedTicks() > 65 / 0.6
         && plugin.getGuardianCount() == 0) {
       return true;
     }
@@ -65,10 +65,9 @@ public class BuildGuardian extends Task {
       return;
     }
 
-    final int guardianCount = plugin.getGuardianCount();
-
     essencePile.interact("Assemble");
-    if (!Time.sleepTicksUntil(() -> plugin.getGuardianCount() > guardianCount, 20)) {
+    if (!Time.sleepTicksUntil(
+        () -> !Inventory.contains(Predicates.ids(Constants.CELL_IDS)), 20)) {
       return;
     }
 

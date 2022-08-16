@@ -4,10 +4,28 @@ import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
 import io.reisub.unethicalite.guardiansoftheriftsolo.data.PluginActivity;
 import io.reisub.unethicalite.guardiansoftheriftsolo.data.RuneType;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.BuildBarrier;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.BuildGuardian;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.CraftCell;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.CraftEssence;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.CraftRunes;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.DepositRunes;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.EnterAltar;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.EnterPortal;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.GoToLargeRemains;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.LeaveAltar;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.LeaveHugeRemains;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.LeaveLargeRemains;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.MineHugeRemains;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.MineLargeRemains;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.PowerGuardian;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.RechargeBarrier;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.RepairPouches;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.TakeCell;
+import io.reisub.unethicalite.guardiansoftheriftsolo.tasks.TakeItems;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
-import io.reisub.unethicalite.utils.api.Activity;
 import java.util.HashSet;
 import java.util.Set;
 import javax.inject.Inject;
@@ -16,10 +34,10 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Actor;
 import net.runelite.api.AnimationID;
+import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameTick;
-import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
@@ -43,6 +61,7 @@ import org.slf4j.Logger;
 @Extension
 public class GuardiansOfTheRiftSolo extends TickScript {
 
+  private static final WorldPoint NEAR_START = new WorldPoint(3615, 9489, 0);
   private static final int WIDGET_GROUP_ID = 746;
   private static final Set<String> GAME_END_MESSAGES = ImmutableSet.of(
       "The Great Guardian successfully closed the rift!",
@@ -76,14 +95,33 @@ public class GuardiansOfTheRiftSolo extends TickScript {
   protected void onStart() {
     super.onStart();
 
+    reset();
 
-
-    // addTask();
+    addTask(TakeItems.class);
+    addTask(GoToLargeRemains.class);
+    addTask(MineLargeRemains.class);
+    addTask(LeaveLargeRemains.class);
+    addTask(DepositRunes.class);
+    addTask(TakeCell.class);
+    addTask(BuildGuardian.class);
+    addTask(BuildBarrier.class);
+    addTask(RechargeBarrier.class);
+    addTask(PowerGuardian.class);
+    addTask(RepairPouches.class);
+    addTask(CraftCell.class);
+    addTask(CraftRunes.class);
+    addTask(LeaveAltar.class);
+    addTask(MineHugeRemains.class);
+    addTask(LeaveHugeRemains.class);
+    addTask(EnterPortal.class);
+    addTask(EnterAltar.class);
+    addTask(CraftEssence.class);
   }
 
   @Subscribe
   private void onGameTick(GameTick event) {
-
+    // log.info("ticks elapsed: " + getElapsedTicks());
+    // log.info("seconds elapsed: " + getElapsedTicks() * 0.6);
   }
 
   @Subscribe
@@ -142,31 +180,29 @@ public class GuardiansOfTheRiftSolo extends TickScript {
     }
   }
 
-  @Subscribe
-  private void onItemContainerChanged(ItemContainerChanged event) {
-    if (!isRunning()) {
-      return;
-    }
-
-    if (isCurrentActivity(PluginActivity.MINING)
-        || isCurrentActivity(PluginActivity.CRAFTING)) {
-      if (Inventory.isFull()) {
-        setActivity(Activity.IDLE);
-      }
-    }
-  }
-
   private void reset() {
     startTick = -1;
     lastGuardianBuild = null;
   }
 
   public int getElapsedTicks() {
+    if (startTick == -1) {
+      return -1;
+    }
+
     return Static.getClient().getTickCount() - startTick;
   }
 
   public boolean isGameActive() {
-    return startTick == -1;
+    return startTick != -1;
+  }
+
+  public boolean isNearStart() {
+    return isNearStart(5);
+  }
+
+  public boolean isNearStart(int distance) {
+    return Players.getLocal().distanceTo(NEAR_START) < 5;
   }
 
   private int getWidgetInteger(int widgetId) {
