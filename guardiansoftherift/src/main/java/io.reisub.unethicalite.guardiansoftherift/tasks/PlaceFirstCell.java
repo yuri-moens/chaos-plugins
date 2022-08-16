@@ -28,6 +28,11 @@ public class PlaceFirstCell extends Task {
 
   @Override
   public void execute() {
+    if (!Inventory.contains("Weak cell")) {
+      plugin.setGamePhase(4);
+      return;
+    }
+
     TileObjects.getNearest("Inactive cell tile").interact("Place-cell");
 
     if (!Time.sleepTicksUntil(() -> Players.getLocal().isAnimating(), 2)) {
