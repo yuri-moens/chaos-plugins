@@ -141,7 +141,7 @@ public class HandleBank extends BankTask {
               Bank.withdraw(
                   Predicates.ids(Constants.CONSTRUCTION_CAPE_IDS), 1, WithdrawMode.ITEM);
               withdrawnConstructionCape = true;
-            } else {
+            } else if (!withdrawnConstructionCape) {
               runes.put(ItemID.AIR_RUNE, runes.get(ItemID.AIR_RUNE) + 1);
               runes.put(ItemID.EARTH_RUNE, runes.get(ItemID.EARTH_RUNE) + 1);
               runes.put(ItemID.LAW_RUNE, runes.get(ItemID.LAW_RUNE) + 1);
