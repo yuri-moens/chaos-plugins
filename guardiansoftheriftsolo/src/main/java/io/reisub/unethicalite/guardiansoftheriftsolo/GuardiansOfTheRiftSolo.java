@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 @PluginDependency(Utils.class)
 @Slf4j
 @Extension
-public class GuardiansOfTheRift extends TickScript {
+public class GuardiansOfTheRiftSolo extends TickScript {
 
   private static final int WIDGET_GROUP_ID = 746;
 
