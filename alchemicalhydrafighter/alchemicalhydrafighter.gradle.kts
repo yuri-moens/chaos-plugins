@@ -6,7 +6,7 @@ project.extra["PluginName"] = "Chaos Alchemical Hydra Fighter"
 project.extra["PluginDescription"] = "Fights the Alchemical Hydra"
 
 dependencies {
-    compileOnly(group = "io.reisub.unethicalite", name = "alchemicalhydra", version = "5.1.0")
+    compileOnly(group = "io.reisub.unethicalite", name = "alchemicalhydra", version = "5.1.1")
     compileOnly(group = "io.reisub.unethicalite", name = "combathelper", version = combatHelperVersion)
 }
 

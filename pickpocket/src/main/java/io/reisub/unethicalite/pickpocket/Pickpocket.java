@@ -24,6 +24,7 @@ import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.plugins.itemstats.ItemStatPlugin;
 import net.unethicalite.api.entities.Players;
 import org.pf4j.Extension;
+import org.slf4j.Logger;
 
 @PluginDescriptor(
     name = "Chaos Pickpocket",
@@ -40,6 +41,11 @@ public class Pickpocket extends TickScript {
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
+  }
+
+  @Override
+  public Logger getLogger() {
+    return log;
   }
 
   @Override

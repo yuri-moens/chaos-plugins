@@ -1,6 +1,8 @@
 package io.reisub.unethicalite.mahoganyhomes;
 
 import com.google.inject.Provides;
+import io.reisub.unethicalite.mahoganyhomes.data.Home;
+import io.reisub.unethicalite.mahoganyhomes.data.PlankSack;
 import io.reisub.unethicalite.mahoganyhomes.tasks.Fix;
 import io.reisub.unethicalite.mahoganyhomes.tasks.GetTask;
 import io.reisub.unethicalite.mahoganyhomes.tasks.GoToHome;
@@ -28,6 +30,7 @@ import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.movement.Reachable;
 import net.unethicalite.client.Static;
 import org.pf4j.Extension;
+import org.slf4j.Logger;
 
 @PluginDescriptor(
     name = "Chaos Mahogany Homes",
@@ -59,10 +62,21 @@ public class MahoganyHomes extends TickScript {
   }
 
   @Override
+  public Logger getLogger() {
+    return log;
+  }
+
+  @Override
   protected void onStart() {
     super.onStart();
 
-    currentHome = null;
+    if (config.startingHome() != Home.NONE) {
+      log.info("Starting home is set: " + config.startingHome());
+      currentHome = config.startingHome();
+    } else {
+      currentHome = null;
+    }
+
     plankSack = injector.getInstance(PlankSack.class);
     Static.getEventBus().register(plankSack);
 

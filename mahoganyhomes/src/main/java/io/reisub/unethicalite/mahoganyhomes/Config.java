@@ -1,5 +1,7 @@
 package io.reisub.unethicalite.mahoganyhomes;
 
+import io.reisub.unethicalite.mahoganyhomes.data.Home;
+import io.reisub.unethicalite.mahoganyhomes.data.Plank;
 import net.runelite.client.config.Button;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
@@ -13,6 +15,15 @@ public interface Config extends net.runelite.client.config.Config {
       position = 0)
   default Plank plank() {
     return Plank.TEAK;
+  }
+
+  @ConfigItem(
+      keyName = "startingHome",
+      name = "Starting home",
+      description = "Select a starting home if you already have a task, otherwise set to none",
+      position = 1)
+  default Home startingHome() {
+    return Home.NONE;
   }
 
   @ConfigItem(

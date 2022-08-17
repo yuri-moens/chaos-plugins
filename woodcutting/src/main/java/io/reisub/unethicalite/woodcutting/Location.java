@@ -5,6 +5,7 @@ import java.util.ArrayDeque;
 import java.util.Set;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.runelite.api.NullObjectID;
 import net.runelite.api.ObjectID;
 import net.runelite.api.coords.WorldPoint;
 
@@ -42,6 +43,20 @@ public enum Location {
           add(new WorldPoint(1596,3495,0));
         }
       },
+      false
+  ),
+  HARDWOOD_FOSSIL_ISLAND(
+      new WorldPoint(3708, 3836, 0),
+      10,
+      new WorldPoint(3741, 3805, 0),
+      ImmutableSet.of(
+          NullObjectID.NULL_30480,
+          NullObjectID.NULL_30481,
+          NullObjectID.NULL_30482
+      ),
+      -1,
+      -1,
+      null,
       false
   ),
   ;

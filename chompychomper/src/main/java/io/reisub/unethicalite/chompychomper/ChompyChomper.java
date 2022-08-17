@@ -22,6 +22,7 @@ import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.unethicalite.api.entities.Players;
 import org.pf4j.Extension;
+import org.slf4j.Logger;
 
 @PluginDescriptor(
     name = "Chaos Chompy Chomper",
@@ -38,6 +39,11 @@ public class ChompyChomper extends TickScript {
   @Provides
   public Config getConfig(ConfigManager configManager) {
     return configManager.getConfig(Config.class);
+  }
+
+  @Override
+  public Logger getLogger() {
+    return log;
   }
 
   @Override

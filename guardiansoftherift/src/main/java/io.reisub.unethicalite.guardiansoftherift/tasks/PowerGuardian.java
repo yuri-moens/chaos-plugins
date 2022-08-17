@@ -6,6 +6,7 @@ import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.NPCs;
+import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.items.Inventory;
 
 
@@ -30,6 +31,11 @@ public class PowerGuardian extends Task {
   @Override
   public void execute() {
     NPCs.getNearest("The Great Guardian").interact("Power-up");
+
+    if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 2)) {
+      return;
+    }
+
     Time.sleepTicksUntil(
         () -> !Inventory.contains("Elemental guardian stone", "Catalytic guardian stone"), 10);
   }

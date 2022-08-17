@@ -168,6 +168,16 @@ public interface Config extends net.runelite.client.config.Config {
   }
 
   @ConfigItem(
+      keyName = "catherbyThroughHouse",
+      name = "Catherby through house",
+      description = "Teleport to Catherby through your house",
+      section = "teleportItemsConfig",
+      position = 104)
+  default boolean catherbyThroughHouse() {
+    return false;
+  }
+
+  @ConfigItem(
       keyName = "oneClickMode",
       name = "One click mode",
       description = "Enable one click mode to quickly do farming actions manually",

@@ -1,5 +1,6 @@
 package io.reisub.unethicalite.alchemicalhydrafighter;
 
+import io.reisub.unethicalite.utils.enums.TeleportLocation;
 import net.runelite.client.config.Button;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
@@ -25,6 +26,15 @@ public interface Config extends net.runelite.client.config.Config {
   default String inventory() {
     return "Rune pouch\nSuper combat potion(4):2\nAntidote+(4)\nBracelet of slaughter\n"
         + "Crafting cape\nDragon dagger(p++)\nShark:10";
+  }
+
+  @ConfigItem(
+      keyName = "teleportLocation",
+      name = "Teleport location",
+      description = "Choose where to teleport to for banking",
+      position = 2)
+  default TeleportLocation teleportLocation() {
+    return TeleportLocation.CRAFTING_GUILD_CAPE;
   }
 
   @ConfigItem(

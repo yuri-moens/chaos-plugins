@@ -28,8 +28,8 @@ public class MoveToMainArea extends Task {
   @Override
   public void execute() {
     TileObjects.getNearest("Rubble").interact("Climb");
-    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getWorldX() < 3633, 10);
-    Time.sleepTicks(2);
+    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getWorldX() <= 3633, 10);
+    Time.sleepTicks(4);
     plugin.setGamePhase(10);
 
   }

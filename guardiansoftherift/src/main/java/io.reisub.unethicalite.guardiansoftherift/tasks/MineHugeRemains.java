@@ -28,6 +28,11 @@ public class MineHugeRemains extends Task {
   @Override
   public void execute() {
     TileObjects.getNearest("Huge guardian remains").interact("Mine");
+
+    if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 3)) {
+      return;
+    }
+
     Time.sleepTicksUntil(Inventory::isFull, 20);
     for (int id : GuardiansOfTheRift.POUCH_IDS) {
       if (Inventory.contains(id)) {

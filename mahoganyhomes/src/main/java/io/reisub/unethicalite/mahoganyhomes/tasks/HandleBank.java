@@ -1,27 +1,23 @@
 package io.reisub.unethicalite.mahoganyhomes.tasks;
 
 import io.reisub.unethicalite.mahoganyhomes.Config;
-import io.reisub.unethicalite.mahoganyhomes.Home;
 import io.reisub.unethicalite.mahoganyhomes.MahoganyHomes;
-import io.reisub.unethicalite.mahoganyhomes.RequiredMaterials;
+import io.reisub.unethicalite.mahoganyhomes.data.Home;
+import io.reisub.unethicalite.mahoganyhomes.data.RequiredMaterials;
 import io.reisub.unethicalite.utils.Utils;
-import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
 import javax.inject.Inject;
 import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 import net.runelite.api.coords.WorldPoint;
-import net.unethicalite.api.commons.Rand;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.items.Bank;
 import net.unethicalite.api.items.Bank.WithdrawMode;
 import net.unethicalite.api.items.Inventory;
-import net.unethicalite.api.movement.pathfinder.model.BankLocation;
 
 public class HandleBank extends BankTask {
 
@@ -62,18 +58,16 @@ public class HandleBank extends BankTask {
     final Home previousHome = plugin.getPreviousHome();
     final Home currentHome = plugin.getCurrentHome();
 
-    BankLocation nearest;
+    WorldPoint nearest;
 
     if ((currentHome == Home.JESS || currentHome == Home.NOELLA)
         && previousHome == Home.ROSS) {
-      nearest = BankLocation.ARDOUGNE_NORTH_BANK;
+      nearest = Home.ROSS.getBankLocation();
     } else {
       nearest = currentHome.getBankLocation();
     }
 
-    final List<WorldPoint> bankAreaPoints = nearest.getArea().toWorldPointList();
-
-    ChaosMovement.walkTo(bankAreaPoints.get(Rand.nextInt(0, bankAreaPoints.size())));
+    ChaosMovement.walkTo(nearest);
 
     if (!open(40, true)) {
       return;
@@ -99,7 +93,8 @@ public class HandleBank extends BankTask {
         Bank.withdrawAll(config.plank().getPlankId(), WithdrawMode.ITEM);
         Time.sleepTick();
 
-        ChaosBank.bankInventoryInteract(plankSack, "Use");
+        Item plankSack2 = Bank.Inventory.getFirst(ItemID.PLANK_SACK);
+        plankSack2.interact("Use");
 
         Time.sleepTicksUntil(() -> Bank.Inventory.getAll().size() < 28
             || plugin.getPlankSack().getPlankCount() == 28, 3);

@@ -20,7 +20,7 @@ public class GoToHome extends Task {
 
   @Override
   public String getStatus() {
-    return "Going to home";
+    return "Going to home: " + plugin.getCurrentHome();
   }
 
   @Override

@@ -53,6 +53,7 @@ import net.unethicalite.api.game.Vars;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.client.Static;
 import org.pf4j.Extension;
+import org.slf4j.Logger;
 
 @PluginDescriptor(
     name = "Chaos Farming",
@@ -63,6 +64,7 @@ import org.pf4j.Extension;
 @Extension
 public class Farming extends TickScript implements KeyListener {
 
+  public static boolean catherbyThroughHouse;
   private static final Set<Integer> ITEM_OPCODES = ImmutableSet.of(1007, 25, 57);
   private static final int INVENTORY_WIDGET_ID = 9764864;
   private static final int FARMING_GUILD_REGION = 4922;
@@ -73,6 +75,7 @@ public class Farming extends TickScript implements KeyListener {
   @Getter
   private Location currentLocation;
   private ConfigList compostProduceConfigList;
+  private boolean harvestAndCompost;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
@@ -80,8 +83,15 @@ public class Farming extends TickScript implements KeyListener {
   }
 
   @Override
+  public Logger getLogger() {
+    return log;
+  }
+
+  @Override
   protected void onStart() {
     super.onStart();
+
+    catherbyThroughHouse = config.catherbyThroughHouse();
 
     buildLocationQueue();
 
@@ -112,6 +122,11 @@ public class Farming extends TickScript implements KeyListener {
 
   @Subscribe
   private void onGameTick(GameTick event) {
+    if (harvestAndCompost) {
+      harvestAndCompost = false;
+      schedule(this::harvestAndCompost);
+    }
+
     if (compostProduceConfigList == null) {
       compostProduceConfigList = ConfigList.parseList(config.oneClickCompostProduce());
     }
@@ -277,7 +292,7 @@ public class Farming extends TickScript implements KeyListener {
       start();
     } else if (config.harvestAndCompostHotkey().matches(e)) {
       e.consume();
-      schedule(this::harvestAndCompost);
+      harvestAndCompost = true;
     }
   }
 

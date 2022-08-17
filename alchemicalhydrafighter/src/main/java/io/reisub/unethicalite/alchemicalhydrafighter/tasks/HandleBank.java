@@ -1,28 +1,32 @@
 package io.reisub.unethicalite.alchemicalhydrafighter.tasks;
 
 import io.reisub.unethicalite.alchemicalhydrafighter.AlchemicalHydraFighter;
-import io.reisub.unethicalite.utils.Utils;
 import io.reisub.unethicalite.utils.api.ChaosBank;
+import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import javax.inject.Inject;
 import net.unethicalite.api.items.Bank;
+import net.unethicalite.api.movement.pathfinder.model.BankLocation;
 import net.unethicalite.client.Static;
 
 public class HandleBank extends BankTask {
-
-  private static final int MOUNTAIN_REGION = 0;
 
   @Inject
   private AlchemicalHydraFighter plugin;
 
   @Override
   public boolean validate() {
-    return !Utils.isInRegion(MOUNTAIN_REGION)
-        && !Static.getClient().isInInstancedRegion();
+    return !Static.getClient().isInInstancedRegion()
+        && (!ChaosBank.haveAllItemsInEquipment(plugin.getInventory())
+        || !ChaosBank.haveAllItemsInInventory(plugin.getEquipment()));
   }
 
   @Override
   public void execute() {
+    if (!isBankObjectAvailable()) {
+      ChaosMovement.walkTo(BankLocation.getNearest().getArea().getCenter());
+    }
+
     open(true);
 
     if (!Bank.isOpen()) {
@@ -31,9 +35,12 @@ public class HandleBank extends BankTask {
 
     Bank.depositInventory();
 
-    ChaosBank.withdrawEquipment(plugin.getEquipment());
+    if (!ChaosBank.haveAllItemsInInventory(plugin.getEquipment())) {
+      ChaosBank.withdrawEquipment(plugin.getEquipment());
+    }
 
-    ChaosBank.withdrawItems(plugin.getInventory());
-
+    if (!ChaosBank.haveAllItemsInEquipment(plugin.getInventory())) {
+      ChaosBank.withdrawItems(plugin.getInventory());
+    }
   }
 }

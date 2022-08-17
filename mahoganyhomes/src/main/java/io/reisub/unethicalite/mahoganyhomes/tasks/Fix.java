@@ -2,9 +2,9 @@ package io.reisub.unethicalite.mahoganyhomes.tasks;
 
 import com.google.common.collect.Sets;
 import io.reisub.unethicalite.mahoganyhomes.Config;
-import io.reisub.unethicalite.mahoganyhomes.Home;
-import io.reisub.unethicalite.mahoganyhomes.Hotspot;
 import io.reisub.unethicalite.mahoganyhomes.MahoganyHomes;
+import io.reisub.unethicalite.mahoganyhomes.data.Home;
+import io.reisub.unethicalite.mahoganyhomes.data.Hotspot;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.Task;
 import java.util.List;
@@ -41,48 +41,30 @@ public class Fix extends Task {
 
   @Override
   public void execute() {
-    final List<Hotspot> brokenHotspots = Hotspot.getBrokenHotspots();
-    final Home home = plugin.getCurrentHome();
+    if (plugin.getCurrentHome() == Home.LARRY
+        && Players.getLocal().getWorldLocation().getPlane() == 0) {
+      plugin.useStairs(true);
+    }
 
-    TileObject nearest = TileObjects.getNearest(
-        o -> {
-          for (final Hotspot h : brokenHotspots) {
-            if (h.getObjectIds().contains(o.getId()) && home.isInHome(o)) {
-              return true;
-            }
-          }
+    TileObject hotspotObject = getNext();
 
-          return false;
-        }
-    );
-
-    if (nearest == null) {
+    if (hotspotObject == null) {
       plugin.useStairs(true);
 
-      nearest = TileObjects.getNearest(
-          o -> {
-            for (final Hotspot h : brokenHotspots) {
-              if (h.getObjectIds().contains(o.getId()) && Players.getLocal().distanceTo(o) < 10) {
-                return true;
-              }
-            }
+      hotspotObject = getNext();
 
-            return false;
-          }
-      );
-
-      if (nearest == null) {
+      if (hotspotObject == null) {
         return;
       }
     }
 
-    final TileObject finalNearest = nearest;
-    final Hotspot hotspot = Hotspot.getByObjectId(finalNearest.getId());
+    final TileObject finalHotspotObject = hotspotObject;
+    final Hotspot hotspot = Hotspot.getByObjectId(finalHotspotObject.getId());
 
     final int maxTries = 5;
     int tries = 0;
 
-    while (!Reachable.isInteractable(finalNearest) && tries++ < maxTries) {
+    while (!Reachable.isInteractable(finalHotspotObject) && tries++ < maxTries) {
       if (plugin.getCurrentHome() == Home.NOELLA
           && Players.getLocal().getWorldLocation().getPlane() == 1) {
         plugin.useStairs(true);
@@ -91,23 +73,33 @@ public class Fix extends Task {
 
       Set<WorldPoint> ignoreLocations = Sets.newHashSet(
           new WorldPoint(3231, 3387, 0),
-          new WorldPoint(1762, 3612, 0)
+          new WorldPoint(1762, 3612, 0),
+          new WorldPoint(1762, 3613, 0),
+          new WorldPoint(1765, 3619, 0),
+          new WorldPoint(1798, 3605, 0),
+          new WorldPoint(1798, 3611, 0),
+          new WorldPoint(1776, 3590, 0),
+          new WorldPoint(1777, 3590, 0),
+          new WorldPoint(1787, 3590, 0),
+          new WorldPoint(1787, 3589, 0),
+          new WorldPoint(2670, 3319, 0),
+          new WorldPoint(2670, 3320, 0)
       );
 
-      if (!ChaosMovement.openDoor(finalNearest, ignoreLocations)) {
+      if (!ChaosMovement.openDoor(finalHotspotObject, 7, ignoreLocations)) {
         plugin.useStairs(true);
         return;
       }
     }
 
-    if (finalNearest.hasAction("Repair")) {
-      finalNearest.interact("Repair");
+    if (finalHotspotObject.hasAction("Repair")) {
+      finalHotspotObject.interact("Repair");
     } else {
-      finalNearest.interact("Remove");
+      finalHotspotObject.interact("Remove");
 
       Time.sleepTicksUntil(
           () -> TileObjects.getNearest(
-              o -> o.hasAction("Build") && o.getWorldLocation().distanceTo(finalNearest) < 3)
+              o -> o.hasAction("Build") && o.getWorldLocation().distanceTo(finalHotspotObject) < 3)
               != null, 15);
 
       final TileObject buildObject = TileObjects.getNearest(o -> o.hasAction("Build"));
@@ -137,5 +129,32 @@ public class Fix extends Task {
 
     Time.sleepTicksUntil(hotspot::isFixed, 15);
     Time.sleepTick();
+  }
+
+  private TileObject getNext() {
+    final List<Hotspot> brokenHotspots = Hotspot.getBrokenHotspots();
+    final Home home = plugin.getCurrentHome();
+
+    final List<TileObject> hotspotObjects = TileObjects.getAll(
+        o -> {
+          for (final Hotspot h : brokenHotspots) {
+            if (h.getObjectIds().contains(o.getId()) && home.isInHome(o)) {
+              return true;
+            }
+          }
+
+          return false;
+        }
+    );
+
+    for (Hotspot hotspot : home.getOrder()) {
+      for (TileObject hotspotObject : hotspotObjects) {
+        if (hotspot.getObjectIds().contains(hotspotObject.getId())) {
+          return hotspotObject;
+        }
+      }
+    }
+
+    return null;
   }
 }

@@ -24,11 +24,11 @@
  */
 
 object ProjectVersions {
-    const val unethicaliteVersion = "1.0.8-SNAPSHOT"
+    const val unethicaliteVersion = "1.0.10-SNAPSHOT"
     const val rlVersion = "1.8.29"
     const val apiVersion = "^1.0.0"
-    const val utilsVersion = "1.8.0"
-    const val combatHelperVersion = "1.9.5"
+    const val utilsVersion = "1.9.2"
+    const val combatHelperVersion = "1.9.6"
 }
 
 object Libraries {
