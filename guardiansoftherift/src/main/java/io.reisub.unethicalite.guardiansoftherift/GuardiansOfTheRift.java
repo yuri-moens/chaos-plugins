@@ -34,6 +34,7 @@ import net.runelite.api.AnimationID;
 import net.runelite.api.Client;
 import net.runelite.api.DynamicObject;
 import net.runelite.api.GameObject;
+import net.runelite.api.ItemID;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameObjectSpawned;
@@ -323,7 +324,8 @@ public class GuardiansOfTheRift extends TickScript {
 
     final int pouchesCount = Inventory.getCount(Predicates.ids(normalPouches));
 
-    return fullPouches >= pouchesCount;
+    return fullPouches >= pouchesCount
+        || (fullPouches > 0 && Inventory.contains(ItemID.GUARDIAN_ESSENCE));
   }
 
   public boolean arePouchesEmpty() {
@@ -332,6 +334,7 @@ public class GuardiansOfTheRift extends TickScript {
 
     final int pouchesCount = Inventory.getCount(Predicates.ids(normalPouches));
 
-    return emptyPouches >= pouchesCount;
+    return emptyPouches >= pouchesCount
+        || (emptyPouches > 0 && Inventory.getFreeSlots() > 0);
   }
 }
