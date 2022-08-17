@@ -27,10 +27,19 @@ public interface Config extends net.runelite.client.config.Config {
   }
 
   @ConfigItem(
+      keyName = "guardianPowerLastRun",
+      name = "Guardian power last run",
+      description = "Set the guardian power at which we should do a last runecrafting run",
+      position = 2)
+  default int guardianPowerLastRun() {
+    return 95;
+  }
+
+  @ConfigItem(
       keyName = "focusPoints",
       name = "Focus",
       description = "Focus on one of the types of points",
-      position = 2)
+      position = 3)
   default boolean focusPoints() {
     return false;
   }
@@ -39,7 +48,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "runeTypeFocus",
       name = "Rune type focus",
       description = "Choose what type of rune to focus",
-      position = 3)
+      position = 4)
   default RuneType runeTypeFocus() {
     return RuneType.ELEMENTAL;
   }

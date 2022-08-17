@@ -29,18 +29,24 @@ public class CraftEssence extends Task {
   public boolean validate() {
     return GotrArea.getCurrent() == GotrArea.MAIN
         && !Inventory.isFull()
+        && plugin.getGuardianPower() < config.guardianPowerLastRun()
         && Inventory.contains("Guardian fragments");
   }
 
   @Override
   public void execute() {
     while (!Inventory.isFull()
+        // && GotrArea.getCurrent() == GotrArea.MAIN
         && !plugin.isPortalActive()
-        && Inventory.contains("Guardian fragments")) {
+        && Inventory.contains("Guardian fragments")
+        && plugin.getGuardianPower() < config.guardianPowerLastRun()) {
       craft();
 
       // don't fill pouches during the first inventory
-      if (!plugin.arePouchesFull() && plugin.getElapsedTicks() > 180 / 0.6) {
+      // don't fill pouches right before starting the last run
+      if (!plugin.arePouchesFull()
+          && plugin.getElapsedTicks() > 180 / 0.6
+          && plugin.getGuardianPower() < config.guardianPowerLastRun()) {
         fillPouches();
       }
     }
@@ -55,8 +61,10 @@ public class CraftEssence extends Task {
 
     workbench.interact("Work-at");
     Time.sleepTicksUntil(() -> Inventory.isFull()
+        // || GotrArea.getCurrent() != GotrArea.MAIN
         || plugin.isPortalActive()
-        || !Inventory.contains("Guardian fragments"), 50);
+        || !Inventory.contains("Guardian fragments")
+        || plugin.getGuardianPower() >= config.guardianPowerLastRun(), 50);
   }
 
   private void fillPouches() {

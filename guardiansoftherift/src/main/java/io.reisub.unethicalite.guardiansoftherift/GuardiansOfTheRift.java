@@ -251,6 +251,7 @@ public class GuardiansOfTheRift extends TickScript {
         activeGuardiansInfo.add(gii);
       }
     }
+
     if (config.focusPoints() && activeGuardiansInfo.size() > 1) {
       activeGuardiansInfo.removeIf(gf -> config.runeTypeFocus() == gf.getRuneType());
     }

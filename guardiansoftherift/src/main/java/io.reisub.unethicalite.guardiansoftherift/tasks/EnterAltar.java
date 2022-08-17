@@ -32,7 +32,7 @@ public class EnterAltar extends Task {
   @Override
   public boolean validate() {
     return GotrArea.getCurrent() == GotrArea.MAIN
-        && Inventory.isFull()
+        && (Inventory.isFull() || plugin.getGuardianPower() >= config.guardianPowerLastRun())
         && Inventory.contains("Guardian essence");
   }
 
@@ -59,8 +59,12 @@ public class EnterAltar extends Task {
         }
 
         Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.ALTAR
-            || !plugin.getBestGuardian().equals(bestGuardian), 24);
-        Time.sleepTick();
+            || !bestGuardian.equals(plugin.getBestGuardian()), 24);
+
+        if (plugin.getBestGuardian() == null) {
+          Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.ALTAR, 2);
+          Time.sleepTick();
+        }
       }
     }
   }
