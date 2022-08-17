@@ -18,10 +18,19 @@ public interface Config extends net.runelite.client.config.Config {
   }
 
   @ConfigItem(
+      keyName = "betterGuardianWaitTime",
+      name = "Better guardian wait time",
+      description = "Seconds to wait for a better guardian (strong or overcharged) to open",
+      position = 1)
+  default int betterGuardianWaitTime() {
+    return 0;
+  }
+
+  @ConfigItem(
       keyName = "focusPoints",
       name = "Focus",
       description = "Focus on one of the types of points",
-      position = 1)
+      position = 2)
   default boolean focusPoints() {
     return false;
   }
@@ -30,7 +39,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "runeTypeFocus",
       name = "Rune type focus",
       description = "Choose what type of rune to focus",
-      position = 2)
+      position = 3)
   default RuneType runeTypeFocus() {
     return RuneType.ELEMENTAL;
   }
