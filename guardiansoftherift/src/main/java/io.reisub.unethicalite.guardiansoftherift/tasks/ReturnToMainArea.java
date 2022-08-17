@@ -29,7 +29,7 @@ public class ReturnToMainArea extends Task {
   public void execute() {
     TileObjects.getNearest("Portal").interact("Use");
     Time.sleepTicksUntil(plugin::checkInMainRegion, 20);
-    Time.sleepTick();
+    Time.sleepTicks(3);
 
   }
 }
