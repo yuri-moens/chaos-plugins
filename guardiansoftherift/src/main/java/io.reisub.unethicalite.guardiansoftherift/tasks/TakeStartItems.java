@@ -8,7 +8,8 @@ import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 
-public class StartItems extends Task {
+public class TakeStartItems extends Task {
+
   @Inject
   private GuardiansOfTheRift plugin;
   @Inject
@@ -21,17 +22,21 @@ public class StartItems extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getGamePhase() == 1;
+    return plugin.getElapsedTicks() == -1
+        && (!Inventory.contains("Weak cell")
+        || Inventory.getCount(true, "Uncharged cell") < 10);
   }
 
   @Override
   public void execute() {
-    TileObjects.getNearest("Weak cells").interact("Take");
-    Time.sleepTicksUntil(() -> Inventory.contains("Weak cell"), 20);
+    if (!Inventory.contains("Weak cell")) {
+      TileObjects.getNearest("Weak cells").interact("Take");
+      Time.sleepTicksUntil(() -> Inventory.contains("Weak cell"), 20);
+    }
 
-    TileObjects.getNearest("Uncharged cells").interact("Take-10");
-    Time.sleepTicksUntil(() -> Inventory.getCount(true, "Uncharged cell") == 10, 20);
-
-    plugin.setGamePhase(2);
+    if (Inventory.getCount(true, "Uncharged cell") < 10) {
+      TileObjects.getNearest("Uncharged cells").interact("Take-10");
+      Time.sleepTicksUntil(() -> Inventory.getCount(true, "Uncharged cell") == 10, 20);
+    }
   }
 }

@@ -2,15 +2,15 @@ package io.reisub.unethicalite.guardiansoftherift.tasks;
 
 import io.reisub.unethicalite.guardiansoftherift.Config;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
+import io.reisub.unethicalite.guardiansoftherift.data.GotrArea;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.unethicalite.api.commons.Time;
-import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 
+public class LeaveHugeRemains extends Task {
 
-public class PlaceFirstCell extends Task {
   @Inject
   private GuardiansOfTheRift plugin;
   @Inject
@@ -18,28 +18,19 @@ public class PlaceFirstCell extends Task {
 
   @Override
   public String getStatus() {
-    return "Placing first cell at start of game";
+    return "Leaving huge remains";
   }
 
   @Override
   public boolean validate() {
-    return plugin.getGamePhase() == 3;
+    return GotrArea.getCurrent() == GotrArea.HUGE_REMAINS
+        && Inventory.isFull();
   }
 
   @Override
   public void execute() {
-    if (!Inventory.contains("Weak cell")) {
-      plugin.setGamePhase(4);
-      return;
-    }
-
-    TileObjects.getNearest("Inactive cell tile").interact("Place-cell");
-
-    if (!Time.sleepTicksUntil(() -> Players.getLocal().isAnimating(), 2)) {
-      return;
-    }
-
-    Time.sleepTicksUntil(() -> !Inventory.contains("Weak cell"), 10);
-    plugin.setGamePhase(4);
+    TileObjects.getNearest("Portal").interact("Enter");
+    Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.MAIN, 20);
+    Time.sleepTick();
   }
 }

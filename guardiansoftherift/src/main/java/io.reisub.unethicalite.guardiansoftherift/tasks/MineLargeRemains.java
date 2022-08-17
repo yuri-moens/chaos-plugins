@@ -2,16 +2,16 @@ package io.reisub.unethicalite.guardiansoftherift.tasks;
 
 import io.reisub.unethicalite.guardiansoftherift.Config;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
+import io.reisub.unethicalite.guardiansoftherift.data.GotrArea;
+import io.reisub.unethicalite.guardiansoftherift.data.PluginActivity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
-import net.runelite.api.coords.WorldPoint;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
-import net.unethicalite.api.items.Inventory;
 
 public class MineLargeRemains extends Task {
-  private final WorldPoint endOfRubble = new WorldPoint(3637, 9503, 0);
+
   @Inject
   private GuardiansOfTheRift plugin;
   @Inject
@@ -24,18 +24,20 @@ public class MineLargeRemains extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getGamePhase() == 4 && Players.getLocal().getWorldLocation().equals(endOfRubble);
+    return plugin.getElapsedTicks() >= 0
+        && GotrArea.getCurrent() == GotrArea.LARGE_REMAINS
+        && !plugin.isCurrentActivity(PluginActivity.MINING);
   }
 
   @Override
   public void execute() {
     TileObjects.getNearest("Large guardian remains").interact("Mine");
 
-    if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 3)) {
+    if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving()
+        || Players.getLocal().isAnimating(), 3)) {
       return;
     }
 
-    Time.sleepTicksUntil(() -> Inventory.getCount(true, "Guardian fragments") >= 160, 200);
-    plugin.setGamePhase(5);
+    Time.sleepTicksUntil(() -> plugin.isCurrentActivity(PluginActivity.MINING), 10);
   }
 }

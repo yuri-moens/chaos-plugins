@@ -2,16 +2,17 @@ package io.reisub.unethicalite.guardiansoftherift.tasks;
 
 import io.reisub.unethicalite.guardiansoftherift.Config;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
+import io.reisub.unethicalite.guardiansoftherift.data.GotrArea;
+import io.reisub.unethicalite.utils.api.Activity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
-import net.runelite.api.coords.WorldPoint;
+import net.runelite.api.ItemID;
 import net.unethicalite.api.commons.Time;
-import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.items.Inventory;
 
+public class LeaveLargeRemains extends Task {
 
-public class MoveToLargeRemains extends Task {
-  private final WorldPoint endOfRubble = new WorldPoint(3637, 9503, 0);
   @Inject
   private GuardiansOfTheRift plugin;
   @Inject
@@ -19,18 +20,21 @@ public class MoveToLargeRemains extends Task {
 
   @Override
   public String getStatus() {
-    return "Moving to the large remains";
+    return "Leaving large remains";
   }
 
   @Override
   public boolean validate() {
-    return plugin.getGamePhase() == 4 && !Players.getLocal().getWorldLocation().equals(endOfRubble);
+    return GotrArea.getCurrent() == GotrArea.LARGE_REMAINS
+        && Inventory.getCount(true, ItemID.GUARDIAN_FRAGMENTS) >= config.fragments();
   }
 
   @Override
   public void execute() {
+    plugin.setActivity(Activity.IDLE);
+
     TileObjects.getNearest("Rubble").interact("Climb");
-    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(endOfRubble), 30);
-    Time.sleepTicks(4);
+    Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.MAIN, 10);
+    Time.sleepTicks(3);
   }
 }

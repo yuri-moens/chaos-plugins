@@ -143,7 +143,7 @@ public class GuardiansOfTheRiftSolo extends TickScript {
 
       lastPouchFullMessageTick = Static.getClient().getTickCount();
       fullPouches++;
-    } else if (message.equals("")) {
+    } else if (message.equals("There is no essence in this pouch.")) {
       if (Static.getClient().getTickCount() != lastPouchEmptyMessageTick) {
         emptyPouches = 0;
       }

@@ -2,14 +2,15 @@ package io.reisub.unethicalite.guardiansoftherift.tasks;
 
 import io.reisub.unethicalite.guardiansoftherift.Config;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
+import io.reisub.unethicalite.guardiansoftherift.data.GotrArea;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.unethicalite.api.commons.Time;
-import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.items.Inventory;
 
+public class EnterPortal extends Task {
 
-public class MoveToMainArea extends Task {
   @Inject
   private GuardiansOfTheRift plugin;
   @Inject
@@ -17,20 +18,19 @@ public class MoveToMainArea extends Task {
 
   @Override
   public String getStatus() {
-    return "Going to main area";
+    return "Entering portal";
   }
 
   @Override
   public boolean validate() {
-    return plugin.getGamePhase() == 5;
+    return !Inventory.isFull()
+        && TileObjects.getNearest(43729) != null;
   }
 
   @Override
   public void execute() {
-    TileObjects.getNearest("Rubble").interact("Climb");
-    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getWorldX() <= 3633, 10);
-    Time.sleepTicks(4);
-    plugin.setGamePhase(10);
-
+    TileObjects.getNearest(43729).interact("Enter");
+    Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.HUGE_REMAINS, 20);
+    Time.sleepTick();
   }
 }

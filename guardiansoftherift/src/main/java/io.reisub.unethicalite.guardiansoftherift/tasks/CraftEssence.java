@@ -7,14 +7,13 @@ import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.Item;
-import net.runelite.api.ItemID;
 import net.runelite.api.TileObject;
 import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 
-public class CraftRunes extends Task {
+public class CraftEssence extends Task {
 
   @Inject
   private GuardiansOfTheRift plugin;
@@ -23,42 +22,48 @@ public class CraftRunes extends Task {
 
   @Override
   public String getStatus() {
-    return "Crafting Runes";
+    return "Crafting essence";
   }
 
   @Override
   public boolean validate() {
-    return GotrArea.getCurrent() == GotrArea.ALTAR
-        && Inventory.contains(ItemID.GUARDIAN_ESSENCE);
+    return GotrArea.getCurrent() == GotrArea.MAIN
+        && !Inventory.isFull()
+        && Inventory.contains("Guardian fragments");
   }
 
   @Override
   public void execute() {
-    while (Inventory.contains(ItemID.GUARDIAN_ESSENCE)) {
-      craftRunes();
+    while (!Inventory.isFull()
+        && !plugin.isPortalActive()
+        && Inventory.contains("Guardian fragments")) {
+      craft();
 
-      if (!plugin.arePouchesEmpty()) {
-        emptyPouches();
+      // don't fill pouches during the first inventory
+      if (!plugin.arePouchesFull() && plugin.getElapsedTicks() > 180 / 0.6) {
+        fillPouches();
       }
     }
   }
 
-  private void craftRunes() {
-    final TileObject altar = TileObjects.getNearest("Altar");
+  private void craft() {
+    final TileObject workbench = TileObjects.getNearest("Workbench");
 
-    if (altar == null) {
+    if (workbench == null) {
       return;
     }
 
-    altar.interact("Craft-rune");
-    Time.sleepTicksUntil(() -> !Inventory.contains(ItemID.GUARDIAN_ESSENCE), 20);
+    workbench.interact("Work-at");
+    Time.sleepTicksUntil(() -> Inventory.isFull()
+        || plugin.isPortalActive()
+        || !Inventory.contains("Guardian fragments"), 50);
   }
 
-  private void emptyPouches() {
+  private void fillPouches() {
     for (Item pouch : Inventory.getAll(Predicates.ids(Constants.ESSENCE_POUCH_IDS))) {
-      pouch.interact("Empty");
+      pouch.interact("Fill");
     }
 
-    Time.sleepTicksUntil(() -> Inventory.contains(Predicates.ids(ItemID.GUARDIAN_ESSENCE)), 3);
+    Time.sleepTicksUntil(() -> Inventory.getFreeSlots() > 0 || plugin.arePouchesFull(), 3);
   }
 }

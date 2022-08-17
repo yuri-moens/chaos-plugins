@@ -2,15 +2,15 @@ package io.reisub.unethicalite.guardiansoftherift.tasks;
 
 import io.reisub.unethicalite.guardiansoftherift.Config;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
+import io.reisub.unethicalite.guardiansoftherift.data.GotrArea;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.unethicalite.api.commons.Time;
-import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 
+public class LeaveAltar extends Task {
 
-public class ReturnToMainAreaFromHugeRemains extends Task {
   @Inject
   private GuardiansOfTheRift plugin;
   @Inject
@@ -18,19 +18,20 @@ public class ReturnToMainAreaFromHugeRemains extends Task {
 
   @Override
   public String getStatus() {
-    return "Returning to the game";
+    return "Leaving altar";
   }
 
   @Override
   public boolean validate() {
-    return Players.getLocal().getWorldLocation().getWorldX() < 3597 && Inventory.isFull();
+    return GotrArea.getCurrent() == GotrArea.ALTAR
+        && !Inventory.contains("Guardian essence");
   }
 
   @Override
   public void execute() {
-    TileObjects.getNearest("Portal").interact("Enter");
-    Time.sleepTicksUntil(plugin::checkInMainRegion, 20);
-    Time.sleepTick();
+    TileObjects.getNearest("Portal").interact("Use");
+    Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.MAIN, 20);
+    Time.sleepTicks(3);
 
   }
 }

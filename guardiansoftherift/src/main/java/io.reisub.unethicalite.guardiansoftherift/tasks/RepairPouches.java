@@ -48,7 +48,8 @@ public class RepairPouches extends Task {
         DialogOption.NPC_CONTINUE,
         DialogOption.CHAT_OPTION_TWO,
         DialogOption.PLAYER_CONTINUE,
-        DialogOption.NPC_CONTINUE);
+        DialogOption.NPC_CONTINUE
+    );
 
     Time.sleepTicksUntil(
         () -> !Inventory.contains(Predicates.ids(Constants.DEGRADED_ESSENCE_POUCH_IDS)), 3);
