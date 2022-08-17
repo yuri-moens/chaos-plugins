@@ -6,9 +6,11 @@ import io.reisub.unethicalite.guardiansoftherift.data.GotrArea;
 import io.reisub.unethicalite.guardiansoftherift.data.PluginActivity;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
+import net.runelite.api.ItemID;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.items.Inventory;
 
 public class MineLargeRemains extends Task {
 
@@ -31,6 +33,11 @@ public class MineLargeRemains extends Task {
 
   @Override
   public void execute() {
+    if (Inventory.isFull()) {
+      Inventory.getFirst(ItemID.GUARDIAN_ESSENCE).drop();
+      Time.sleepTick();
+    }
+
     TileObjects.getNearest("Large guardian remains").interact("Mine");
 
     if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving()

@@ -26,7 +26,8 @@ public class LeaveLargeRemains extends Task {
   @Override
   public boolean validate() {
     return GotrArea.getCurrent() == GotrArea.LARGE_REMAINS
-        && Inventory.getCount(true, ItemID.GUARDIAN_FRAGMENTS) >= config.fragments();
+        && (Inventory.getCount(true, ItemID.GUARDIAN_FRAGMENTS) >= config.fragments()
+        || plugin.getElapsedTicks() >= 190);
   }
 
   @Override

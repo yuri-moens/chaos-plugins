@@ -38,11 +38,6 @@ public class GoToLargeRemains extends Task {
   public void execute() {
     TileObjects.getNearest("Rubble").interact("Climb");
 
-    if (Inventory.isFull()) {
-      Time.sleepTick();
-      Inventory.getFirst(ItemID.GUARDIAN_ESSENCE).drop();
-    }
-
     Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().equals(END_OF_RUBBLE), 30);
     Time.sleepTicks(3);
 

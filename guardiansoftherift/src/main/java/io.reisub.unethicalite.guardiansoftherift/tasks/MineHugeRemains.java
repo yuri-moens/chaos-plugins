@@ -34,7 +34,8 @@ public class MineHugeRemains extends Task {
 
   @Override
   public void execute() {
-    while (!Inventory.isFull()) {
+    while (!Inventory.isFull()
+        && plugin.getElapsedTicks() != -1) {
       mine();
 
       if (!plugin.arePouchesFull()) {
