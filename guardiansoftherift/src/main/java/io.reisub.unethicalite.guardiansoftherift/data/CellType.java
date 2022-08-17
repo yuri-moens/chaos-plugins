@@ -1,8 +1,8 @@
-package io.reisub.unethicalite.guardiansoftherift;
+package io.reisub.unethicalite.guardiansoftherift.data;
 
 public enum CellType {
-  Weak,
-  Medium,
-  Strong,
-  Overcharged
+  WEAK,
+  MEDIUM,
+  STRONG,
+  OVERCHARGED
 }

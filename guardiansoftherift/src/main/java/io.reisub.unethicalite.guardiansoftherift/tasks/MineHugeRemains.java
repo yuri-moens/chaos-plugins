@@ -2,14 +2,20 @@ package io.reisub.unethicalite.guardiansoftherift.tasks;
 
 import io.reisub.unethicalite.guardiansoftherift.Config;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
+import io.reisub.unethicalite.guardiansoftherift.data.GotrArea;
+import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
+import net.runelite.api.Item;
+import net.runelite.api.TileObject;
+import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 
 public class MineHugeRemains extends Task {
+
   @Inject
   private GuardiansOfTheRift plugin;
   @Inject
@@ -22,23 +28,45 @@ public class MineHugeRemains extends Task {
 
   @Override
   public boolean validate() {
-    return !Inventory.isFull() && Players.getLocal().getWorldLocation().getWorldX() < 3597;
+    return !Inventory.isFull()
+        && GotrArea.getCurrent() == GotrArea.HUGE_REMAINS;
   }
 
   @Override
   public void execute() {
-    TileObjects.getNearest("Huge guardian remains").interact("Mine");
+    while (!Inventory.isFull()) {
+      mine();
 
-    if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 3)) {
+      if (!plugin.arePouchesFull()) {
+        fillPouches();
+      }
+    }
+
+    Time.sleepTick();
+  }
+
+  private void mine() {
+    final TileObject remains = TileObjects.getNearest("Huge guardian remains");
+
+    if (remains == null) {
+      return;
+    }
+
+    remains.interact("Mine");
+
+    if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving()
+        || Players.getLocal().isAnimating(), 3)) {
       return;
     }
 
     Time.sleepTicksUntil(Inventory::isFull, 20);
-    for (int id : GuardiansOfTheRift.POUCH_IDS) {
-      if (Inventory.contains(id)) {
-        Inventory.getFirst(id).interact("Fill");
-      }
+  }
+
+  private void fillPouches() {
+    for (Item pouch : Inventory.getAll(Predicates.ids(Constants.ESSENCE_POUCH_IDS))) {
+      pouch.interact("Fill");
     }
-    Time.sleepTick();
+
+    Time.sleepTicksUntil(() -> Inventory.getFreeSlots() > 0 || plugin.arePouchesFull(), 3);
   }
 }

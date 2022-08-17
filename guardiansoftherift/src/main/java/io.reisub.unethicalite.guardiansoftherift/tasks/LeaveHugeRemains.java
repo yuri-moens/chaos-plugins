@@ -2,15 +2,15 @@ package io.reisub.unethicalite.guardiansoftherift.tasks;
 
 import io.reisub.unethicalite.guardiansoftherift.Config;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
+import io.reisub.unethicalite.guardiansoftherift.data.GotrArea;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.unethicalite.api.commons.Time;
-import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 
+public class LeaveHugeRemains extends Task {
 
-public class GoThroughPortal extends Task {
   @Inject
   private GuardiansOfTheRift plugin;
   @Inject
@@ -18,20 +18,19 @@ public class GoThroughPortal extends Task {
 
   @Override
   public String getStatus() {
-    return "Entering PORTAL";
+    return "Leaving huge remains";
   }
 
   @Override
   public boolean validate() {
-    return plugin.getGamePhase() == 10 && !Inventory.isFull()
-        &&
-        TileObjects.getNearest(43729) != null;
+    return GotrArea.getCurrent() == GotrArea.HUGE_REMAINS
+        && Inventory.isFull();
   }
 
   @Override
   public void execute() {
-    TileObjects.getNearest(43729).interact("Enter");
-    Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getWorldX() < 3597, 10);
-    Time.sleepTicks(3);
+    TileObjects.getNearest("Portal").interact("Enter");
+    Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.MAIN, 20);
+    Time.sleepTick();
   }
 }

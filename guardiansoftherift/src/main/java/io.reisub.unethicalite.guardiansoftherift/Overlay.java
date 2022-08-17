@@ -26,8 +26,6 @@ public class Overlay extends OverlayPanel {
     TableComponent tableComponent = new TableComponent();
     tableComponent.setColumnAlignments(TableAlignment.LEFT, TableAlignment.RIGHT);
 
-    tableComponent.addRow("Game phase:", String.valueOf(plugin.getGamePhase()));
-
 
     if (!tableComponent.isEmpty()) {
       panelComponent.setBackgroundColor(ColorUtil.fromHex("#121212")); //Material Dark default

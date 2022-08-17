@@ -1,8 +1,9 @@
 package io.reisub.unethicalite.guardiansoftherift.tasks;
 
 import io.reisub.unethicalite.guardiansoftherift.Config;
-import io.reisub.unethicalite.guardiansoftherift.GuardianInfo;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
+import io.reisub.unethicalite.guardiansoftherift.data.GotrArea;
+import io.reisub.unethicalite.guardiansoftherift.data.GuardianInfo;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.TileObject;
@@ -11,7 +12,8 @@ import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 
-public class GoToAltar extends Task {
+public class EnterAltar extends Task {
+
   @Inject
   private GuardiansOfTheRift plugin;
   @Inject
@@ -24,9 +26,9 @@ public class GoToAltar extends Task {
 
   @Override
   public boolean validate() {
-    return plugin.getGamePhase() == 10 && Inventory.isFull()
-        &&
-        Inventory.contains("Guardian essence");
+    return GotrArea.getCurrent() == GotrArea.MAIN
+        && Inventory.isFull()
+        && Inventory.contains("Guardian essence");
   }
 
   @Override
@@ -41,11 +43,10 @@ public class GoToAltar extends Task {
           return;
         }
 
-        Time.sleepTicksUntil(() -> TileObjects.getNearest("Altar") != null
+        Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.ALTAR
             || !plugin.getBestGuardian().equals(bestGuardian), 24);
         Time.sleepTick();
       }
     }
-
   }
 }
