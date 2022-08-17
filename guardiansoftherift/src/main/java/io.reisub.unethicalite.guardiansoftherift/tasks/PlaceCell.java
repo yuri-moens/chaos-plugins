@@ -53,8 +53,7 @@ public class PlaceCell extends Task {
     if (Inventory.contains(Predicates.ids(Constants.RUNE_IDS))
         && (plugin.getPortalTimer() == -1) || plugin.getPortalTimer() > 8) {
       TileObjects.getNearest("Deposit Pool").interact("Deposit-runes");
-      Time.sleepTicks(2);
-      Time.sleepTicksUntil(() -> Players.getLocal().isIdle(), 10);
+      Time.sleepTicksUntil(() -> !Inventory.contains(Predicates.ids(Constants.RUNE_IDS)), 15);
     }
   }
 }
