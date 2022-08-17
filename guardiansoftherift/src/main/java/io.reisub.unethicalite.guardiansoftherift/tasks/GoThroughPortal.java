@@ -32,6 +32,6 @@ public class GoThroughPortal extends Task {
   public void execute() {
     TileObjects.getNearest(43729).interact("Enter");
     Time.sleepTicksUntil(() -> Players.getLocal().getWorldLocation().getWorldX() < 3597, 10);
-    Time.sleepTick();
+    Time.sleepTicks(3);
   }
 }

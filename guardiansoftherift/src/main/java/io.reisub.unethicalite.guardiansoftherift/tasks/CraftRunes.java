@@ -30,13 +30,11 @@ public class CraftRunes extends Task {
     Time.sleepTick();
     TileObjects.getNearest("Altar").interact("Craft-rune");
     Time.sleepTicksUntil(() -> !Inventory.contains("Guardian essence"), 15);
-    for (int id : plugin.POUCH_IDS) {
+    for (int id : GuardiansOfTheRift.POUCH_IDS) {
       if (Inventory.contains(id)) {
         Inventory.getFirst(id).interact("Empty");
       }
     }
     Time.sleepTick();
-    TileObjects.getNearest("Altar").interact("Craft-rune");
-    Time.sleepTicksUntil(() -> !Inventory.contains("Guardian essence"), 15);
   }
 }

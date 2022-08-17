@@ -42,7 +42,8 @@ public class GoToAltar extends Task {
         }
 
         Time.sleepTicksUntil(() -> TileObjects.getNearest("Altar") != null
-            || !plugin.getBestGuardian().equals(bestGuardian), 16);
+            || !plugin.getBestGuardian().equals(bestGuardian), 24);
+        Time.sleepTick();
       }
     }
 

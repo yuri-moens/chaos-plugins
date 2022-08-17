@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
@@ -65,6 +66,9 @@ public class GuardiansOfTheRift extends TickScript {
       ImmutableSet.of(ItemID.SMALL_POUCH, ItemID.MEDIUM_POUCH, ItemID.MEDIUM_POUCH_5511,
           ItemID.LARGE_POUCH, ItemID.LARGE_POUCH_5513, ItemID.GIANT_POUCH, ItemID.GIANT_POUCH_5515,
           ItemID.COLOSSAL_POUCH);
+  private static final Set<Integer> TALISMAN_IDS = GuardianInfo.ALL.stream()
+      .mapToInt(x -> x.getTalismanId()).boxed().collect(
+          Collectors.toSet());
   private static final int GUARDIAN_ACTIVE_ANIM = 9363;
   private static final Set<Integer> GUARDIAN_IDS =
       ImmutableSet.of(43705, 43701, 43710, 43702, 43703, 43711, 43704, 43708, 43712, 43707, 43706,
@@ -158,12 +162,14 @@ public class GuardiansOfTheRift extends TickScript {
   public void onGameTick(GameTick tick) {
     activeGuardians.removeIf(ag -> {
       Animation anim = ((DynamicObject) ag.getRenderable()).getAnimation();
-      return anim == null || anim.getId() != GUARDIAN_ACTIVE_ANIM;
+      return anim == null || anim.getId() != GUARDIAN_ACTIVE_ANIM
+          || !Inventory.contains(GuardianInfo.getForObjectId(ag.getId()).getTalismanId());
     });
 
     for (GameObject guardian : guardians) {
       Animation animation = ((DynamicObject) guardian.getRenderable()).getAnimation();
-      if (animation != null && animation.getId() == GUARDIAN_ACTIVE_ANIM) {
+      if ((animation != null && animation.getId() == GUARDIAN_ACTIVE_ANIM)
+          || Inventory.contains(GuardianInfo.getForObjectId(guardian.getId()).getTalismanId())) {
         activeGuardians.add(guardian);
       }
     }
@@ -228,6 +234,9 @@ public class GuardiansOfTheRift extends TickScript {
     }
     if (Inventory.contains("Medium cell", "Strong cell", "Overcharged cell")) {
       Inventory.getFirst("Medium cell", "Strong cell", "Overcharged cell").drop();
+    }
+    if (Inventory.contains("Guardian essence")) {
+      Inventory.getFirst("Guardian essence").drop();
     }
   }
 
