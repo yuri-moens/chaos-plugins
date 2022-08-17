@@ -10,6 +10,7 @@ import net.unethicalite.api.entities.TileObjects;
 @RequiredArgsConstructor
 @Getter
 public enum GotrArea {
+  ALTAR(() -> TileObjects.getNearest("Altar") != null),
   MAIN(() -> {
     if (!Utils.isInMapRegion(14484)) {
       return false;
@@ -31,7 +32,6 @@ public enum GotrArea {
 
     return Players.getLocal().getWorldX() < 3595;
   }),
-  ALTAR(() -> TileObjects.getNearest("Altar") != null),
   UNKNOWN(() -> true);
 
   private final BooleanSupplier test;
