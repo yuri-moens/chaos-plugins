@@ -11,6 +11,7 @@ import net.runelite.api.ItemID;
 import net.runelite.api.TileObject;
 import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
+import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 
@@ -51,6 +52,12 @@ public class CraftRunes extends Task {
     }
 
     altar.interact("Craft-rune");
+
+    if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving()
+        || Players.getLocal().isAnimating(), 3)) {
+      return;
+    }
+
     Time.sleepTicksUntil(() -> !Inventory.contains(ItemID.GUARDIAN_ESSENCE), 20);
   }
 

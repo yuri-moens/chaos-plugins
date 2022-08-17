@@ -31,7 +31,6 @@ public class LeaveAltar extends Task {
   public void execute() {
     TileObjects.getNearest("Portal").interact("Use");
     Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.MAIN, 20);
-    Time.sleepTicks(3);
-
+    Time.sleepTicks(2);
   }
 }

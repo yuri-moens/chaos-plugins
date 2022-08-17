@@ -25,6 +25,7 @@ public class PowerGuardian extends Task {
   @Override
   public boolean validate() {
     return GotrArea.getCurrent() == GotrArea.MAIN
+        && plugin.getElapsedTicks() != -1
         && Inventory.contains("Elemental guardian stone", "Catalytic guardian stone");
   }
 

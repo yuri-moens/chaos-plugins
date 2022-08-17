@@ -34,14 +34,22 @@ public class PlaceCell extends Task {
   @Override
   public void execute() {
     TileObjects.getNearest(43740, 43741, 43742, 43743).interact("Place-cell");
+
     if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving(), 2)) {
       return;
     }
 
-    Time.sleepTicksUntil(
-        () -> !Inventory.contains("Weak cell", "Medium cell", "Strong cell", "Overcharged cell"),
-        10
-    );
+    // if we stop moving and we still have a cell after 3 ticks it means the cell tile
+    // has changed and our action stops so we return as quickly as possible
+    Time.sleepTicksUntil(() -> !Players.getLocal().isMoving(), 10);
+    if (!Time.sleepTicksUntil(
+        () -> !Inventory.contains("Weak cell", "Medium cell", "Strong cell", "Overcharged cell")
+            || !Players.getLocal().isMoving(),
+        3
+    )) {
+      return;
+    }
+
     if (Inventory.contains(Predicates.ids(Constants.RUNE_IDS))
         && (plugin.getPortalTimer() == -1) || plugin.getPortalTimer() > 8) {
       TileObjects.getNearest("Deposit Pool").interact("Deposit-runes");
