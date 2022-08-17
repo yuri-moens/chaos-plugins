@@ -36,29 +36,30 @@ public class CraftRunes extends Task {
   @Override
   public void execute() {
     while (Inventory.contains(ItemID.GUARDIAN_ESSENCE)) {
-      craftRunes();
+      boolean success = craftRunes();
 
-      if (!plugin.arePouchesEmpty()) {
+      if ((!plugin.arePouchesEmpty() || plugin.getGuardianPower() >= config.guardianPowerLastRun())
+          && success) {
         emptyPouches();
       }
     }
   }
 
-  private void craftRunes() {
+  private boolean craftRunes() {
     final TileObject altar = TileObjects.getNearest("Altar");
 
     if (altar == null) {
-      return;
+      return false;
     }
 
     altar.interact("Craft-rune");
 
     if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving()
         || Players.getLocal().isAnimating(), 3)) {
-      return;
+      return false;
     }
 
-    Time.sleepTicksUntil(() -> !Inventory.contains(ItemID.GUARDIAN_ESSENCE), 20);
+    return Time.sleepTicksUntil(() -> !Inventory.contains(ItemID.GUARDIAN_ESSENCE), 20);
   }
 
   private void emptyPouches() {

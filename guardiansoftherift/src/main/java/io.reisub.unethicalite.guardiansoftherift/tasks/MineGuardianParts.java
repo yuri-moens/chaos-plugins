@@ -34,6 +34,6 @@ public class MineGuardianParts extends Task {
     TileObjects.getNearest("Guardian parts").interact("Mine");
     Time.sleepTicksUntil(
         () -> plugin.isPortalActive()
-            || Inventory.getCount("Guardian fragments") >= Inventory.getFreeSlots() + 1, 50);
+            || Inventory.getCount(true, "Guardian fragments") >= Inventory.getFreeSlots() + 1, 50);
   }
 }

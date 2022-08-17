@@ -2,8 +2,10 @@ package io.reisub.unethicalite.guardiansoftherift;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Provides;
+import io.reisub.unethicalite.guardiansoftherift.data.CellType;
 import io.reisub.unethicalite.guardiansoftherift.data.GuardianInfo;
 import io.reisub.unethicalite.guardiansoftherift.data.PluginActivity;
+import io.reisub.unethicalite.guardiansoftherift.data.RuneType;
 import io.reisub.unethicalite.guardiansoftherift.tasks.CraftEssence;
 import io.reisub.unethicalite.guardiansoftherift.tasks.CraftRunes;
 import io.reisub.unethicalite.guardiansoftherift.tasks.EnterAltar;
@@ -25,6 +27,8 @@ import io.reisub.unethicalite.utils.Utils;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.inject.Inject;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +43,7 @@ import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameObjectSpawned;
 import net.runelite.api.events.GameTick;
+import net.runelite.api.util.Text;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
@@ -70,10 +75,10 @@ public class GuardiansOfTheRift extends TickScript {
           43709);
   private static final int PORTAL_WIDGET_ID = 48889883;
   private static final Set<String> GAME_END_MESSAGES = ImmutableSet.of(
-      "The Great Guardian successfully closed the rift!",
-      "The Portal Guardians close their rifts.",
-      "The Great Guardian was defeated!",
-      "The Portal Guardians will keep their rifts open for another 30 seconds."
+      "the great guardian successfully closed the rift!",
+      "the portal guardians close their rifts.",
+      "the great guardian was defeated!",
+      "the portal guardians will keep their rifts open for another 30 seconds."
   );
   @Getter
   private final Set<GameObject> activeGuardians = new HashSet<>();
@@ -94,6 +99,8 @@ public class GuardiansOfTheRift extends TickScript {
   private int lastPouchEmptyMessageTick;
   private int fullPouches;
   private int emptyPouches;
+  private int elementalPoints;
+  private int catalyticPoints;
 
   @Provides
   public Config getConfig(ConfigManager configManager) {
@@ -110,6 +117,16 @@ public class GuardiansOfTheRift extends TickScript {
     super.onStart();
 
     reset();
+
+    int entranceTimer = getEntranceTimer();
+
+    if (entranceTimer != -1) {
+      if (entranceTimer >= 20) {
+        startTick = Static.getClient().getTickCount() - (int) ((60 - entranceTimer) / 0.6);
+      } else {
+        startTick = Static.getClient().getTickCount() - 200;
+      }
+    }
 
     overlayManager.add(overlay);
 
@@ -207,12 +224,13 @@ public class GuardiansOfTheRift extends TickScript {
 
   @Subscribe
   public void onChatMessage(ChatMessage chatMessage) {
-    String msg = chatMessage.getMessage();
-    if (msg.contains("The rift becomes active!")) {
+    String msg = Text.standardize(chatMessage.getMessage());
+
+    if (msg.contains("the rift becomes active!")) {
       startTick = Static.getClient().getTickCount();
     } else if (GAME_END_MESSAGES.contains(msg)) {
       reset();
-    } else if (msg.equals("You cannot add any more essence to the pouch.")) {
+    } else if (msg.equals("you cannot add any more essence to the pouch.")) {
       if (Static.getClient().getTickCount() != lastPouchFullMessageTick) {
         fullPouches = 0;
       }
@@ -220,7 +238,7 @@ public class GuardiansOfTheRift extends TickScript {
       lastPouchFullMessageTick = Static.getClient().getTickCount();
       fullPouches++;
       emptyPouches = 0;
-    } else if (msg.equals("There is no essence in this pouch.")) {
+    } else if (msg.equals("there is no essence in this pouch.")) {
       if (Static.getClient().getTickCount() != lastPouchEmptyMessageTick) {
         emptyPouches = 0;
       }
@@ -228,6 +246,36 @@ public class GuardiansOfTheRift extends TickScript {
       lastPouchEmptyMessageTick = Static.getClient().getTickCount();
       emptyPouches++;
       fullPouches = 0;
+    } else if (msg.startsWith("total elemental energy")) {
+      Pattern regex = Pattern.compile("\\d+");
+      Matcher matcher = regex.matcher(msg);
+
+      String elemental = null;
+      String catalytic = null;
+
+      while (matcher.find()) {
+        if (elemental == null) {
+          elemental = matcher.group(0);
+        } else {
+          catalytic = matcher.group(0);
+        }
+      }
+
+      try {
+        assert elemental != null;
+        assert catalytic != null;
+        elementalPoints = Integer.parseInt(elemental);
+        catalyticPoints = Integer.parseInt(catalytic);
+      } catch (AssertionError | NumberFormatException e) {
+        log.warn("Error parsing points\n{}", e.getMessage());
+      }
+
+      if (config.balancePoints()
+          && !config.focusPoints()
+          && getPreferredRuneType() != null) {
+        log.info("Point difference is larger than 10, preferring {} runes next round",
+            getPreferredRuneType().name().toLowerCase());
+      }
     }
   }
 
@@ -245,6 +293,7 @@ public class GuardiansOfTheRift extends TickScript {
 
   public GuardianInfo getBestGuardian() {
     Set<GuardianInfo> activeGuardiansInfo = new HashSet<>();
+
     for (GameObject ag : activeGuardians) {
       GuardianInfo gii = GuardianInfo.getForObjectId(ag.getId());
       if (gii != null && gii.haveRequirements()) {
@@ -252,18 +301,88 @@ public class GuardiansOfTheRift extends TickScript {
       }
     }
 
-    if (config.focusPoints() && activeGuardiansInfo.size() > 1) {
-      activeGuardiansInfo.removeIf(gf -> config.runeTypeFocus() == gf.getRuneType());
+    if (config.disableMind() && activeGuardiansInfo.size() > 1) {
+      activeGuardiansInfo.remove(GuardianInfo.MIND);
+    }
+
+    if (config.disableBody() && activeGuardiansInfo.size() > 1) {
+      activeGuardiansInfo.remove(GuardianInfo.BODY);
+    }
+
+    final RuneType preferredRuneType = getPreferredRuneType();
+
+    if (preferredRuneType != null && activeGuardiansInfo.size() > 1) {
+      GuardianInfo highestElemental = activeGuardiansInfo
+          .stream()
+          .filter(x -> x.getRuneType() == RuneType.ELEMENTAL)
+          .max(Comparator.comparing(GuardianInfo::getCellType))
+          .orElse(null);
+
+      GuardianInfo highestCatalytic = activeGuardiansInfo
+          .stream()
+          .filter(x -> x.getRuneType() == RuneType.CATALYTIC)
+          .max(Comparator.comparing(GuardianInfo::getCellType))
+          .orElse(null);
+
+      if (highestElemental == null) {
+        return highestCatalytic;
+      }
+
+      if (highestCatalytic == null) {
+        return highestElemental;
+      }
+
+      if (preferredRuneType == RuneType.ELEMENTAL) {
+        if (highestElemental.getCellType() != CellType.OVERCHARGED
+            && highestCatalytic.getCellType() == CellType.OVERCHARGED) {
+          return highestCatalytic;
+        }
+
+        int delta =
+            highestCatalytic.getCellType().ordinal() - highestElemental.getCellType().ordinal();
+
+        if (delta > 1) {
+          return highestCatalytic;
+        } else {
+          return highestElemental;
+        }
+      } else {
+        if (highestCatalytic.getCellType() != CellType.OVERCHARGED
+            && highestElemental.getCellType() == CellType.OVERCHARGED) {
+          return highestElemental;
+        }
+
+        int delta =
+            highestElemental.getCellType().ordinal() - highestCatalytic.getCellType().ordinal();
+
+        if (delta > 1) {
+          return highestElemental;
+        } else {
+          return highestCatalytic;
+        }
+      }
     }
 
     return activeGuardiansInfo
         .stream()
         .max(Comparator.comparing(GuardianInfo::getCellType))
-        .isPresent()
-        ? activeGuardiansInfo
-        .stream()
-        .max(Comparator.comparing(GuardianInfo::getCellType))
-        .get() : null;
+        .orElse(null);
+  }
+
+  private RuneType getPreferredRuneType() {
+    if (config.focusPoints()) {
+      return config.runeTypeFocus();
+    }
+
+    if (config.balancePoints()) {
+      if (elementalPoints - catalyticPoints >= 10) {
+        return RuneType.CATALYTIC;
+      } else if (catalyticPoints - elementalPoints >= 10) {
+        return RuneType.ELEMENTAL;
+      }
+    }
+
+    return null;
   }
 
   public int getElapsedTicks() {

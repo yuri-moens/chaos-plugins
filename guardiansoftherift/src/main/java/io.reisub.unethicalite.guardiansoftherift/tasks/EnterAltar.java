@@ -61,9 +61,9 @@ public class EnterAltar extends Task {
         Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.ALTAR
             || !bestGuardian.equals(plugin.getBestGuardian()), 24);
 
-        if (plugin.getBestGuardian() == null) {
+        if (plugin.getBestGuardian() == null || !bestGuardian.equals(plugin.getBestGuardian())) {
           Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.ALTAR, 2);
-          Time.sleepTick();
+          Time.sleepTicks(2);
         }
       }
     }
