@@ -36,7 +36,7 @@ public class CraftEssence extends Task {
   @Override
   public void execute() {
     while (!Inventory.isFull()
-        // && GotrArea.getCurrent() == GotrArea.MAIN
+        && GotrArea.getCurrent() == GotrArea.MAIN
         && !plugin.isPortalActive()
         && Inventory.contains("Guardian fragments")
         && plugin.getGuardianPower() < config.guardianPowerLastRun()) {
@@ -61,7 +61,7 @@ public class CraftEssence extends Task {
 
     workbench.interact("Work-at");
     Time.sleepTicksUntil(() -> Inventory.isFull()
-        // || GotrArea.getCurrent() != GotrArea.MAIN
+        || GotrArea.getCurrent() != GotrArea.MAIN
         || plugin.isPortalActive()
         || !Inventory.contains("Guardian fragments")
         || plugin.getGuardianPower() >= config.guardianPowerLastRun(), 50);
