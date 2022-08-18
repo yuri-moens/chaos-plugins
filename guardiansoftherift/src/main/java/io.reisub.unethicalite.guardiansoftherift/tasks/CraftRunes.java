@@ -55,7 +55,7 @@ public class CraftRunes extends Task {
     altar.interact("Craft-rune");
 
     if (!Time.sleepTicksUntil(() -> Players.getLocal().isMoving()
-        || Players.getLocal().isAnimating(), 3)) {
+        || Players.getLocal().isAnimating(), 2)) {
       return false;
     }
 
