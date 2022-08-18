@@ -51,6 +51,7 @@ public class PlaceCell extends Task {
     }
 
     if (Inventory.contains(Predicates.ids(Constants.RUNE_IDS))
+        && !Inventory.contains("Weak cell", "Medium cell", "Strong cell", "Overcharged cell")
         && (plugin.getPortalTimer() == -1) || plugin.getPortalTimer() > 8) {
       TileObjects.getNearest("Deposit Pool").interact("Deposit-runes");
       Time.sleepTicksUntil(() -> !Inventory.contains(Predicates.ids(Constants.RUNE_IDS)), 15);
