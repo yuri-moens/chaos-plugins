@@ -365,7 +365,8 @@ public class GuardiansOfTheRift extends TickScript {
 
     return activeGuardiansInfo
         .stream()
-        .max(Comparator.comparing(GuardianInfo::getCellType))
+        .max(Comparator.comparing(GuardianInfo::getCellType)
+            .thenComparing(GuardianInfo::getRuneType))
         .orElse(null);
   }
 
