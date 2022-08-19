@@ -28,7 +28,8 @@ public class PlaceCell extends Task {
   public boolean validate() {
     return GotrArea.getCurrent() == GotrArea.MAIN
         && plugin.getElapsedTicks() != -1
-        && Inventory.contains("Weak cell", "Medium cell", "Strong cell", "Overcharged cell");
+        && Inventory.contains("Weak cell", "Medium cell", "Strong cell", "Overcharged cell")
+        && (plugin.getPortalTimer() == -1 || plugin.getPortalTimer() > 10);
   }
 
   @Override
