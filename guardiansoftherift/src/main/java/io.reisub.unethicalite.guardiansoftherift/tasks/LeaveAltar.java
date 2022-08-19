@@ -33,7 +33,7 @@ public class LeaveAltar extends Task {
   public void execute() {
     TileObjects.getNearest("Portal").interact("Use");
     Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.MAIN, 20);
-    Time.sleepTicks(2);
+    Time.sleepTick();
 
     if (Inventory.isFull()) {
       Movement.walk(new WorldPoint(3615, 9509, 0));
