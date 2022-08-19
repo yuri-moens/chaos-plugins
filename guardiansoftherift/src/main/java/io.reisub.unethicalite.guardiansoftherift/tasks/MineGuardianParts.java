@@ -26,7 +26,8 @@ public class MineGuardianParts extends Task {
   @Override
   public boolean validate() {
     return GotrArea.getCurrent() == GotrArea.MAIN
-        && !Inventory.contains("Guardian fragments");
+        && !Inventory.contains("Guardian fragments")
+        && plugin.getGuardianPower() < config.guardianPowerLastRun() - 1;
   }
 
   @Override
@@ -35,6 +36,6 @@ public class MineGuardianParts extends Task {
     Time.sleepTicksUntil(
         () -> plugin.isPortalActive()
             || Inventory.getCount(true, "Guardian fragments")
-            >= (config.guardianPowerLastRun() - plugin.getGuardianPower()) * 2.5, 50);
+            >= (config.guardianPowerLastRun() - plugin.getGuardianPower()) * 2, 50);
   }
 }
