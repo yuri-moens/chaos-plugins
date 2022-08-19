@@ -7,6 +7,7 @@ import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.Item;
+import net.runelite.api.ItemID;
 import net.runelite.api.TileObject;
 import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
@@ -47,7 +48,10 @@ public class CraftEssence extends Task {
       if (!plugin.arePouchesFull()
           && plugin.getElapsedTicks() > 180 / 0.6
           && plugin.getGuardianPower() < config.guardianPowerLastRun()) {
-        fillPouches();
+        if (fillPouches()) {
+          plugin.setEmptyPouches(0);
+          plugin.setFullPouches(4);
+        }
       }
     }
   }
@@ -67,11 +71,13 @@ public class CraftEssence extends Task {
         || plugin.getGuardianPower() >= config.guardianPowerLastRun(), 50);
   }
 
-  private void fillPouches() {
+  private boolean fillPouches() {
     for (Item pouch : Inventory.getAll(Predicates.ids(Constants.ESSENCE_POUCH_IDS))) {
       pouch.interact("Fill");
     }
 
     Time.sleepTicksUntil(() -> Inventory.getFreeSlots() > 0 || plugin.arePouchesFull(), 3);
+
+    return Inventory.contains(ItemID.GUARDIAN_ESSENCE);
   }
 }

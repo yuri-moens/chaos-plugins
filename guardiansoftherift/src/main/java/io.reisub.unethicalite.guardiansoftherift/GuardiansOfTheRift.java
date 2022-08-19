@@ -31,6 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Actor;
 import net.runelite.api.Animation;
@@ -38,7 +39,6 @@ import net.runelite.api.AnimationID;
 import net.runelite.api.Client;
 import net.runelite.api.DynamicObject;
 import net.runelite.api.GameObject;
-import net.runelite.api.ItemID;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameObjectSpawned;
@@ -97,7 +97,9 @@ public class GuardiansOfTheRift extends TickScript {
   private int startTick = -1;
   private int lastPouchFullMessageTick;
   private int lastPouchEmptyMessageTick;
+  @Setter
   private int fullPouches;
+  @Setter
   private int emptyPouches;
   private int elementalPoints;
   private int catalyticPoints;
@@ -445,8 +447,7 @@ public class GuardiansOfTheRift extends TickScript {
 
     final int pouchesCount = Inventory.getCount(Predicates.ids(normalPouches));
 
-    return fullPouches >= pouchesCount
-        || (fullPouches > 0 && Inventory.contains(ItemID.GUARDIAN_ESSENCE));
+    return fullPouches >= pouchesCount;
   }
 
   public boolean arePouchesEmpty() {
@@ -455,7 +456,6 @@ public class GuardiansOfTheRift extends TickScript {
 
     final int pouchesCount = Inventory.getCount(Predicates.ids(normalPouches));
 
-    return emptyPouches >= pouchesCount
-        || (emptyPouches > 0 && Inventory.getFreeSlots() > 0);
+    return emptyPouches >= pouchesCount;
   }
 }

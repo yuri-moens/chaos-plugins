@@ -40,7 +40,10 @@ public class CraftRunes extends Task {
 
       if ((!plugin.arePouchesEmpty() || plugin.getGuardianPower() >= config.guardianPowerLastRun())
           && success) {
-        emptyPouches();
+        if (emptyPouches()) {
+          plugin.setEmptyPouches(4);
+          plugin.setFullPouches(0);
+        }
       }
     }
   }
@@ -62,11 +65,13 @@ public class CraftRunes extends Task {
     return Time.sleepTicksUntil(() -> !Inventory.contains(ItemID.GUARDIAN_ESSENCE), 20);
   }
 
-  private void emptyPouches() {
+  private boolean emptyPouches() {
     for (Item pouch : Inventory.getAll(Predicates.ids(Constants.ESSENCE_POUCH_IDS))) {
       pouch.interact("Empty");
     }
 
     Time.sleepTicksUntil(() -> Inventory.contains(Predicates.ids(ItemID.GUARDIAN_ESSENCE)), 3);
+
+    return Inventory.getFreeSlots() > 0;
   }
 }
