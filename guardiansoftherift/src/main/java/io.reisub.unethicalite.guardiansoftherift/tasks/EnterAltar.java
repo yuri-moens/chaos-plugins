@@ -15,6 +15,7 @@ import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.movement.Movement;
+import net.unethicalite.api.widgets.Dialog;
 
 @Slf4j
 public class EnterAltar extends Task {
@@ -59,11 +60,16 @@ public class EnterAltar extends Task {
         }
 
         Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.ALTAR
-            || !bestGuardian.equals(plugin.getBestGuardian()), 24);
+            || !bestGuardian.equals(plugin.getBestGuardian())
+            || Dialog.isOpen(), 24);
+
+        if (Dialog.isOpen()) {
+          return;
+        }
 
         if (plugin.getBestGuardian() == null || !bestGuardian.equals(plugin.getBestGuardian())) {
           Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.ALTAR, 2);
-          Time.sleepTicks(2);
+          Time.sleepTick();
         }
       }
     }
