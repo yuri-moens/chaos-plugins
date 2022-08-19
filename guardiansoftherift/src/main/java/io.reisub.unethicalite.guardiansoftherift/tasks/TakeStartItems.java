@@ -2,6 +2,7 @@ package io.reisub.unethicalite.guardiansoftherift.tasks;
 
 import io.reisub.unethicalite.guardiansoftherift.Config;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
+import io.reisub.unethicalite.guardiansoftherift.data.GotrArea;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
@@ -25,6 +26,7 @@ public class TakeStartItems extends Task {
   public boolean validate() {
     return (plugin.getElapsedTicks() == -1
         || (plugin.getElapsedTicks() < 100 && Inventory.contains(ItemID.GUARDIAN_ESSENCE)))
+        && GotrArea.getCurrent() == GotrArea.MAIN
         && (!Inventory.contains("Weak cell")
         || Inventory.getCount(true, "Uncharged cell") < 10);
   }
