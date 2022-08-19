@@ -30,7 +30,8 @@ public class EnterPortal extends Task {
   @Override
   public void execute() {
     TileObjects.getNearest(43729).interact("Enter");
-    Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.HUGE_REMAINS, 20);
+    Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.HUGE_REMAINS
+        || TileObjects.getNearest(43729) == null, 20);
     Time.sleepTick();
   }
 }
