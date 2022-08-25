@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.AnimationID;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
-import net.runelite.api.Hitsplat;
+import net.runelite.api.HitsplatID;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.ItemID;
 import net.runelite.api.NpcID;
@@ -291,7 +291,7 @@ public class Tempoross extends TickScript {
   @Subscribe
   private void onHitsplatApplied(HitsplatApplied event) {
     if (event.getActor().getName().contains("Spirit pool")
-        && event.getHitsplat().getHitsplatType() == Hitsplat.HitsplatType.DAMAGE_ME) {
+        && event.getHitsplat().getHitsplatType() == HitsplatID.DAMAGE_ME) {
       if (isCurrentActivity(Activity.ATTACKING) && phase <= 3 && essence <= 10) {
         setActivity(Activity.IDLE);
       }
