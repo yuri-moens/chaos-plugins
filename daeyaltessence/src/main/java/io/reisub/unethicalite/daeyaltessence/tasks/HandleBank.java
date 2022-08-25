@@ -6,6 +6,7 @@ import io.reisub.unethicalite.utils.api.ChaosBank;
 import io.reisub.unethicalite.utils.api.ChaosMovement;
 import io.reisub.unethicalite.utils.tasks.BankTask;
 import lombok.RequiredArgsConstructor;
+import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 import net.runelite.api.ObjectID;
 import net.runelite.api.TileObject;
@@ -14,6 +15,7 @@ import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.items.Bank;
 import net.unethicalite.api.items.Inventory;
 
 @RequiredArgsConstructor
@@ -55,5 +57,9 @@ public class HandleBank extends BankTask {
     open();
 
     ChaosBank.depositAll(false, Predicates.ids(Constants.MINEABLE_GEM_IDS));
+    final Item gemBag = Bank.Inventory.getFirst("Open gem bag");
+    if (gemBag != null) {
+      gemBag.interact("Empty");
+    }
   }
 }
