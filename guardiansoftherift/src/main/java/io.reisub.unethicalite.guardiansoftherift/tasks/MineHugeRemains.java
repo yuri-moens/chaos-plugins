@@ -30,7 +30,8 @@ public class MineHugeRemains extends Task {
   @Override
   public boolean validate() {
     return !Inventory.isFull()
-        && GotrArea.getCurrent() == GotrArea.HUGE_REMAINS;
+        && GotrArea.getCurrent() == GotrArea.HUGE_REMAINS
+        && plugin.getElapsedTicks() != -1;
   }
 
   @Override
