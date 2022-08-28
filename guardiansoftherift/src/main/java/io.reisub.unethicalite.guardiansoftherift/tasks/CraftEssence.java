@@ -46,6 +46,7 @@ public class CraftEssence extends Task {
       // don't fill pouches during the first inventory
       // don't fill pouches right before starting the last run
       if (!plugin.arePouchesFull()
+          && Inventory.isFull()
           && plugin.getElapsedTicks() > 180 / 0.6
           && plugin.getGuardianPower() < config.guardianPowerLastRun()) {
         if (fillPouches()) {
