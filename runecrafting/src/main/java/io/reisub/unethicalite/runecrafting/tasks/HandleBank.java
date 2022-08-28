@@ -51,10 +51,6 @@ public class HandleBank extends BankTask {
       drinkStamina();
     }
 
-    final int essenceId =
-        Bank.contains(ItemID.DAEYALT_ESSENCE) ? ItemID.DAEYALT_ESSENCE : ItemID.PURE_ESSENCE;
-
-
     while (!Inventory.isFull()) {
       if (Inventory.contains(Predicates.ids(Constants.DEGRADED_ESSENCE_POUCH_IDS))
           && SpellBook.getCurrent() == SpellBook.LUNAR) {
@@ -62,7 +58,7 @@ public class HandleBank extends BankTask {
         return;
       }
 
-      withdraw(essenceId);
+      withdraw();
 
       if (!plugin.arePouchesFull()) {
         if (fillPouches()) {
@@ -73,8 +69,8 @@ public class HandleBank extends BankTask {
     }
   }
 
-  private void withdraw(final int essenceId) {
-    Bank.withdrawAll(essenceId, WithdrawMode.ITEM);
+  private void withdraw() {
+    Bank.withdrawAll(Predicates.ids(Constants.ESSENCE_IDS), WithdrawMode.ITEM);
     Time.sleepTicksUntil(Inventory::isFull, 3);
   }
 
