@@ -4,12 +4,16 @@ import io.reisub.unethicalite.guardiansoftherift.Config;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
 import io.reisub.unethicalite.guardiansoftherift.data.GotrArea;
 import io.reisub.unethicalite.guardiansoftherift.data.PluginActivity;
+import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import net.runelite.api.ItemID;
+import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
+import net.unethicalite.api.game.Combat;
+import net.unethicalite.api.items.Equipment;
 import net.unethicalite.api.items.Inventory;
 
 public class MineLargeRemains extends Task {
@@ -36,6 +40,11 @@ public class MineLargeRemains extends Task {
     if (Inventory.isFull()) {
       Inventory.getFirst(ItemID.GUARDIAN_ESSENCE).drop();
       Time.sleepTick();
+    }
+
+    if (Equipment.contains(Predicates.ids(Constants.SPECIAL_PICKAXE_IDS))
+        && Combat.getSpecEnergy() == 100) {
+      Combat.toggleSpec();
     }
 
     TileObjects.getNearest("Large guardian remains").interact("Mine");
