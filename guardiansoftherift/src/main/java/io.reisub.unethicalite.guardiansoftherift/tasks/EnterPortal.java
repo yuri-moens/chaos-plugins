@@ -5,9 +5,11 @@ import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
 import io.reisub.unethicalite.guardiansoftherift.data.GotrArea;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
+import net.runelite.api.coords.WorldPoint;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
+import net.unethicalite.api.movement.Movement;
 
 public class EnterPortal extends Task {
 
@@ -34,5 +36,9 @@ public class EnterPortal extends Task {
     Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.HUGE_REMAINS
         || TileObjects.getNearest(43729) == null, 20);
     Time.sleepTick();
+
+    if (plugin.getElapsedTicks() == -1) {
+      Movement.walk(new WorldPoint(3591, 9500, 0));
+    }
   }
 }
