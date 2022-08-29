@@ -47,8 +47,6 @@ public class MineHugeRemains extends Task {
         }
       }
     }
-
-    Time.sleepTick();
   }
 
   private void mine() {
@@ -65,15 +63,22 @@ public class MineHugeRemains extends Task {
       return;
     }
 
-    Time.sleepTicksUntil(Inventory::isFull, 20);
+    if (plugin.arePouchesFull()) {
+      Time.sleepTicksUntil(Inventory::isFull, 20);
+    } else {
+      Time.sleepTicksUntil(() -> Inventory.getFreeSlots() < 4, 20);
+    }
   }
 
   private boolean fillPouches() {
+    final int essenceCount = Inventory.getCount(ItemID.GUARDIAN_ESSENCE);
+
     for (Item pouch : Inventory.getAll(Predicates.ids(Constants.ESSENCE_POUCH_IDS))) {
       pouch.interact("Fill");
     }
 
-    Time.sleepTicksUntil(() -> Inventory.getFreeSlots() > 0 || plugin.arePouchesFull(), 3);
+    Time.sleepTicksUntil(() -> Inventory.getCount(ItemID.GUARDIAN_ESSENCE) < essenceCount
+        || plugin.arePouchesFull(), 3);
 
     return Inventory.contains(ItemID.GUARDIAN_ESSENCE);
   }

@@ -24,7 +24,7 @@ public class CraftRunes extends Task {
 
   @Override
   public String getStatus() {
-    return "Crafting Runes";
+    return "Crafting runes";
   }
 
   @Override
