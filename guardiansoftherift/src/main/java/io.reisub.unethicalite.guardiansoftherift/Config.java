@@ -14,7 +14,7 @@ public interface Config extends net.runelite.client.config.Config {
       description = "Amount of guardian fragments to mine at the start",
       position = 0)
   default int fragments() {
-    return 160;
+    return 165;
   }
 
   @ConfigItem(

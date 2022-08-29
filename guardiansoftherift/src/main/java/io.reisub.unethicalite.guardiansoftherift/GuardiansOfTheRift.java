@@ -20,7 +20,7 @@ import io.reisub.unethicalite.guardiansoftherift.tasks.MineLargeRemains;
 import io.reisub.unethicalite.guardiansoftherift.tasks.PlaceCell;
 import io.reisub.unethicalite.guardiansoftherift.tasks.PowerGuardian;
 import io.reisub.unethicalite.guardiansoftherift.tasks.RepairPouches;
-import io.reisub.unethicalite.guardiansoftherift.tasks.TakeStartItems;
+import io.reisub.unethicalite.guardiansoftherift.tasks.TakeUnchargedCells;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.TickScript;
 import io.reisub.unethicalite.utils.Utils;
@@ -137,7 +137,7 @@ public class GuardiansOfTheRift extends TickScript {
     }
 
     addTask(RepairPouches.class);
-    addTask(TakeStartItems.class);
+    addTask(TakeUnchargedCells.class);
     addTask(GoToLargeRemains.class);
     addTask(MineLargeRemains.class);
     addTask(LeaveLargeRemains.class);
