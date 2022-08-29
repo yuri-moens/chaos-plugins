@@ -24,7 +24,8 @@ public class EnterPortal extends Task {
   @Override
   public boolean validate() {
     return !Inventory.isFull()
-        && TileObjects.getNearest(43729) != null;
+        && TileObjects.getNearest(43729) != null
+        && GotrArea.getCurrent() == GotrArea.MAIN;
   }
 
   @Override
