@@ -37,8 +37,9 @@ public class EnterPortal extends Task {
         || TileObjects.getNearest(43729) == null, 20);
     Time.sleepTick();
 
-    if (plugin.getElapsedTicks() == -1
-        || plugin.getGuardianPower() >= config.guardianPowerLastRun()) {
+    if (GotrArea.getCurrent() == GotrArea.HUGE_REMAINS
+        && (plugin.getElapsedTicks() == -1
+        || plugin.getGuardianPower() >= config.guardianPowerLastRun())) {
       Movement.walk(new WorldPoint(3591, 9500, 0));
     }
   }
