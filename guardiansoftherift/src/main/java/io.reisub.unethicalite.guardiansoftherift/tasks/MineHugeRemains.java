@@ -31,7 +31,9 @@ public class MineHugeRemains extends Task {
   public boolean validate() {
     return !Inventory.isFull()
         && GotrArea.getCurrent() == GotrArea.HUGE_REMAINS
-        && plugin.getElapsedTicks() != -1;
+        && plugin.getElapsedTicks() != -1
+        && plugin.getGuardianPower() != -1
+        && plugin.getGuardianPower() < config.guardianPowerLastRun();
   }
 
   @Override
