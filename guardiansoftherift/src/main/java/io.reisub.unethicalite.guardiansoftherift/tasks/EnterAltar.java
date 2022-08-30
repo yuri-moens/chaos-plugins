@@ -8,6 +8,8 @@ import io.reisub.unethicalite.guardiansoftherift.data.GuardianInfo;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.DynamicObject;
+import net.runelite.api.GameObject;
 import net.runelite.api.TileObject;
 import net.runelite.api.coords.WorldPoint;
 import net.unethicalite.api.commons.Time;
@@ -61,6 +63,7 @@ public class EnterAltar extends Task {
 
         Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.ALTAR
             || !bestGuardian.equals(plugin.getBestGuardian())
+            || !isActive(guardian)
             || Dialog.isOpen(), 24);
 
         if (Dialog.isOpen()) {
@@ -73,5 +76,9 @@ public class EnterAltar extends Task {
         }
       }
     }
+  }
+
+  private boolean isActive(TileObject guardian) {
+    return ((DynamicObject) ((GameObject) guardian).getRenderable()).getAnimationID() == 9363;
   }
 }
