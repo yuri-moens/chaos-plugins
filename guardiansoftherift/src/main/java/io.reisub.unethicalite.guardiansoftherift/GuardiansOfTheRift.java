@@ -438,7 +438,7 @@ public class GuardiansOfTheRift extends TickScript {
   }
 
   public int getPortalTimer() {
-    return getWidgetInteger(26);
+    return getWidgetInteger(28);
   }
 
   public boolean arePouchesFull() {
