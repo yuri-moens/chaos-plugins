@@ -3,13 +3,9 @@ package io.reisub.unethicalite.guardiansoftherift.tasks;
 import io.reisub.unethicalite.guardiansoftherift.Config;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
 import io.reisub.unethicalite.guardiansoftherift.data.GotrArea;
-import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
-import net.runelite.api.Item;
-import net.runelite.api.ItemID;
 import net.runelite.api.TileObject;
-import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.TileObjects;
 import net.unethicalite.api.items.Inventory;
@@ -49,7 +45,7 @@ public class CraftEssence extends Task {
           && Inventory.isFull()
           && plugin.getElapsedTicks() > 180 / 0.6
           && plugin.getGuardianPower() < config.guardianPowerLastRun()) {
-        if (fillPouches()) {
+        if (plugin.fillPouches()) {
           plugin.setEmptyPouches(0);
           plugin.setFullPouches(4);
         }
@@ -70,15 +66,5 @@ public class CraftEssence extends Task {
         || plugin.isPortalActive()
         || !Inventory.contains("Guardian fragments")
         || plugin.getGuardianPower() >= config.guardianPowerLastRun(), 50);
-  }
-
-  private boolean fillPouches() {
-    for (Item pouch : Inventory.getAll(Predicates.ids(Constants.ESSENCE_POUCH_IDS))) {
-      pouch.interact("Fill");
-    }
-
-    Time.sleepTicksUntil(() -> Inventory.getFreeSlots() > 0 || plugin.arePouchesFull(), 3);
-
-    return Inventory.contains(ItemID.GUARDIAN_ESSENCE);
   }
 }

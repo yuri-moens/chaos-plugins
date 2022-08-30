@@ -1,7 +1,9 @@
 package io.reisub.unethicalite.guardiansoftherift.tasks;
 
+import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
 import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.tasks.Task;
+import javax.inject.Inject;
 import net.runelite.api.DialogOption;
 import net.runelite.api.widgets.Widget;
 import net.unethicalite.api.commons.Predicates;
@@ -14,6 +16,9 @@ import net.unethicalite.api.widgets.Dialog;
 import net.unethicalite.api.widgets.Widgets;
 
 public class RepairPouches extends Task {
+
+  @Inject
+  private GuardiansOfTheRift plugin;
 
   @Override
   public String getStatus() {
@@ -53,5 +58,7 @@ public class RepairPouches extends Task {
 
     Time.sleepTicksUntil(
         () -> !Inventory.contains(Predicates.ids(Constants.DEGRADED_ESSENCE_POUCH_IDS)), 3);
+
+    plugin.fillPouches();
   }
 }

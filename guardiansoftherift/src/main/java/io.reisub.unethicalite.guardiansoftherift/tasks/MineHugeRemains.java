@@ -3,13 +3,9 @@ package io.reisub.unethicalite.guardiansoftherift.tasks;
 import io.reisub.unethicalite.guardiansoftherift.Config;
 import io.reisub.unethicalite.guardiansoftherift.GuardiansOfTheRift;
 import io.reisub.unethicalite.guardiansoftherift.data.GotrArea;
-import io.reisub.unethicalite.utils.Constants;
 import io.reisub.unethicalite.utils.tasks.Task;
 import javax.inject.Inject;
-import net.runelite.api.Item;
-import net.runelite.api.ItemID;
 import net.runelite.api.TileObject;
-import net.unethicalite.api.commons.Predicates;
 import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.entities.TileObjects;
@@ -43,7 +39,7 @@ public class MineHugeRemains extends Task {
       mine();
 
       if (!plugin.arePouchesFull()) {
-        if (fillPouches()) {
+        if (plugin.fillPouches()) {
           plugin.setEmptyPouches(0);
           plugin.setFullPouches(4);
         }
@@ -70,18 +66,5 @@ public class MineHugeRemains extends Task {
     } else {
       Time.sleepTicksUntil(() -> Inventory.getFreeSlots() < 4, 20);
     }
-  }
-
-  private boolean fillPouches() {
-    final int essenceCount = Inventory.getCount(ItemID.GUARDIAN_ESSENCE);
-
-    for (Item pouch : Inventory.getAll(Predicates.ids(Constants.ESSENCE_POUCH_IDS))) {
-      pouch.interact("Fill");
-    }
-
-    Time.sleepTicksUntil(() -> Inventory.getCount(ItemID.GUARDIAN_ESSENCE) < essenceCount
-        || plugin.arePouchesFull(), 3);
-
-    return Inventory.contains(ItemID.GUARDIAN_ESSENCE);
   }
 }

@@ -39,6 +39,8 @@ import net.runelite.api.AnimationID;
 import net.runelite.api.Client;
 import net.runelite.api.DynamicObject;
 import net.runelite.api.GameObject;
+import net.runelite.api.Item;
+import net.runelite.api.ItemID;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameObjectSpawned;
@@ -51,6 +53,7 @@ import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.unethicalite.api.commons.Predicates;
+import net.unethicalite.api.commons.Time;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.items.Inventory;
 import net.unethicalite.api.widgets.Widgets;
@@ -439,6 +442,20 @@ public class GuardiansOfTheRift extends TickScript {
 
   public int getPortalTimer() {
     return getWidgetInteger(28);
+  }
+
+  public boolean fillPouches() {
+    final int essenceCount = Inventory.getCount(ItemID.GUARDIAN_ESSENCE);
+
+    for (Item pouch : Inventory.getAll(Predicates.ids(Constants.ESSENCE_POUCH_IDS))) {
+      pouch.interact("Fill");
+    }
+
+    Time.sleepTicksUntil(() -> Inventory.getCount(ItemID.GUARDIAN_ESSENCE) < essenceCount
+        || arePouchesFull(), 3);
+
+    return Inventory.contains(ItemID.GUARDIAN_ESSENCE)
+        && !Inventory.contains(Predicates.ids(Constants.DEGRADED_ESSENCE_POUCH_IDS));
   }
 
   public boolean arePouchesFull() {
