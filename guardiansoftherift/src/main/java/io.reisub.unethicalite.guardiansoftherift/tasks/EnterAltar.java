@@ -63,7 +63,6 @@ public class EnterAltar extends Task {
 
         Time.sleepTicksUntil(() -> GotrArea.getCurrent() == GotrArea.ALTAR
             || !bestGuardian.equals(plugin.getBestGuardian())
-            || !isActive(guardian)
             || Dialog.isOpen(), 24);
 
         if (Dialog.isOpen()) {
