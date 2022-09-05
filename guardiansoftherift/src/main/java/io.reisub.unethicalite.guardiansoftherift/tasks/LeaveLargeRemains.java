@@ -25,10 +25,17 @@ public class LeaveLargeRemains extends Task {
 
   @Override
   public boolean validate() {
-    return GotrArea.getCurrent() == GotrArea.LARGE_REMAINS
-        && (Inventory.getCount(true, ItemID.GUARDIAN_FRAGMENTS) >= config.fragments()
-        || (plugin.getElapsedTicks() >= 190) && Inventory.contains(ItemID.GUARDIAN_ESSENCE)
-        || plugin.getElapsedTicks() >= 195);
+    if (GotrArea.getCurrent() != GotrArea.LARGE_REMAINS) {
+      return false;
+    }
+
+    final int elapsedTicks = plugin.getElapsedTicks();
+
+    if (Inventory.contains(ItemID.GUARDIAN_ESSENCE)) {
+      return elapsedTicks >= config.ticksBeforeLeavingRemainsPortalStart();
+    }
+
+    return elapsedTicks >= config.ticksBeforeLeavingRemains();
   }
 
   @Override

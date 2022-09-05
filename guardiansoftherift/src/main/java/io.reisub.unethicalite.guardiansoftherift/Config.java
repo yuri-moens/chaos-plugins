@@ -9,19 +9,28 @@ import net.runelite.client.config.ConfigItem;
 public interface Config extends net.runelite.client.config.Config {
 
   @ConfigItem(
-      keyName = "fragments",
-      name = "Fragments",
-      description = "Amount of guardian fragments to mine at the start",
+      keyName = "ticksBeforeLeavingRemains",
+      name = "Ticks before leaving remains",
+      description = "Number of ticks at which to stop mining large remains",
       position = 0)
-  default int fragments() {
-    return 165;
+  default int ticksBeforeLeavingRemains() {
+    return 180;
+  }
+
+  @ConfigItem(
+      keyName = "ticksBeforeLeavingRemainsPortalStart",
+      name = "Ticks before leaving remains with portal start",
+      description = "Number of ticks at which to stop mining large remains with a portal start",
+      position = 1)
+  default int ticksBeforeLeavingRemainsPortalStart() {
+    return 210;
   }
 
   @ConfigItem(
       keyName = "betterGuardianWaitTime",
       name = "Better guardian wait time",
       description = "Seconds to wait for a better guardian (strong or overcharged) to open",
-      position = 1)
+      position = 2)
   default int betterGuardianWaitTime() {
     return 0;
   }
@@ -30,7 +39,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "guardianPowerLastRun",
       name = "Guardian power last run",
       description = "Set the guardian power at which we should do a last runecrafting run",
-      position = 2)
+      position = 3)
   default int guardianPowerLastRun() {
     return 95;
   }
@@ -39,7 +48,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "balancePoints",
       name = "Auto balance points",
       description = "Try to balance elemental and catalytic points",
-      position = 3)
+      position = 4)
   default boolean balancePoints() {
     return false;
   }
@@ -48,7 +57,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "focusPoints",
       name = "Focus",
       description = "Focus on one of the types of points",
-      position = 4)
+      position = 5)
   default boolean focusPoints() {
     return false;
   }
@@ -57,7 +66,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "runeTypeFocus",
       name = "Rune type focus",
       description = "Choose what type of rune to focus",
-      position = 5)
+      position = 6)
   default RuneType runeTypeFocus() {
     return RuneType.ELEMENTAL;
   }
@@ -66,7 +75,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "disableMind",
       name = "Disable mind",
       description = "Disable the mind altar",
-      position = 6)
+      position = 7)
   default boolean disableMind() {
     return true;
   }
@@ -75,7 +84,7 @@ public interface Config extends net.runelite.client.config.Config {
       keyName = "disableBody",
       name = "Disable body",
       description = "Disable the body altar",
-      position = 6)
+      position = 8)
   default boolean disableBody() {
     return true;
   }
